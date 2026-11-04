@@ -5,31 +5,101 @@
   "levelId": 2,
   "levelCategory": "intermediate",
   "title": "Exception Handling & Debugging",
-  "subtitle": "Hierarki Exception, Custom Exception & pdb Debugger",
-  "description": "Membuat program andal: hierarki exception Python, blok try/except/else/finally, raise custom exception kustom, dan teknik debugging dengan pdb/breakpoint.",
-  "competencyFocus": "PCAP 2.2: Exception hierarchy dan teknik debugging",
-  "estimatedHours": 4,
+  "subtitle": "Custom Exceptions, Traceback Analysis, pdb & logging",
+  "description": "Menangani error secara elegan dengan try-except-else-finally, mendefinisikan custom exception, analisis traceback, debugging dengan pdb/breakpoint, dan audit operasional dengan modul logging.",
+  "competencyFocus": "PCAP 2.2: Penanganan exception lanjutan dan debugging",
+  "estimatedHours": 5,
   "difficulty": "Intermediate",
-  "available": false,
+  "available": true,
   "prerequisites": [
-    "Chapter 11"
+    "Chapter 11",
+    "Chapter 17"
   ],
   "learningObjectives": [
-    "Menangkap beberapa exception spesifik secara hierarkis tanpa bare except:",
-    "Mendefinisikan class exception kustom turunan dari Exception bawaan",
-    "Menggunakan breakpoint() dan pdb untuk inspeksi call stack saat runtime"
+    "Membedakan secara tegas SyntaxError, Runtime Exception, dan Logical Bugs",
+    "Menerapkan penanganan multi-exception secara presisi menggunakan blok try-except",
+    "Mengontrol alur eksekusi pembersihan mutlak menggunakan klausa else dan finally",
+    "Merancang hierarki custom exception domain dan menerapkan exception chaining (from)",
+    "Melakukan debugging sistematis menggunakan assertion, breakpoint()/pdb, dan modul logging"
   ],
   "tags": [
     "Exceptions",
+    "try-except",
     "Debugging",
-    "pdb",
-    "Robustness"
+    "Traceback",
+    "Custom Exceptions",
+    "Logging",
+    "pdb"
   ],
   "resources": {
-    "hasSlides": false,
-    "slidesDeck": null,
-    "starterCode": null,
-    "assignmentGuide": null,
+    "hasSlides": true,
+    "slidesDeck": "slides/deck.json",
+    "starterCode": "code/contoh.py",
+    "assignmentGuide": "assignments/tugas.md",
     "pptxDownload": null
+  },
+  "codeExample": {
+    "title": "Pembagian Aman dengan try-except ZeroDivisionError",
+    "code": "def pembagian_aman(pembilang: float, penyebut: float) -> float | None:\n    try:\n        return pembilang / penyebut\n    except ZeroDivisionError:\n        print(f\"Peringatan: Terjadi pembagian dengan nol ({pembilang} / {penyebut})!\")\n        return None\n\nprint(\"100 / 4 =\", pembagian_aman(100.0, 4.0))\nprint(\"45 / 0  =\", pembagian_aman(45.0, 0.0))",
+    "outputKey": "ch18-01",
+    "explanation": "Blok try-except mengisolasi operasi pembagian berisiko tinggi. Jika pembagian nol terjadi, eksekusi dialihkan ke blok except tanpa merusak jalannya alur program utama."
+  },
+  "exercise": {
+    "title": "Latihan Terarah: Pertahanan Kode & Teknik Debugging",
+    "instructions": [
+      "Implementasikan fungsi alokasi daya per antena dengan pencegahan ZeroDivisionError.",
+      "Tangani multi-exception KeyError dan ValueError saat parsing konfigurasi dictionary jaringan.",
+      "Definisikan custom exception BandwidthExceededError dan picu dengan statement raise.",
+      "Gantikan statement print() dengan modul logging untuk mencatat alur transmisi paket."
+    ],
+    "tips": "Jangan pernah menggunakan bare except tanpa kelas exception spesifik karena akan menelan KeyboardInterrupt (Ctrl+C).",
+    "time": "40 menit"
+  },
+  "quiz": {
+    "question": "Mengapa penggunaan pola 'except: pass' (bare except yang mengabaikan error secara diam-diam) dianggap sebagai salah satu anti-pattern terburuk di Python?",
+    "options": [
+      "Karena pola tersebut menyembunyikan bug nyata dan menangkap KeyboardInterrupt sehingga program tidak bisa dihentikan dari terminal",
+      "Karena interpreter Python akan otomatis menghapus file skrip yang memuat pola tersebut",
+      "Karena statement pass membutuhkan konsumsi CPU 100% secara terus-menerus",
+      "Karena blok except wajib mengembalikan nilai boolean True"
+    ],
+    "correctIndex": 0,
+    "explanation": "Bare except menangkap seluruh exception termasuk BaseException (seperti KeyboardInterrupt dan SystemExit). Selain membuat program tidak bisa dihentikan via Ctrl+C, pola ini menelan bug secara diam-diam (silent failure) yang mempersulit penelusuran masalah di kemudian hari. Sesuai Zen of Python: 'Errors should never pass silently. Unless explicitly silenced.'",
+    "hint": "Ingat bahwa BaseException mencakup sinyal interupsi sistem dari pengguna."
+  },
+  "assignment": {
+    "title": "Tugas Praktik 18: Telecom Anomaly Detection & Robust Validator Suite",
+    "description": "Rancang dan bangun modul validasi telemetri jaringan yang tangguh terhadap kesalahan runtime, memanfaatkan custom exceptions, logging diagnostik, dan pelaporan metrik terperinci.",
+    "instructions": [
+      "Rancang hierarki custom exception TelemetryValidationError, MissingPropertyError, dan ValueRangeError.",
+      "Terapkan blok try-except spesifik untuk menangani konversi tipe numerik dan pengecekan batas rentang fisik.",
+      "Integrasikan modul logging untuk mencatat rekaman yang valid (INFO), ditolak (WARNING), dan error kritis (ERROR).",
+      "Sajikan ringkasan statistik proses validasi batch dalam bentuk dictionary informatif."
+    ],
+    "rubric": [
+      {
+        "criteria": "Desain Hierarki Custom Exception",
+        "weight": 25,
+        "description": "Merancang class exception turunan yang informatif dan merepresentasikan aturan domain jaringan."
+      },
+      {
+        "criteria": "Presisi Penanganan try-except-else-finally",
+        "weight": 25,
+        "description": "Menerapkan blok proteksi spesifik tanpa bare except: dan memanfaatkan else/finally secara tepat."
+      },
+      {
+        "criteria": "Ketahanan Validasi Rekaman & Edge Cases",
+        "weight": 25,
+        "description": "Mampu menangani tipe string non-numerik, nilai negatif tak valid, list kosong, dan data duplikat."
+      },
+      {
+        "criteria": "Integrasi Logging & Pelaporan Diagnostik",
+        "weight": 25,
+        "description": "Menerapkan modul logging dengan level yang sesuai serta menghasilkan ringkasan statistik yang akurat."
+      }
+    ],
+    "starterFilename": "tugas_18.py",
+    "downloadMdUrl": "downloads/chapter-18/tugas.md",
+    "downloadPyUrl": "downloads/chapter-18/contoh.py"
   }
 }

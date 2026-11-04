@@ -23,3 +23,4 @@ print(f"Rasio Penghematan RAM   : {memori_list / memori_gen:.1f}x lebih hemat me
 print(f"\nNilai pertama dari generator: {next(gen_kuadrat)}")
 print(f"Nilai kedua dari generator  : {next(gen_kuadrat)}")
 print(f"Penjumlahan 3 nilai berikutnya: {sum(next(gen_kuadrat) for _ in range(3))}")
+

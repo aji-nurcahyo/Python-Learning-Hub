@@ -980,7 +980,7 @@ for mhs in mahasiswa:
     print(f"- NIM: {mhs['nim']} | Nama: {mhs['name']:<18} | Nilai: {mhs['grade']}")`,
       outputKey: 'ch12-01',
       explanation:
-        'Struktur data list of dictionaries merepresentasikan basis data in-memory di mana setiap baris rekaman adalah kamus dengan atribut nim, name, dan grade.',
+        'Struktur data list of dictionaries merepresentasikan basis data in-memory di mana setiap baris rekaman adalah dictionary dengan atribut nim, name, dan grade.',
     },
     exercise: {
       title: 'Latihan Terarah: Tantangan Ekstensi Capstone',
@@ -1152,7 +1152,7 @@ def calculate_statistics(students: list[dict[str, Any]]) -> dict[str, Any]:
       title: 'Latihan Terarah: Transformasi Koleksi Ekspresif',
       instructions: [
         'Ekstraksi log SNR menggunakan list comprehension dengan ternary if-else.',
-        'Lakukan inversi kamus node IP ke hostname dengan filter nama akses.',
+        'Lakukan inversi dictionary node IP ke hostname dengan filter nama akses.',
         'Gabungkan aliran data sensor paralel menggunakan zip() dan enumerate().',
         'Bangun generator deret bilangan prima untuk streaming evaluasi lazy.',
       ],
@@ -1185,7 +1185,7 @@ def calculate_statistics(students: list[dict[str, Any]]) -> dict[str, Any]:
       ],
       rubric: [
         { criteria: 'Penguasaan List & Nested Comprehensions', weight: 25, description: 'Menerapkan list comprehension dan nested flattening secara presisi tanpa loop imperatif manual.' },
-        { criteria: 'Penguasaan Dict & Set Comprehensions', weight: 25, description: 'Mampu menginversi dan membangun mapping kamus serta deduplikasi himpunan unik secara bersih.' },
+        { criteria: 'Penguasaan Dict & Set Comprehensions', weight: 25, description: 'Mampu menginversi dan membangun mapping dictionary serta deduplikasi set unik secara bersih.' },
         { criteria: 'Protokol Iterator & Generator Expression', weight: 25, description: 'Menerapkan generator expression bertipe lazy, memahami interaksi iter(), next(), dan efisiensi memori.' },
         { criteria: 'Pemanfaatan Enumerate, Zip & Standar PEP 8', weight: 25, description: 'Menggunakan enumerate() dan zip() secara idiomatis, kode memiliki type hints lengkap, dan format rapi.' },
       ],
@@ -1351,18 +1351,74 @@ def calculate_statistics(students: list[dict[str, Any]]) -> dict[str, Any]:
     title: 'File Handling & Data Serialization',
     subtitle: 'Context Manager (with), CSV, JSON & Text Processing',
     description:
-      'Membaca dan menulis file lokal dengan aman menggunakan context manager (with open), parsing format CSV terstruktur, serialisasi JSON, dan manajemen path (pathlib).',
+      'Membaca dan menulis file lokal dengan aman menggunakan context manager (with open), parsing format CSV terstruktur, serialisasi JSON, dan manajemen path modern (pathlib).',
     competencyFocus: 'PCAP 2.1: File I/O stream dan format data',
-    estimatedHours: 4,
+    estimatedHours: 5,
     difficulty: 'Intermediate',
-    available: false,
+    available: true,
     prerequisites: ['Chapter 11'],
     learningObjectives: [
-      'Mengelola file descriptor secara aman tanpa resource leak menggunakan with statement',
+      'Mengelola file descriptor secara aman tanpa resource leak menggunakan statement with',
+      'Membedakan mode akses berkas (r, w, a, x) serta memastikan penggunaan encoding UTF-8',
       'Membaca dan menulis data tabel menggunakan modul bawaan csv.DictReader dan csv.DictWriter',
-      'Melakukan serialisasi dan deserialisasi data menggunakan json.loads() dan json.dumps()',
+      'Melakukan serialisasi dan deserialisasi data menggunakan json.dump(), json.load(), json.dumps(), dan json.loads()',
+      'Mengelola path direktori dan berkas lintas platform secara berorientasi objek dengan pathlib.Path',
     ],
-    tags: ['Files', 'CSV', 'JSON', 'pathlib'],
+    tags: ['Files', 'CSV', 'JSON', 'pathlib', 'Context Manager', 'Serialization', 'I/O'],
+    deckPath: '#chapter/17/slides',
+    tugasPath: '#chapter/17/task',
+    codeExample: {
+      title: 'Membaca File Teks dengan Context Manager dan UTF-8',
+      code: `nama_file = "sampel_log.txt"\n\nwith open(nama_file, "w", encoding="utf-8") as f:\n    f.write("INFO: Inisialisasi node berhasil\\nWARN: Daya sinyal rendah\\n")\n\nwith open(nama_file, "r", encoding="utf-8") as file_in:\n    for nomor, baris in enumerate(file_in, 1):\n        print(f"Baris {nomor}: {baris.strip()}")`,
+      outputKey: 'ch17-01',
+      explanation:
+        'Context manager with open(...) as f menjamin file descriptor ditutup secara otomatis setelah blok selesai dieksekusi, bahkan jika terjadi runtime exception.',
+    },
+    exercise: {
+      title: 'Latihan Terarah: Manipulasi Berkas & Format Pertukaran Data',
+      instructions: [
+        'Ekstraksi baris log telekomunikasi berkategori [WARN] dan [ERROR] menggunakan filter teks.',
+        'Tulis kumpulan data dictionary pemancar seluler ke berkas CSV menggunakan csv.DictWriter.',
+        'Konversi rekaman sensor suhu dari format CSV ke format JSON terindentasi rapi.',
+        'Buat pohon folder bertingkat dan cari seluruh berkas teks menggunakan pathlib.Path.glob().',
+      ],
+      tips: "Selalu sertakan parameter newline='' saat membuka file CSV di Python untuk mencegah baris kosong ganda pada sistem operasi Windows.",
+      time: '40 menit',
+    },
+    quiz: {
+      question:
+        "Mengapa penggunaan context manager 'with open(...) as f' sangat direkomendasikan dibandingkan memanggil f.close() secara manual?",
+      options: [
+        'Karena blok with menjamin berkas otomatis ditutup seketika bahkan jika terjadi runtime exception di dalam blok',
+        'Karena fungsi f.close() telah dihapus dari spesifikasi resmi Python 3',
+        'Karena blok with secara otomatis mengompresi isi berkas menjadi format zip',
+        'Karena statement with membuat eksekusi program menjadi 10 kali lebih cepat',
+      ],
+      correctIndex: 0,
+      explanation:
+        'Statement with mengimplementasikan protokol context manager (__enter__ dan __exit__). Metode __exit__ dipanggil secara otomatis saat keluar dari blok konteks, menjamin penutupan file descriptor dan pembebasan sumber daya sistem bahkan bila terjadi error tak terduga.',
+      hint: 'Pikirkan apa yang terjadi jika ada error yang memotong alur program sebelum baris f.close() sempat dieksekusi.',
+    },
+    assignment: {
+      title: 'Tugas Praktik 17: Telecom Gateway Data Pipeline & Serialization Suite',
+      description:
+        'Rancang dan bangun modul data pipeline telekomunikasi yang memproses rekaman BTS dari berkas CSV, menyaring baris anomali, melakukan pembaruan in-memory, dan mengekspor basis data terstruktur ke format JSON.',
+      instructions: [
+        'Implementasikan pemuatan data CSV defensif dengan penanganan FileNotFoundError.',
+        'Gunakan csv.DictReader untuk memetakan kolom dan validasi tipe data numerik float.',
+        'Implementasikan penambahan node baru dan pembaruan in-place berdasarkan ID.',
+        'Ekspor seluruh data node ke berkas format JSON terstruktur menggunakan json.dump().',
+      ],
+      rubric: [
+        { criteria: 'Penguasaan File I/O & Context Manager', weight: 25, description: "Menggunakan with open() secara konsisten, menyertakan encoding='utf-8', dan newline='' pada CSV." },
+        { criteria: 'Parsing & Manipulasi CSV Tabular', weight: 25, description: 'Memanfaatkan csv.DictReader dan csv.DictWriter secara tepat dengan pemetaan header yang valid.' },
+        { criteria: 'Serialisasi & Deserialisasi JSON', weight: 25, description: 'Mampu mengonversi data dictionary ke JSON terstruktur dengan json.dump()/json.load() secara rapi.' },
+        { criteria: 'Validasi Data & Penanganan Error pathlib', weight: 25, description: 'Penanganan FileNotFoundError, validasi tipe numerik, dan integrasi modul modern pathlib.Path.' },
+      ],
+      starterFilename: 'tugas_17.py',
+      downloadMdUrl: 'downloads/chapter-17/tugas.md',
+      downloadPyUrl: 'downloads/chapter-17/contoh.py',
+    },
   },
   {
     id: 18,
@@ -1370,20 +1426,76 @@ def calculate_statistics(students: list[dict[str, Any]]) -> dict[str, Any]:
     levelId: 2,
     number: '18',
     title: 'Exception Handling & Debugging',
-    subtitle: 'Hierarki Exception, Custom Exception & pdb Debugger',
+    subtitle: 'Custom Exceptions, Traceback Analysis, pdb & logging',
     description:
-      'Membuat program andal: hierarki exception Python, blok try/except/else/finally, raise custom exception kustom, dan teknik debugging dengan pdb/breakpoint.',
-    competencyFocus: 'PCAP 2.2: Exception hierarchy dan teknik debugging',
-    estimatedHours: 4,
+      'Menangani error secara elegan dengan try-except-else-finally, mendefinisikan custom exception, analisis traceback, debugging dengan pdb/breakpoint, dan audit operasional dengan modul logging.',
+    competencyFocus: 'PCAP 2.2: Penanganan exception lanjutan dan debugging',
+    estimatedHours: 5,
     difficulty: 'Intermediate',
-    available: false,
-    prerequisites: ['Chapter 11'],
+    available: true,
+    prerequisites: ['Chapter 11', 'Chapter 17'],
     learningObjectives: [
-      'Menangkap beberapa exception spesifik secara hierarkis tanpa bare except:',
-      'Mendefinisikan class exception kustom turunan dari Exception bawaan',
-      'Menggunakan breakpoint() dan pdb untuk inspeksi call stack saat runtime',
+      'Membedakan secara tegas SyntaxError, Runtime Exception, dan Logical Bugs',
+      'Menerapkan penanganan multi-exception secara presisi menggunakan blok try-except',
+      'Mengontrol alur eksekusi pembersihan mutlak menggunakan klausa else dan finally',
+      'Merancang hierarki custom exception domain dan menerapkan exception chaining (from)',
+      'Melakukan debugging sistematis menggunakan assertion, breakpoint()/pdb, dan modul logging',
     ],
-    tags: ['Exceptions', 'Debugging', 'pdb', 'Robustness'],
+    tags: ['Exceptions', 'try-except', 'Debugging', 'Traceback', 'Custom Exceptions', 'Logging', 'pdb'],
+    deckPath: '#chapter/18/slides',
+    tugasPath: '#chapter/18/task',
+    codeExample: {
+      title: 'Pembagian Aman dengan try-except ZeroDivisionError',
+      code: `def pembagian_aman(pembilang: float, penyebut: float) -> float | None:\n    try:\n        return pembilang / penyebut\n    except ZeroDivisionError:\n        print(f"Peringatan: Terjadi pembagian dengan nol ({pembilang} / {penyebut})!")\n        return None\n\nprint("100 / 4 =", pembagian_aman(100.0, 4.0))\nprint("45 / 0  =", pembagian_aman(45.0, 0.0))`,
+      outputKey: 'ch18-01',
+      explanation:
+        'Blok try-except mengisolasi operasi pembagian berisiko tinggi. Jika pembagian nol terjadi, eksekusi dialihkan ke blok except tanpa merusak jalannya alur program utama.',
+    },
+    exercise: {
+      title: 'Latihan Terarah: Pertahanan Kode & Teknik Debugging',
+      instructions: [
+        'Implementasikan fungsi alokasi daya per antena dengan pencegahan ZeroDivisionError.',
+        'Tangani multi-exception KeyError dan ValueError saat parsing konfigurasi dictionary jaringan.',
+        'Definisikan custom exception BandwidthExceededError dan picu dengan statement raise.',
+        'Gantikan statement print() dengan modul logging untuk mencatat alur transmisi paket.',
+      ],
+      tips: 'Jangan pernah menggunakan bare except tanpa kelas exception spesifik karena akan menelan KeyboardInterrupt (Ctrl+C).',
+      time: '40 menit',
+    },
+    quiz: {
+      question:
+        "Mengapa penggunaan pola 'except: pass' (bare except yang mengabaikan error secara diam-diam) dianggap sebagai salah satu anti-pattern terburuk di Python?",
+      options: [
+        'Karena pola tersebut menyembunyikan bug nyata dan menangkap KeyboardInterrupt sehingga program tidak bisa dihentikan dari terminal',
+        'Karena interpreter Python akan otomatis menghapus file skrip yang memuat pola tersebut',
+        'Karena statement pass membutuhkan konsumsi CPU 100% secara terus-menerus',
+        'Karena blok except wajib mengembalikan nilai boolean True',
+      ],
+      correctIndex: 0,
+      explanation:
+        "Bare except menangkap seluruh exception termasuk BaseException (seperti KeyboardInterrupt dan SystemExit). Selain membuat program tidak bisa dihentikan via Ctrl+C, pola ini menelan bug secara diam-diam (silent failure) yang mempersulit penelusuran masalah di kemudian hari. Sesuai Zen of Python: 'Errors should never pass silently. Unless explicitly silenced.'",
+      hint: 'Ingat bahwa BaseException mencakup sinyal interupsi sistem dari pengguna.',
+    },
+    assignment: {
+      title: 'Tugas Praktik 18: Telecom Anomaly Detection & Robust Validator Suite',
+      description:
+        'Rancang dan bangun modul validasi telemetri jaringan yang tangguh terhadap kesalahan runtime, memanfaatkan custom exceptions, logging diagnostik, dan pelaporan metrik terperinci.',
+      instructions: [
+        'Rancang hierarki custom exception TelemetryValidationError, MissingPropertyError, dan ValueRangeError.',
+        'Terapkan blok try-except spesifik untuk menangani konversi tipe numerik dan pengecekan batas rentang fisik.',
+        'Integrasikan modul logging untuk mencatat rekaman yang valid (INFO), ditolak (WARNING), dan error kritis (ERROR).',
+        'Sajikan ringkasan statistik proses validasi batch dalam bentuk dictionary informatif.',
+      ],
+      rubric: [
+        { criteria: 'Desain Hierarki Custom Exception', weight: 25, description: 'Merancang class exception turunan yang informatif dan merepresentasikan aturan domain jaringan.' },
+        { criteria: 'Presisi Penanganan try-except-else-finally', weight: 25, description: 'Menerapkan blok proteksi spesifik tanpa bare except: dan memanfaatkan else/finally secara tepat.' },
+        { criteria: 'Ketahanan Validasi Rekaman & Edge Cases', weight: 25, description: 'Mampu menangani tipe string non-numerik, nilai negatif tak valid, list kosong, dan data duplikat.' },
+        { criteria: 'Integrasi Logging & Pelaporan Diagnostik', weight: 25, description: 'Menerapkan modul logging dengan level yang sesuai serta menghasilkan ringkasan statistik yang akurat.' },
+      ],
+      starterFilename: 'tugas_18.py',
+      downloadMdUrl: 'downloads/chapter-18/tugas.md',
+      downloadPyUrl: 'downloads/chapter-18/contoh.py',
+    },
   },
   {
     id: 19,

@@ -29,3 +29,4 @@ def hitung_redaman(jarak_km: float, frekuensi_ghz: float) -> float:
 print("\nInspeksi Metadata Anotasi (Tipe Data):")
 for param, tipe in hitung_redaman.__annotations__.items():
     print(f"  - Parameter '{param}': {tipe}")
+

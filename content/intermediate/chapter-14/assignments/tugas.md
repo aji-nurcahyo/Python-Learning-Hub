@@ -58,6 +58,7 @@ Anda diminta melengkapi pustaka utilitas pemrosesan data fungsional pada berkas 
 | Kriteria Penilaian | Bobot | Deskripsi Capaian Kualitas |
 |:---|:---:|:---|
 | **1. Penguasaan List & Nested Comprehensions** | 25 Poin | Menerapkan list comprehension dan nested flattening secara presisi tanpa loop manual imperatif. |
-| **2. Penguasaan Dict & Set Comprehensions** | 25 Poin | Mampu menginversi dan membangun mapping kamus serta deduplikasi himpunan unik secara bersih. |
+| **2. Penguasaan Dict & Set Comprehensions** | 25 Poin | Mampu menginversi dan membangun mapping dictionary serta deduplikasi set unik secara bersih. |
 | **3. Protokol Iterator & Generator Expression** | 25 Poin | Menerapkan generator expression bertipe lazy, memahami interaksi `iter()`, `next()`, dan efisiensi memori RAM. |
 | **4. Pemanfaatan Enumerate, Zip & Standar PEP 8** | 25 Poin | Menggunakan `enumerate()` dan `zip()` secara idiomatis, kode memiliki type hints lengkap, dan format rapi. |
+

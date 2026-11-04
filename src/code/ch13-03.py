@@ -24,3 +24,4 @@ print("Panggilan 1:", tambah_log_benar("Error koneksi 404"))
 print("Panggilan 2:", tambah_log_benar("Timeout gateway 504"))  # Bersih dan independen!
 log_kustom = ["Sistem mulai"]
 print("Panggilan dengan list eksternal:", tambah_log_benar("Shutdown terencana", log_kustom))
+

@@ -20,3 +20,4 @@ print(f"Dataset Ukuran        : {N:,} elemen")
 print(f"Total Akumulasi       : {total_o1:,}")
 print(f"Alokasi Memori O(1)   : {memori_generator:,} byte (Ruang Konstan)")
 print(f"Alokasi Memori O(n)   : {memori_list:,} byte (Ruang Linier terhadap N)")
+

@@ -39,16 +39,16 @@
   },
   {
     "title": "Dictionary Comprehensions",
-    "body": "<p>Pembuatan tabel indeks asosiatif, transformasi nilai kamus, dan pembalikan kunci-nilai (inversion).</p>",
+    "body": "<p>Pembuatan tabel indeks asosiatif, transformasi nilai dictionary, dan pembalikan key-value (inversion).</p>",
     "kind": "code",
     "example": "ch14-03",
     "notes": "Tunjukkan bagaimana dict comprehension dengan sintaks kurung kurawal dan titik dua {k: v} membuat lookup hash seketika."
   },
   {
     "title": "Pola Pemanfaatan Dict Comprehension",
-    "body": "<ul><li><strong>Indeks Cepat:</strong> Mengonversi list of dicts menjadi kamus berpencarian $O(1)$ berdasarkan kunci primer: <code>{r['id']: r for r in data}</code>.</li><li><strong>Inversi Kamus:</strong> Membalik relasi pemetaan: <code>{nilai: kunci for kunci, nilai in kamus.items()}</code> (pastikan nilai unik).</li><li><strong>Penyaringan Atribut:</strong> Membuang pasangan kunci yang tidak relevan atau bernilai kosong secara otomatis.</li></ul>",
+    "body": "<ul><li><strong>Indeks Cepat:</strong> Mengonversi list of dicts menjadi dictionary berlookup $O(1)$ berdasarkan key primer: <code>{r['id']: r for r in data}</code>.</li><li><strong>Inversi Dictionary:</strong> Membalik relasi pemetaan: <code>{val: k for k, val in data.items()}</code> (pastikan value unik).</li><li><strong>Penyaringan Atribut:</strong> Membuang pasangan key-value yang tidak relevan atau bernilai kosong secara otomatis.</li></ul>",
     "kind": "content",
-    "notes": "Diskusikan bahaya inversi kamus jika terdapat nilai yang duplikat, di mana entri terakhir akan menimpa entri sebelumnya."
+    "notes": "Diskusikan bahaya inversi dictionary jika terdapat value yang duplikat, di mana entri terakhir akan menimpa entri sebelumnya."
   },
   {
     "title": "Set Comprehensions & Deduplikasi",
@@ -129,3 +129,4 @@
     "notes": "Beri waktu peserta untuk menganalisis jebakan sintaksis umum tanda kurung generator vs tuple."
   }
 ]
+

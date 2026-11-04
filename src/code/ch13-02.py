@@ -24,3 +24,4 @@ print("\nUnpacking List ke *args:", hitung_total_bandwidth(*paket_data))
 
 opsi_tambahan = {"cpu_cores": 16, "lokasi": "Gedung Labtek 3"}
 buat_profil_server("srv-backup-02", **opsi_tambahan)
+

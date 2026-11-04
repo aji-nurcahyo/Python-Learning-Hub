@@ -17,3 +17,4 @@ print("-" * 72)
 for n in skala_data:
     lin, bin_ops = estimasi_operasi(n)
     print(f"{n:<18,d} | {lin:<22,d} | {bin_ops:<25d}")
+

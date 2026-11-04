@@ -34,3 +34,4 @@ print(f"Cari 2600: Ditemukan di indeks {idx} (Hanya butuh {steps} perbandingan)"
 
 idx_missing, steps_m = pencarian_biner(frekuensi_khz, 1500)
 print(f"Cari 1500: Hasil {idx_missing} (Selesai dalam {steps_m} perbandingan)")
+

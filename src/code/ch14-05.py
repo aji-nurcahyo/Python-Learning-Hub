@@ -23,3 +23,4 @@ except StopIteration:
 
 # Pengambilan aman dengan argumen default sentinel
 print("next aman:", next(iterator_kanal, "TIDAK_ADA_DATA_LAGI"))
+

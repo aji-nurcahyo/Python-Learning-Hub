@@ -62,14 +62,14 @@ Setiap fase memiliki gerbang kualitas (*quality gates*) yang harus dipenuhi sebe
 | **Ch 14** | `14-comprehensions-iterators` — List/Dict/Set Comprehension | 5 Jam | [DOCS] Sec 5.1.3, [30DAY] Day 13 | **SELESAI (100%)**: `index.md`, 20 slide, 7 contoh kode, 4 latihan, 1 tugas, test suite (5 tests) |
 | **Ch 15** | `15-searching-sorting-algorithms` — Linear, Binary Search, Sort | 6 Jam | [THINK] Ch 10, [LEARN] `algorithms/` | **SELESAI (100%)**: `index.md`, 20 slide, 7 contoh kode, 4 latihan, 1 tugas, test suite (4 tests) |
 | **Ch 16** | `16-algorithm-analysis-problem-solving` — Kompleksitas Big-O | 5 Jam | [THINK] App B, Python TimeWiki | **SELESAI (100%)**: `index.md`, 20 slide, 7 contoh kode, 4 latihan, 1 tugas, test suite (3 tests) |
-| **Ch 17** | `17-file-handling-serialization` — Context Manager, CSV, JSON | 5 Jam | [DOCS] Sec 7.2, [CS50P] Wk 6 | `index.md`, 20 slide, 6 contoh kode, 4 latihan, 1 tugas |
-| **Ch 18** | `18-exception-handling-debugging` — Custom Exception, pdb | 5 Jam | [DOCS] Sec 8, [CS50P] Wk 3 | `index.md`, 18 slide, 5 contoh kode, 3 latihan, 1 tugas |
+| **Ch 17** | `17-file-handling-serialization` — Context Manager, CSV, JSON | 5 Jam | [DOCS] Sec 7.2, [CS50P] Wk 6 | **SELESAI (100%)**: `index.md`, 20 slide, 8 contoh kode, 4 latihan, 1 tugas, test suite (5 tests) |
+| **Ch 18** | `18-exception-handling-debugging` — Custom Exception, pdb | 5 Jam | [DOCS] Sec 8, [CS50P] Wk 3 | **SELESAI (100%)**: `index.md`, 20 slide, 8 contoh kode, 4 latihan, 1 tugas, test suite (4 tests) |
 
 *Status Kemajuan Fase 2:*
 - **Batch 1 (Chapter 13 s.d. 16):** **100% Selesai & Terverifikasi** (CPython 3, Slide Deck, Unittest suites, Typecheck, Build, Routes).
-- **Batch 2 (Chapter 17 s.d. 18):** Dalam rencana pengerjaan berikutnya.
+- **Batch 2 (Chapter 17 s.d. 18):** **100% Selesai & Terverifikasi** (CPython 3, Slide Deck, Unittest suites, Typecheck, Build, Routes).
 
-*Milestone Fase 2 (Batch 1):* **TERCAPAI 100%**. Fondasi fungsi tingkat lanjut, pemrosesan sequence ekspresif, algoritma pencarian & pengurutan, serta analisis kompleksitas Big-O telah selesai dan terintegrasi penuh.
+*Milestone Fase 2 (Batch 1 & Batch 2 — Core Intermediate):* **TERCAPAI 100%**. Fondasi fungsi tingkat lanjut, pemrosesan sequence ekspresif, algoritma pencarian & pengurutan, analisis kompleksitas Big-O, file handling tabular CSV & JSON, serta error handling defensif telah selesai dan terintegrasi penuh. Standar penulisan bahasa teknis telah dibakukan melalui `docs/TECHNICAL_LANGUAGE_GUIDE.md`.
 
 ---
 

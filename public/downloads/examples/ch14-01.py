@@ -19,3 +19,4 @@ print("Sinyal Kuat (>= -90 dBm):", sinyal_kuat)
 # Klasifikasi status sinyal: "BAIK" jika >= -85 dBm, selain itu "LEMAH"
 status_sinyal = ["BAIK" if s >= -85.0 else "LEMAH" for s in sinyal_mentah_dbm]
 print("Label Status Sinyal     :", status_sinyal)
+

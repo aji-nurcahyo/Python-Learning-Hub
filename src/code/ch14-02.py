@@ -20,3 +20,4 @@ print("\nHasil Flattening Matriks 2D:", semua_daya)
 # 3. Flattening dengan pemfilteran nilai
 daya_tinggi = [x for baris in matriks_daya for x in baris if x >= 25.0]
 print("Elemen Daya Tinggi (>= 25.0):", daya_tinggi)
+

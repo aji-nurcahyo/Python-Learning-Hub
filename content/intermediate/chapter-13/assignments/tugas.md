@@ -58,3 +58,4 @@ Status Sistem  : NORMAL
 | **2. Implementasi Closure & Lexical Scope** | 25 Poin | Fungsi pembuat filter bekerja sebagai closure murni tanpa variabel global, mempertahankan state ambang batas secara independen. |
 | **3. Pemanfaatan *args, **kwargs & Parameter Constraints** | 25 Poin | Menerapkan `*args`, `**kwargs`, serta pembatas `/` dan `*` secara tepat sesuai kaidah PEP 570 dan PEP 3102. |
 | **4. Kebersihan Kode, Type Hints & Zero-Bug Mutable Default** | 20 Poin | Menggunakan sentinel `None` untuk parameter list opsional, menyertakan type hints lengkap, docstring standar, dan formatting PEP 8. |
+

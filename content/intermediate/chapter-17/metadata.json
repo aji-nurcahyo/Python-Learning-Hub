@@ -6,30 +6,99 @@
   "levelCategory": "intermediate",
   "title": "File Handling & Data Serialization",
   "subtitle": "Context Manager (with), CSV, JSON & Text Processing",
-  "description": "Membaca dan menulis file lokal dengan aman menggunakan context manager (with open), parsing format CSV terstruktur, serialisasi JSON, dan manajemen path (pathlib).",
+  "description": "Membaca dan menulis file lokal dengan aman menggunakan context manager (with open), parsing format CSV terstruktur, serialisasi JSON, dan manajemen path modern (pathlib).",
   "competencyFocus": "PCAP 2.1: File I/O stream dan format data",
-  "estimatedHours": 4,
+  "estimatedHours": 5,
   "difficulty": "Intermediate",
-  "available": false,
+  "available": true,
   "prerequisites": [
     "Chapter 11"
   ],
   "learningObjectives": [
-    "Mengelola file descriptor secara aman tanpa resource leak menggunakan with statement",
+    "Mengelola file descriptor secara aman tanpa resource leak menggunakan statement with",
+    "Membedakan mode akses berkas (r, w, a, x) serta memastikan penggunaan encoding UTF-8",
     "Membaca dan menulis data tabel menggunakan modul bawaan csv.DictReader dan csv.DictWriter",
-    "Melakukan serialisasi dan deserialisasi data menggunakan json.loads() dan json.dumps()"
+    "Melakukan serialisasi dan deserialisasi data menggunakan json.dump(), json.load(), json.dumps(), dan json.loads()",
+    "Mengelola path direktori dan berkas lintas platform secara berorientasi objek dengan pathlib.Path"
   ],
   "tags": [
     "Files",
     "CSV",
     "JSON",
-    "pathlib"
+    "pathlib",
+    "Context Manager",
+    "Serialization",
+    "I/O"
   ],
   "resources": {
-    "hasSlides": false,
-    "slidesDeck": null,
-    "starterCode": null,
-    "assignmentGuide": null,
+    "hasSlides": true,
+    "slidesDeck": "slides/deck.json",
+    "starterCode": "code/contoh.py",
+    "assignmentGuide": "assignments/tugas.md",
     "pptxDownload": null
+  },
+  "codeExample": {
+    "title": "Membaca File Teks dengan Context Manager dan UTF-8",
+    "code": "nama_file = \"sampel_log.txt\"\n\nwith open(nama_file, \"w\", encoding=\"utf-8\") as f:\n    f.write(\"INFO: Inisialisasi node berhasil\\nWARN: Daya sinyal rendah\\n\")\n\nwith open(nama_file, \"r\", encoding=\"utf-8\") as file_in:\n    for nomor, baris in enumerate(file_in, 1):\n        print(f\"Baris {nomor}: {baris.strip()}\")",
+    "outputKey": "ch17-01",
+    "explanation": "Context manager with open(...) as f menjamin file descriptor ditutup secara otomatis setelah blok selesai dieksekusi, bahkan jika terjadi runtime exception."
+  },
+  "exercise": {
+    "title": "Latihan Terarah: Manipulasi Berkas & Format Pertukaran Data",
+    "instructions": [
+      "Ekstraksi baris log telekomunikasi berkategori [WARN] dan [ERROR] menggunakan filter teks.",
+      "Tulis kumpulan data dictionary pemancar seluler ke berkas CSV menggunakan csv.DictWriter.",
+      "Konversi rekaman sensor suhu dari format CSV ke format JSON terindentasi rapi.",
+      "Buat pohon folder bertingkat dan cari seluruh berkas teks menggunakan pathlib.Path.glob()."
+    ],
+    "tips": "Selalu sertakan parameter newline='' saat membuka file CSV di Python untuk mencegah baris kosong ganda pada sistem operasi Windows.",
+    "time": "40 menit"
+  },
+  "quiz": {
+    "question": "Mengapa penggunaan context manager 'with open(...) as f' sangat direkomendasikan dibandingkan memanggil f.close() secara manual?",
+    "options": [
+      "Karena blok with menjamin berkas otomatis ditutup seketika bahkan jika terjadi runtime exception di dalam blok",
+      "Karena fungsi f.close() telah dihapus dari spesifikasi resmi Python 3",
+      "Karena blok with secara otomatis mengompresi isi berkas menjadi format zip",
+      "Karena statement with membuat eksekusi program menjadi 10 kali lebih cepat"
+    ],
+    "correctIndex": 0,
+    "explanation": "Statement with mengimplementasikan protokol context manager (__enter__ dan __exit__). Metode __exit__ dipanggil secara otomatis saat keluar dari blok konteks, menjamin penutupan file descriptor dan pembebasan sumber daya sistem bahkan bila terjadi error tak terduga.",
+    "hint": "Pikirkan apa yang terjadi jika ada error yang memotong alur program sebelum baris f.close() sempat dieksekusi."
+  },
+  "assignment": {
+    "title": "Tugas Praktik 17: Telecom Gateway Data Pipeline & Serialization Suite",
+    "description": "Rancang dan bangun modul data pipeline telekomunikasi yang memproses rekaman BTS dari berkas CSV, menyaring baris anomali, melakukan pembaruan in-memory, dan mengekspor basis data terstruktur ke format JSON.",
+    "instructions": [
+      "Implementasikan pemuatan data CSV defensif dengan penanganan FileNotFoundError.",
+      "Gunakan csv.DictReader untuk memetakan kolom dan validasi tipe data numerik float.",
+      "Implementasikan penambahan node baru dan pembaruan in-place berdasarkan ID.",
+      "Ekspor seluruh data node ke berkas format JSON terstruktur menggunakan json.dump()."
+    ],
+    "rubric": [
+      {
+        "criteria": "Penguasaan File I/O & Context Manager",
+        "weight": 25,
+        "description": "Menggunakan with open() secara konsisten, menyertakan encoding='utf-8', dan newline='' pada CSV."
+      },
+      {
+        "criteria": "Parsing & Manipulasi CSV Tabular",
+        "weight": 25,
+        "description": "Memanfaatkan csv.DictReader dan csv.DictWriter secara tepat dengan pemetaan header yang valid."
+      },
+      {
+        "criteria": "Serialisasi & Deserialisasi JSON",
+        "weight": 25,
+        "description": "Mampu mengonversi data dictionary ke JSON terstruktur dengan json.dump()/json.load() secara rapi."
+      },
+      {
+        "criteria": "Validasi Data & Penanganan Error pathlib",
+        "weight": 25,
+        "description": "Penanganan FileNotFoundError, validasi tipe numerik, dan integrasi modul modern pathlib.Path."
+      }
+    ],
+    "starterFilename": "tugas_17.py",
+    "downloadMdUrl": "downloads/chapter-17/tugas.md",
+    "downloadPyUrl": "downloads/chapter-17/contoh.py"
   }
 }

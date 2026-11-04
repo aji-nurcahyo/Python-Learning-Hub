@@ -78,3 +78,4 @@ def analyze_theoretical_growth(n: int) -> dict[str, Any]:
         "O(n_log_n)": int(n * math.log2(n)) if n > 1 else 0,
         "O(n2)": n ** 2,
     }
+

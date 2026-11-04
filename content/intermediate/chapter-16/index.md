@@ -18,7 +18,7 @@ Analisis algoritma memberikan kerangka kerja teoretis dan matematis independen d
 
 Untuk menganalisis efisiensi secara objektif, ilmu komputer menggunakan model komputasi teoritis bernama **Random Access Machine (RAM)**:
 1. Setiap operasi aritmatika dasar (`+`, `-`, `*`, `/`, `%`), perbandingan (`==`, `<`, `>`), dan penugasan variabel membutuhkan satu satuan waktu konstan ($O(1)$).
-2. Setiap pengaksesan elemen list berdasarkan indeks (`arr[i]`) atau pencarian kunci kamus (`dict[key]`) memakan waktu konstan.
+2. Setiap pengaksesan elemen list berdasarkan indeks (`arr[i]`) atau pencarian key dictionary (`dict[key]`) memakan waktu konstan.
 3. Total waktu eksekusi diproksikan dari akumulasi total operasi primitif yang dieksekusi terhadap ukuran masukan $n$.
 
 Ukuran masukan ($n$) bergantung pada domain permasalahan:
@@ -63,7 +63,7 @@ Selain waktu eksekusi, sebuah algoritma mengonsumsi memori kerja komputer. Kompl
 - **Ruang Kuadratik $O(n^2)$**: Membuat tabel lookup matriks 2D berukuran $n \times n$.
 
 > [!TIP]
-> **Space-Time Tradeoff**: Dalam optimasi nyata, kita sering mengorbankan memori untuk menghemat waktu komputasi. Contoh paling umum adalah tabel *memoization* atau *hash map lookup*: alih-alih menghitung ulang fungsi $O(n)$, kita menyimpan hasil sebelumnya dalam kamus ($O(n)$ memori) untuk mendapatkan akses waktu $O(1)$.
+> **Space-Time Tradeoff**: Dalam optimasi nyata, kita sering mengorbankan memori untuk menghemat waktu komputasi. Contoh paling umum adalah tabel *memoization* atau *hash map lookup*: alih-alih menghitung ulang fungsi $O(n)$, kita menyimpan hasil sebelumnya dalam dictionary ($O(n)$ memori) untuk mendapatkan akses waktu $O(1)$.
 
 ---
 

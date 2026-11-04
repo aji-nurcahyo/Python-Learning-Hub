@@ -16,11 +16,12 @@ Pemeriksaan membedakan secara tegas antara **metadata/kerangka silabus** (judul,
 
 ### Metrik Status Kelengkapan Konten:
 - **Total Modul Chapter:** 30 Chapter
-- **Modul Berstatus Lengkap & Aktif (*Production Ready*):** 16 Chapter (**53.3%**) — Level 1: Python Foundations (Ch 01–12) & Level 2 Batch 1 (Ch 13–16) 100% LENGKAP!
-- **Modul Berstatus Kerangka Silabus (*Pending Content Creation*):** 14 Chapter (**46.7%**) — Chapter 17–30
-- **Total Slide Presentasi Reveal.js Aktif:** 304 Slide (16 Decks Terstandarisasi)
-- **Total Skrip Contoh Python Terverifikasi CPython:** 98 Program Mandiri
-- **Total Soal Latihan & Kuis Terintegrasi:** 51 Latihan Terarah, 16 Kuis Konsep Interaktif, 16 Tugas Berubrik
+- **Modul Berstatus Lengkap & Aktif (*Production Ready*):** 18 Chapter (**60.0%**) — Level 1: Python Foundations (Ch 01–12) & Level 2 Batch 1–2 (Ch 13–18) 100% LENGKAP!
+- **Modul Berstatus Kerangka Silabus (*Pending Content Creation*):** 12 Chapter (**40.0%**) — Chapter 19–30
+- **Total Slide Presentasi Reveal.js Aktif:** 344 Slide (18 Decks Terstandarisasi)
+- **Total Skrip Contoh Python Terverifikasi CPython:** 114 Program Mandiri
+- **Total Soal Latihan & Kuis Terintegrasi:** 59 Latihan Terarah, 18 Kuis Konsep Interaktif, 18 Tugas Berubrik
+- **Panduan Standar Penulisan Teknis:** Mengacu pada `docs/TECHNICAL_LANGUAGE_GUIDE.md`
 
 ---
 
@@ -28,7 +29,7 @@ Pemeriksaan membedakan secara tegas antara **metadata/kerangka silabus** (judul,
 
 Setiap chapter dinilai berdasarkan 7 dimensi kelengkapan materi:
 
-1. **Penjelasan Konsep (*Concept Explanation*):** Ketersediaan dokumen teks komprehensif dalam bahasa Indonesia di `index.md` yang memuat latar belakang, teori, diagram/formula, dan penjelasan kode (bukan sekadar daftar checklist silabus).
+1. **Penjelasan Konsep (*Concept Explanation*):** Ketersediaan dokumen teks komprehensif dalam bahasa Indonesia di `index.md` yang memuat latar belakang, teori, diagram/formula, dan penjelasan kode (bukan sekadar daftar checklist silabus), mematuhi standar terminologi teknis di `docs/TECHNICAL_LANGUAGE_GUIDE.md`.
 2. **Slide Interaktif (*Interactive Slides*):** Ketersediaan deck presentasi Reveal.js di `slides/deck.json` dengan minimal 15–25 slide terstruktur.
 3. **Kode Sumber Python (*Runnable Code*):** Ketersediaan skrip contoh mandiri di `code/contoh.py` atau `downloads/examples/` yang dapat dieksekusi secara nyata tanpa error.
 4. **Keluaran Program Terverifikasi (*Verified Output*):** Hasil eksekusi interpreter CPython 3 aktual yang tersimpan di `src/code/outputs.json` dan divalidasi oleh `check:outputs`.
@@ -63,8 +64,8 @@ Setiap chapter dinilai berdasarkan 7 dimensi kelengkapan materi:
 | **Ch 14** | L2 | `14-comprehensions-iterators` — Comprehensions & Iterators | `[V]` | `[V]` (20) | `[V]` (7) | `[V]` | `[V]` | `[V]` | `[V]` | **Siap Belajar** |
 | **Ch 15** | L2 | `15-searching-sorting-algorithms` — Searching & Sorting | `[V]` | `[V]` (20) | `[V]` (7) | `[V]` | `[V]` | `[V]` | `[V]` | **Siap Belajar** |
 | **Ch 16** | L2 | `16-algorithm-analysis-problem-solving` — Algorithm Analysis | `[V]` | `[V]` (20) | `[V]` (7) | `[V]` | `[V]` | `[V]` | `[V]` | **Siap Belajar** |
-| **Ch 17** | L2 | `17-file-handling-serialization` — File Handling & Data | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | Pending |
-| **Ch 18** | L2 | `18-exception-handling-debugging` — Exception & Debugging | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | Pending |
+| **Ch 17** | L2 | `17-file-handling-serialization` — File Handling & Data | `[V]` | `[V]` (20) | `[V]` (8) | `[V]` | `[V]` | `[V]` | `[V]` | **Siap Belajar** |
+| **Ch 18** | L2 | `18-exception-handling-debugging` — Exception & Debugging | `[V]` | `[V]` (20) | `[V]` (8) | `[V]` | `[V]` | `[V]` | `[V]` | **Siap Belajar** |
 | **Ch 19** | L2 | `19-oop-fundamentals` — OOP I: Classes & Objects | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | Pending |
 | **Ch 20** | L2 | `20-oop-advanced` — OOP II: Inheritance & Dunder | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | Pending |
 | **Ch 21** | L2 | `21-packaging-environments-testing` — Packaging & Testing | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | Pending |

@@ -19,3 +19,4 @@ for nama, pwr, freq in zip(stasiun_id, daya_mw, frekuensi_mhz):
 # 3. zip untuk pembuatan kamus cepat (Dict Pairing)
 kamus_daya = dict(zip(stasiun_id, daya_mw))
 print("\nKamus Hasil zip():", kamus_daya)
+

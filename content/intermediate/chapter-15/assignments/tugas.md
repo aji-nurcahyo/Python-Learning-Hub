@@ -58,3 +58,4 @@ Anda diminta melengkapi pustaka algoritma mandiri pada berkas `tugas_15.py`:
 | **2. Implementasi Bubble & Selection Sort** | 25 Poin | Algoritma manual Bubble Sort (dengan deteksi early stop) dan Selection Sort berjalan tanpa bantuan fungsi bawaan. |
 | **3. Implementasi Insertion Sort & Stabilitas** | 25 Poin | Algoritma Insertion Sort menggeser prefix dengan tepat dan memahami konsep pengurutan stabil. |
 | **4. Pemeringkatan Multi-Kriteria Timsort & Edge Cases** | 25 Poin | Menerapkan custom lambda key multi-atribut, menangani kasus batas (kosong, 1 elemen, duplikat, negatif), dan format PEP 8 rapi. |
+

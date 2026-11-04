@@ -21,3 +21,4 @@ print(f"{'Peringkat':<10} | {'Pengguna':<10} | {'Prioritas':<10} | {'Kecepatan':
 print("-" * 55)
 for rank, k in enumerate(pemeringkatan, start=1):
     print(f"{rank:<10} | {k['user']:<10} | {k['prioritas']:<10} | {k['kecepatan_mbps']:>5} Mbps")
+

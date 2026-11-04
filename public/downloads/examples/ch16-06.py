@@ -24,3 +24,4 @@ print("Verifikasi Kebenaran Algoritma pada Kasus Batas:")
 for label, data in kasus_uji:
     hasil = temukan_maksimum_aman(data)
     print(f"  - {label:<22} -> Maksimum: {hasil}")
+

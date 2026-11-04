@@ -90,3 +90,4 @@ def rank_records(
 ) -> list[dict[str, Any]]:
     """Pemeringkatan rekaman data menggunakan Timsort bawaan Python."""
     return sorted(records, key=lambda r: r.get(sort_key, 0), reverse=reverse)
+

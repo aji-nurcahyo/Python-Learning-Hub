@@ -63,3 +63,4 @@ Anda diminta merancang program laboratorium komparasi kinerja bernama `tugas_16.
 | **2. Metodologi Benchmarking Empiris yang Adil** | 25 Poin | Menggunakan `time.perf_counter()`, memisahkan setup phase dari search phase, dan menerapkan multi-repetition averaging. |
 | **3. Demonstrasi Space-Time Tradeoff** | 25 Poin | Mampu mengimplementasikan komparasi Brute Force $O(n^2)$ vs Hash Set $O(n)$ dengan hasil terukur. |
 | **4. Uji Kebenaran Kasus Batas & Kerapian Kode** | 25 Poin | Menangani list kosong, angka negatif, data duplikat tanpa error, menyertakan type hints lengkap, dan format tabel rapi. |
+

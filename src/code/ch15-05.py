@@ -20,3 +20,4 @@ def insertion_sort(data: list[float]) -> list[float]:
 latensi_ms = [4.2, 12.5, 3.1, 8.4, 25.0, 6.7]
 print("Latensi Sebelum Insertion Sort:", latensi_ms)
 print("Latensi Setelah Insertion Sort:", insertion_sort(latensi_ms))
+

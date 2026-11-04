@@ -27,3 +27,4 @@ dinormalisasi = list(map(lambda x: round(x / 100.0, 2), lulus))
 
 print(f"\nNilai Lulus (>= 70): {lulus}")
 print(f"Normalisasi Skala 0-1: {dinormalisasi}")
+

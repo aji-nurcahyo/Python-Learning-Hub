@@ -20,3 +20,4 @@ kata_kunci = ["antena", "BTS", "Modem", "kabel", "Router"]
 # Pengurutan case-insensitive menggunakan fungsi str.lower sebagai key
 print("\nPengurutan Alfabetik Case-Insensitive:")
 print(" ", sorted(kata_kunci, key=str.lower))
+

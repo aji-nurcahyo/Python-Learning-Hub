@@ -1,0 +1,130 @@
+[
+  {
+    "title": "File Handling & Data Serialization",
+    "body": "Membaca dan menulis file lokal dengan aman menggunakan context manager with, parsing format CSV terstruktur, serialisasi JSON, dan manipulasi path modern dengan pathlib.",
+    "kind": "cover",
+    "notes": "Selamat datang di Chapter 17. Pada modul ini pembelajar akan menguasai teknik pengelolaan file I/O lokal serta pertukaran data terstruktur dengan CSV dan JSON."
+  },
+  {
+    "title": "Tujuan Pembelajaran Modul",
+    "body": "<ul><li><strong>File I/O Aman:</strong> Membaca dan menulis file teks menggunakan context manager <code>with</code> dan encoding UTF-8.</li><li><strong>File Modes:</strong> Membedakan mode pembacaan <code>r</code>, penimpaan <code>w</code>, penambahan <code>a</code>, dan eksklusif <code>x</code>.</li><li><strong>Tabulasi CSV:</strong> Memproses data baris dan dictionary menggunakan <code>csv.DictReader</code> dan <code>csv.DictWriter</code>.</li><li><strong>Serialisasi JSON:</strong> Melakukan konversi format Python ke JSON (<code>dump/dumps</code>) dan sebaliknya (<code>load/loads</code>).</li><li><strong>pathlib Modern:</strong> Mengelola struktur folder dan berkas secara berorientasi objek dengan <code>pathlib.Path</code>.</li></ul>",
+    "kind": "content",
+    "notes": "Tekankan bahwa penguasaan file I/O adalah jembatan menuju pengolahan dataset dunia nyata dan persistensi data aplikasi."
+  },
+  {
+    "title": "Siklus Hidup File & Resource Management",
+    "body": "<ul><li><strong>Open:</strong> Sistem operasi mengalokasikan file descriptor dan pointer posisi berkas.</li><li><strong>Operate:</strong> Eksekusi operasi baca (<code>read</code>, <code>readline</code>) atau tulis (<code>write</code>, <code>writelines</code>).</li><li><strong>Close:</strong> Melepaskan handle sistem operasi agar memori dan buffer di-flush secara aman.</li><li><strong>Bahaya Tanpa Close:</strong> Terjadinya kebocoran sumber daya (resource leak) dan risiko korupsi data jika program crash sebelum penulisan tuntas.</li></ul>",
+    "kind": "content",
+    "notes": "Ingatkan bahwa menutup berkas secara manual rawan terlewat jika terjadi exception di tengah eksekusi."
+  },
+  {
+    "title": "Mode Akses Berkas Python",
+    "body": "<ul><li><code>'r'</code>: <strong>Read Only</strong> (Default). Gagal memicu <code>FileNotFoundError</code> jika berkas tidak ditemukan.</li><li><code>'w'</code>: <strong>Write Only</strong>. Membuat berkas baru atau <em>menimpa bersih</em> konten yang sudah ada.</li><li><code>'a'</code>: <strong>Append</strong>. Menambahkan data baru di ujung berkas tanpa menghapus konten lama.</li><li><code>'x'</code>: <strong>Exclusive Creation</strong>. Membuat berkas baru; gagal memicu <code>FileExistsError</code> jika berkas telah ada.</li><li><code>'t'</code> vs <code>'b'</code>: Mode teks (string) vs mode biner (bytes).</li></ul>",
+    "kind": "content",
+    "notes": "Hati-hati dengan mode 'w' yang dapat menghapus data lama secara instan tanpa peringatan konfirmasi."
+  },
+  {
+    "title": "Standar Text Encoding & UTF-8",
+    "body": "<ul><li><strong>Definisi Encoding:</strong> Pemetaan antara karakter teks manusia dengan deretan biner (byte) pada media disk.</li><li><strong>Jebakan Multi-Platform:</strong> Windows secara historis menggunakan encoding lokal <code>cp1252</code>, sedangkan Linux/macOS memakai <code>utf-8</code>.</li><li><strong>Praktik Terbaik:</strong> Selalu nyatakan parameter eksplisit <code>encoding='utf-8'</code> pada setiap pemanggilan fungsi <code>open()</code> untuk menjamin kompatibilitas universal.</li></ul>",
+    "kind": "content",
+    "notes": "Jelaskan bahwa ketidakcocokan encoding memicu UnicodeDecodeError saat membaca karakter khusus atau simbol matematika."
+  },
+  {
+    "title": "Context Manager: with Statement",
+    "body": "<p>Menjamin pelepasan file descriptor secara otomatis saat keluar blok, bahkan saat terjadi runtime exception.</p>",
+    "kind": "code",
+    "example": "ch17-01",
+    "notes": "Tunjukkan bahwa statement with open(...) as f mengeliminasi kebutuhan memanggil f.close() secara manual."
+  },
+  {
+    "title": "Menulis & Menambahkan Baris Teks",
+    "body": "<p>Perbedaan penulisan bersih mode 'w' dengan penambahan log bertahap mode 'a'.</p>",
+    "kind": "code",
+    "example": "ch17-02",
+    "notes": "Jelaskan metode write() dan writelines() serta pentingnya menyertakan karakter newline '\\n'."
+  },
+  {
+    "title": "Pengenalan Format Tabular CSV",
+    "body": "<ul><li><strong>Comma-Separated Values:</strong> Format teks paling umum untuk pertukaran tabel basis data dan spreadsheet.</li><li><strong>Struktur:</strong> Baris pertama memuat header penamaan kolom; baris berikutnya memuat nilai data yang dipisahkan pembatas (delimiter koma).</li><li><strong>Modul csv Bawaan:</strong> Menangani otomatis escaping tanda koma di dalam teks string dan kutip ganda.</li><li><strong>Aturan Wajib:</strong> Buka file CSV dengan <code>newline=''</code> agar modul csv mengontrol translasi enter secara akurat.</li></ul>",
+    "kind": "content",
+    "notes": "Jelaskan bahwa tanpa newline='', Python di Windows dapat menyisipkan baris kosong ganda di antara rekaman."
+  },
+  {
+    "title": "Parsing CSV dengan csv.reader & writer",
+    "body": "<p>Membaca dan menulis baris demi baris berkas CSV berbasis list representatif.</p>",
+    "kind": "code",
+    "example": "ch17-03",
+    "notes": "Tunjukkan penggunaan fungsi next(reader) untuk memisahkan baris header dari iterasi baris data."
+  },
+  {
+    "title": "CSV Tabular dengan DictReader & DictWriter",
+    "body": "<p>Memetakan setiap baris CSV secara otomatis menjadi dictionary berbasis nama header kolom.</p>",
+    "kind": "code",
+    "example": "ch17-04",
+    "notes": "DictReader jauh lebih aman dan mudah dirawat karena pengaksesan data menggunakan nama kolom, bukan nomor indeks urutan."
+  },
+  {
+    "title": "Format Pertukaran Data JSON",
+    "body": "<ul><li><strong>JavaScript Object Notation:</strong> Format data teks standar industri untuk API web, konfigurasi sistem, dan payload microservices.</li><li><strong>Pemetaan Tipe Python-JSON:</strong></li><div class=\"math-card compact\">dict <-> Object | list <-> Array | str <-> String | int/float <-> Number | bool <-> Boolean | None <-> null</div><li><strong>Keunggulan:</strong> Mendukung struktur bersarang hierarkis (*nested data structures*) yang tidak dapat dimodelkan oleh tabel datar CSV.</li></ul>",
+    "kind": "content",
+    "notes": "Tunjukkan fleksibilitas JSON dalam menyimpan nested object dan list of dictionaries."
+  },
+  {
+    "title": "Serialisasi Python ke JSON: json.dumps & dump",
+    "body": "<p>Mengubah dictionary atau list Python menjadi representasi teks JSON di memori atau file disk.</p>",
+    "kind": "code",
+    "example": "ch17-05",
+    "notes": "Jelaskan perbedaan dumps (dump string ke memori) dan dump (dump langsung ke file stream)."
+  },
+  {
+    "title": "Deserialisasi JSON ke Python: json.loads & load",
+    "body": "<p>Mem-parsing teks atau file JSON mentah menjadi dictionary Python terstruktur.</p>",
+    "kind": "code",
+    "example": "ch17-06",
+    "notes": "Jelaskan bahwa deserialisasi memvalidasi integritas sintaksis JSON dan memicu JSONDecodeError jika payload cacat."
+  },
+  {
+    "title": "Manajemen Path Modern dengan pathlib.Path",
+    "body": "<p>Pendekatan berorientasi objek yang elegan untuk manipulasi path lintas sistem operasi Windows/Linux.</p>",
+    "kind": "code",
+    "example": "ch17-07",
+    "notes": "Tunjukkan operator slash (folder / file) yang otomatis menyesuaikan separator path sistem operasi."
+  },
+  {
+    "title": "Pipeline Konversi CSV ke JSON Terstruktur",
+    "body": "<p>Mengintegrasikan pembacaan CSV, validasi data, konversi tipe numerik, dan export format JSON.</p>",
+    "kind": "code",
+    "example": "ch17-08",
+    "notes": "Tekankan pentingnya melakukan casting tipe data dari string CSV menjadi float/int sebelum disimpan ke JSON."
+  },
+  {
+    "title": "Pencegahan Kesalahan & File Safety",
+    "body": "<ul><li><strong>Pemeriksaan Eksistensi:</strong> Gunakan <code>path.exists()</code> atau blok <code>try-except FileNotFoundError</code> sebelum membaca berkas.</li><li><strong>Pencadangan Berkas:</strong> Selalu buat salinan backup sebelum menimpa file konfigurasi penting.</li><li><strong>Mode Eksklusif 'x':</strong> Gunakan mode <code>'x'</code> jika pembuatan file tidak boleh menimpa file yang sudah ada sebelumnya.</li><li><strong>Validasi Skema:</strong> Pastikan seluruh key wajib ada sebelum memproses payload dictionary.</li></ul>",
+    "kind": "content",
+    "notes": "Diskusikan praktik penulisan berkas atomik (atomic write) pada sistem telekomunikasi kritis."
+  },
+  {
+    "title": "Mini Proyek: CSV & JSON Data Manager",
+    "body": "<ul><li><strong>Arsitektur Modular:</strong> Kelas <code>TelemetryDataManager</code> memisahkan logika validasi I/O dari eksekusi CLI.</li><li><strong>Validasi Rekaman:</strong> Mengabaikan baris cacat dan memvalidasi rentang frekuensi serta daya transmisi.</li><li><strong>Operasi Dinamis:</strong> Mendukung penambahan node BTS baru dan pembaruan data secara in-place.</li><li><strong>Ringkasan Statistik:</strong> Menghitung total node terdaftar, rata-rata daya, dan rasio ketersediaan stasiun aktif.</li></ul>",
+    "kind": "content",
+    "notes": "Tunjukkan implementasi class TelemetryDataManager pada paket kode Chapter 17."
+  },
+  {
+    "title": "Latihan Terarah (Guided Practice)",
+    "body": "<ul><li><strong>Latihan 1:</strong> Ekstraksi baris log telekomunikasi berkategori <code>[WARN]</code> dan <code>[ERROR]</code>.</li><li><strong>Latihan 2:</strong> Tabulasi pemancar seluler menggunakan <code>csv.DictWriter</code> ber-header.</li><li><strong>Latihan 3:</strong> Konversi dataset CSV suhu sensor menjadi dokumen JSON terindentasi rapi.</li><li><strong>Latihan 4:</strong> Pemanfaatan <code>pathlib.Path</code> untuk pembuatan direktori bertingkat dan inspeksi ukuran berkas.</li></ul>",
+    "kind": "exercise",
+    "notes": "Pandu peserta menyelesaikan 4 latihan terarah di exercises/exercise.md."
+  },
+  {
+    "title": "Tugas Praktik 17",
+    "body": "<ul><li><strong>Tugas:</strong> Rancang modul <code>TelecomDataPipeline</code> untuk memproses dataset stasiun BTS jaringan secara otomatis.</li><li><strong>Kriteria Utama:</strong> Parsing CSV defensif, penanganan <code>FileNotFoundError</code>, ekspor JSON terstruktur, dan pelaporan metrik.</li><li><strong>Rubrik 100 Poin:</strong> File I/O with (25%), CSV Tabular (25%), JSON Serialization (25%), Data Validation & pathlib (25%).</li><li><strong>Berkas Starter:</strong> Unduh starter code <code>tugas_17.py</code> dan panduan lengkap <code>tugas.md</code>.</li></ul>",
+    "kind": "assignment",
+    "notes": "Jelaskan rubrik penilaian 100 poin dan dorong peserta untuk menulis unit test pengujian otomatis mandiri."
+  },
+  {
+    "title": "Rangkuman & Langkah Selanjutnya",
+    "body": "<ul><li><strong>Rangkuman:</strong> Context manager <code>with</code> menjamin keamanan resource I/O. CSV ideal untuk data tabular datar, sementara JSON unggul untuk konfigurasi bersarang dan pertukaran payload web.</li><li><strong>Jembatan Chapter 18:</strong> Penanganan kesalahan operasi berkas (I/O Errors) membawa kita ke pembahasan formal <strong>Chapter 18: Exception Handling & Debugging</strong>.</li><li><strong>Refleksi:</strong> Mengapa penyimpanan konfigurasi sistem di industri hampir selalu menggunakan JSON atau YAML alih-alih berkas teks mentah?</li></ul>",
+    "kind": "reflection",
+    "notes": "Beri apresiasi atas penyelesaian Chapter 17 dan persiapkan peserta memasuki topik penanganan exception dan debugging sistematis."
+  }
+]

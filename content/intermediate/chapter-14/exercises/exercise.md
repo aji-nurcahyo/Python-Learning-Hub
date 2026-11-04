@@ -17,8 +17,8 @@ Uji kecakapan Anda dalam menulis transformasi data yang ekspresif menggunakan li
 
 ---
 
-### Latihan 2: Inversi & Normalisasi Kamus IP Host (Dict Comprehension)
-**Tujuan:** Membalik kunci-nilai (*inversion*) dan membersihkan teks pada kamus dictionary.
+### Latihan 2: Inversi & Normalisasi Dictionary IP Host (Dict Comprehension)
+**Tujuan:** Membalik pasangan `key-value` (*inversion*) dan membersihkan teks pada `dictionary`.
 
 1. Diberikan pemetaan nama node ke alamat IP:
    ```python
@@ -28,7 +28,7 @@ Uji kecakapan Anda dalam menulis transformasi data yang ekspresif menggunakan li
        " Switch-Akses-02 ": "192.168.1.20"
    }
    ```
-2. Buat kamus baru `ip_ke_node` di mana alamat IP menjadi kunci (*key*), dan nama node yang sudah dibersihkan spasinya (`.strip()`) menjadi nilai (*value*).
+2. Buat dictionary baru `ip_ke_node` di mana alamat IP menjadi `key`, dan nama node yang sudah dibersihkan spasinya (`.strip()`) menjadi `value`.
 3. Hanya sertakan node yang memiliki akhiran `"Akses-01"` atau `"Akses-02"`.
 
 ---
@@ -56,3 +56,4 @@ Uji kecakapan Anda dalam menulis transformasi data yang ekspresif menggunakan li
 1. Buat fungsi helper `apakah_prima(n: int) -> bool`.
 2. Gunakan generator expression `(p for p in range(2, 1000) if apakah_prima(p))` untuk menghasilkan bilangan prima.
 3. Gunakan `next()` untuk mengambil 5 bilangan prima pertama secara bertahap tanpa membangkitkan seluruh list ke dalam RAM.
+

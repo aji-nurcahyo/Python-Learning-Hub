@@ -1,0 +1,130 @@
+[
+  {
+    "title": "Exception Handling & Debugging",
+    "body": "Membangun program yang tangguh dan andal terhadap kesalahan runtime menggunakan try-except-else-finally, custom exception, exception chaining, dan teknik debugging sistematis.",
+    "kind": "cover",
+    "notes": "Selamat datang di Chapter 18. Modul ini mengajarkan cara berpikir defensif dalam rekayasa perangkat lunak agar sistem tidak crash saat menerima data tak terduga."
+  },
+  {
+    "title": "Tujuan Pembelajaran Modul",
+    "body": "<ul><li><strong>Taksonomi Galat:</strong> Membedakan SyntaxError, Runtime Exception, dan Logical Bugs.</li><li><strong>Blok try-except:</strong> Menangani error secara presisi tanpa menghentikan alur program.</li><li><strong>Alur Lengkap:</strong> Memanfaatkan klausa <code>else</code> dan <code>finally</code> secara idiomatis.</li><li><strong>Custom Exception:</strong> Merancang kelas exception khusus untuk aturan domain aplikasi.</li><li><strong>Debugging & Logging:</strong> Membaca traceback, menggunakan assertion, dan menerapkan modul <code>logging</code>.</li></ul>",
+    "kind": "content",
+    "notes": "Jelaskan bahwa kemampuan debugging dan error handling membedakan developer amatir dari software engineer profesional."
+  },
+  {
+    "title": "Taksonomi Galat dalam Pemrograman",
+    "body": "<ul><li><strong>Syntax Errors (Parsing-Time):</strong> Pelanggaran tata bahasa Python (misal tanda titik dua hilang). Terdeteksi oleh interpreter sebelum program dijalankan.</li><li><strong>Runtime Exceptions (Execution-Time):</strong> Operasi tidak sah saat program berjalan (pembagian nol, file tidak ditemukan, indeks terlampaui).</li><li><strong>Logical Errors (Semantics):</strong> Program berjalan mulus tanpa error namun menghasilkan keluaran kalkulasi yang keliru.</li></ul>",
+    "kind": "content",
+    "notes": "Tekankan bahwa exception handling berfokus pada Runtime Exceptions, sedangkan logical errors diatasi melalui debugging dan pengujian unit."
+  },
+  {
+    "title": "Hirarki Built-in Exception Python",
+    "body": "<ul><li><code>BaseException</code>: Akar dari seluruh exception internal (termasuk <code>KeyboardInterrupt</code> dan <code>SystemExit</code>).</li><li><code>Exception</code>: Induk dari seluruh non-system-exiting exceptions standar yang <strong>wajib ditangkap</strong> oleh aplikasi.</li><li><code>ArithmeticError</code>: Induk dari <code>ZeroDivisionError</code> dan <code>OverflowError</code>.</li><li><code>LookupError</code>: Induk dari <code>IndexError</code> (list/tuple) dan <code>KeyError</code> (dictionary).</li><li><code>ValueError</code>: Tipe data benar namun isi nilainya tidak sesuai.</li></ul>",
+    "kind": "content",
+    "notes": "Pahami pohon warisan exception agar dapat menangani sekelompok error terkait menggunakan superclass."
+  },
+  {
+    "title": "Blok Dasar try-except: Safe Division",
+    "body": "<p>Menangkap ZeroDivisionError secara elegan tanpa menyebabkan crash pada aplikasi.</p>",
+    "kind": "code",
+    "example": "ch18-01",
+    "notes": "Tunjukkan bahwa pembagian aman mengembalikan None atau nilai default saat penyebut bernilai nol."
+  },
+  {
+    "title": "Validasi Input Numerik & ValueError",
+    "body": "<p>Memvalidasi masukan teks pengguna dan mengonversi menjadi float dengan proteksi ValueError.</p>",
+    "kind": "code",
+    "example": "ch18-02",
+    "notes": "Jelaskan bahwa konversi float('abc') memicu ValueError yang harus selalu diantisipasi pada masukan pengguna."
+  },
+  {
+    "title": "Menangani Multi-Exception Spesifik",
+    "body": "<p>Memisahkan logika penanganan IndexError, KeyError, dan TypeError secara deklaratif.</p>",
+    "kind": "code",
+    "example": "ch18-03",
+    "notes": "Tunjukkan bahwa satu blok try dapat memiliki banyak klausa except independen yang dievaluasi dari atas ke bawah."
+  },
+  {
+    "title": "Bahaya Bare except & Silent Swallowing",
+    "body": "<ul><li><strong>Anti-Pattern Bare except:</strong> Menulis <code>except: pass</code> menangkap seluruh error termasuk <code>KeyboardInterrupt</code> (Ctrl+C), membuat program mustahil dihentikan.</li><li><strong>Menyembunyikan Bug:</strong> Menelan exception tanpa logging membuat penelusuran galat (*troubleshooting*) di server produksi menjadi sangat sulit.</li><li><strong>Aturan Baku:</strong> Tangkap selalu tipe exception paling spesifik (misal <code>except ValueError:</code>). Jika butuh penanganan umum, gunakan <code>except Exception as err:</code> dan catat log-nya.</li></ul>",
+    "kind": "content",
+    "notes": "Jelaskan prinsip Zen of Python: Errors should never pass silently. Unless explicitly silenced."
+  },
+  {
+    "title": "Alur Lengkap: try-except-else-finally",
+    "body": "<p>Mendemonstrasikan urutan eksekusi: try mencoba, except menangkap, else jika sukses, finally selalu jalan.</p>",
+    "kind": "code",
+    "example": "ch18-04",
+    "notes": "Klausa else hanya berjalan jika tidak ada exception di blok try. Klausa finally selalu dieksekusi untuk pembersihan."
+  },
+  {
+    "title": "Memicu Exception dengan Statement raise",
+    "body": "<ul><li><strong>Validasi Eksplisit:</strong> Jangan biarkan data cacat merusak state sistem di kemudian hari; picu error segera (*fail-fast*).</li><li><strong>Sintaksis raise:</strong> Gunakan kata kunci <code>raise ExceptionClass('Pesan')</code> saat aturan invariansi bisnis dilanggar.</li><li><strong>Contoh Nyata:</strong> Memicu <code>ValueError</code> jika kapasitas frekuensi atau daya pemancar berada di luar batas operasional.</li></ul>",
+    "kind": "content",
+    "notes": "Diskusikan prinsip fail-fast dalam rekayasa perangkat lunak untuk mempermudah identifikasi sumber masalah."
+  },
+  {
+    "title": "Merancang Custom Exception Domain",
+    "body": "<p>Membuat hierarki exception khusus aplikasi yang mewarisi class Exception standar.</p>",
+    "kind": "code",
+    "example": "ch18-05",
+    "notes": "Tunjukkan bahwa custom exception memungkinkan pemanggil membedakan error domain bisnis dari error internal Python."
+  },
+  {
+    "title": "Exception Chaining: raise ... from ...",
+    "body": "<p>Menautkan exception asli ke exception domain tingkat tinggi tanpa menghilangkan jejak penyebab aslinya.</p>",
+    "kind": "code",
+    "example": "ch18-06",
+    "notes": "Jelaskan atribut __cause__ yang otomatis diisi oleh Python ketika menggunakan sintaksis raise ... from err."
+  },
+  {
+    "title": "Membaca & Menganalisis Python Traceback",
+    "body": "<ul><li><strong>Urutan Traceback:</strong> Python mencetak call stack dari pemanggilan terluar (paling atas) menuju baris spesifik tempat error terjadi (paling bawah).</li><li><strong>Poin Kunci Membaca:</strong></li><div class=\"math-card compact\">1. Lihat baris TERAKHIR (tipe dan pesan error) | 2. Lihat baris SEBELUMNYA (file dan nomor baris kode Anda)</div><li><strong>Konteks Pemanggilan:</strong> Periksa variabel lokal yang dilewatkan ke fungsi penyebab error.</li></ul>",
+    "kind": "content",
+    "notes": "Tunjukkan bahwa baris paling bawah adalah petunjuk pertama yang harus dibaca developer saat terjadi crash."
+  },
+  {
+    "title": "Debugging Logis dengan Assertion",
+    "body": "<p>Menggunakan statement assert untuk memvalidasi kondisi invarian internal selama fase pengujian.</p>",
+    "kind": "code",
+    "example": "ch18-07",
+    "notes": "Ingatkan bahwa assertion digunakan untuk debugging internal programmer, bukan untuk validasi input pengguna di produksi."
+  },
+  {
+    "title": "Teknik Debugging Modern: breakpoint() & pdb",
+    "body": "<ul><li><strong>Fungsi breakpoint():</strong> Membekukan eksekusi program dan membuka shell interaktif Python Debugger (PDB) di terminal.</li><li><strong>Perintah PDB Utama:</strong></li><div class=\"math-card compact\">n (next line) | s (step into) | c (continue) | p var (print variable) | q (quit)</div><li><strong>Keunggulan dibanding print():</strong> Memungkinkan inspeksi dinamis dan pengujian ekspresi secara langsung di titik terjadinya anomali.</li></ul>",
+    "kind": "content",
+    "notes": "Tunjukkan bahwa fungsi breakpoint() diperkenalkan di Python 3.7 sebagai standar debugging CLI bawaan."
+  },
+  {
+    "title": "Audit Operasional dengan Modul logging",
+    "body": "<p>Pencatatan aktivitas sistem terstruktur menggunakan level DEBUG, INFO, WARNING, dan ERROR.</p>",
+    "kind": "code",
+    "example": "ch18-08",
+    "notes": "Jelaskan mengapa print() tidak boleh digunakan untuk logging di aplikasi produksi yang berjalan di background."
+  },
+  {
+    "title": "Mini Proyek: Robust Data Validator",
+    "body": "<ul><li><strong>Arsitektur Defensif:</strong> Kelas <code>TelecomRecordValidator</code> memisahkan rekaman valid dari rekaman anomali.</li><li><strong>Hierarki Custom Exception:</strong> Menggunakan <code>MissingFieldError</code> dan <code>InvalidRangeError</code>.</li><li><strong>Pelaporan Batch:</strong> Memproses daftar payload, mencatat audit via logging, dan menghitung persentase kelulusan.</li><li><strong>Kemandirian Modul:</strong> Siap diuji secara otomatis dengan framework <code>unittest</code>.</li></ul>",
+    "kind": "content",
+    "notes": "Tunjukkan implementasi class TelecomRecordValidator pada paket kode Chapter 18."
+  },
+  {
+    "title": "Latihan Terarah (Guided Practice)",
+    "body": "<ul><li><strong>Latihan 1:</strong> Alokasi pembagian daya terdistribusi dengan proteksi <code>ZeroDivisionError</code>.</li><li><strong>Latihan 2:</strong> Pengambilan konfigurasi jaringan dengan penanganan multi-exception (KeyError, ValueError).</li><li><strong>Latihan 3:</strong> Perancangan custom exception <code>BandwidthExceededError</code>.</li><li><strong>Latihan 4:</strong> Audit alur transmisi paket data menggunakan modul <code>logging</code>.</li></ul>",
+    "kind": "exercise",
+    "notes": "Pandu peserta menyelesaikan 4 latihan terarah di exercises/exercise.md."
+  },
+  {
+    "title": "Tugas Praktik 18",
+    "body": "<ul><li><strong>Tugas:</strong> Rancang modul <code>RobustTelemetryValidator</code> yang mengintegrasikan custom exceptions dan logging.</li><li><strong>Kriteria Utama:</strong> Penanganan multi-exception spesifik, pelaporan batch terperinci, dan pencegahan silent error.</li><li><strong>Rubrik 100 Poin:</strong> Custom Exception (25%), Alur try-except-else-finally (25%), Validasi Rekaman (25%), Logging & Diagnostik (25%).</li><li><strong>Berkas Starter:</strong> Unduh starter code <code>tugas_18.py</code> dan panduan lengkap <code>tugas.md</code>.</li></ul>",
+    "kind": "assignment",
+    "notes": "Jelaskan rubrik penilaian 100 poin dan dorong peserta untuk menulis unit test pengujian otomatis mandiri."
+  },
+  {
+    "title": "Rangkuman & Langkah Selanjutnya",
+    "body": "<ul><li><strong>Rangkuman:</strong> Exception handling adalah tameng keandalan sistem. Tangkap selalu error secara spesifik, manfaatkan custom exception untuk domain bisnis, dan gunakan logging untuk audit.</li><li><strong>Jembatan Chapter 19:</strong> Seluruh modul procedural dan fungsional telah tuntas! Selanjutnya kita memasuki paradigma baru di <strong>Chapter 19: Object-Oriented Programming I</strong>.</li><li><strong>Refleksi:</strong> Mengapa software engineering industri menganggap bug yang 'gagal secara diam-diam' jauh lebih berbahaya daripada bug yang langsung memicu crash?</li></ul>",
+    "kind": "reflection",
+    "notes": "Beri selamat atas penyelesaian Batch 2 (Chapters 17–18) dan persiapkan peserta memasuki pembahasan Object-Oriented Programming di Phase 2 Batch 3."
+  }
+]

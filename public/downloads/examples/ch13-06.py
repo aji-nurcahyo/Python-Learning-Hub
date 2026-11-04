@@ -33,3 +33,4 @@ pelemahan_3db = buat_pengali_daya(0.5)   # Redaman ~3 dB mengurangi daya separuh
 
 print(f"\nDaya 10 W dikuatkan 3dB: {penguat_3db(10.0)} W")
 print(f"Daya 10 W dilemahkan 3dB: {pelemahan_3db(10.0)} W")
+

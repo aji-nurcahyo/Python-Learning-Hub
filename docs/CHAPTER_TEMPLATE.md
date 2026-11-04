@@ -3,6 +3,10 @@
 
 Dokumen ini adalah cetak biru (*blueprint*) dan templat standar pengembangan konten untuk seluruh 30 chapter di **Python Learning Hub**.
 
+> [!IMPORTANT]
+> **Kebijakan Bahasa & Terminologi Teknis:**  
+> Seluruh narasi materi, instruksi latihan, dan panduan tugas wajib mengikuti pedoman [TECHNICAL_LANGUAGE_GUIDE.md](file:///d:/Workstation/Repo%20My%20Corses/Alpro-python/docs/TECHNICAL_LANGUAGE_GUIDE.md). Gunakan Bahasa Indonesia akademis sebagai bahasa pengantar, namun pertahankan istilah teknis baku Python dalam bahasa aslinya (misalnya `list`, `tuple`, `dictionary`, `set`, `comprehension`, `exception`, `debugging`, `file handling`, `type hint`, `generator`) tanpa terjemahan harfiah yang rancu seperti "kamus", "pengecualian", atau "pengirisan".
+
 ---
 
 ## 1. Tata Letak Direktori Standar (*Directory Structure*)

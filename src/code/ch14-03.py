@@ -24,3 +24,4 @@ print("\nInversi Kamus Status:", nama_ke_kode)
 konsumsi_daya_w = {"BTS-01": 450, "BTS-02": 120, "BTS-03": 600, "BTS-04": 280}
 bts_efisien = {k: v for k, v in konsumsi_daya_w.items() if v <= 300}
 print("Stasiun Efisien (<= 300 W):", bts_efisien)
+

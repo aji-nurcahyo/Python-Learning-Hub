@@ -18,3 +18,4 @@ print("Data Koleksi:", data_node)
 print("Cari 'Gateway-C'   : Indeks ke-", pencarian_linier(data_node, "Gateway-C"))
 print("Cari 'Router-A'    : Indeks ke-", pencarian_linier(data_node, "Router-A"))
 print("Cari 'Firewall-X'  : Hasil ->", pencarian_linier(data_node, "Firewall-X"))
+

@@ -2,7 +2,7 @@
 ## Python Learning Hub — Global Presentation Audit Report
 
 **Tanggal Audit:** 4 November 2026  
-**Status Audit:** **100% Selesai & Terverifikasi (All 16 Active Decks, 304 Slides)**  
+**Status Audit:** **100% Selesai & Terverifikasi (All 18 Active Decks, 344 Slides)**  
 **Platform:** Python Learning Hub  
 **Pengembang:** Aji Pamungkas Tri Nurcahyo  
 **Institusi Resmi:** Institut Teknologi Sumatera  
@@ -41,8 +41,10 @@ Sesuai instruksi baku perancangan platform:
 | **14** | Comprehensions & Iterators | 20 | Tidak ada | Sesuai standar resmi | Nihil | 20 slide modular, comprehension & lazy evaluation | **LULUS (100%)** |
 | **15** | Searching & Sorting Algorithms | 20 | Tidak ada | Sesuai standar resmi | Nihil | 20 slide modular, linear/binary search & sorting | **LULUS (100%)** |
 | **16** | Algorithm Analysis & Problem Solving | 20 | Tidak ada | Sesuai standar resmi | Nihil | 20 slide modular, notasi Big-O & benchmarking | **LULUS (100%)** |
+| **17** | File Handling & Data Serialization | 20 | Tidak ada | Sesuai standar resmi | Nihil | 20 slide modular, text/csv/json pipelines & context managers | **LULUS (100%)** |
+| **18** | Exception Handling & Debugging | 20 | Tidak ada | Sesuai standar resmi | Nihil | 20 slide modular, robust try/except/finally, custom exceptions, logging | **LULUS (100%)** |
 
-**Total Slide yang Diaudit & Divalidasi:** **304 Slide di 16 Deck Aktif**
+**Total Slide yang Diaudit & Divalidasi:** **344 Slide di 18 Deck Aktif**
 
 ---
 

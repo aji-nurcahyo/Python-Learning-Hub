@@ -31,3 +31,4 @@ print("Konversi ke Watt :", hasil_watt)
 # Mempassing fungsi konversi_mwatt sebagai argumen
 hasil_mwatt = proses_aliran_daya(sampel_sinyal, konversi_mwatt)
 print("Konversi ke mWatt:", hasil_mwatt)
+

@@ -24,3 +24,4 @@ def selection_sort(data: list[int]) -> list[int]:
 slot_kanal = [11, 1, 6, 9, 3, 5]
 print("Slot Sebelum Selection Sort:", slot_kanal)
 print("Slot Setelah Selection Sort:", selection_sort(slot_kanal))
+

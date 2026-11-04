@@ -19,3 +19,4 @@ def konfigurasi_node(node_id: int, /, frekuensi_mhz: float, *, mode: str = "AUTO
 print("\nUji Positional-Only & Keyword-Only:")
 print(konfigurasi_node(101, 2412.0, mode="MANUAL"))
 print(konfigurasi_node(102, frekuensi_mhz=5180.0))
+

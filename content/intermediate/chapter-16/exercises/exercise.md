@@ -57,3 +57,4 @@ def fungsi_c(n: int) -> list[tuple[int, int]]:
 1. Diberikan list bilangan bulat `angka = [2, 7, 11, 15]` dan nilai target `jumlah = 9`.
 2. Rancang fungsi `temukan_pasangan_two_sum(angka: list[int], target: int) -> tuple[int, int] | None`.
 3. Gunakan kamus penampung komplemen `{target - x: idx}` untuk menemukan indeks pasangan dalam satu lintasan $O(n)$ tanpa nested loop $O(n^2)$.
+

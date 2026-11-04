@@ -26,3 +26,4 @@ def bubble_sort(data: list[float]) -> list[float]:
 daya_sampel = [45.2, 12.0, 88.5, 32.1, 10.4, 60.0]
 print("Data Sebelum Bubble Sort:", daya_sampel)
 print("Data Setelah Bubble Sort:", bubble_sort(daya_sampel))
+

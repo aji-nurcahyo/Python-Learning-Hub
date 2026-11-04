@@ -47,3 +47,4 @@ def stream_transformed_data(
 ) -> Generator[float, None, None]:
     """Generator expression: Streaming generator evaluasi lazy untuk nilai yang lolos filter."""
     return (round(x * 1.5, 2) for x in data if x >= threshold)
+

@@ -53,3 +53,4 @@ Perkuat pemahaman Anda mengenai algoritma pencarian (Linear vs Binary) dan algor
 
 1. Buat fungsi `sisipkan_ke_terurut(data_terurut: list[float], elemen_baru: float) -> list[float]`.
 2. Sisipkan `elemen_baru` ke posisi indeks yang tepat sehingga daftar tetap terurut dengan kompleksitas $O(n)$ tanpa perlu melakukan sort ulang penuh.
+
