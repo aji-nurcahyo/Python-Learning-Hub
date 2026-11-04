@@ -22,3 +22,4 @@ while indeks < len(simulasi_input_pengguna):
         print(f"-> Gagal: Nilai {nilai} di luar batas aman. Ulangi masukan.")
 
 print(f"Hasil akhir proses validasi: Daya Terdaftar = {daya_tervalidasi} W")
+

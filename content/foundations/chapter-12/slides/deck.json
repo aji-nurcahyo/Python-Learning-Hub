@@ -1,0 +1,142 @@
+[
+  {
+    "title": "Foundations Capstone Project",
+    "body": "<p class=\"lead\">Integrasi menyeluruh pemrograman Python tingkat dasar: Perancangan Sistem Manajemen Data Mahasiswa.</p><p class=\"note\">Level 1 · Python Foundations — Chapter 12</p>",
+    "kind": "cover",
+    "notes": "Selamat datang di Chapter 12: Foundations Capstone Project. Sesi kulminasi Level 1 yang menyatukan seluruh konsep pemrograman prosedural dan modular ke dalam sebuah aplikasi utuh."
+  },
+  {
+    "title": "Capaian Pembelajaran Capstone",
+    "body": "<ul><li>Mengintegrasikan seluruh konsep dasar Python (variabel, logika, loop, struktur data, fungsi).</li><li>Merancang arsitektur aplikasi modular multi-berkas (validators, student_manager, main).</li><li>Mengimplementasikan siklus operasi CRUD dan pencarian linier multi-kriteria.</li><li>Membangun validasi masukan kokoh dan penanganan galat runtime.</li><li>Menganalisis statistik kelas dan menyajikan antarmuka konsol terstruktur.</li></ul>",
+    "kind": "content",
+    "notes": "Tinjau capaian pembelajaran capstone ini. Mahasiswa diharapkan mampu merancang dan menyatukan komponen kode secara sistematis."
+  },
+  {
+    "title": "Student Data Management System",
+    "body": "<ul><li><strong>Deskripsi:</strong> Aplikasi CLI untuk mengelola rekaman data akademik mahasiswa.</li><li><strong>Model Memori:</strong> Menggunakan struktur list of dictionaries murni tanpa dependensi eksternal.</li><li><strong>Fungsionalitas:</strong> 10 fitur utama mencakup menu interaktif, CRUD, pencarian, dan statistik nilai.</li><li><strong>Standar Kualitas:</strong> Menerapkan type hints, docstring informatif, dan validasi masukan ketat.</li></ul>",
+    "kind": "content",
+    "notes": "Bahas ikhtisar proyek dan filosofi di balik Student Data Management System sebagai latihan integratif tingkat dasar."
+  },
+  {
+    "title": "Arsitektur Modular Tiga Lapisan",
+    "body": "<ul><li><strong>Lapisan 1: validators.py</strong> — Fungsi validasi murni untuk integritas NIM, nama, dan nilai angka.</li><li><strong>Lapisan 2: student_manager.py</strong> — Logika bisnis manipulasi data (CRUD, pencarian, dan statistik).</li><li><strong>Lapisan 3: main.py</strong> — Antarmuka pengguna konsol (CLI) dan alur perulangan menu utama.</li><li><strong>Keunggulan Desain:</strong> Logika pemrosesan data terisolasi sempurna dari operasi terminal.</li></ul>",
+    "kind": "content",
+    "notes": "Tekankan pemisahan tanggung jawab (Separation of Concerns). Logika bisnis tidak boleh tercampur dengan input/print agar mudah diuji secara otomatis."
+  },
+  {
+    "title": "Model Data: List of Dictionaries",
+    "body": "<p>Setiap mahasiswa direpresentasikan sebagai kamus (dictionary) dan dikelola di dalam list utama.</p>",
+    "kind": "code",
+    "example": "ch12-01",
+    "notes": "Struktur list of dictionaries memberikan fleksibilitas tinggi. NIM disimpan sebagai string untuk menjaga integritas format angka awal."
+  },
+  {
+    "title": "Validasi Data Masukan Pengguna",
+    "body": "<p>Pemeriksaan ketat terhadap kekosongan, format karakter, batas rentang numerik, dan duplikasi NIM.</p>",
+    "kind": "code",
+    "example": "ch12-02",
+    "notes": "Validasi data merupakan benteng utama keandalan perangkat lunak. Masukan salah harus ditolak dengan pesan yang mendidik tanpa menghentikan paksa aplikasi."
+  },
+  {
+    "title": "Siklus Operasi CRUD",
+    "body": "<p>Mekanisme Create (tambah), Read (baca), Update (perbarui), dan Delete (hapus) rekaman.</p>",
+    "kind": "code",
+    "example": "ch12-03",
+    "notes": "Bahas bagaimana setiap operasi CRUD bekerja pada list in-memory. Perhatikan penanganan referensi objek dan pencarian indeks."
+  },
+  {
+    "title": "Pencarian Multi-Kriteria",
+    "body": "<p>Pencarian linier fleksibel berdasarkan kecocokan fragmen NIM atau substring nama tanpa sensitivitas huruf.</p>",
+    "kind": "code",
+    "example": "ch12-04",
+    "notes": "Gunakan metode lower() untuk menjamin pencarian case-insensitive dan operator in untuk menemukan fragmen teks."
+  },
+  {
+    "title": "Analisis Statistik Nilai",
+    "body": "<p>Kalkulasi rerata kelas, pencarian nilai ekstrem (min/max), serta deteksi mahasiswa berprestasi.</p>",
+    "kind": "code",
+    "example": "ch12-05",
+    "notes": "Gunakan fungsi bawaan sum, len, max, dan min untuk efisiensi komputasi, serta list comprehension untuk menangani nilai kembar."
+  },
+  {
+    "title": "Pengurutan & Predikat Nilai",
+    "body": "<p>Pengurutan data terurut peringkat nilai (ranking) dan pemetaan predikat huruf standar.</p>",
+    "kind": "code",
+    "example": "ch12-06",
+    "notes": "Fungsi sorted() dengan argumen key lambda memungkinkan pengurutan non-destruktif tanpa mengubah struktur basis data asli."
+  },
+  {
+    "title": "Perancangan Format Konsol CLI",
+    "body": "<ul><li>Gunakan pemformat f-string dengan spesifikasi lebar kolom: <code>{val:&lt;lebar}</code>.</li><li>Sertakan garis pemisah konsisten (<code>'-' * lebar</code>) untuk estetika tabel data.</li><li>Format angka desimal secara presisi menggunakan penentu <code>{nilai:.2f}</code>.</li><li>Sediakan umpan balik visual yang jelas untuk setiap keberhasilan atau kegagalan operasi.</li></ul>",
+    "kind": "content",
+    "notes": "Tampilan konsol yang rapi meningkatkan kenyamanan pengguna (UX) dan memudahkan verifikasi kebenaran data."
+  },
+  {
+    "title": "Integritas Identitas: NIM Unik",
+    "body": "<ul><li>NIM berfungsi sebagai kunci unik (*unique identifier*) setiap entitas mahasiswa.</li><li>Sebelum menambahkan rekaman baru, periksa seluruh koleksi untuk mendeteksi NIM kembar.</li><li>Pada operasi pembaruan data (Update), NIM tidak boleh diubah agar relasi tetap konsisten.</li><li>Format NIM disimpan sebagai string agar awalan nol (*leading zero*) tidak hilang.</li></ul>",
+    "kind": "content",
+    "notes": "Diskusikan mengapa NIM tidak boleh berupa tipe integer. Konversi ke int akan memotong angka 0 di depan NIM."
+  },
+  {
+    "title": "Penanganan Galat Runtime",
+    "body": "<ul><li>Tangani potensi konversi nilai non-numerik menggunakan blok <code>try-except ValueError</code>.</li><li>Tangani kondisi basis data kosong pada fungsi statistik agar tidak terjadi pembagian nol.</li><li>Pastikan perulangan menu utama tidak terputus saat pengguna salah memilih opsi.</li><li>Gunakan nilai kembali tuple <code>(status, pesan)</code> untuk mengalirkan informasi galat secara elegan.</li></ul>",
+    "kind": "content",
+    "notes": "Tekankan bahwa program profesional tidak boleh berhenti dengan traceback merah saat pengguna memasukkan data yang keliru."
+  },
+  {
+    "title": "Pengujian Unit Otomatis (Unittest)",
+    "body": "<ul><li>Pemisahan logika bisnis murni memungkinkan pengujian otomatis tanpa simulasi terminal.</li><li>Uji kasus positif: penambahan data valid, pencarian yang cocok, dan pembaruan sukses.</li><li>Uji kasus negatif: penolakan duplikasi NIM, masukan nama kosong, dan nilai di luar rentang.</li><li>Uji kasus batas: nilai tepat 0.0, 100.0, dan penanganan dataset kosong.</li></ul>",
+    "kind": "content",
+    "notes": "Diskusikan manfaat automated testing. Mahasiswa dapat memverifikasi seluruh fungsi dalam hitungan detik."
+  },
+  {
+    "title": "Praktik Penulisan Kode Profesional",
+    "body": "<ul><li><strong>Anotasi Tipe:</strong> Gunakan type hints eksplisit (<code>list[dict]</code>, <code>tuple[bool, str]</code>).</li><li><strong>Docstrings Informatif:</strong> Tuliskan deskripsi ringkas, parameter (Args), dan nilai kembali (Returns).</li><li><strong>Keterbacaan PEP 8:</strong> Gunakan penamaan snake_case untuk fungsi dan variabel deskriptif.</li><li><strong>Fungsi Mandiri:</strong> Batasi panjang fungsi agar masing-masing menangani satu tugas spesifik.</li></ul>",
+    "kind": "content",
+    "notes": "Tekankan bahwa kode yang baik adalah kode yang mudah dibaca dan dipelihara oleh pengembang lain."
+  },
+  {
+    "title": "Tantangan Pengembangan Ekstensi",
+    "body": "<ul><li><strong>Tantangan 1 — Multi-Sorting:</strong> Pengurutan data fleksibel berdasarkan nilai, nama (A-Z), atau NIM.</li><li><strong>Tantangan 2 — Filtering Kelulusan:</strong> Penyaringan daftar mahasiswa lulus (&ge; 70.0) vs remedial.</li><li><strong>Tantangan 3 — Distribusi Frekuensi:</strong> Perhitungan kuantitas dan persentase predikat nilai (A, B, C, D, E).</li></ul><div class=\"callout\">Fitur ekstensi mengasah ketajaman algoritma dan pemikiran komputasional tingkat lanjut.</div>",
+    "kind": "content",
+    "notes": "Jelaskan bagaimana fitur ekstensi ini menantang mahasiswa untuk melampaui kebutuhan dasar capstone."
+  },
+  {
+    "title": "Spesifikasi Tugas Proyek Capstone",
+    "body": "<ul><li>Lengkapi berkas modul <code>tugas.py</code> sesuai spesifikasi 10 fitur wajib.</li><li>Bagi kode menjadi 3 lapisan: validasi, manajemen data, dan antarmuka CLI.</li><li>Terapkan validasi ketat: keunikan NIM, nilai rentang 0–100, dan nama valid.</li><li>Sediakan opsi statistik lengkap dan penyajian tabel konsol yang rapi.</li><li>Uji kode secara mandiri dengan berbagai skenario masukan sebelum dikumpulkan.</li></ul>",
+    "kind": "exercise",
+    "notes": "Bahas instruksi pengerjaan tugas capstone dan ekspektasi kualitas kode akhir."
+  },
+  {
+    "title": "Rubrik Evaluasi Proyek Capstone",
+    "body": "<ul><li><strong>Arsitektur & Modularitas (15%):</strong> Pemisahan file dan pemisahan logika bisnis dari I/O.</li><li><strong>Fungsionalitas CRUD & Pencarian (25%):</strong> Kelancaran seluruh operasi data in-memory.</li><li><strong>Validasi & Ketahanan (20%):</strong> Penanganan NIM duplikat, tipe numerik, dan edge-cases.</li><li><strong>Statistik & Analitik (20%):</strong> Akurasi rata-rata, nilai ekstrem, dan konversi predikat.</li><li><strong>Kerapian Kode & Format CLI (20%):</strong> Standar PEP 8, type hints, docstring, dan estetika konsol.</li></ul>",
+    "kind": "content",
+    "notes": "Transparansi kriteria evaluasi membantu mahasiswa memfokuskan upaya pada aspek-aspek mutu perangkat lunak."
+  },
+  {
+    "title": "Alur Kerja: Tambah Mahasiswa",
+    "body": "<ul><li>1. Pengguna memasukkan NIM &rarr; Sistem memeriksa format digit, panjang, dan keunikan.</li><li>2. Pengguna memasukkan Nama &rarr; Sistem memastikan nama tidak kosong dan valid.</li><li>3. Pengguna memasukkan Nilai &rarr; Sistem memverifikasi angka float dalam [0.0, 100.0].</li><li>4. Jika semua valid &rarr; Rekaman ditambahkan ke memori dan pesan sukses ditampilkan.</li><li>5. Jika salah satu gagal &rarr; Tampilkan pesan edukatif dan batalkan operasi penambahan.</li></ul>",
+    "kind": "content",
+    "notes": "Gambarkan alur validasi bertingkat langkah demi langkah agar alur kontrol program mudah dipahami."
+  },
+  {
+    "title": "Cek Pemahaman Arsitektur",
+    "body": "<p>Uji pemahaman Anda tentang prinsip desain sistem sebelum menutup modul capstone.</p>",
+    "kind": "question",
+    "question": "Mengapa fungsi logika bisnis seperti add_student() tidak boleh memanggil input() secara langsung?",
+    "answer": "Karena mencampur input() ke dalam fungsi logika bisnis menghilangkan modularitas dan membuat fungsi tersebut mustahil diuji secara otomatis (unit test) tanpa intervensi pengguna.",
+    "notes": "Beri waktu peserta untuk menganalisis pentingnya pemisahan antara interaksi pengguna dan logika data."
+  },
+  {
+    "title": "Refleksi & Pencapaian Level 1",
+    "body": "<ul><li>Selamat! Anda telah menuntaskan seluruh 12 Chapter pada <strong>Level 1: Python Foundations</strong>.</li><li>Anda kini menguasai fondasi algoritma, struktur data terurut, pemrosesan teks, dan arsitektur modular.</li><li>Aplikasi Student Data Management System menjadi portofolio kode nyata dari kecakapan fundamental Anda.</li></ul><div class=\"callout\">Fondasi yang kokoh adalah modal utama untuk melangkah ke tingkat pemrograman menengah.</div>",
+    "kind": "content",
+    "notes": "Apresiasi dedikasi belajar peserta. Refleksikan lompatan kemampuan dari Chapter 01 hingga Chapter 12."
+  },
+  {
+    "title": "Menuju Level 2: Python Intermediate",
+    "body": "<ul><li><strong>Chapter 13 — OOP Fundamentals:</strong> Mentransformasi record data menjadi objek kelas (classes & objects).</li><li><strong>Chapter 14 — File I/O & JSON:</strong> Menyimpan data mahasiswa secara permanen ke media penyimpanan.</li><li><strong>Chapter 15–22:</strong> Dekorator, generator, algoritma rekursi, serta integrasi pustaka pengolahan data.</li></ul><p class=\"note\">Data in-memory pada Capstone ini akan berevolusi menjadi sistem berbasis berkas dan objek di Level 2!</p>",
+    "kind": "content",
+    "notes": "Tunjukkan roadmap masa depan. Bagaimana konsep yang dibuat hari ini akan berevolusi di level berikutnya."
+  }
+]

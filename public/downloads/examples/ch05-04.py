@@ -25,3 +25,4 @@ uji_node = [
 for v, t, conn in uji_node:
     siap, pesan = evaluasi_kesiapan_node(v, t, conn)
     print(f"V={v}V, T={t}C, Conn={conn} -> Siap: {siap} | Pesan: {pesan}")
+

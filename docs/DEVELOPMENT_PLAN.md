@@ -41,15 +41,15 @@ Setiap fase memiliki gerbang kualitas (*quality gates*) yang harus dipenuhi sebe
 | **Ch 06** | `06-loops-iteration` — Perulangan While, For & Range | 5 Jam | [DOCS] Sec 4.2-4.3, [SWCARP] Ep 2 | **SELESAI (100%)**: `index.md`, 18 slide, 7 contoh kode, 3 latihan, 1 tugas |
 | **Ch 07** | `07-strings-processing` — Slicing & Metode String | 4 Jam | [DOCS] Sec 3.1.2, [30DAY] Day 04 | **SELESAI (100%)**: `index.md`, 18 slide, 7 contoh kode, 3 latihan, 1 tugas |
 | **Ch 08–11**| *Pengayaan Narasi Konsep Bacaan pada Modul yang Sudah Aktif* | 4 Jam | [DOCS], [THINK], ITERA upstream | **AKTIF (100%)**: Memperkaya `index.md` dan menambah daftar referensi |
-| **Ch 12** | `12-foundations-capstone` — Foundations Capstone Project | 6 Jam | [CS50P] Projects, Telecom specs | Panduan proyek capstone CLI, starter code, rubrik 100% (Batch 3) |
+| **Ch 12** | `12-foundations-capstone` — Foundations Capstone Project | 6 Jam | [CS50P] Projects, Open specs | **SELESAI (100%)**: `index.md`, 22 slide, 6 contoh kode, 3 latihan, 1 tugas, unit test suite |
 
 *Status Kemajuan Fase 1:*
 - **Batch 1 (Chapter 01 s.d. 04):** **100% Selesai & Terverifikasi** (CPython 3, Slide Deck, Typecheck, Build, Routes).
 - **Batch 2 (Chapter 05 s.d. 07):** **100% Selesai & Terverifikasi** (CPython 3, Slide Deck, Typecheck, Build, Routes).
 - **Existing Active (Chapter 08 s.d. 11):** **100% Aktif & Terintegrasi**.
-- **Batch 3 (Chapter 12 Capstone):** Siap dikerjakan pada iterasi berikutnya untuk menuntaskan 100% Level 1 Foundations.
+- **Batch 3 (Chapter 12 Capstone):** **100% Selesai & Terverifikasi** (Student Data Management System CLI, Unittest, 22 Slide Deck, Typecheck, Build).
 
-*Milestone Fase 1:* Seluruh 12 Chapter di Level 1 Foundations berstatus **Tersedia Penuh (100% Active)**. Pengguna pemula dapat mempelajari dasar Python secara mandiri dari awal hingga akhir level.
+*Milestone Fase 1:* **TERCAPAI 100%**. Seluruh 12 Chapter di Level 1 Foundations berstatus **Tersedia Penuh (100% Active)**. Pengguna pemula dapat mempelajari dasar Python secara mandiri dari awal hingga akhir level.
 
 ---
 

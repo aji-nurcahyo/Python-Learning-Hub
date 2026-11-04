@@ -16,3 +16,4 @@ daftar_tahun = [2000, 2024, 2026, 1900, 2028]
 for th in daftar_tahun:
     status = "Kabisat" if cek_tahun_kabisat(th) else "Bukan Kabisat"
     print(f"Tahun {th}: {status}")
+

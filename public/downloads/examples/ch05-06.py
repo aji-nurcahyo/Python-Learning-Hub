@@ -26,3 +26,4 @@ sampel_masukan = [" 1800.5 ", "2100", "", "abc_mhz", "500.0", "4000.0"]
 for item in sampel_masukan:
     valid, angka, pesan = validasi_dan_proses_frekuensi(item)
     print(f"Input: '{item:<10}' | Valid: {str(valid):<5} | Status: {pesan}")
+

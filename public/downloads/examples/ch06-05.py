@@ -19,3 +19,4 @@ for detik, suhu in enumerate(telemetri_suhu, start=1):
     print(f"Detik {detik:2d}: Suhu normal terukur = {suhu:5.1f} C")
 
 print("Monitoring selesai dengan aman.")
+

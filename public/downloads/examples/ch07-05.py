@@ -27,3 +27,4 @@ uji_id = ["NODE-A0123", "NODE-99", "HUB-12345", "NODE-B#421", "NODE-XYZ99"]
 for id_str in uji_id:
     valid, alasan = validasi_id_perangkat(id_str)
     print(f"ID: '{id_str:<12}' -> Valid: {str(valid):<5} | Catatan: {alasan}")
+

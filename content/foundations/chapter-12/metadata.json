@@ -5,30 +5,103 @@
   "levelId": 1,
   "levelCategory": "foundations",
   "title": "Foundations Capstone Project",
-  "subtitle": "Integrasi Komprehensif: Sistem Pengolahan Data Multi-Module",
-  "description": "Proyek akhir Level 1: membangun aplikasi CLI terstruktur yang mengolah dataset dinamis, menerapkan validasi masukan, modul kustom, dan pengujian assert.",
-  "competencyFocus": "Integrasi Kompetensi PCEP",
+  "subtitle": "Student Data Management System (CLI)",
+  "description": "Proyek integratif akhir Level 1: membangun aplikasi CLI modular Sistem Manajemen Data Mahasiswa yang menerapkan operasi CRUD, pencarian linier, validasi masukan kokoh, dan analisis statistik.",
+  "competencyFocus": "PCEP Capstone: Integrasi Fondasi Prosedural & Modular",
   "estimatedHours": 6,
-  "difficulty": "Beginner",
-  "available": false,
+  "difficulty": "Intermediate",
+  "available": true,
   "prerequisites": [
     "Chapter 01 – 11"
   ],
   "learningObjectives": [
-    "Mengintegrasikan dictionary, list, set, dan tuple dalam arsitektur data realistis",
-    "Menata kode menjadi minimal dua file modul dengan docstring lengkap",
-    "Menyusun minimal 10 pengujian assert otomatis untuk menjamin kebenaran logika"
+    "Mengintegrasikan seluruh konsep dasar Python (variabel, logika bercabang, loop, struktur data, fungsi)",
+    "Merancang arsitektur aplikasi multi-berkas dengan pemisahan tanggung jawab (validators, manager, UI)",
+    "Mengimplementasikan operasi CRUD data in-memory dan algoritma pencarian multi-kriteria",
+    "Membangun sistem validasi masukan yang andal dan aman dari runtime errors",
+    "Menyajikan laporan statistik akademik dan format tabel konsol yang rapi"
   ],
   "tags": [
     "Capstone",
-    "Integration",
-    "CLI Project"
+    "CLI Application",
+    "CRUD",
+    "Data Management",
+    "Modular Architecture"
   ],
   "resources": {
-    "hasSlides": false,
-    "slidesDeck": null,
-    "starterCode": null,
-    "assignmentGuide": null,
+    "hasSlides": true,
+    "slidesDeck": "slides/deck.json",
+    "starterCode": "code/contoh.py",
+    "assignmentGuide": "assignments/tugas.md",
     "pptxDownload": null
+  },
+  "codeExample": {
+    "title": "Model Data Mahasiswa In-Memory & Operasi Dasar",
+    "code": "# Inisialisasi basis data mahasiswa in-memory (list of dicts)\nmahasiswa = [\n    {\"nim\": \"121140001\", \"name\": \"Budi Santoso\", \"grade\": 86.50},\n    {\"nim\": \"121140002\", \"name\": \"Siti Nurhaliza\", \"grade\": 92.00},\n    {\"nim\": \"121140003\", \"name\": \"Ahmad Fauzi\", \"grade\": 74.25},\n]\n\nprint(f\"Total mahasiswa terdaftar: {len(mahasiswa)}\")\nfor mhs in mahasiswa:\n    print(f\"- NIM: {mhs['nim']} | Nama: {mhs['name']:<18} | Nilai: {mhs['grade']}\")",
+    "outputKey": "ch12-01",
+    "explanation": "Struktur data list of dictionaries merepresentasikan basis data in-memory di mana setiap baris rekaman adalah kamus dengan atribut nim, name, dan grade."
+  },
+  "exercise": {
+    "title": "Latihan Terarah: Tantangan Ekstensi Capstone",
+    "instructions": [
+      "Implementasikan fungsi pengurutan multi-kriteria (berdasarkan ranking nilai, abjad nama, atau urutan NIM).",
+      "Bangun fungsi pemfilteran mahasiswa lulus berdasarkan ambang batas kelulusan (>= 70.0).",
+      "Hitung distribusi frekuensi kategori predikat huruf (A, B, C, D, E) dan persentasenya."
+    ],
+    "tips": "Gunakan parameter reverse=True pada fungsi sorted() untuk menghasilkan urutan ranking menurun.",
+    "time": "45 menit"
+  },
+  "quiz": {
+    "question": "Mengapa NIM mahasiswa harus disimpan sebagai string dan bukan bilangan bulat (integer)?",
+    "options": [
+      "Agar dapat menyimpan angka nol di awal (leading zeros) dan mendukung validasi panjang karakter secara eksak",
+      "Karena tipe data integer mengonsumsi memori lebih besar daripada string",
+      "Karena list Python tidak mengizinkan integer di dalam dictionary",
+      "Agar operasi penjumlahan aritmatika dapat langsung dilakukan pada NIM"
+    ],
+    "correctIndex": 0,
+    "explanation": "NIM adalah data pengenal (identitas) kategoris, bukan besaran kuantitatif untuk perhitungan matematika. Menyimpannya sebagai string mempertahankan angka nol di awal (misal: '01234') dan memudahkan pengujian karakter numerik serta panjang digit.",
+    "hint": "Pikirkan apa yang terjadi jika mahasiswa memiliki NIM dengan awalan angka 0 seperti '0112345'."
+  },
+  "assignment": {
+    "title": "Proyek Akhir: Student Data Management System",
+    "description": "Rancang dan bangun aplikasi CLI modular Sistem Manajemen Data Mahasiswa dengan 10 fitur lengkap mencakup CRUD, pencarian, validasi masukan, analisis statistik, dan pengujian unit.",
+    "instructions": [
+      "Pisahkan arsitektur kode menjadi 3 modul utama: validators.py, student_manager.py, dan main.py.",
+      "Terapkan validasi ketat untuk keunikan NIM, format nama, serta rentang nilai 0.0 - 100.0.",
+      "Sajikan seluruh data dalam tabel konsol yang rapi dengan format dua digit desimal dan predikat huruf.",
+      "Sertakan perhitungan rata-rata, nilai tertinggi/terendah, dan identifikasi mahasiswa berprestasi."
+    ],
+    "rubric": [
+      {
+        "criteria": "Arsitektur Modular & Desain Sistem",
+        "weight": 15,
+        "description": "Kode terpisah secara modular, logika bisnis terisolasi dari I/O konsol."
+      },
+      {
+        "criteria": "Logika CRUD & Pencarian Multi-Kriteria",
+        "weight": 25,
+        "description": "Fungsi tambah, lihat, cari, perbarui, dan hapus berjalan lancar tanpa bug."
+      },
+      {
+        "criteria": "Validasi Masukan & Ketahanan Sistem",
+        "weight": 20,
+        "description": "Pencegahan duplikasi NIM, validasi tipe nilai 0-100, dan penanganan error."
+      },
+      {
+        "criteria": "Analisis Statistik & Fitur Analitik",
+        "weight": 20,
+        "description": "Perhitungan rerata, nilai ekstrem, dan predikat huruf akurat."
+      },
+      {
+        "criteria": "Kerapian Kode, Type Hints & Format CLI",
+        "weight": 20,
+        "description": "Sesuai konvensi PEP 8, type hints lengkap, docstring jelas, dan format tabel konsol rapi."
+      }
+    ],
+    "starterCode": "\"\"\"\nStarter Template: Student Data Management System\n\"\"\"\ndef add_student(students, nim, name, grade):\n    pass\n\ndef calculate_statistics(students):\n    pass\n",
+    "starterFilename": "tugas_12.py",
+    "downloadMdUrl": "downloads/chapter-12/tugas.md",
+    "downloadPyUrl": "downloads/chapter-12/contoh.py"
   }
 }

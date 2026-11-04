@@ -16,11 +16,11 @@ Pemeriksaan membedakan secara tegas antara **metadata/kerangka silabus** (judul,
 
 ### Metrik Status Kelengkapan Konten:
 - **Total Modul Chapter:** 30 Chapter
-- **Modul Berstatus Lengkap & Aktif (*Production Ready*):** 11 Chapter (**36.7%**) — Chapter 01 s.d. 11
-- **Modul Berstatus Kerangka Silabus (*Pending Content Creation*):** 19 Chapter (**63.3%**) — Chapter 12–30
-- **Total Slide Presentasi Reveal.js Aktif:** 202 Slide
-- **Total Skrip Contoh Python Terverifikasi CPython:** 64 Program Mandiri
-- **Total Soal Latihan & Kuis Terintegrasi:** 32 Latihan Terarah, 11 Kuis Konsep Interaktif, 11 Tugas Berubrik
+- **Modul Berstatus Lengkap & Aktif (*Production Ready*):** 12 Chapter (**40.0%**) — Level 1: Python Foundations (Chapter 01 s.d. 12) 100% LENGKAP!
+- **Modul Berstatus Kerangka Silabus (*Pending Content Creation*):** 18 Chapter (**60.0%**) — Chapter 13–30
+- **Total Slide Presentasi Reveal.js Aktif:** 224 Slide (12 Decks Terstandarisasi)
+- **Total Skrip Contoh Python Terverifikasi CPython:** 70 Program Mandiri
+- **Total Soal Latihan & Kuis Terintegrasi:** 35 Latihan Terarah, 12 Kuis Konsep Interaktif, 12 Tugas Berubrik
 
 ---
 
@@ -58,7 +58,7 @@ Setiap chapter dinilai berdasarkan 7 dimensi kelengkapan materi:
 | **Ch 09** | L1 | `09-dictionaries-sets` — Dictionaries & Sets | `[P]` | `[V]` (21) | `[V]` (2) | `[V]` | `[V]` | `[V]` | `[-]` | **Siap Belajar** |
 | **Ch 10** | L1 | `10-functions-scope` — Functions & Scope | `[P]` | `[V]` (20) | `[V]` (2) | `[V]` | `[V]` | `[V]` | `[-]` | **Siap Belajar** |
 | **Ch 11** | L1 | `11-modules-basic-exceptions` — Modules & Basic Exceptions | `[P]` | `[V]` (20) | `[V]` (2) | `[V]` | `[V]` | `[V]` | `[-]` | **Siap Belajar** |
-| **Ch 12** | L1 | `12-foundations-capstone` — Foundations Capstone Project | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | Pending |
+| **Ch 12** | L1 | `12-foundations-capstone` — Foundations Capstone Project | `[V]` | `[V]` (22) | `[V]` (6) | `[V]` | `[V]` | `[V]` | `[V]` | **Siap Belajar** |
 | **Ch 13** | L2 | `13-advanced-functions` — Advanced Functions | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | Pending |
 | **Ch 14** | L2 | `14-comprehensions-iterators` — Comprehensions & Iterators | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | Pending |
 | **Ch 15** | L2 | `15-searching-sorting-algorithms` — Searching & Sorting | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | Pending |

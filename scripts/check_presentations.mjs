@@ -20,7 +20,8 @@ const CANONICAL_TITLES = {
   8: 'Lists, Tuples & Sequences',
   9: 'Dictionaries, Sets & Hash Structures',
   10: 'Functions & Scope',
-  11: 'Modules & Basic Exceptions'
+  11: 'Modules & Basic Exceptions',
+  12: 'Foundations Capstone Project'
 };
 
 const FORBIDDEN_BRANDING_TERMS = [
@@ -47,7 +48,7 @@ console.log('▶ [1/2] Auditing Slide Decks & Branding Metadata...');
 const outputsPath = path.join(ROOT, 'src/code/outputs.json');
 const outputs = fs.existsSync(outputsPath) ? JSON.parse(fs.readFileSync(outputsPath, 'utf8')) : {};
 
-for (let ch = 1; ch <= 11; ch++) {
+for (let ch = 1; ch <= 12; ch++) {
   const chStr = String(ch).padStart(2, '0');
   const deckPath = path.join(ROOT, `content/foundations/chapter-${chStr}/slides/deck.json`);
 
@@ -227,7 +228,7 @@ for (const res of testResolutions) {
     mobile: false
   });
 
-  for (let ch = 1; ch <= 11; ch++) {
+  for (let ch = 1; ch <= 12; ch++) {
     await send('Page.navigate', { url: `http://127.0.0.1:8932/index.html#chapter/${ch}/slides` });
     await new Promise(r => setTimeout(r, 400));
 
@@ -301,3 +302,4 @@ if (staticErrors > 0 || totalLayoutIssues > 0) {
   console.log('🎉 ALL PRESENTATION AUDIT & LAYOUT CHECKS PASSED PERFECTLY!\n');
   process.exit(0);
 }
+

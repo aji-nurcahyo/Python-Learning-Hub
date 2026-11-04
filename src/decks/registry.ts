@@ -9,6 +9,7 @@ import ch08Slides from '../../content/foundations/chapter-08/slides/deck.json';
 import ch09Slides from '../../content/foundations/chapter-09/slides/deck.json';
 import ch10Slides from '../../content/foundations/chapter-10/slides/deck.json';
 import ch11Slides from '../../content/foundations/chapter-11/slides/deck.json';
+import ch12Slides from '../../content/foundations/chapter-12/slides/deck.json';
 
 export interface SlideData {
   title: string;
@@ -34,13 +35,14 @@ export function getSlideDeckForChapter(chapterId: number): SlideData[] | null {
   if (chapterId === 9) return ch09Slides as SlideData[];
   if (chapterId === 10) return ch10Slides as SlideData[];
   if (chapterId === 11) return ch11Slides as SlideData[];
+  if (chapterId === 12) return ch12Slides as SlideData[];
   return null;
 }
 
 // Backward-compatibility meeting helper
 export const meetings = Array.from({ length: 16 }, (_, i) => {
   const number = i + 1;
-  const isAvail = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].includes(number);
+  const isAvail = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].includes(number);
   return {
     number,
     available: isAvail,
@@ -67,6 +69,8 @@ export const meetings = Array.from({ length: 16 }, (_, i) => {
         ? 'Functions & Scope'
         : number === 11
         ? 'Modules & Basic Exceptions'
+        : number === 12
+        ? 'Foundations Capstone Project'
         : 'Materi Pembelajaran',
     description: 'Modul pembelajaran Python Learning Hub.',
     tags: ['Python', 'Learning Hub'],

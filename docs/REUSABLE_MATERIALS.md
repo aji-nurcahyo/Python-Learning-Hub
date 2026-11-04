@@ -24,6 +24,12 @@ Dokumen ini menginventarisasi komponen edukasi konkret dari 8 sumber referensi t
 - **Decorator Pola Standar:** Decorator pengukuran latensi waktu eksekusi fungsi (`@timer_decorator`) dan decorator logging panggilan fungsi. Target: **Chapter 24**.
 - **Context Manager Kustom:** Implementasi class dengan method `__enter__` dan `__exit__` untuk pengelolaan resource koneksi jaringan atau soket telemetri. Target: **Chapter 24**.
 
+### D. Pola Arsitektur Capstone Proyek Terpadu (Chapter 12)
+- **Tiga Lapisan Modular:** Pemisahan `validators.py` (validasi murni), `student_manager.py` (logika bisnis murni), dan `main.py` (antarmuka CLI interaktif).
+- **In-Memory List of Dictionaries:** Pola manipulasi basis data lokal tanpa dependensi eksternal.
+- **Pola Tuple Return:** `tuple[bool, str, ...]` untuk transfer status dan pesan edukatif.
+- **Automated Unit Testing (`unittest`):** Pengujian menyeluruh fungsi bisnis dan validasi tanpa interaksi terminal.
+
 ---
 
 ## 2. Bank Soal Latihan & Kasus Uji (*Exercise Problem Sets*)

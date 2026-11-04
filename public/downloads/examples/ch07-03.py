@@ -19,3 +19,4 @@ print(f"Panjang Karakter   : {len(teks_telemetri)}")
 print(f"Kata 'PACKET'      : {jumlah_packet} kali")
 print(f"Karakter '_'       : {jumlah_garis_bawah} kali")
 print(f"Total Huruf Vokal  : {cacah_vokal}")
+
