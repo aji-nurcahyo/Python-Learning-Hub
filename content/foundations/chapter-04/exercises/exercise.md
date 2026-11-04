@@ -38,3 +38,4 @@ Kerjakan latihan berikut untuk melatih kemampuan Anda dalam menyusun antarmuka t
 1. Tampilkan tabel inventaris spektrum frekuensi dengan header:
    `BAND` (lebar 8, rata kiri), `RENTANG FREKUENSI` (lebar 20, rata tengah), dan `ALOKASI OPERATOR` (lebar 18, rata kanan).
 2. Cetak minimal 3 baris data alokasi operator seluler dengan batas garis horizontal di atas dan di bawah tabel.
+

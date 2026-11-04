@@ -17,3 +17,4 @@ print("Validasi Frekuensi (int/float):", valid_frekuensi)
 print("Validasi Daya TX (int):", valid_daya)
 print("Validasi Status (bool):", valid_status)
 print("Semua parameter valid:", valid_id and valid_frekuensi and valid_daya and valid_status)
+

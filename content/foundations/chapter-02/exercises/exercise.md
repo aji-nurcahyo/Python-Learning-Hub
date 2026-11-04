@@ -42,3 +42,4 @@ Kerjakan latihan berikut untuk menguji pemahaman Anda mengenai variabel, tipe da
    - `daya` harus bertipe `int` atau `float` dan nilainya harus $\ge 0$.
 2. Fungsi mengembalikan `True` jika valid, dan `False` jika terdapat tipe yang tidak sesuai atau nilai di luar batas.
 3. Uji fungsi dengan input: `(1800.5, 20)`, `("1800", 20)`, dan `(-900, 10)`.
+

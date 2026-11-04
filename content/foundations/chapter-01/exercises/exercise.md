@@ -43,3 +43,4 @@ Kerjakan serangkaian latihan berikut untuk memperkuat pemahaman fundamental Anda
 2. Dengan kecepatan gelombang $c = 3 \times 10^8\text{ m/s}$, hitung jarak tempuh gelombang menggunakan rumus:
    $$\text{jarak} = \text{kecepatan} \times \text{waktu}$$
 3. Tampilkan hasil perhitungan jarak dalam satuan meter dan kilometer ke layar terminal.
+

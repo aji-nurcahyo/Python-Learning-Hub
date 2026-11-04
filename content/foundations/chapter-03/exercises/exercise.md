@@ -39,3 +39,4 @@ Kerjakan latihan berikut untuk memperdalam penguasaan Anda terhadap operator ari
    - Wi-Fi 2.4 GHz ($f_1 = 2.4 \times 10^9\text{ Hz}$)
    - Wi-Fi 5.0 GHz ($f_2 = 5.0 \times 10^9\text{ Hz}$)
 3. Tampilkan perbandingan panjang gelombang kedua frekuensi tersebut dan simpulkan frekuensi mana yang memiliki perambatan gelombang lebih pendek.
+

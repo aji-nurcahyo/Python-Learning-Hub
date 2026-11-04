@@ -20,3 +20,4 @@ print(f"ID Antena terformat: ANT-{id_antena:04d}")
 
 # Pemisah ribuan dengan koma ({:,})
 print(f"Jarak total: {1500000:,} meter")
+

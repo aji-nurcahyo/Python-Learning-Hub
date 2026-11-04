@@ -13,3 +13,4 @@ print("rsrp > ambang (Lebih Baik):", rsrp_terukur > ambang_batas)
 print("rsrp < ambang (Lebih Buruk):", rsrp_terukur < ambang_batas)
 print("rsrp >= ambang:", rsrp_terukur >= ambang_batas)
 print("rsrp <= ambang:", rsrp_terukur <= ambang_batas)
+

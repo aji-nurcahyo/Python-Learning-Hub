@@ -6,29 +6,94 @@
   "levelCategory": "foundations",
   "title": "Strings & Text Processing",
   "subtitle": "Indexing, Slicing, Immutability & Metode String",
-  "description": "Eksplorasi mendalam string sebagai sequence immutable: pemotongan slice [start:stop:step], metode bawaan, dan pembersihan teks.",
+  "description": "Eksplorasi mendalam string sebagai sequence immutable: pemotongan slice [start:stop:step], metode bawaan, validasi format, dan parsing telemetri terstruktur.",
   "competencyFocus": "PCEP 3.3: Manipulasi sequence teks",
-  "estimatedHours": 3,
+  "estimatedHours": 4,
   "difficulty": "Beginner",
-  "available": false,
+  "available": true,
   "prerequisites": [
     "Chapter 06"
   ],
   "learningObjectives": [
     "Menerapkan indexing positif dan negatif serta slicing sequence",
     "Memanfaatkan metode string penting (strip, split, join, replace, find)",
-    "Memahami sifat immutability string dalam memori Python"
+    "Memahami sifat immutability string dalam memori Python",
+    "Melakukan validasi identifier perangkat dan parsing payload sensor IoT"
   ],
   "tags": [
     "Strings",
     "Slicing",
-    "Text Processing"
+    "Text Processing",
+    "Methods"
   ],
   "resources": {
-    "hasSlides": false,
-    "slidesDeck": null,
-    "starterCode": null,
-    "assignmentGuide": null,
+    "hasSlides": true,
+    "slidesDeck": "slides/deck.json",
+    "starterCode": "code/contoh.py",
+    "assignmentGuide": "assignments/tugas.md",
     "pptxDownload": null
+  },
+  "codeExample": {
+    "title": "Parsing Pesan Telemetri Sensor Terstruktur",
+    "code": "# Parsing Pesan Telemetri Sensor Terstruktur\nraw_payload = \"ID=BTS-04;FREQ=1800.5;PWR=40.0;STAT=ACTIVE\"\npasangan_field = raw_payload.split(\";\")\ndata_terurai = {}\n\nfor pair in pasangan_field:\n    kunci, nilai = pair.split(\"=\")\n    data_terurai[kunci] = nilai\n\nprint(\"Field Parsing:\", data_terurai)\nprint(f\"Node {data_terurai['ID']} aktif pada {data_terurai['FREQ']} MHz\")",
+    "outputKey": "ch07-06",
+    "explanation": "Metode .split(';') memecah string payload menjadi pasangan token field, kemudian pemisahan kedua .split('=') mengekstrak nama parameter dan nilainya ke dalam dictionary terorganisir."
+  },
+  "exercise": {
+    "title": "Latihan Terarah: Ekstraktor URL & Masking Data",
+    "instructions": [
+      "Ekstrak protokol, IP host, dan port dari string URL gateway jaringan.",
+      "Lakukan masking penyensoran 5 digit terakhir pada nomor seri perangkat nirkabel.",
+      "Validasi kepatuhan format alamat MAC menggunakan split(':') dan isalnum()."
+    ],
+    "tips": "Gunakan slicing dengan indeks negatif untuk memotong atau menyensor karakter dari belakang.",
+    "time": "15 menit"
+  },
+  "quiz": {
+    "question": "Apakah yang terjadi jika kode mengeksekusi: s = 'Python'; s[0] = 'J'?",
+    "options": [
+      "String s berubah nilainya menjadi 'Jython'",
+      "Terjadi galat TypeError karena string di Python bersifat immutable (tidak bisa dimodifikasi di tempat)",
+      "Karakter 'J' ditambahkan di depan kata 'Python' menjadi 'JPython'",
+      "String s terhapus otomatis dari memori Heap"
+    ],
+    "correctIndex": 1,
+    "explanation": "String di Python bersifat immutable (kekal). Anda tidak dapat mengubah elemen karakter di tempat menggunakan item assignment (s[0] = 'J'). Untuk mengubahnya, Anda harus membentuk string baru: s = 'J' + s[1:].",
+    "hint": "Ingat salah satu sifat fundamental string di Python yang melarang mutasi in-place."
+  },
+  "assignment": {
+    "title": "Tugas Praktik 07: Device Identifier & Sensor Message Processor",
+    "description": "Rancang program parser telemetri yang memvalidasi format ID perangkat, mengekstrak metrik sensor dari payload teks mentah, dan menyajikan laporan bersih.",
+    "instructions": [
+      "Validasi format ID perangkat berdasarkan prefiks 'NODE-', jumlah segmen strip, 3 huruf lokasi, dan 4 digit unit.",
+      "Urai payload mentah berbasis delimiter titik-koma ';' dan '=' menjadi data terstruktur.",
+      "Lakukan normalisasi teks status dan cetak kartu laporan pemantauan telemetri terformat."
+    ],
+    "rubric": [
+      {
+        "criteria": "Validasi Format Identifier",
+        "weight": 30,
+        "description": "Memeriksa prefiks, jumlah segmen split, validitas huruf kapital lokasi, dan 4 digit unit."
+      },
+      {
+        "criteria": "Parsing Delimiter & Pasangan Nilai",
+        "weight": 35,
+        "description": "Mengurai string sensor berbasis delimiter ';' dan '=' secara akurat."
+      },
+      {
+        "criteria": "Normalisasi & Pembersihan Teks",
+        "weight": 20,
+        "description": "Menghapus whitespace liar, membersihkan tag prefiks mentah, dan menstandarisasi huruf."
+      },
+      {
+        "criteria": "Kepatuhan Gaya PEP 8 & Struktur",
+        "weight": 15,
+        "description": "Penamaan snake_case, modularitas fungsi terpisah, dan blok idiomatis Python."
+      }
+    ],
+    "starterCode": "\"\"\"\nTugas Praktik 07: Device Identifier & Sensor Message Processor\n\"\"\"\ndef parse_payload(payload: str) -> dict:\n    data = {}\n    for item in payload.strip().split(';'):\n        if '=' in item:\n            k, v = item.split('=', 1)\n            data[k.strip()] = v.strip()\n    return data\n\nif __name__ == '__main__':\n    print(parse_payload('ID=NODE-01;TEMP=32.5;STAT=ok'))",
+    "starterFilename": "tugas_07.py",
+    "downloadMdUrl": "downloads/chapter-07/tugas.md",
+    "downloadPyUrl": "downloads/chapter-07/contoh.py"
   }
 }

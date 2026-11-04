@@ -6,29 +6,94 @@
   "levelCategory": "foundations",
   "title": "Loops & Iteration",
   "subtitle": "Pengulangan for, while, break, continue & else",
-  "description": "Mengulang tugas komputasi dengan for dan while, pemanfaatan range(), kontrol loop break dan continue, serta klausa else pada loop.",
+  "description": "Mengulang tugas komputasi dengan for dan while, pemanfaatan range(), kontrol loop break dan continue, serta pola algoritma akumulator.",
   "competencyFocus": "PCEP 3.2: Pengulangan dan kontrol iterasi",
   "estimatedHours": 4,
   "difficulty": "Beginner",
-  "available": false,
+  "available": true,
   "prerequisites": [
     "Chapter 05"
   ],
   "learningObjectives": [
     "Memilih antara for loop (definite iteration) dan while loop (indefinite iteration)",
     "Memanfaatkan fungsi range(start, stop, step) secara optimal",
-    "Mengendalikan siklus loop dengan break, continue, dan else block"
+    "Mengendalikan siklus loop dengan break, continue, dan else block",
+    "Menerapkan pola akumulator dan pencacah untuk statistik data streaming"
   ],
   "tags": [
     "For Loop",
     "While Loop",
-    "Range"
+    "Range",
+    "Iteration"
   ],
   "resources": {
-    "hasSlides": false,
-    "slidesDeck": null,
-    "starterCode": null,
-    "assignmentGuide": null,
+    "hasSlides": true,
+    "slidesDeck": "slides/deck.json",
+    "starterCode": "code/contoh.py",
+    "assignmentGuide": "assignments/tugas.md",
     "pptxDownload": null
+  },
+  "codeExample": {
+    "title": "Akumulasi Penjumlahan dan Perhitungan Nilai Rata-Rata",
+    "code": "# Akumulasi Penjumlahan dan Perhitungan Nilai Rata-Rata\ndaftar_daya_mw = [25.0, 32.5, 40.0, 18.5, 50.0]\ntotal_daya = 0.0\njumlah_data = 0\n\nfor daya in daftar_daya_mw:\n    total_daya += daya\n    jumlah_data += 1\n\nrata_rata = total_daya / jumlah_data\nprint(f\"Total: {total_daya:.1f} mW | Rata-Rata: {rata_rata:.2f} mW\")",
+    "outputKey": "ch06-03",
+    "explanation": "Pola akumulator (total += x) dan pola pencacah (count += 1) digunakan bersama for loop untuk menghitung total kumulatif dan nilai rata-rata dari koleksi data deret waktu."
+  },
+  "exercise": {
+    "title": "Latihan Terarah: Retransmisi Paket & Filter Sinyal",
+    "instructions": [
+      "Simulasikan retransmisi paket dengan while loop dan break saat menerima respon ACK.",
+      "Saring derau sinyal negatif menggunakan for loop dan kata kunci continue.",
+      "Cetak matriks pola penguatan antena berjenjang dengan nested loops."
+    ],
+    "tips": "Pastikan variabel loop selalu diperbarui untuk mencegah terjadinya infinite loop pada while.",
+    "time": "15 menit"
+  },
+  "quiz": {
+    "question": "Berapakah jumlah pengulangan yang dilakukan oleh kode: for i in range(1, 10, 2):?",
+    "options": [
+      "10 kali (1 sampai 10)",
+      "9 kali (1 sampai 9)",
+      "5 kali (1, 3, 5, 7, 9)",
+      "4 kali (2, 4, 6, 8)"
+    ],
+    "correctIndex": 2,
+    "explanation": "range(1, 10, 2) menghasilkan deret bilangan ganjil: 1, 3, 5, 7, dan 9. Bilangan berikutnya (11) melampaui batas henti eksklusif 10, sehingga loop dieksekusi tepat 5 kali.",
+    "hint": "Hitung pertambahan bilangan mulai dari 1 dengan kenaikan (step) 2 hingga sebelum menyentuh 10."
+  },
+  "assignment": {
+    "title": "Tugas Praktik 06: Sensor Data Monitoring Simulator",
+    "description": "Rancang program simulator pemrosesan aliran data telemetri sensor telekomunikasi dengan penyaringan anomali, kalkulasi ringkasan statistik, dan pelaporan rapi.",
+    "instructions": [
+      "Gunakan for loop untuk memproses deret sampel telemetri sensor suhu.",
+      "Terapkan continue untuk melewati data noise -999.0 C dan break jika suhu kritis >= 80 C.",
+      "Hitung total sampel valid, rata-rata, min, max, serta jumlah peringatan suhu waspada (>= 35 C)."
+    ],
+    "rubric": [
+      {
+        "criteria": "Implementasi Loop & Kontrol Alur",
+        "weight": 40,
+        "description": "Menerapkan for/while, continue untuk noise, dan break untuk darurat secara tepat."
+      },
+      {
+        "criteria": "Kalkulasi Akumulator & Statistik",
+        "weight": 30,
+        "description": "Perhitungan total, rata-rata, min, max, dan ambang waspada presisi."
+      },
+      {
+        "criteria": "Penanganan Terminasi & Pelaporan",
+        "weight": 20,
+        "description": "Format laporan konsol terstruktur rapi dan menyajikan status terminasi akurat."
+      },
+      {
+        "criteria": "Kepatuhan Gaya PEP 8 & Pythonic",
+        "weight": 10,
+        "description": "Penamaan variabel snake_case deskriptif dan struktur kode bersih."
+      }
+    ],
+    "starterCode": "\"\"\"\nTugas Praktik 06: Sensor Data Monitoring Simulator\n\"\"\"\ndef proses_sensor(aliran_data: list[float]) -> dict:\n    total = 0.0\n    valid = 0\n    for x in aliran_data:\n        if x == -999.0: continue\n        if x >= 80.0: break\n        total += x\n        valid += 1\n    return {'valid': valid, 'rata_rata': total / valid if valid > 0 else 0.0}\n\nif __name__ == '__main__':\n    print(proses_sensor([25.0, 30.0, -999.0, 35.0]))",
+    "starterFilename": "tugas_06.py",
+    "downloadMdUrl": "downloads/chapter-06/tugas.md",
+    "downloadPyUrl": "downloads/chapter-06/contoh.py"
   }
 }

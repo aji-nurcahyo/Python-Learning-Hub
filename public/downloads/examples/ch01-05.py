@@ -11,3 +11,4 @@ waktu_propagasi_mikrodetik = waktu_propagasi_detik * 1e6
 print("Jarak Transmisi:", jarak_meter, "meter")
 print("Kecepatan Gelombang:", kecepatan_cahaya, "m/s")
 print("Waktu Tempuh Propagasi:", waktu_propagasi_mikrodetik, "mikrodetik")
+

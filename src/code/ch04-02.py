@@ -12,3 +12,4 @@ frekuensi_khz = frekuensi_mhz * 1000
 print("Nilai teks asli:", input_simulasi, "| Tipe:", type(input_simulasi).__name__)
 print("Frekuensi (MHz):", frekuensi_mhz, "| Tipe:", type(frekuensi_mhz).__name__)
 print("Frekuensi (kHz):", frekuensi_khz, "| Tipe:", type(frekuensi_khz).__name__)
+

@@ -39,3 +39,4 @@ def inspeksi_node() -> None:
 
 if __name__ == "__main__":
     inspeksi_node()
+

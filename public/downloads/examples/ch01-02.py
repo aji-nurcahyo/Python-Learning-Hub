@@ -12,3 +12,4 @@ atau fungsi sesuai panduan standar PEP 257.
 
 print(f"Platform: {nama_platform}")
 print("Komentar tidak dieksekusi oleh interpreter CPython.")
+

@@ -53,3 +53,4 @@ Di mana $S_{\text{rx}}$ adalah sensitivitas batas penerima (misal: $-95.0\text{ 
 | **Penerapan Operator & Logika** | 30% | Menggunakan operator relasional dan ekspresi boolean untuk mengevaluasi kelayakan transmisi tautan. |
 | **Kepatuhan Gaya PEP 8** | 20% | Penamaan variabel deskriptif, spasi antar operator konsisten, dan modularitas fungsi. |
 | **Pengujian Kasus Uji Ekstrem** | 10% | Menyertakan kasus uji di mana tautan dinyatakan tidak layak karena margin tidak mencukupi. |
+

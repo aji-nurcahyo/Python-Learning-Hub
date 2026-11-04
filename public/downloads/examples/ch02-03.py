@@ -18,3 +18,4 @@ print("bool(0):", bool(0))
 print("bool(100):", bool(100))
 print("bool(''):", bool(""))
 print("bool('Aktif'):", bool("Aktif"))
+

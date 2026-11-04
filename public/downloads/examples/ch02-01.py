@@ -13,3 +13,4 @@ print("Kapasitas Kanal:", kapasitas_kanal)
 # Referensi variabel lain ke objek yang sama
 salinan_id = id_transceiver
 print("Apakah referensi menunjuk objek yang sama?", salinan_id is id_transceiver)
+

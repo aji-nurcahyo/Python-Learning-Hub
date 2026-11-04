@@ -12,3 +12,4 @@ else:
     print(f"Level Daya: {daya_dbm} dBm -> {status}")
 
 print("Blok percabangan selesai dieksekusi secara terurut.")
+

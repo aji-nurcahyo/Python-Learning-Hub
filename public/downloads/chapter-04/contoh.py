@@ -53,3 +53,4 @@ if __name__ == "__main__":
     demonstrasi_fstrings_dan_specifiers()
     demonstrasi_tabel_telemetri()
     print("Seluruh modul demonstrasi Chapter 04 berhasil dieksekusi.")
+

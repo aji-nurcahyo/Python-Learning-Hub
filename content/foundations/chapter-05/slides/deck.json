@@ -1,0 +1,120 @@
+[
+  {
+    "title": "Conditional Statements",
+    "body": "<p class=\"lead\">Pengambilan keputusan program: struktur if, elif, else, nested logic, dan guard clauses.</p><p class=\"note\">Level 1 · Python Foundations — Chapter 05</p>",
+    "kind": "cover",
+    "notes": "Selamat datang di Chapter 05: Conditional Statements. Kita akan mempelajari bagaimana program mengambil keputusan berdasarkan evaluasi kondisi logika."
+  },
+  {
+    "title": "Capaian Pembelajaran",
+    "body": "<ul><li>Memahami konsep alur kendali kondisional dan ekspresi boolean.</li><li>Mengimplementasikan struktur percabangan if, elif, dan else secara tepat.</li><li>Menggabungkan banyak kondisi menggunakan operator logika and, or, not.</li><li>Merancang percabangan bersarang dan menerapkan teknik guard clauses.</li><li>Mengidentifikasi dan memperbaiki kesalahan logika percabangan umum.</li></ul>",
+    "kind": "content",
+    "notes": "Paparkan sasaran capaian pembelajaran bab 05."
+  },
+  {
+    "title": "Konsep Logika Percabangan",
+    "body": "<ul><li>Secara default, Python mengeksekusi instruksi secara sekuensial dari atas ke bawah.</li><li>Pernyataan kondisional memungkinkan alur eksekusi bercabang sesuai nilai kebenaran (True/False).</li><li>Blok kode di bawah kondisi ditentukan oleh indentasi tepat 4 spasi standar PEP 8.</li></ul>",
+    "kind": "content",
+    "notes": "Gambarkan model mental percabangan rel kereta api sebagai analogi visual."
+  },
+  {
+    "title": "Deteksi Bilangan: if-elif-else",
+    "body": "<p>Menentukan apakah suatu bilangan bernilai positif, negatif, atau nol.</p>",
+    "kind": "code",
+    "notes": "Perhatikan bahwa jika kondisi > 0 sudah True, cabang elif dan else langsung dilewati.",
+    "example": "ch05-01"
+  },
+  {
+    "title": "Klasifikasi Nilai Akademik",
+    "body": "<p>Menerapkan pengujian rentang skor berurutan dari ambang batas tertinggi ke terendah.</p>",
+    "kind": "code",
+    "notes": "Tekankan pentingnya urutan evaluasi dari skor tertinggi ke terendah.",
+    "example": "ch05-02"
+  },
+  {
+    "title": "Aturan Tahun Kabisat: Logika Majemuk",
+    "body": "<p>Menggabungkan operator perbandingan modulo (%) dan operator logika (and, or).</p>",
+    "kind": "code",
+    "notes": "Tahun kabisat adalah contoh klasik pengujian logika gabungan dengan tanda kurung presedensi.",
+    "example": "ch05-03"
+  },
+  {
+    "title": "Validasi Multi-Kondisi",
+    "body": "<p>Mengevaluasi parameter tegangan suplai DC 48V, suhu operasional, dan tautan jaringan.</p>",
+    "kind": "code",
+    "notes": "Hubungkan dengan skenario pemantauan node telekomunikasi lapangan riil.",
+    "example": "ch05-04"
+  },
+  {
+    "title": "Studi Kasus: Klasifikasi Sinyal RSRP",
+    "body": "<p>Mengklasifikasikan kualitas sinyal telekomunikasi berdasarkan ambang batas pedagogis.</p><div class=\"callout\">Catatan: Ambang batas adalah asumsi instruksional pembelajaran.</div>",
+    "kind": "code",
+    "notes": "Jelaskan bahwa ambang batas RSRP yang digunakan adalah ilustrasi konseptual pembelajaran.",
+    "example": "ch05-05"
+  },
+  {
+    "title": "Validasi Masukan & Penanganan Galat",
+    "body": "<p>Memeriksa kelengkapan teks, tipe data, dan rentang alokasi frekuensi sebelum diproses.</p>",
+    "kind": "code",
+    "notes": "Tunjukkan teknik sanitasi data masukan menggunakan percabangan kondisional.",
+    "example": "ch05-06"
+  },
+  {
+    "title": "Percabangan Bersarang (Nested if)",
+    "body": "<ul><li>Pernyataan kondisional dapat diletakkan di dalam blok kondisional lainnya.</li><li>Setiap tingkat percabangan bersarang menambah indentasi 4 spasi baru.</li><li><em>Peringatan:</em> Percabangan yang terlalu dalam (lebih dari 3 tingkat) membuat kode sulit dibaca (disebut <em>Arrow Anti-Pattern</em>).</li></ul>",
+    "kind": "content",
+    "notes": "Bahas dampak negatif nesting berlebihan terhadap kemudahan pemeliharaan perangkat lunak."
+  },
+  {
+    "title": "Solusi Rekayasa: Guard Clauses",
+    "body": "<ul><li>Alih-alih membuat nested if yang dalam, lakukan pemeriksaan kondisi batas atau galat di awal fungsi.</li><li>Jika syarat tidak terpenuhi, langsung keluar dengan <code>return</code> dini.</li><li>Jalur normal (<em>Happy Path</em>) tetap berada di tingkat indentasi terluar yang bersih.</li></ul>",
+    "kind": "content",
+    "notes": "Kenalkan teknik guard clauses sebagai best practice industri modern."
+  },
+  {
+    "title": "Operator Ternary (Conditional Expression)",
+    "body": "<ul><li>Penulisan ekspresi satu baris untuk memilih nilai: <code>A if KONDISI else B</code></li><li>Contoh: <code>status = \"Kabisat\" if tahun % 4 == 0 else \"Biasa\"</code></li><li>Ringkas dan ekspresif, sangat cocok untuk penugasan variabel sederhana.</li></ul>",
+    "kind": "content",
+    "notes": "Ingatkan peserta agar tidak menggunakan ternary jika logikanya kompleks atau bertingkat."
+  },
+  {
+    "title": "Kesalahan Logika Umum Pemula",
+    "body": "<ul><li><strong>Tertukar '=' dan '==':</strong> Menggunakan '=' dalam kondisi memicu SyntaxError di Python.</li><li><strong>Dead Code:</strong> Meletakkan kondisi umum di atas kondisi spesifik sehingga kondisi spesifik tidak pernah terjangkau.</li><li><strong>Boundary Off-by-one:</strong> Salah menggunakan '&gt;' alih-alih '&gt;=' untuk nilai ambang.</li><li><strong>Kondisi Salah:</strong> <code>if x == 1 or 2:</code> harus ditulis <code>if x == 1 or x == 2:</code>.</li></ul>",
+    "kind": "content",
+    "notes": "Ulas contoh-contoh kesalahan umum yang sering dialami mahasiswa pada ujian praktikum."
+  },
+  {
+    "title": "Kuis: Urutan Cabang elif",
+    "body": "<p>Apa output jika <code>skor = 90</code> dievaluasi pada kode berikut?</p><pre><code>if skor >= 60:\n    print(\"Lulus\")\nelif skor >= 85:\n    print(\"Sangat Memuaskan\")</code></pre>",
+    "kind": "quiz",
+    "question": "Apakah yang akan tercetak jika skor = 90?",
+    "answer": "\"Lulus\" (karena kondisi pertama sudah bernilai True sehingga elif diabaikan).",
+    "notes": "Ini adalah contoh dead code. Urutan elif harus selalu disusun dari rentang yang paling ketat ke yang paling umum."
+  },
+  {
+    "title": "Kuis: Evaluasi String pada 'or'",
+    "body": "<p>Mengapa ekspresi <code>status == \"A\" or \"B\"</code> selalu bernilai True di Python?</p>",
+    "kind": "quiz",
+    "question": "Mengapa status == 'A' or 'B' selalu bernilai True?",
+    "answer": "Karena string non-kosong 'B' selalu dievaluasi sebagai True (Truthy) oleh interpreter.",
+    "notes": "Sintaks yang benar adalah status == 'A' or status == 'B' atau menggunakan operator membership: status in ('A', 'B')."
+  },
+  {
+    "title": "Latihan Terarah Chapter 05",
+    "body": "<p class=\"lead\">Latihan Mandiri 05</p><ul><li>1. Klasifikasi suhu ruang server dengan guard clauses.</li><li>2. Validasi login otentikasi teknisi dengan operator logika.</li><li>3. Deteksi tipe segitiga berdasarkan panjang ketiga sisi.</li></ul>",
+    "kind": "content",
+    "notes": "Arahkan peserta membuka berkas exercises/exercise.md untuk petunjuk detail."
+  },
+  {
+    "title": "Tugas Praktik Chapter 05",
+    "body": "<p class=\"lead\">Tugas 05: Student Grade and Signal Quality Classifier</p><p>Rancang program terpadu yang memvalidasi masukan numerik, mengklasifikasi nilai akademik dan sinyal RSRP, serta memberikan penjelasan diagnostik.</p><div class=\"callout\">Rubrik penilaian: Validasi Masukan (30%), Kebenaran Klasifikasi (40%), Kerapian PEP 8 (20%), Kasus Uji Batas (10%).</div>",
+    "kind": "content",
+    "notes": "Jelaskan bahwa tugas mencakup penanganan nilai batas (boundary conditions) secara teliti."
+  },
+  {
+    "title": "Ringkasan Bab 05",
+    "body": "<ul><li>Pernyataan if, elif, dan else mengarahkan alur komputasi berdasarkan evaluasi boolean.</li><li>Gunakan operator logika and, or, not untuk pengambilan keputusan multi-parameter.</li><li>Hindari percabangan bersarang yang dalam dengan menerapkan pola guard clauses.</li><li>Perhatikan urutan evaluasi kondisi untuk mencegah timbulnya dead code.</li></ul>",
+    "kind": "summary",
+    "notes": "Selesai Chapter 05. Lanjutkan ke Chapter 06 tentang Perulangan dan Iterasi."
+  }
+]

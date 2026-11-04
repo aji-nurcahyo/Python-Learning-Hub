@@ -18,3 +18,4 @@ print("Perlu Inspeksi Lapangan:", perlu_inspeksi)
 print("Short-circuit AND:", False and (10 / 0 == 0))  # Tidak memicu ZeroDivisionError
 # Pada 'True or ...', operan kedua tidak akan pernah dievaluasi
 print("Short-circuit OR:", True or (10 / 0 == 0))   # Tidak memicu ZeroDivisionError
+

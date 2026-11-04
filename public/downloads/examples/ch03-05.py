@@ -19,3 +19,4 @@ print("Panjang Gelombang (lambda):", round(panjang_gelombang, 4), "meter")
 print("Panjang Gelombang (cm):", round(panjang_gelombang * 100, 2), "cm")
 print("Daya Pemancar (mW):", daya_mw, "mW")
 print("Daya Pemancar (dBm):", round(daya_dbm, 2), "dBm")
+

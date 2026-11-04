@@ -51,3 +51,4 @@ Anda diminta membuat modul `tugas_02.py` yang memproses parameter stasiun pemanc
 | **Logika Validasi Parameter** | 30% | Memvalidasi tipe data dengan `isinstance()` dan memeriksa batasan nilai numerik (frekuensi dan daya). |
 | **Kepatuhan Gaya PEP 8** | 20% | Penamaan variabel deskriptif snake_case, kerapian spasi, dan struktur kode bersih. |
 | **Pengujian Kasus Uji** | 10% | Menyertakan kasus uji tambahan dengan input valid dan input di luar batas toleransi. |
+

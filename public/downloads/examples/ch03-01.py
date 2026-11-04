@@ -12,3 +12,4 @@ print("Pembagian Riil (a / b):", a / b)
 print("Pembagian Bulat (a // b):", a // b)
 print("Sisa Bagi / Modulo (a % b):", a % b)
 print("Eksponensial / Pangkat (a ** 2):", a ** 2)
+

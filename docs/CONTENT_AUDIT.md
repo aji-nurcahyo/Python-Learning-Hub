@@ -16,11 +16,11 @@ Pemeriksaan membedakan secara tegas antara **metadata/kerangka silabus** (judul,
 
 ### Metrik Status Kelengkapan Konten:
 - **Total Modul Chapter:** 30 Chapter
-- **Modul Berstatus Lengkap & Aktif (*Production Ready*):** 8 Chapter (**26.7%**) — Chapter 01, 02, 03, 04, 08, 09, 10, 11
-- **Modul Berstatus Kerangka Silabus (*Pending Content Creation*):** 22 Chapter (**73.3%**) — Chapter 05–07, Chapter 12–30
-- **Total Slide Presentasi Reveal.js Aktif:** 148 Slide
-- **Total Skrip Contoh Python Terverifikasi CPython:** 44 Program Mandiri
-- **Total Soal Latihan & Kuis Terintegrasi:** 20 Latihan Terarah, 8 Kuis Konsep Interaktif, 8 Tugas Berubrik
+- **Modul Berstatus Lengkap & Aktif (*Production Ready*):** 11 Chapter (**36.7%**) — Chapter 01 s.d. 11
+- **Modul Berstatus Kerangka Silabus (*Pending Content Creation*):** 19 Chapter (**63.3%**) — Chapter 12–30
+- **Total Slide Presentasi Reveal.js Aktif:** 202 Slide
+- **Total Skrip Contoh Python Terverifikasi CPython:** 64 Program Mandiri
+- **Total Soal Latihan & Kuis Terintegrasi:** 32 Latihan Terarah, 11 Kuis Konsep Interaktif, 11 Tugas Berubrik
 
 ---
 
@@ -51,9 +51,9 @@ Setiap chapter dinilai berdasarkan 7 dimensi kelengkapan materi:
 | **Ch 02** | L1 | `02-variables-data-types` — Variables & Data Types | `[V]` | `[V]` (17) | `[V]` (5) | `[V]` | `[V]` | `[V]` | `[V]` | **Siap Belajar** |
 | **Ch 03** | L1 | `03-operators-expressions` — Operators & Expressions | `[V]` | `[V]` (16) | `[V]` (5) | `[V]` | `[V]` | `[V]` | `[V]` | **Siap Belajar** |
 | **Ch 04** | L1 | `04-input-output` — Input & Output | `[V]` | `[V]` (17) | `[V]` (5) | `[V]` | `[V]` | `[V]` | `[V]` | **Siap Belajar** |
-| **Ch 05** | L1 | `05-conditionals` — Conditional Statements | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | Pending |
-| **Ch 06** | L1 | `06-loops-iteration` — Loops & Iteration | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | Pending |
-| **Ch 07** | L1 | `07-strings-processing` — Strings & Text Processing | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | Pending |
+| **Ch 05** | L1 | `05-conditionals` — Conditional Statements | `[V]` | `[V]` (18) | `[V]` (6) | `[V]` | `[V]` | `[V]` | `[V]` | **Siap Belajar** |
+| **Ch 06** | L1 | `06-loops-iteration` — Loops & Iteration | `[V]` | `[V]` (18) | `[V]` (7) | `[V]` | `[V]` | `[V]` | `[V]` | **Siap Belajar** |
+| **Ch 07** | L1 | `07-strings-processing` — Strings & Text Processing | `[V]` | `[V]` (18) | `[V]` (7) | `[V]` | `[V]` | `[V]` | `[V]` | **Siap Belajar** |
 | **Ch 08** | L1 | `08-lists-tuples` — Lists & Tuples | `[P]` | `[V]` (21) | `[V]` (2) | `[V]` | `[V]` | `[V]` | `[-]` | **Siap Belajar** |
 | **Ch 09** | L1 | `09-dictionaries-sets` — Dictionaries & Sets | `[P]` | `[V]` (21) | `[V]` (2) | `[V]` | `[V]` | `[V]` | `[-]` | **Siap Belajar** |
 | **Ch 10** | L1 | `10-functions-scope` — Functions & Scope | `[P]` | `[V]` (20) | `[V]` (2) | `[V]` | `[V]` | `[V]` | `[-]` | **Siap Belajar** |

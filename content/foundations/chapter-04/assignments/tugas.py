@@ -62,3 +62,4 @@ if __name__ == "__main__":
         {"id": "NODE-04", "lokasi": "Gerbang Utama", "frekuensi": 2600.0, "daya": 10.0, "loss": 0.0580, "status": "ALERT"},
     ]
     generate_laporan_telemetri(nodes_sample)
+

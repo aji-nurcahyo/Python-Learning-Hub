@@ -43,3 +43,4 @@ Anda diminta membuat program mandiri `tugas_04.py` yang menerima atau memproses 
 | **Format Specifiers & Alignment** | 30% | Menerapkan format persentase `:.2%`, desimal `:.1f`, dan perataan kolom (`<`, `^`, `>`) yang sejajar rapi. |
 | **Kepatuhan Gaya PEP 8** | 20% | Penamaan fungsi dan variabel menggunakan `snake_case`, struktur kode modular, dan dokumentasi docstring. |
 | **Logika Ringkasan Metrik** | 10% | Perhitungan nilai rata-rata daya pancar dan rata-rata packet loss akurat. |
+

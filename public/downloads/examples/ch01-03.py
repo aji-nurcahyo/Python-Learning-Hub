@@ -11,3 +11,4 @@ print("FREKUENSI_MHZ:", FREKUENSI_MHZ)
 
 # Standar PEP 8: Variabel biasa menggunakan huruf kecil snake_case
 print("Variabel berbeda meski hanya berbeda besar-kecil huruf.")
+

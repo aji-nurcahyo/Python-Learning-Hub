@@ -1,0 +1,121 @@
+[
+  {
+    "title": "Loops & Iteration",
+    "body": "<p class=\"lead\">Pengulangan terhitung for, while kondisional, range(), kontrol loop break & continue, serta pola akumulator.</p><p class=\"note\">Level 1 · Python Foundations — Chapter 06</p>",
+    "kind": "cover",
+    "notes": "Selamat datang di Chapter 06: Loops & Iteration. Pada sesi ini kita menguasai teknik pengulangan komputasi data secara efisien dan terkontrol."
+  },
+  {
+    "title": "Capaian Pembelajaran",
+    "body": "<ul><li>Membedakan definite iteration (for loop) dan indefinite iteration (while loop).</li><li>Memanfaatkan fungsi range(start, stop, step) untuk kontrol urutan bilangan.</li><li>Menerapkan pola counter dan akumulator untuk statistik data teragregasi.</li><li>Mengendalikan siklus pengulangan menggunakan break, continue, dan loop else.</li><li>Mendeteksi dan mencegah potensi perulangan tak hingga (infinite loop).</li></ul>",
+    "kind": "content",
+    "notes": "Paparkan sasaran capaian pembelajaran bab 06."
+  },
+  {
+    "title": "Paradigma Iterasi di Python",
+    "body": "<ul><li><strong>for loop:</strong> Berjalan di atas koleksi elemen (list, string, range) dengan jumlah putaran yang terdefinisi sejak awal.</li><li><strong>while loop:</strong> Berjalan selama ekspresi kondisi boolean bernilai True; ideal untuk proses pemantauan berkesinambungan.</li><li>Indentasi 4 spasi menandai badan instruksi yang akan diulang.</li></ul>",
+    "kind": "content",
+    "notes": "Bahas kapan harus memilih for loop dan kapan harus memilih while loop."
+  },
+  {
+    "title": "Deret Bilangan dengan range()",
+    "body": "<p>Berbagai variasi deret: rentang dasar, batas kustom, kelipatan langkah (step), dan hitung mundur.</p>",
+    "kind": "code",
+    "notes": "Ingatkan bahwa batas stop pada range() bersifat eksklusif (tidak diikutsertakan).",
+    "example": "ch06-01"
+  },
+  {
+    "title": "Penerapan for: Tabel Perkalian",
+    "body": "<p>Menghitung dan mencetak tabel perkalian terformat menggunakan for loop dan range().</p>",
+    "kind": "code",
+    "notes": "Tunjukkan bagaimana variabel indeks 'i' bertambah secara otomatis pada tiap putaran loop.",
+    "example": "ch06-02"
+  },
+  {
+    "title": "Pola Akumulator & Rata-Rata",
+    "body": "<p>Menghitung total daya transmisi dan mencari nilai rata-rata sampel secara bertahap.</p>",
+    "kind": "code",
+    "notes": "Jelaskan perbedaan peran variabel akumulator (total += x) dan variabel pencacah (count += 1).",
+    "example": "ch06-03"
+  },
+  {
+    "title": "while Loop & Validasi Berulang",
+    "body": "<p>Menjalankan loop hingga pengguna memberikan masukan yang valid di dalam batas toleransi.</p>",
+    "kind": "code",
+    "notes": "Simulasi ini membuktikan cara kerja while loop untuk menolak masukan salah secara berulang.",
+    "example": "ch06-04"
+  },
+  {
+    "title": "Kontrol Loop: break dan continue",
+    "body": "<ul><li><code>break</code> : Memutus loop seketika dan langsung melompat keluar ke baris setelah loop.</li><li><code>continue</code> : Menghentikan iterasi saat ini dan langsung melompat ke iterasi berikutnya.</li><li>Kombinasi keduanya memungkinkan penanganan data glitch dan alarm darurat secara elegan.</li></ul>",
+    "kind": "content",
+    "notes": "Jelaskan peran break untuk alarm kritis dan continue untuk menyaring data noise."
+  },
+  {
+    "title": "Studi Kasus: Pemantauan Suhu Sensor",
+    "body": "<p>Menyaring glitch sensor dengan <code>continue</code> dan memutus pemantauan saat alarm darurat dengan <code>break</code>.</p>",
+    "kind": "code",
+    "notes": "Amati bagaimana -999.0 dilewati tanpa menghentikan pemantauan, sedangkan suhu > 75.0 memicu penghentian loop.",
+    "example": "ch06-05"
+  },
+  {
+    "title": "Pencarian Min / Max Manual",
+    "body": "<p>Algoritma fundamental pencarian nilai ekstrem data sinyal terlemah dan terkuat menggunakan loop.</p>",
+    "kind": "code",
+    "notes": "Jelaskan inisialisasi menggunakan elemen pertama data[0] alih-alih angka nol arbitrer.",
+    "example": "ch06-06"
+  },
+  {
+    "title": "Perulangan Bersarang (Nested Loops)",
+    "body": "<p>Pembangkitan kisi koordinat matriks antena MIMO dan pola bertingkat.</p>",
+    "kind": "code",
+    "notes": "Tunjukkan bahwa untuk setiap 1 baris, seluruh kolom diselesaikan terlebih dahulu oleh inner loop.",
+    "example": "ch06-07"
+  },
+  {
+    "title": "Klausa else pada Loop",
+    "body": "<ul><li>Python mendukung klausa <code>else</code> langsung setelah blok <code>for</code> atau <code>while</code>.</li><li>Blok <code>else:</code> hanya berjalan jika loop <strong>selesai secara normal</strong> tanpa interupsi <code>break</code>.</li><li>Sangat berguna untuk pencarian elemen: jika loop selesai tanpa break, berarti item tidak ditemukan.</li></ul>",
+    "kind": "content",
+    "notes": "Jelaskan keunikan fitur loop-else di Python yang tidak ditemukan di bahasa seperti C atau Java."
+  },
+  {
+    "title": "Kesalahan Umum pada Perulangan",
+    "body": "<ul><li><strong>Infinite Loop:</strong> Lupa memperbarui variabel kondisi pada while loop.</li><li><strong>Off-by-One Error:</strong> Mengira range(1, 10) menghasilkan 10 angka, padahal hanya 1 s.d. 9.</li><li><strong>Inisialisasi di Dalam Loop:</strong> Menginisialisasi total = 0 di dalam loop sehingga nilai selalu ter-reset.</li><li><strong>Mutasi List saat Iterasi:</strong> Menghapus item dari list saat loop sedang berjalan.</li></ul>",
+    "kind": "content",
+    "notes": "Ulas cara mendeteksi dan menghentikan script yang terjebak infinite loop (Ctrl+C di terminal)."
+  },
+  {
+    "title": "Kuis: Karakteristik range()",
+    "body": "<p>Berapa banyak angka yang dihasilkan oleh pemanggilan <code>range(2, 10, 3)</code> dan apa saja angkanya?</p>",
+    "kind": "quiz",
+    "question": "Berapa banyak angka dan apa saja nilai dari range(2, 10, 3)?",
+    "answer": "3 angka, yaitu: 2, 5, dan 8.",
+    "notes": "Mulai dari 2, ditambah 3 menjadi 5, ditambah 3 menjadi 8. Penambahan berikutnya adalah 11 yang telah melampaui batas stop 10."
+  },
+  {
+    "title": "Kuis: Perilaku break dan else",
+    "body": "<p>Apakah blok <code>else:</code> pada loop akan dieksekusi jika loop dihentikan oleh pernyataan <code>break</code>?</p>",
+    "kind": "quiz",
+    "question": "Apakah blok else pada loop akan berjalan jika terjadi break?",
+    "answer": "Tidak. Blok else hanya dieksekusi jika perulangan selesai secara alami tanpa interupsi break.",
+    "notes": "Ini adalah sifat khas mekanisme loop-else di Python."
+  },
+  {
+    "title": "Latihan Terarah Chapter 06",
+    "body": "<p class=\"lead\">Latihan Mandiri 06</p><ul><li>1. Simulasi retransmisi paket data dengan batas percobaan maksimal.</li><li>2. Pencarian bilangan prima sederhana menggunakan loop dan break.</li><li>3. Perhitungan deret derau sinyal kumulatif.</li></ul>",
+    "kind": "content",
+    "notes": "Arahkan peserta membuka berkas exercises/exercise.md."
+  },
+  {
+    "title": "Tugas Praktik Chapter 06",
+    "body": "<p class=\"lead\">Tugas 06: Sensor Data Monitoring Simulator</p><p>Rancang simulator pemrosesan aliran data telemetri sensor telekomunikasi dengan penyaringan anomali, kalkulasi ringkasan statistik, dan pelaporan rapi.</p><div class=\"callout\">Rubrik penilaian: Algoritma Loop (40%), Penanganan break/continue (30%), Statistik (20%), PEP 8 (10%).</div>",
+    "kind": "content",
+    "notes": "Jelaskan bahwa tugas wajib diselesaikan tanpa modul eksternal pihak ketiga."
+  },
+  {
+    "title": "Ringkasan Bab 06",
+    "body": "<ul><li>for loop digunakan untuk iterasi sequence; while loop untuk kondisi dinamis.</li><li>range(start, stop, step) menghasilkan barisan bilangan tanpa memboroskan memori.</li><li>break memutus loop; continue melompati iterasi saat ini; loop-else berjalan jika tuntas normal.</li><li>Pola counter dan akumulator adalah pondasi analisis statistik data deret waktu.</li></ul>",
+    "kind": "summary",
+    "notes": "Selesai Chapter 06. Lanjutkan ke Chapter 07 tentang Strings & Text Processing."
+  }
+]

@@ -13,3 +13,4 @@ print(laporan)
 print(f"Daya dua kali lipat: {daya_tx * 2} dBm")
 print(f"Status uppercase: {nama_stasiun.upper()}")
 print(f"Kondisi daya aman: {'YA' if daya_tx <= 50 else 'TIDAK'}")
+

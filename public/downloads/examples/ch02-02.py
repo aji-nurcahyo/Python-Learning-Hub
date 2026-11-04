@@ -10,3 +10,4 @@ print("jumlah_antena:", jumlah_antena, "-> tipe:", type(jumlah_antena).__name__)
 print("frekuensi_ghz:", frekuensi_ghz, "-> tipe:", type(frekuensi_ghz).__name__)
 print("nama_protokol:", nama_protokol, "-> tipe:", type(nama_protokol).__name__)
 print("status_aktif:", status_aktif, "-> tipe:", type(status_aktif).__name__)
+

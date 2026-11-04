@@ -1,0 +1,121 @@
+[
+  {
+    "title": "Strings & Text Processing",
+    "body": "<p class=\"lead\">Pengindeksan, pemotongan slicing, sifat immutability, ragam metode teks, dan parsing data telemetri terstruktur.</p><p class=\"note\">Level 1 · Python Foundations — Chapter 07</p>",
+    "kind": "cover",
+    "notes": "Selamat datang di Chapter 07: Strings & Text Processing. Di bab ini kita akan mengeksplorasi teknik pengolahan data teks, ekstraksi informasi, dan pembersihan pesan sensor."
+  },
+  {
+    "title": "Capaian Pembelajaran",
+    "body": "<ul><li>Memahami karakteristik string sebagai sequence terurut dan bersifat immutable.</li><li>Menerapkan pengindeksan positif dan negatif serta slicing [start:stop:step].</li><li>Menguasai metode string esensial: strip, lower, upper, split, join, replace, find.</li><li>Melakukan validasi format pengenal perangkat telekomunikasi (device identifier).</li><li>Mengurai (parse) pesan sensor berbasis delimiter dan merekonstruksi teks laporan.</li></ul>",
+    "kind": "content",
+    "notes": "Paparkan sasaran capaian pembelajaran bab 07."
+  },
+  {
+    "title": "Sifat Kekal String (Immutability)",
+    "body": "<ul><li>String di Python bersifat <strong>immutable</strong>: karakternya tidak bisa diubah langsung di memori setelah dibuat.</li><li>Pernyataan seperti <code>teks[0] = 'X'</code> akan memicu <strong>TypeError</strong>.</li><li>Semua metode string menghasilkan <strong>objek string baru</strong>, membiarkan string aslinya tetap utuh.</li></ul>",
+    "kind": "content",
+    "notes": "Tekankan sifat immutability untuk mencegah kebingungan saat mahasiswa mencoba memodifikasi karakter satu per satu."
+  },
+  {
+    "title": "Pemformatan Nama & Normalisasi",
+    "body": "<p>Menghapus whitespace dengan strip(), kapitalisasi dengan title(), dan ekstraksi bagian kata dengan split().</p>",
+    "kind": "code",
+    "notes": "Amati bagaimana string mentah dibersihkan dan dipotong menjadi nama depan dan nama belakang.",
+    "example": "ch07-01"
+  },
+  {
+    "title": "Pengindeksan & Slicing [start:stop:step]",
+    "body": "<ul><li><strong>Indeks Positif:</strong> Dimulai dari 0 di sisi kiri.</li><li><strong>Indeks Negatif:</strong> Dimulai dari -1 di karakter paling kanan.</li><li><strong>Slicing [start:stop]:</strong> Mengambil potongan dari indeks start hingga stop-1.</li><li><strong>Pembalikan String:</strong> <code>teks[::-1]</code> membalik urutan seluruh karakter secara efisien.</li></ul>",
+    "kind": "content",
+    "notes": "Jelaskan bahwa batas stop selalu bersifat eksklusif pada slicing."
+  },
+  {
+    "title": "Pencarian Teks dalam Log Jaringan",
+    "body": "<p>Pencarian kata kunci error menggunakan operator 'in', metode find(), serta pengecekan startswith().</p>",
+    "kind": "code",
+    "notes": "Metode find() mengembalikan posisi indeks kemunculan pertama, atau -1 jika substring tidak ditemukan.",
+    "example": "ch07-02"
+  },
+  {
+    "title": "Penghitungan Karakter & Substring",
+    "body": "<p>Menghitung kemunculan token dengan metode count() dan iterasi manual karakter vokal.</p>",
+    "kind": "code",
+    "notes": "Metode count() mempermudah audit jumlah token atau karakter pembatas di dalam payload teks.",
+    "example": "ch07-03"
+  },
+  {
+    "title": "Pemeriksaan Palindrom dengan [::-1]",
+    "body": "<p>Menguji kesamaan kata dari depan dan belakang menggunakan slicing ber-step negatif.</p>",
+    "kind": "code",
+    "notes": "Tunjukkan kekuatan teknik slicing satu baris teks[::-1] di Python.",
+    "example": "ch07-04"
+  },
+  {
+    "title": "Validasi Pengenal Perangkat (Device ID)",
+    "body": "<p>Memeriksa format prefiks 'NODE-', panjang tepat 10 karakter, dan validitas karakter alfanumerik.</p>",
+    "kind": "code",
+    "notes": "Kombinasi len(), startswith(), dan isalnum() merupakan pola baku validasi identitas perangkat.",
+    "example": "ch07-05"
+  },
+  {
+    "title": "Parsing Pesan Sensor Terstruktur",
+    "body": "<p>Memecah pesan telemetri berbasis delimiter titik-koma ';' dan pasangan kunci-nilai '='.</p>",
+    "kind": "code",
+    "notes": "Jelaskan langkah demi langkah penguraian string mentah menjadi struktur data terorganisir.",
+    "example": "ch07-06"
+  },
+  {
+    "title": "Pembersihan & Normalisasi Teks",
+    "body": "<p>Menghapus simbol tanda baca liar, merapikan spasi ganda dengan split-join, dan penyeragaman huruf.</p>",
+    "kind": "code",
+    "notes": "Trik ' '.join(teks.split()) adalah cara paling bersih merapikan spasi ganda di Python.",
+    "example": "ch07-07"
+  },
+  {
+    "title": "Metode Pengujian Tipe Karakter",
+    "body": "<ul><li><code>.isalnum()</code>: Seluruh karakter berupa huruf atau angka.</li><li><code>.isalpha()</code>: Seluruh karakter berupa huruf alfabet.</li><li><code>.isdigit()</code>: Seluruh karakter berupa digit angka 0-9.</li><li><code>.isspace()</code>: Seluruh karakter berupa spasi atau baris baru.</li></ul>",
+    "kind": "content",
+    "notes": "Metode pengujian karakter ini mengembalikan boolean dan sangat efektif untuk sanitasi data masukan."
+  },
+  {
+    "title": "Kesalahan Umum Pengolahan String",
+    "body": "<ul><li><strong>Item Assignment:</strong> Menulis teks[0] = 'A' memicu TypeError karena sifat immutability.</li><li><strong>IndexError:</strong> Mengakses indeks di luar jangkauan (slicing lebih aman karena tidak memicu IndexError).</li><li><strong>Lupa Re-assignment:</strong> Memanggil teks.strip() tanpa menampung hasil kembaliannya ke variabel.</li><li><strong>Kesalahan Escape Characters:</strong> Karakter backslash '\\' membutuhkan raw string (r\"...\") jika berupa path folder Windows atau regex.</li></ul>",
+    "kind": "content",
+    "notes": "Ulas solusi untuk masing-masing kesalahan umum pemula."
+  },
+  {
+    "title": "Kuis: Slicing Python",
+    "body": "<p>Apakah hasil dari <code>\"TELEKOMUNIKASI\"[4:10]</code> di Python 3?</p>",
+    "kind": "quiz",
+    "question": "Apakah hasil dari 'TELEKOMUNIKASI'[4:10]?",
+    "answer": "\"KOMUNI\" (indeks 4 sampai 9: K, O, M, U, N, I).",
+    "notes": "Karakter pada indeks ke-4 adalah 'K', dan berakhir sebelum indeks ke-10 ('K' kedua), menghasilkan 6 karakter."
+  },
+  {
+    "title": "Kuis: Sifat Immutability",
+    "body": "<p>Apakah yang terjadi jika kode mengeksekusi <code>s = \"halo\"; s.upper()</code> lalu mencetak <code>print(s)</code>?</p>",
+    "kind": "quiz",
+    "question": "Apakah yang tercetak dari s = 'halo'; s.upper(); print(s)?",
+    "answer": "'halo' (huruf kecil asli, karena upper() mengembalikan objek baru yang belum disimpan ke s).",
+    "notes": "Untuk memperbarui variabel s, harus dituliskan s = s.upper()."
+  },
+  {
+    "title": "Latihan Terarah Chapter 07",
+    "body": "<p class=\"lead\">Latihan Mandiri 07</p><ul><li>1. Ekstraksi nomor port dan IP dari URL koneksi soket jaringan.</li><li>2. Penyensoran kata sensitif (data masking) nomor kartu identitas.</li><li>3. Analisis frekuensi karakter paket data biner hex.</li></ul>",
+    "kind": "content",
+    "notes": "Arahkan peserta membuka berkas exercises/exercise.md."
+  },
+  {
+    "title": "Tugas Praktik Chapter 07",
+    "body": "<p class=\"lead\">Tugas 07: Device Identifier & Sensor Message Processor</p><p>Rancang program parser telemetri yang memvalidasi format ID perangkat, mengekstrak metrik sensor dari payload teks mentah, dan menyajikan laporan bersih.</p><div class=\"callout\">Rubrik penilaian: Validasi ID (30%), Parsing Delimiter (35%), Normalisasi Teks (20%), Kerapian PEP 8 (15%).</div>",
+    "kind": "content",
+    "notes": "Jelaskan bahwa tugas mencakup pemisahan token terstruktur dan verifikasi sufiks alfanumerik."
+  },
+  {
+    "title": "Ringkasan Bab 07",
+    "body": "<ul><li>String di Python bersifat sequence terurut dan immutable (tidak dapat dimodifikasi di tempat).</li><li>Indexing zero-based dan slicing [start:stop:step] memudahkan pemotongan teks secara aman.</li><li>Metode string seperti strip, split, join, replace, find menyediakan toolkit lengkap manipulasi teks.</li><li>Kombinasi metode string dan ekspresi kondisional memungkinkan pembuatan parser protokol jaringan yang andal.</li></ul>",
+    "kind": "summary",
+    "notes": "Selamat! Anda telah menyelesaikan seluruh rangkaian materi Bab 05, 06, dan 07 pada Batch 2."
+  }
+]

@@ -20,3 +20,4 @@ print("Setelah *= 3:", total_antena)
 
 total_antena //= 2 # total_antena = total_antena // 2
 print("Setelah //= 2:", total_antena)
+

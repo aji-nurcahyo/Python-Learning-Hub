@@ -13,3 +13,4 @@ print("Setelah re-assignment float:", sinyal, "| Tipe:", type(sinyal).__name__)
 
 sinyal = True
 print("Setelah re-assignment boolean:", sinyal, "| Tipe:", type(sinyal).__name__)
+

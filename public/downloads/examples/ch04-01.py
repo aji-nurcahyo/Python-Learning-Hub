@@ -12,3 +12,4 @@ print(" [TERHUBUNG]")
 
 # Kombinasi sep dan end
 print("STATUS", "READY", sep=": ", end=" | ID: BTS-01\n")
+

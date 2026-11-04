@@ -81,3 +81,4 @@ if __name__ == "__main__":
     demonstrasi_type_casting()
     demonstrasi_validasi_bts()
     print("Seluruh modul demonstrasi Chapter 02 berhasil dieksekusi.")
+

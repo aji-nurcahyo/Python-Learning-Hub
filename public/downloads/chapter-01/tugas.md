@@ -42,3 +42,4 @@ Anda diminta untuk membuat skrip Python mandiri bernama `tugas_01.py` yang memba
 | **Kepatuhan Gaya PEP 8** | 30% | Penamaan variabel menggunakan `snake_case`, penggunaan indentasi 4 spasi tanpa karakter tab, spasi di sekitar operator. |
 | **Dokumentasi & Docstring** | 20% | Menyertakan modul docstring dan komentar yang menjelaskan tujuan setiap bagian kode secara logis. |
 | **Struktur Eksekusi** | 10% | Menggunakan idiom `if __name__ == '__main__':` untuk menjaga modularitas program. |
+

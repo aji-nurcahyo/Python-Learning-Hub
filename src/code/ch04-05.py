@@ -18,3 +18,4 @@ for kode, frek, status in data_bts:
     print(f"{kode:<12} | {frek:^10.1f} MHz | {status:>12}")
 
 print("=" * 45)
+

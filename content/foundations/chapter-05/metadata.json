@@ -6,11 +6,11 @@
   "levelCategory": "foundations",
   "title": "Conditional Statements",
   "subtitle": "Pengambilan Keputusan: if, elif, else & Guard Clauses",
-  "description": "Merancang alur logika percabangan, kondisi bertingkat, operator ternary, dan pola guard clauses untuk kode yang bersih.",
+  "description": "Merancang alur logika percabangan, kondisi bertingkat, operator ternary, dan pola guard clauses untuk kode yang bersih dan andal.",
   "competencyFocus": "PCEP 3.1: Percabangan dan logika alur",
   "estimatedHours": 3,
   "difficulty": "Beginner",
-  "available": false,
+  "available": true,
   "prerequisites": [
     "Chapter 03",
     "Chapter 04"
@@ -18,18 +18,83 @@
   "learningObjectives": [
     "Menulis struktur percabangan if, elif, dan else secara tepat",
     "Menggabungkan kondisi majemuk menggunakan and, or, dan not",
-    "Menghindari nested if yang terlalu dalam dengan teknik guard clauses"
+    "Menghindari nested if yang terlalu dalam dengan teknik guard clauses",
+    "Mengimplementasikan ekspresi kondisional ternary untuk penugasan variabel bersih"
   ],
   "tags": [
     "Branching",
     "if-else",
-    "Decision Logic"
+    "Decision Logic",
+    "Conditionals"
   ],
   "resources": {
-    "hasSlides": false,
-    "slidesDeck": null,
-    "starterCode": null,
-    "assignmentGuide": null,
+    "hasSlides": true,
+    "slidesDeck": "slides/deck.json",
+    "starterCode": "code/contoh.py",
+    "assignmentGuide": "assignments/tugas.md",
     "pptxDownload": null
+  },
+  "codeExample": {
+    "title": "Klasifikasi Nilai Akademik Mahasiswa",
+    "code": "# Klasifikasi Nilai Akademik Mahasiswa\ndef konversi_skor_ke_huruf(skor: float) -> str:\n    if skor >= 80.0:\n        return \"A\"\n    elif skor >= 70.0:\n        return \"B\"\n    elif skor >= 60.0:\n        return \"C\"\n    elif skor >= 50.0:\n        return \"D\"\n    else:\n        return \"E\"\n\nprint(\"Skor 85.5 -> Huruf Mutu:\", konversi_skor_ke_huruf(85.5))\nprint(\"Skor 72.0 -> Huruf Mutu:\", konversi_skor_ke_huruf(72.0))",
+    "outputKey": "ch05-02",
+    "explanation": "Struktur if-elif-else mengevaluasi kondisi secara berurutan dari atas ke bawah. Segera setelah kondisi pertama yang bernilai True terpenuhi, blok tersebut dieksekusi dan cabang lainnya dilewati."
+  },
+  "exercise": {
+    "title": "Latihan Terarah: Evaluasi Suhu Server & Otentikasi",
+    "instructions": [
+      "Terapkan fungsi evaluasi suhu server menggunakan guard clauses untuk mendeteksi kondisi darurat.",
+      "Susun ekspresi logika boolean multi-parameter untuk otentikasi pintu shelter BTS.",
+      "Klasifikasikan jenis segitiga antena berdasarkan panjang ketiga sisinya."
+    ],
+    "tips": "Urutkan pengujian nilai batas dari kriteria yang paling ketat agar tidak terjadi dead code.",
+    "time": "15 menit"
+  },
+  "quiz": {
+    "question": "Apakah yang akan terjadi jika urutan percabangan diletakkan dengan 'elif skor >= 85' berada di bawah 'if skor >= 60'?",
+    "options": [
+      "Kode akan menghasilkan galat SyntaxError saat dikompilasi",
+      "Nilai 90 akan salah dikategorikan oleh cabang pertama (skor >= 60) sehingga cabang 85 menjadi dead code",
+      "CPython akan otomatis mengurutkan ulang cabang kondisi berdasarkan angka terbesar",
+      "Keduanya akan dieksekusi secara bersamaan"
+    ],
+    "correctIndex": 1,
+    "explanation": "CPython mengevaluasi percabangan dari atas ke bawah dan berhenti pada kondisi pertama yang bernilai True. Karena 90 >= 60 bernilai True, cabang >= 85 di bawahnya tidak akan pernah terjangkau (dead code).",
+    "hint": "Ingat sifat evaluasi alur percabangan yang berhenti seketika saat kondisi pertama terpenuhi."
+  },
+  "assignment": {
+    "title": "Tugas Praktik 05: Student Grade and Signal Quality Classifier",
+    "description": "Rancang program cerdas terstruktur yang memvalidasi masukan numerik, mengklasifikasi nilai akademik dan sinyal RSRP, serta menyajikan analisis diagnostik.",
+    "instructions": [
+      "Validasi masukan numerik terhadap batas rentang sah (skor 0-100 dan RSRP -140 s.d. -40 dBm).",
+      "Klasifikasikan nilai akademik ke grade A, B, C, D, E dan sinyal RSRP ke Sangat Baik, Baik, Cukup, Buruk.",
+      "Tampilkan pesan diagnostik lengkap untuk masing-masing hasil klasifikasi dan tangani nilai batas kritis."
+    ],
+    "rubric": [
+      {
+        "criteria": "Validasi Masukan & Kondisi Batas",
+        "weight": 30,
+        "description": "Menolak nilai di luar rentang dan menangani nilai batas kritis secara akurat."
+      },
+      {
+        "criteria": "Kebenaran Logika Percabangan",
+        "weight": 40,
+        "description": "Mengimplementasikan if-elif-else yang runtut, tanpa dead code, dengan hasil presisi."
+      },
+      {
+        "criteria": "Penjelasan Diagnostik Lengkap",
+        "weight": 15,
+        "description": "Memberikan keterangan kontekstual yang informatif untuk setiap kategori."
+      },
+      {
+        "criteria": "Kepatuhan Gaya PEP 8 & Struktur",
+        "weight": 15,
+        "description": "Penamaan snake_case, modularitas fungsi, dan pola idiomatis Python."
+      }
+    ],
+    "starterCode": "\"\"\"\nTugas Praktik 05: Student Grade and Signal Quality Classifier\n\"\"\"\ndef klasifikasi_nilai_akademik(skor: float) -> tuple[bool, str, str]:\n    if skor < 0 or skor > 100:\n        return False, '-', 'Skor di luar rentang sah'\n    if skor >= 80: return True, 'A', 'Sangat Memuaskan'\n    elif skor >= 70: return True, 'B', 'Memuaskan'\n    elif skor >= 60: return True, 'C', 'Cukup'\n    elif skor >= 50: return True, 'D', 'Kurang'\n    else: return True, 'E', 'Gagal'\n\nif __name__ == '__main__':\n    print(klasifikasi_nilai_akademik(85.5))",
+    "starterFilename": "tugas_05.py",
+    "downloadMdUrl": "downloads/chapter-05/tugas.md",
+    "downloadPyUrl": "downloads/chapter-05/contoh.py"
   }
 }
