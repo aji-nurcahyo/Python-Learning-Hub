@@ -99,3 +99,4 @@ export function getPowerPointDownloadUrl(chapterId: number): string | null {
   const pptx = getChapterResources(chapterId).powerpoint;
   return pptx ? getAssetUrl(pptx) : null;
 }
+

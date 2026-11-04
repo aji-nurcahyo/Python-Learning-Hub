@@ -195,3 +195,4 @@ if (errorCount > 0) {
   console.log('\nSUCCESS: All chapter presentations, slide decks, PPTX files, and resources are 100% verified!');
   process.exit(0);
 }
+
