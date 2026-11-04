@@ -6,29 +6,94 @@
   "levelCategory": "foundations",
   "title": "Variables & Data Types",
   "subtitle": "Variabel Dinamis, Tipe Data Skalar & Konversi",
-  "description": "Menyimpan nilai dalam memori, tipe int, float, str, bool, type hinting dasar, dan konversi tipe data eksplisit.",
+  "description": "Menyimpan nilai dalam memori, tipe int, float, str, bool, pemahaman dynamic typing, dan konversi tipe data eksplisit.",
   "competencyFocus": "PCEP 2.1: Literal, variabel, dan konversi tipe",
   "estimatedHours": 3,
   "difficulty": "Beginner",
-  "available": false,
+  "available": true,
   "prerequisites": [
     "Chapter 01"
   ],
   "learningObjectives": [
     "Mendeklarasikan variabel dengan penamaan snake_case sesuai PEP 8",
     "Membedakan tipe data integer, floating-point, boolean, dan string",
-    "Melakukan type casting dengan int(), float(), str(), dan bool()"
+    "Melakukan type casting dengan int(), float(), str(), dan bool()",
+    "Menggunakan isinstance() untuk memvalidasi tipe data yang aman"
   ],
   "tags": [
     "Variables",
     "Types",
-    "Casting"
+    "Casting",
+    "Scalars"
   ],
   "resources": {
-    "hasSlides": false,
-    "slidesDeck": null,
-    "starterCode": null,
-    "assignmentGuide": null,
+    "hasSlides": true,
+    "slidesDeck": "slides/deck.json",
+    "starterCode": "code/contoh.py",
+    "assignmentGuide": "assignments/tugas.md",
     "pptxDownload": null
+  },
+  "codeExample": {
+    "title": "Variabel sebagai Referensi Objek di Memori",
+    "code": "# Variabel sebagai Referensi Objek di Memori\nnama_stasiun = \"BTS-Sukarame-01\"\nid_transceiver = 1042\nkapasitas_kanal = 64\n\nprint(\"Nama Stasiun:\", nama_stasiun)\nprint(\"ID Transceiver:\", id_transceiver)\nprint(\"Kapasitas Kanal:\", kapasitas_kanal)\n\nsalinan_id = id_transceiver\nprint(\"Apakah referensi menunjuk objek yang sama?\", salinan_id is id_transceiver)",
+    "outputKey": "ch02-01",
+    "explanation": "Variabel di Python bekerja sebagai label penunjuk (pointer) ke objek di memori. Operator 'is' membuktikan bahwa dua variabel menunjuk ke objek identik yang sama di memori."
+  },
+  "exercise": {
+    "title": "Latihan Terarah: Deklarasi Parameter Jaringan",
+    "instructions": [
+      "Deklarasikan variabel nama_operator (str), frekuensi_mhz (float), dan kapasitas (int).",
+      "Lakukan konversi data string mentah '1800.5' ke dalam tipe data float.",
+      "Gunakan fungsi type() dan isinstance() untuk memverifikasi tipe data hasil konversi."
+    ],
+    "tips": "Ingat bahwa string numerik dengan tanda titik seperti '1800.5' tidak dapat langsung diubah ke int() sebelum diubah ke float() terlebih dahulu.",
+    "time": "15 menit"
+  },
+  "quiz": {
+    "question": "Manakah nilai yang menghasilkan nilai logika True ketika dievaluasi menggunakan fungsi bawaan bool()?",
+    "options": [
+      "bool(0)",
+      "bool(\"\")",
+      "bool(\"0\")",
+      "bool(0.0)"
+    ],
+    "correctIndex": 2,
+    "explanation": "bool(\"0\") menghasilkan True karena string tersebut tidak kosong (memiliki panjang 1 karakter). Sebaliknya, angka 0, float 0.0, dan string kosong \"\" bernilai Falsy (False).",
+    "hint": "Perhatikan perbedaan antara angka integer nol dengan string yang berisi karakter teks '0'."
+  },
+  "assignment": {
+    "title": "Tugas Praktik 02: Validasi Parameter Transceiver BTS",
+    "description": "Rancang parser parameter konfigurasi stasiun pemancar dengan validasi tipe data ketat dan konversi tipe teruji.",
+    "instructions": [
+      "Ambil input mentah string parameter stasiun BTS.",
+      "Lakukan pembersihan spasi dan type casting ke tipe str, float, int, dan bool.",
+      "Validasi batasan nilai numerik dan cetak laporan hasil verifikasi konfigurasi."
+    ],
+    "rubric": [
+      {
+        "criteria": "Kebenaran Type Casting",
+        "weight": 40,
+        "description": "Mengonversi seluruh string mentah ke tipe data target secara tepat tanpa galat runtime."
+      },
+      {
+        "criteria": "Logika Validasi Parameter",
+        "weight": 30,
+        "description": "Menerapkan isinstance() dan memeriksa batasan nilai frekuensi serta daya pancar."
+      },
+      {
+        "criteria": "Kepatuhan Gaya PEP 8",
+        "weight": 20,
+        "description": "Penamaan variabel snake_case deskriptif, spasi operator, dan keterbacaan kode."
+      },
+      {
+        "criteria": "Pengujian Kasus Uji",
+        "weight": 10,
+        "description": "Menyertakan verifikasi data keluaran dengan kasus uji normal dan batas."
+      }
+    ],
+    "starterCode": "\"\"\"\nTugas Praktik 02: Validasi Parameter Transceiver BTS\n\"\"\"\ndef proses_konfigurasi_bts(raw_name: str, raw_freq: str, raw_power: str, raw_status: str) -> dict:\n    bts_name = raw_name.strip()\n    frekuensi = float(raw_freq)\n    daya = int(raw_power)\n    aktif = bool(int(raw_status))\n    return {'nama': bts_name, 'frekuensi': frekuensi, 'daya': daya, 'aktif': aktif}\n\nif __name__ == '__main__':\n    print(proses_konfigurasi_bts('BTS-01', '1800.0', '40', '1'))",
+    "starterFilename": "tugas_02.py",
+    "downloadMdUrl": "downloads/chapter-02/tugas.md",
+    "downloadPyUrl": "downloads/chapter-02/contoh.py"
   }
 }

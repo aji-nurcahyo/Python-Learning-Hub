@@ -16,11 +16,11 @@ Pemeriksaan membedakan secara tegas antara **metadata/kerangka silabus** (judul,
 
 ### Metrik Status Kelengkapan Konten:
 - **Total Modul Chapter:** 30 Chapter
-- **Modul Berstatus Lengkap & Aktif (*Production Ready*):** 4 Chapter (**13.3%**) — Chapter 08, 09, 10, 11
-- **Modul Berstatus Kerangka Silabus (*Pending Content Creation*):** 26 Chapter (**86.7%**) — Chapter 01–07, Chapter 12–30
-- **Total Slide Presentasi Reveal.js Aktif:** 82 Slide
-- **Total Skrip Contoh Python Terverifikasi CPython:** 24 Program Mandiri
-- **Total Soal Latihan & Kuis Terintegrasi:** 8 Latihan Terarah, 4 Kuis Konsep Interaktif, 4 Tugas Berubrik
+- **Modul Berstatus Lengkap & Aktif (*Production Ready*):** 8 Chapter (**26.7%**) — Chapter 01, 02, 03, 04, 08, 09, 10, 11
+- **Modul Berstatus Kerangka Silabus (*Pending Content Creation*):** 22 Chapter (**73.3%**) — Chapter 05–07, Chapter 12–30
+- **Total Slide Presentasi Reveal.js Aktif:** 148 Slide
+- **Total Skrip Contoh Python Terverifikasi CPython:** 44 Program Mandiri
+- **Total Soal Latihan & Kuis Terintegrasi:** 20 Latihan Terarah, 8 Kuis Konsep Interaktif, 8 Tugas Berubrik
 
 ---
 
@@ -47,10 +47,10 @@ Setiap chapter dinilai berdasarkan 7 dimensi kelengkapan materi:
 
 | No | Level | Slug & Judul Chapter | Penjelasan Konsep | Slide Reveal.js | Kode Python | Output CPython | Latihan & Kuis | Tugas & Rubrik | Referensi Pustaka | Status Rilis |
 |:---|:---|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **Ch 01** | L1 | `01-introduction` — Introduction to Python | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | Pending |
-| **Ch 02** | L1 | `02-variables-data-types` — Variables & Data Types | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | Pending |
-| **Ch 03** | L1 | `03-operators-expressions` — Operators & Expressions | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | Pending |
-| **Ch 04** | L1 | `04-input-output` — Input & Output | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | Pending |
+| **Ch 01** | L1 | `01-introduction` — Introduction to Python | `[V]` | `[V]` (16) | `[V]` (5) | `[V]` | `[V]` | `[V]` | `[V]` | **Siap Belajar** |
+| **Ch 02** | L1 | `02-variables-data-types` — Variables & Data Types | `[V]` | `[V]` (17) | `[V]` (5) | `[V]` | `[V]` | `[V]` | `[V]` | **Siap Belajar** |
+| **Ch 03** | L1 | `03-operators-expressions` — Operators & Expressions | `[V]` | `[V]` (16) | `[V]` (5) | `[V]` | `[V]` | `[V]` | `[V]` | **Siap Belajar** |
+| **Ch 04** | L1 | `04-input-output` — Input & Output | `[V]` | `[V]` (17) | `[V]` (5) | `[V]` | `[V]` | `[V]` | `[V]` | **Siap Belajar** |
 | **Ch 05** | L1 | `05-conditionals` — Conditional Statements | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | Pending |
 | **Ch 06** | L1 | `06-loops-iteration` — Loops & Iteration | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | Pending |
 | **Ch 07** | L1 | `07-strings-processing` — Strings & Text Processing | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | Pending |
@@ -100,3 +100,4 @@ Setiap chapter dinilai berdasarkan 7 dimensi kelengkapan materi:
 1. Mengadopsi materi pembelajaran terbuka terverifikasi (Python Official Tutorial, Think Python, 30 Days of Python, CS50P, Software Carpentry) dengan mematuhi lisensi masing-masing.
 2. Memprioritaskan penulisan konten untuk **Chapter 01 s.d. 07** guna melengkapi Level 1 Foundations agar ramah pemula sebelum melanjutkan ke Level 2 dan Level 3.
 3. Menerapkan **Standar Konten Modular** yang seragam mencakup narasi bahasa Indonesia, 15–25 slide interaktif, 5–8 contoh kode CPython terverifikasi, latihan terarah, dan tugas berbasis studi kasus teknik/telekomunikasi.
+

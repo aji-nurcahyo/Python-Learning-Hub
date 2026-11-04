@@ -226,3 +226,4 @@ Dokumen ini memetakan 8 sumber edukasi terkemuka dan berstandar internasional ke
 - **Topik:** Proyek integrasi menyeluruh tingkat profesional: perancangan sistem backend microservice lengkap dengan FastAPI, asynchronous background task, database persistent, unit & integration test `pytest` (>80% coverage), kontainerisasi Docker, dan pipeline CI/CD GitHub Actions.
 - **Rujukan Utama:** Industri Best Practices & Production Python Standards.
 - **Kebutuhan Konten Asli:** Capstone Project: *"Cloud-Native IoT Telecommunications Monitoring & Alerting Microservice"*.
+

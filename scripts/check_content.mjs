@@ -60,15 +60,20 @@ console.log(`✓ 5 specialization tracks verified in content/specializations/`);
 
 // 3. Verify Active Chapter Slides & Python Examples
 const activeChecks = [
-  { ch: 'foundations/chapter-10', legacyMeeting: 9 },
-  { ch: 'foundations/chapter-08', legacyMeeting: 10 },
+  'foundations/chapter-01',
+  'foundations/chapter-02',
+  'foundations/chapter-03',
+  'foundations/chapter-04',
+  'foundations/chapter-08',
+  'foundations/chapter-10',
 ];
 
-for (const { ch, legacyMeeting } of activeChecks) {
-  const pad = String(legacyMeeting).padStart(2, '0');
+for (const ch of activeChecks) {
   const deckFile = resolve(contentRoot, ch, 'slides/deck.json');
   const tugasFile = resolve(contentRoot, ch, 'assignments/tugas.md');
-  const contohFile = resolve(contentRoot, ch, 'assignments/contoh.py');
+  const contohFile = existsSync(resolve(contentRoot, ch, 'code/contoh.py'))
+    ? resolve(contentRoot, ch, 'code/contoh.py')
+    : resolve(contentRoot, ch, 'assignments/contoh.py');
 
   if (!existsSync(deckFile) || !existsSync(tugasFile) || !existsSync(contohFile)) {
     console.error(`Missing required active educational asset in ${ch}`);

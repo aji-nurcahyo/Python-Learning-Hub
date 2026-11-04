@@ -11,11 +11,11 @@ for file in sorted((root/'src/code').rglob('*.py')):
     if run.returncode: raise SystemExit(f'{file}:\n{run.stderr}')
     key=file.relative_to(root/'src/code').with_suffix('').as_posix()
     outputs[key]=run.stdout
-for n in [9,10]:
-    file=root/f'pertemuan-{n:02}/contoh.py'
-    run=subprocess.run([sys.executable,str(file)],env=env,capture_output=True,text=True,encoding='utf-8',timeout=10)
+for n, ch in [(9, 10), (10, 8)]:
+    file = root / f'content/foundations/chapter-{ch:02d}/assignments/contoh.py'
+    run = subprocess.run([sys.executable, str(file)], cwd=file.parent, env=env, capture_output=True, text=True, encoding='utf-8', timeout=10)
     if run.returncode: raise SystemExit(run.stderr)
-    outputs[f'original-{n}']=run.stdout
+    outputs[f'original-{n}'] = run.stdout
 target=root/'src/code/outputs.json'
 if check:
     if not target.exists() or json.loads(target.read_text(encoding='utf-8'))!=outputs:

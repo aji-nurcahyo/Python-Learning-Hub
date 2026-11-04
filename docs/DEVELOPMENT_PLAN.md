@@ -31,17 +31,22 @@ Setiap fase memiliki gerbang kualitas (*quality gates*) yang harus dipenuhi sebe
 ### FASE 1: Melengkapi Fondasi Inti Level 1 (Prioritas Tertinggi / P1)
 *Target: Menjadikan Level 1 Python Foundations 100% lengkap dan siap dipelajari dari awal bagi pemula.*
 
-| Chapter | Judul & Fokus Materi | Estimasi Beban | Sumber Rujukan Utama | Keluaran yang Dihasilkan |
+| Chapter | Judul & Fokus Materi | Estimasi Beban | Sumber Rujukan Utama | Status & Keluaran yang Dihasilkan |
 |:---|:---|:---:|:---|:---|
-| **Ch 01** | `01-introduction` — Ekosistem, Interpreter & Skrip Pertama | 4 Jam | [DOCS] Sec 1-2, [THINK] Ch 1 | `index.md`, 18 slide, 5 contoh kode, 3 latihan, 1 tugas |
-| **Ch 02** | `02-variables-data-types` — Variabel, Tipe Skalar & Memory | 4 Jam | [THINK] Ch 2, [30DAY] Day 02 | `index.md`, 18 slide, 6 contoh kode, 4 latihan, 1 tugas |
-| **Ch 03** | `03-operators-expressions` — Operator Aritmatika & Logika | 4 Jam | [DOCS] Sec 3, [30DAY] Day 03 | `index.md`, 18 slide, 6 contoh kode, 4 latihan, 1 tugas |
-| **Ch 04** | `04-input-output` — Masukan Pengguna & Formatted f-Strings | 4 Jam | [DOCS] Sec 7.1, [CS50P] Wk 0 | `index.md`, 16 slide, 5 contoh kode, 3 latihan, 1 tugas |
-| **Ch 05** | `05-conditionals` — Percabangan If-Elif-Else & Alur Logika | 5 Jam | [DOCS] Sec 4.1, [CS50P] Wk 1 | `index.md`, 20 slide, 6 contoh kode, 4 latihan, 1 tugas |
-| **Ch 06** | `06-loops-iteration` — Perulangan While, For & Range | 5 Jam | [DOCS] Sec 4.2-4.3, [SWCARP] Ep 2 | `index.md`, 20 slide, 7 contoh kode, 4 latihan, 1 tugas |
-| **Ch 07** | `07-strings-processing` — Slicing & Metode String | 4 Jam | [DOCS] Sec 3.1.2, [30DAY] Day 04 | `index.md`, 18 slide, 6 contoh kode, 4 latihan, 1 tugas |
-| **Ch 08–11**| *Pengayaan Narasi Konsep Bacaan pada Modul yang Sudah Aktif* | 4 Jam | [DOCS], [THINK], ITERA upstream | Memperkaya `index.md` dan menambah daftar referensi |
-| **Ch 12** | `12-foundations-capstone` — Foundations Capstone Project | 6 Jam | [CS50P] Projects, Telecom specs | Panduan proyek capstone CLI, starter code, rubrik 100% |
+| **Ch 01** | `01-introduction` — Ekosistem, Interpreter & Skrip Pertama | 4 Jam | [DOCS] Sec 1-2, [THINK] Ch 1 | **SELESAI (100%)**: `index.md`, 16 slide, 5 contoh kode, 3 latihan, 1 tugas |
+| **Ch 02** | `02-variables-data-types` — Variabel, Tipe Skalar & Memory | 4 Jam | [THINK] Ch 2, [30DAY] Day 02 | **SELESAI (100%)**: `index.md`, 17 slide, 5 contoh kode, 3 latihan, 1 tugas |
+| **Ch 03** | `03-operators-expressions` — Operator Aritmatika & Logika | 4 Jam | [DOCS] Sec 3, [30DAY] Day 03 | **SELESAI (100%)**: `index.md`, 16 slide, 5 contoh kode, 3 latihan, 1 tugas |
+| **Ch 04** | `04-input-output` — Masukan Pengguna & Formatted f-Strings | 4 Jam | [DOCS] Sec 7.1, [CS50P] Wk 0 | **SELESAI (100%)**: `index.md`, 17 slide, 5 contoh kode, 3 latihan, 1 tugas |
+| **Ch 05** | `05-conditionals` — Percabangan If-Elif-Else & Alur Logika | 5 Jam | [DOCS] Sec 4.1, [CS50P] Wk 1 | `index.md`, 20 slide, 6 contoh kode, 4 latihan, 1 tugas (Batch 2) |
+| **Ch 06** | `06-loops-iteration` — Perulangan While, For & Range | 5 Jam | [DOCS] Sec 4.2-4.3, [SWCARP] Ep 2 | `index.md`, 20 slide, 7 contoh kode, 4 latihan, 1 tugas (Batch 2) |
+| **Ch 07** | `07-strings-processing` — Slicing & Metode String | 4 Jam | [DOCS] Sec 3.1.2, [30DAY] Day 04 | `index.md`, 18 slide, 6 contoh kode, 4 latihan, 1 tugas (Batch 2) |
+| **Ch 08–11**| *Pengayaan Narasi Konsep Bacaan pada Modul yang Sudah Aktif* | 4 Jam | [DOCS], [THINK], ITERA upstream | **AKTIF (100%)**: Memperkaya `index.md` dan menambah daftar referensi |
+| **Ch 12** | `12-foundations-capstone` — Foundations Capstone Project | 6 Jam | [CS50P] Projects, Telecom specs | Panduan proyek capstone CLI, starter code, rubrik 100% (Batch 3) |
+
+*Status Kemajuan Fase 1:*
+- **Batch 1 (Chapter 01 s.d. 04):** **100% Selesai & Terverifikasi** (CPython 3, Slide Deck, Typecheck, Build, Routes).
+- **Existing Active (Chapter 08 s.d. 11):** **100% Aktif & Terintegrasi**.
+- **Batch 2 (Chapter 05 s.d. 07) & Batch 3 (Chapter 12 Capstone):** Siap dikerjakan pada iterasi berikutnya.
 
 *Milestone Fase 1:* Seluruh 12 Chapter di Level 1 Foundations berstatus **Tersedia Penuh (100% Active)**. Pengguna pemula dapat mempelajari dasar Python secara mandiri dari awal hingga akhir level.
 
@@ -122,3 +127,4 @@ Sebelum suatu chapter diubah statusnya menjadi `"available": true`, modul terseb
    - Menyertakan daftar referensi resmi di bagian penutup modul dengan pernyataan lisensi asal.
 7. **Integritas Build Produksi:**
    - `npm run build` sukses 100% dan lolos seluruh pengujian rute statis di `dist/`.
+

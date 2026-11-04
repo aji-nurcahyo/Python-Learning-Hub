@@ -1,0 +1,113 @@
+[
+  {
+    "title": "Input & Output",
+    "body": "<p class=\"lead\">Interaksi pengguna, kontrol print(), interpolasi modern f-strings, format specifiers, dan laporan tabel terstruktur.</p><p class=\"note\">Level 1 · Python Foundations — Chapter 04</p>",
+    "kind": "cover",
+    "notes": "Selamat datang di Chapter 04: Input & Output. Kita akan mempelajari komunikasi interaktif dengan pengguna dan formatting teks tingkat lanjut."
+  },
+  {
+    "title": "Capaian Pembelajaran",
+    "body": "<ul><li>Memahami siklus aliran standar stdin, stdout, dan stderr.</li><li>Mengatur karakter pemisah (sep) dan penutup (end) pada fungsi print().</li><li>Menerima input pengguna dengan input() dan melakukan casting numerik.</li><li>Menerapkan formatted string literals (f-strings) sesuai standar PEP 498.</li><li>Menggunakan format specifiers (:.2f, :.1%, :04d) dan perataan teks (&lt;, &gt;, ^) untuk tata letak tabel.</li></ul>",
+    "kind": "content",
+    "notes": "Jelaskan sasaran pembelajaran bab 04. Tekankan pentingnya tampilan output yang rapi pada aplikasi teknik."
+  },
+  {
+    "title": "Aliran Standar (Standard Streams)",
+    "body": "<ul><li><strong>stdin:</strong> Aliran masukan ketikan keyboard pengguna.</li><li><strong>stdout:</strong> Aliran keluaran utama yang dicetak ke konsol terminal.</li><li><strong>stderr:</strong> Aliran diagnostik pesan galat sistem.</li><li>Python mengintegrasikan aliran ini melalui fungsi bawaan <code>input()</code> dan <code>print()</code>.</li></ul>",
+    "kind": "content",
+    "notes": "Kenalkan konsep streams di sistem operasi. Hubungkan dengan cara terminal menerima dan menampilkan karakter."
+  },
+  {
+    "title": "Kontrol print(): sep dan end",
+    "body": "<p>Menyesuaikan karakter pemisah antar argumen dan karakter di ujung baris cetak.</p>",
+    "kind": "code",
+    "notes": "Perhatikan bahwa end='' mencegah baris baru otomatis, memungkinkan pencetakan teks bertahap.",
+    "example": "ch04-01"
+  },
+  {
+    "title": "Menerima Input Pengguna",
+    "body": "<ul><li>Fungsi <code>input(prompt)</code> membaca baris teks hingga tombol <em>Enter</em> ditekan.</li><li><strong>Krusial:</strong> Hasil dari <code>input()</code> selalu berupa teks string (<code>str</code>).</li><li>Jika mengharapkan angka numerik, segera bungkus dengan <code>int()</code> atau <code>float()</code>.</li><li>Contoh: <code>frekuensi = float(input(\"Frekuensi (MHz): \"))</code></li></ul>",
+    "kind": "content",
+    "notes": "Tekankan bahwa input '10' adalah teks. Jika dijumlahkan tanpa casting: '10' + '10' menghasilkan '1010', bukan 20!"
+  },
+  {
+    "title": "Pengolahan Input & Type Casting",
+    "body": "<p>Mengonversi data teks masukan menjadi numerik float untuk kebutuhan komputasi teknik.</p>",
+    "kind": "code",
+    "notes": "Tunjukkan perubahan tipe data dari teks mentah ke float sebelum diproses dalam perhitungan frekuensi.",
+    "example": "ch04-02"
+  },
+  {
+    "title": "Revolusi f-Strings (PEP 498)",
+    "body": "<ul><li>Diperkenalkan di Python 3.6 sebagai metode format string paling modern dan cepat.</li><li>Awali string dengan karakter <code>f\"...\"</code>.</li><li>Sisipkan nama variabel atau ekspresi komputasi di dalam tanda kurung kurawal <code>{ekspresi}</code>.</li><li>Lebih mudah dibaca dan dieksekusi lebih cepat dibanding operator lama <code>%</code> atau <code>.format()</code>.</li></ul>",
+    "kind": "content",
+    "notes": "Bandingkan keterbacaan f-string dengan cara lama format string."
+  },
+  {
+    "title": "Interpolasi f-Strings & Ekspresi",
+    "body": "<p>Menyisipkan variabel, operasi matematika, dan pemanggilan metode string di dalam <code>{}</code>.</p>",
+    "kind": "code",
+    "notes": "Amati bagaimana ekspresi logika ternary dan perkalian langsung dievaluasi di dalam string.",
+    "example": "ch04-03"
+  },
+  {
+    "title": "Format Penentu (Format Specifiers)",
+    "body": "<ul><li>Gunakan sintaks <code>{nilai:penentu}</code> di dalam kurung kurawal.</li><li><code>:.2f</code> : Dua angka desimal di belakang koma.</li><li><code>:.3e</code> : Notasi ilmiah eksponensial (scientific).</li><li><code>:.1%</code> : Konversi rasio desimal ke persentase.</li><li><code>:04d</code> : Zero-padding integer 4 digit (misal: <code>0007</code>).</li><li><code>:,</code> : Pemisah ribuan dengan koma (misal: <code>1,500,000</code>).</li></ul>",
+    "kind": "content",
+    "notes": "Jelaskan bahwa format specifier memudahkan standarisasi tampilan data numerik teknik."
+  },
+  {
+    "title": "Eksperimen Format Specifiers",
+    "body": "<p>Berbagai variasi format angka desimal, ilmiah, persentase, dan pemisah ribuan.</p>",
+    "kind": "code",
+    "notes": "Jalankan contoh kode dan amati keakuratan visual dari masing-masing kode penentu format.",
+    "example": "ch04-04"
+  },
+  {
+    "title": "Perataan Teks & Desain Tabel (Alignment)",
+    "body": "<ul><li><code>{teks:&lt;15}</code> : Rata kiri dengan lebar 15 karakter.</li><li><code>{teks:&gt;15}</code> : Rata kanan dengan lebar 15 karakter.</li><li><code>{teks:^15}</code> : Rata tengah dengan lebar 15 karakter.</li><li>Sangat ideal untuk membuat antarmuka konsol CLI dan tabel monitoring telemetri yang rapi.</li></ul>",
+    "kind": "content",
+    "notes": "Tekankan pentingnya format kolom sejajar saat menyajikan data tabular di konsol sistem."
+  },
+  {
+    "title": "Laporan Tabel Terstruktur",
+    "body": "<p>Membangun antarmuka tabel telemetri node BTS dengan perataan kolom yang rapi.</p>",
+    "kind": "code",
+    "notes": "Perhatikan bagaimana header dan baris data memiliki lebar kolom yang konsisten dan sejajar vertikal.",
+    "example": "ch04-05"
+  },
+  {
+    "title": "Kuis: Karakteristik input()",
+    "body": "<p>Apakah tipe data nilai kembalian dari ekspresi <code>input()</code> di Python 3?</p>",
+    "kind": "quiz",
+    "question": "Apakah tipe data nilai yang dihasilkan oleh pemanggilan input() di Python?",
+    "answer": "Selalu menghasilkan string (str).",
+    "notes": "Fungsi input() membaca karakter ketikan keyboard dan selalu mengembalikannya sebagai teks bertipe str."
+  },
+  {
+    "title": "Kuis: Format Specifier",
+    "body": "<p>Manakah sintaks f-string yang benar untuk mencetak angka float <code>1800.4567</code> menjadi 2 angka desimal <code>1800.46</code>?</p>",
+    "kind": "quiz",
+    "question": "Bagaimanakah sintaks f-string untuk menampilkan 2 angka desimal?",
+    "answer": "f\"{nilai:.2f}\"",
+    "notes": "Tanda :.2f menginstruksikan formatter untuk membulatkan nilai floating point menjadi tepat dua digit desimal."
+  },
+  {
+    "title": "Latihan Terarah Chapter 04",
+    "body": "<p class=\"lead\">Latihan Mandiri 04</p><ul><li>1. Buat prompt interaktif yang menanyakan ID stasiun dan frekuensi kerja.</li><li>2. Format angka rasio redaman menjadi tampilan persentase.</li><li>3. Cetak tabel inventaris pemancar nirkabel dengan lebar kolom tetap.</li></ul>",
+    "kind": "content",
+    "notes": "Arahkan peserta membuka berkas exercises/exercise.md untuk panduan pengerjaan."
+  },
+  {
+    "title": "Tugas Praktik Chapter 04",
+    "body": "<p class=\"lead\">Tugas 04: Generator Kartu Telemetri Node Jaringan</p><p>Rancang modul pembuat laporan status node telekomunikasi terformat profesional berbasis f-strings.</p><div class=\"callout\">Rubrik penilaian: Penerapan f-strings (40%), Format Specifiers & Alignment (30%), Kerapian PEP 8 (20%), Penanganan Input (10%).</div>",
+    "kind": "content",
+    "notes": "Jelaskan spesifikasi tugas praktik dan contoh output yang diharapkan."
+  },
+  {
+    "title": "Ringkasan Bab 04",
+    "body": "<ul><li>stdin, stdout, dan stderr adalah jalur komunikasi I/O standar sistem operasi.</li><li>print() menyediakan kendali sep dan end untuk fleksibilitas cetak.</li><li>input() selalu menghasilkan str dan wajib dikonversi sebelum operasi numerik.</li><li>f-strings (PEP 498) adalah standar format string modern tercepat dan paling bersih.</li><li>Gunakan penentu format dan perataan kolom (&lt;, &gt;, ^) untuk menghasilkan antarmuka CLI yang elegan.</li></ul>",
+    "kind": "summary",
+    "notes": "Selamat! Anda telah menyelesaikan Batch 1 (Chapter 01 hingga 04). Fondasi dasar sintaks, tipe data, operator, dan I/O telah dikuasai dengan kokoh."
+  }
+]

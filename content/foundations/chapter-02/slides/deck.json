@@ -1,0 +1,113 @@
+[
+  {
+    "title": "Variables & Data Types",
+    "body": "<p class=\"lead\">Variabel dinamis, tipe data skalar int, float, str, bool, dan konversi tipe eksplisit.</p><p class=\"note\">Level 1 · Python Foundations — Chapter 02</p>",
+    "kind": "cover",
+    "notes": "Selamat datang di Chapter 02: Variables & Data Types. Kita akan mempelajari bagaimana Python mengelola data di memori dan memanipulasi tipe-tipe data dasar."
+  },
+  {
+    "title": "Capaian Pembelajaran",
+    "body": "<ul><li>Memahami konsep variabel sebagai penunjuk referensi memori (reference tag).</li><li>Mengenal dan mendeklarasikan 4 tipe skalar: integer, float, string, dan boolean.</li><li>Memahami karakteristik pengetikan dinamis (dynamic typing) dan implikasinya.</li><li>Melakukan type casting eksplisit menggunakan int(), float(), str(), dan bool().</li><li>Menerapkan fungsi type() dan isinstance() untuk validasi parameter sistem.</li></ul>",
+    "kind": "content",
+    "notes": "Tinjau capaian pembelajaran bab 02. Ingatkan peserta tentang pentingnya pemahaman memori."
+  },
+  {
+    "title": "Variabel: Label Referensi Memori",
+    "body": "<ul><li>Variabel di Python <strong>bukan kotak fisik</strong>, melainkan <em>pointer</em> atau label yang menunjuk objek di Heap Memory.</li><li>Ketika variabel baru diberi nilai yang sama, kedua variabel dapat menunjuk objek memori yang sama.</li><li>Gunakan fungsi <code>id()</code> untuk melihat alamat identitas objek di memori.</li></ul>",
+    "kind": "content",
+    "notes": "Mental model variabel sebagai label sangat penting untuk mencegah miskonsepsi saat mempelajari list dan objek nantinya."
+  },
+  {
+    "title": "Deklarasi Variabel & Referensi",
+    "body": "<p>Menetapkan variabel konfigurasi BTS dan mengamati kesamaan referensi objek.</p>",
+    "kind": "code",
+    "notes": "Jalankan contoh kode untuk melihat bagaimana variabel menunjuk ke objek integer dan string.",
+    "example": "ch02-01"
+  },
+  {
+    "title": "Konvensi Penamaan Variabel (PEP 8)",
+    "body": "<ul><li><strong>snake_case:</strong> Gunakan huruf kecil dan garis bawah (<code>daya_pemancar</code>, <code>frekuensi_mhz</code>).</li><li><strong>Hindari kata kunci bawaan:</strong> Jangan gunakan <code>print</code>, <code>type</code>, <code>id</code>, <code>def</code>, <code>class</code>.</li><li><strong>Case Sensitive:</strong> <code>bts_id</code> berbeda dengan <code>BTS_ID</code>.</li><li><strong>Deskriptif:</strong> Lebih baik <code>kapasitas_kanal</code> daripada hanya <code>k</code>.</li></ul>",
+    "kind": "content",
+    "notes": "Tekankan kepatuhan PEP 8 agar kode bersih dan mudah dipelihara dalam tim rekayasa."
+  },
+  {
+    "title": "Tipe Data Skalar Primitif",
+    "body": "<ul><li><strong>int:</strong> Bilangan bulat tanpa batasan presisi arbitrer (<code>42</code>, <code>-100</code>).</li><li><strong>float:</strong> Bilangan desimal presisi ganda IEEE 754 (<code>3.14159</code>, <code>-88.5</code>, <code>3e8</code>).</li><li><strong>str:</strong> Rangkaian karakter teks dalam tanda petik (<code>\"BTS-01\"</code>).</li><li><strong>bool:</strong> Nilai logika benar/salah (<code>True</code> atau <code>False</code>).</li></ul>",
+    "kind": "content",
+    "notes": "Jelaskan bahwa keempat tipe ini merupakan blok bangunan dasar seluruh komputasi Python."
+  },
+  {
+    "title": "Inspeksi Tipe dengan type()",
+    "body": "<p>Mengamati jenis tipe data skalar secara langsung menggunakan fungsi bawaan <code>type()</code>.</p>",
+    "kind": "code",
+    "notes": "Fungsi type() mengembalikan kelas dari objek yang sedang ditunjuk oleh variabel.",
+    "example": "ch02-02"
+  },
+  {
+    "title": "Pengetikan Dinamis (Dynamic Typing)",
+    "body": "<ul><li>Python tidak mewajibkan deklarasi tipe variabel di awal.</li><li>Variabel dapat dialihkan untuk menunjuk ke objek dengan tipe yang berbeda pada baris berikutnya.</li><li>Fleksibel, namun memerlukan kehati-hatian agar tidak terjadi kesalahan operasi tipe.</li></ul>",
+    "kind": "content",
+    "notes": "Bahas perbandingan dynamic typing di Python dengan static typing di C/C++ atau Java."
+  },
+  {
+    "title": "Eksperimen Dynamic Typing",
+    "body": "<p>Mengamati perubahan tipe variabel secara dinamis saat program berjalan.</p>",
+    "kind": "code",
+    "notes": "Perhatikan bahwa variabel sinyal dapat berubah dari string menjadi integer lalu float dan boolean.",
+    "example": "ch02-04"
+  },
+  {
+    "title": "Konversi Tipe Data (Type Casting)",
+    "body": "<ul><li><code>int(\"1800\")</code> &rarr; Menghasilkan integer <code>1800</code>.</li><li><code>float(\"2.4\")</code> &rarr; Menghasilkan float <code>2.4</code>.</li><li><code>str(100)</code> &rarr; Menghasilkan teks <code>\"100\"</code>.</li><li><code>bool(x)</code> &rarr; Mengevaluasi kondisi Truthy atau Falsy dari nilai.</li></ul>",
+    "kind": "content",
+    "notes": "Jelaskan pentingnya casting saat mengolah input pengguna atau membaca telemetri jaringan."
+  },
+  {
+    "title": "Penerapan Type Casting & Truthy/Falsy",
+    "body": "<p>Konversi tipe eksplisit dan pengamatan evaluasi boolean pada angka serta teks kosong.</p>",
+    "kind": "code",
+    "notes": "Tunjukkan bahwa angka 0 dan string kosong dievaluasi sebagai False, sedangkan angka bukan 0 bernilai True.",
+    "example": "ch02-03"
+  },
+  {
+    "title": "Validasi Tipe Data dengan isinstance()",
+    "body": "<p>Memeriksa apakah variabel sesuai dengan tipe yang diharapkan menggunakan <code>isinstance()</code>.</p>",
+    "kind": "code",
+    "notes": "Jelaskan mengapa isinstance() lebih disukai daripada type() == int karena mendukung hierarki tipe data.",
+    "example": "ch02-05"
+  },
+  {
+    "title": "Kuis: Karakteristik Variabel",
+    "body": "<p>Apakah yang terjadi pada memori ketika kita menulis <code>a = 100</code> lalu <code>b = a</code>?</p>",
+    "kind": "quiz",
+    "question": "Apakah yang terjadi pada memori ketika kode mengeksekusi a = 100 lalu b = a?",
+    "answer": "Variabel b menunjuk ke objek integer 100 yang sama dengan variabel a (id memori identik).",
+    "notes": "Python tidak menyalin objek angka secara terpisah, melainkan mengarahkan variabel kedua ke objek yang telah ada."
+  },
+  {
+    "title": "Kuis: Evaluasi Nilai Falsy",
+    "body": "<p>Manakah dari ekspresi berikut yang bernilai True ketika dievaluasi oleh bool()?</p>",
+    "kind": "quiz",
+    "question": "Manakah nilai yang menghasilkan True saat dievaluasi oleh bool()?",
+    "answer": "bool(\"0\") karena string tersebut tidak kosong (memiliki panjang 1 karakter).",
+    "notes": "Hati-hati: integer 0 bernilai False, tetapi string \"0\" bernilai True karena string tersebut berisi karakter!"
+  },
+  {
+    "title": "Latihan Terarah Chapter 02",
+    "body": "<p class=\"lead\">Latihan Mandiri 02</p><ul><li>1. Deklarasikan 4 parameter transceiver BTS dengan tipe data berbeda.</li><li>2. Lakukan type casting nilai string telemetri ke tipe float.</li><li>3. Validasi tipe data menggunakan fungsi isinstance().</li></ul>",
+    "kind": "content",
+    "notes": "Arahkan peserta membuka berkas exercises/exercise.md."
+  },
+  {
+    "title": "Tugas Praktik Chapter 02",
+    "body": "<p class=\"lead\">Tugas 02: Validasi Parameter Transceiver BTS</p><p>Rancang parser parameter konfigurasi stasiun pemancar dengan validasi tipe data ketat dan konversi tipe teruji.</p><div class=\"callout\">Rubrik penilaian: Fungsionalitas Casting (40%), Validasi Tipe (30%), Kerapian PEP 8 (20%), Kasus Uji (10%).</div>",
+    "kind": "content",
+    "notes": "Jelaskan kriteria tugas praktik dan template tugas_02.py yang disediakan."
+  },
+  {
+    "title": "Ringkasan Bab 02",
+    "body": "<ul><li>Variabel bekerja sebagai label penunjuk referensi objek di Heap Memory.</li><li>Tipe data skalar inti: int, float, str, dan bool.</li><li>Python bersifat dynamically typed: tipe melekat pada objek nilai, bukan pada nama variabel.</li><li>Gunakan int(), float(), str(), dan bool() untuk konversi tipe data yang aman.</li><li>Gunakan isinstance() untuk pengujian tipe yang robust.</li></ul>",
+    "kind": "summary",
+    "notes": "Selesai Chapter 02. Lanjutkan ke Chapter 03 tentang Operator dan Ekspresi Logika."
+  }
+]

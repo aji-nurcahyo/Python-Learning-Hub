@@ -1,0 +1,107 @@
+[
+  {
+    "title": "Introduction to Python",
+    "body": "<p class=\"lead\">Filosofi pemrograman, ekosistem CPython, aturan sintaks dasar, dan eksekusi skrip pertama.</p><p class=\"note\">Level 1 · Python Foundations — Chapter 01</p>",
+    "kind": "cover",
+    "notes": "Selamat datang di Chapter 01: Introduction to Python. Pada sesi perdana ini kita akan memahami cara kerja interpreter CPython dan menulis skrip komputasi pertama."
+  },
+  {
+    "title": "Capaian Pembelajaran",
+    "body": "<ul><li>Memahami perbedaan mendasar antara compiled language dan interpreted language.</li><li>Menjelaskan siklus eksekusi kode sumber Python melalui CPython Bytecode dan PVM.</li><li>Menerapkan fungsi print(), penulisan komentar, dan konvensi docstring PEP 257.</li><li>Menganalisis kepekaan huruf (case-sensitivity) dan hierarki indentasi blok 4-spasi PEP 8.</li><li>Mengidentifikasi dan memperbaiki galat umum pemula (SyntaxError, IndentationError).</li></ul>",
+    "kind": "content",
+    "notes": "Paparkan sasaran capaian pembelajaran bab 01. Dorong peserta untuk aktif mengamati konstruksi sintaks."
+  },
+  {
+    "title": "Mengenal Bahasa Python",
+    "body": "<ul><li><strong>Diciptakan oleh:</strong> Guido van Rossum (1991).</li><li><strong>High-level & Human-readable:</strong> Sintaks dekat dengan bahasa Inggris alami.</li><li><strong>General-purpose:</strong> Dapat digunakan untuk web, otomasi, data science, AI, dan telekomunikasi.</li><li><strong>Batteries Included:</strong> Dilengkapi pustaka bawaan (standard library) yang sangat lengkap tanpa instalasi tambahan.</li></ul>",
+    "kind": "content",
+    "notes": "Tekankan filosofi bahwa Python dirancang agar mudah dibaca dan cepat dikembangkan."
+  },
+  {
+    "title": "Ekosistem & Relevansi Industri",
+    "body": "<ul><li><strong>Data Science & AI:</strong> NumPy, Pandas, PyTorch, TensorFlow.</li><li><strong>Web Backend:</strong> FastAPI, Django, Flask.</li><li><strong>Otomasi Jaringan & Telekomunikasi:</strong> Netmiko, Scapy, Ansible, pemrosesan telemetri sinyal.</li><li><strong>Cloud & DevOps:</strong> Scripting pipeline CI/CD, AWS CDK, GCP Cloud SDK.</li></ul>",
+    "kind": "content",
+    "notes": "Jelaskan mengapa pemahaman Python sangat relevan bagi mahasiswa teknik dan profesional modern."
+  },
+  {
+    "title": "Cara Kerja Interpreter CPython",
+    "body": "<ul><li>1. Kode sumber ditulis dalam berkas berekstensi <code>.py</code>.</li><li>2. CPython mengompilasi kode ke <strong>Bytecode</strong> perantara (disimpan di <code>__pycache__/*.pyc</code>).</li><li>3. <strong>Python Virtual Machine (PVM)</strong> mengeksekusi bytecode instruksi per instruksi.</li><li>4. Tidak memerlukan proses kompilasi biner manual seperti C/C++.</li></ul>",
+    "kind": "content",
+    "notes": "Bahas model eksekusi CPython. Jelaskan bahwa Python adalah interpreted language dengan tahap kompilasi bytecode internal otomatis."
+  },
+  {
+    "title": "Program Pertama: Fungsi print()",
+    "body": "<p>Fungsi <code>print()</code> mencetak representasi teks dari argumen ke konsol terminal standar.</p>",
+    "kind": "code",
+    "notes": "Perhatikan bahwa print() dapat menerima banyak argumen dengan tipe data berbeda sekaligus.",
+    "example": "ch01-01"
+  },
+  {
+    "title": "Komentar & Dokumentasi Kode",
+    "body": "<p>Gunakan tanda <code>#</code> untuk komentar baris dan <code>\"\"\"docstring\"\"\"</code> untuk dokumentasi terstruktur.</p>",
+    "kind": "code",
+    "notes": "Komentar tidak dieksekusi oleh interpreter, namun krusial untuk menjelaskan alasan penulisan kode bagi manusia.",
+    "example": "ch01-02"
+  },
+  {
+    "title": "Kepekaan Huruf (Case-Sensitivity)",
+    "body": "<p>Huruf besar dan huruf kecil dibedakan secara tegas oleh interpreter Python.</p>",
+    "kind": "code",
+    "notes": "Variabel frekuensi_mhz, Frekuensi_mhz, dan FREKUENSI_MHZ menunjuk tiga objek yang berbeda di memori.",
+    "example": "ch01-03"
+  },
+  {
+    "title": "Struktur Indentasi 4 Spasi PEP 8",
+    "body": "<p>Python menggunakan indentasi (spasi) untuk menentukan blok kendali, bukan kurung kurawal <code>{}</code>.</p>",
+    "kind": "code",
+    "notes": "Standar industri PEP 8 mewajibkan 4 spasi untuk tiap level hierarki blok.",
+    "example": "ch01-04"
+  },
+  {
+    "title": "Kesalahan Umum Pemula (Common Errors)",
+    "body": "<ul><li><strong>SyntaxError:</strong> Kesalahan tata bahasa, misalnya tanda kurung atau tanda petik yang tidak tertutup.</li><li><strong>IndentationError:</strong> Tingkat indentasi tidak seragam atau percampuran antara Tab dan Spasi.</li><li><strong>NameError:</strong> Memanggil variabel atau fungsi yang belum pernah didefinisikan sebelumnya.</li><li><strong>TypeError:</strong> Melakukan operasi yang tidak didukung antar tipe data berbeda.</li></ul>",
+    "kind": "content",
+    "notes": "Ingatkan peserta agar tidak takut pada pesan error. Pesan error Python sangat deskriptif dan menunjukkan nomor baris masalah."
+  },
+  {
+    "title": "Studi Kasus: Waktu Propagasi Gelombang",
+    "body": "<p>Menghitung waktu tempuh sinyal elektromagnetik berkecepatan $c = 3 \\times 10^8$ m/s.</p>",
+    "kind": "code",
+    "notes": "Kaitkan komputasi numerik dengan formula fisika riil pada perambatan gelombang nirkabel.",
+    "example": "ch01-05"
+  },
+  {
+    "title": "Kuis: Eksekusi CPython",
+    "body": "<p>Manakah komponen yang mengeksekusi bytecode Python secara langsung?</p>",
+    "kind": "quiz",
+    "question": "Manakah komponen CPython yang mengeksekusi bytecode (.pyc) secara langsung?",
+    "answer": "Python Virtual Machine (PVM).",
+    "notes": "PVM membaca bytecode yang telah dikompilasi oleh parser CPython dan mengeksekusinya di atas arsitektur sistem operasi target."
+  },
+  {
+    "title": "Kuis: Blok Indentasi",
+    "body": "<p>Berapa jumlah spasi yang direkomendasikan secara resmi oleh standar PEP 8 untuk setiap tingkatan indentasi?</p>",
+    "kind": "quiz",
+    "question": "Berapa jumlah spasi yang direkomendasikan secara resmi oleh standar PEP 8 untuk setiap tingkat indentasi?",
+    "answer": "Tepat 4 spasi per level indentasi.",
+    "notes": "PEP 8 secara tegas menetapkan penggunaan 4 spasi konsisten per level indentasi dan melarang pencampuran karakter Tab."
+  },
+  {
+    "title": "Latihan Terarah",
+    "body": "<p class=\"lead\">Latihan Mandiri 01</p><ul><li>1. Buat skrip yang mencetak kartu identitas teknisi telekomunikasi.</li><li>2. Gunakan fungsi print() dengan pemisah argumen koma.</li><li>3. Sisipkan komentar penjelas di bagian atas berkas.</li></ul>",
+    "kind": "content",
+    "notes": "Arahkan peserta membuka berkas latihan exercises/exercise.md untuk petunjuk terperinci."
+  },
+  {
+    "title": "Tugas Praktik Chapter 01",
+    "body": "<p class=\"lead\">Tugas 01: Verifikasi Environment Node</p><p>Rancang skrip Python mandiri untuk menginspeksi parameter sistem dan mencetak konfigurasi node telekomunikasi.</p><div class=\"callout\">Rubrik penilaian: Fungsionalitas (40%), Kerapian PEP 8 (30%), Dokumentasi (20%), Penanganan Output (10%).</div>",
+    "kind": "content",
+    "notes": "Jelaskan kriteria tugas praktik dan pentingnya menjalankan kode verifikasi mandiri sebelum pengumpulan."
+  },
+  {
+    "title": "Ringkasan Bab 01",
+    "body": "<ul><li>Python adalah bahasa tingkat tinggi yang interpretatif, ekspresif, dan berorientasi objek.</li><li>Kode dieksekusi oleh CPython melalui kompilasi bytecode (.pyc) dan mesin virtual PVM.</li><li>Indentasi 4 spasi adalah sintaks wajib untuk mengelompokkan blok kode logika.</li><li>Komentar (#) dan docstrings membantu manusia memahami tujuan program.</li></ul>",
+    "kind": "summary",
+    "notes": "Tutup sesi bab 01 dan pastikan seluruh peserta telah berhasil mengeksekusi skrip pertama di mesin masing-masing."
+  }
+]

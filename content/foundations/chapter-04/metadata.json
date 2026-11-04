@@ -6,29 +6,93 @@
   "levelCategory": "foundations",
   "title": "Input & Output",
   "subtitle": "Interaksi Pengguna & Pemformatan Teks Modern",
-  "description": "Menerima masukan pengguna dengan input(), validasi dasar, serta memformat output dengan f-strings dan string format.",
+  "description": "Menerima masukan pengguna dengan input(), validasi dasar, serta memformat output dengan f-strings, format specifiers, dan tabel terstruktur.",
   "competencyFocus": "PCEP 2.3: I/O standar dan string formatting",
-  "estimatedHours": 2,
+  "estimatedHours": 3,
   "difficulty": "Beginner",
-  "available": false,
+  "available": true,
   "prerequisites": [
     "Chapter 03"
   ],
   "learningObjectives": [
     "Mengambil input dinamis dan mengonversi tipe data masukan",
-    "Menggunakan f-strings untuk interpolasi ekspresi variabel",
-    "Memformat angka desimal, persentase, dan perataan kolom tabel"
+    "Menggunakan f-strings untuk interpolasi ekspresi variabel sesuai PEP 498",
+    "Memformat angka desimal, persentase, dan perataan kolom tabel (<, >, ^)"
   ],
   "tags": [
     "I/O",
     "f-strings",
-    "Formatting"
+    "Formatting",
+    "Alignment"
   ],
   "resources": {
-    "hasSlides": false,
-    "slidesDeck": null,
-    "starterCode": null,
-    "assignmentGuide": null,
+    "hasSlides": true,
+    "slidesDeck": "slides/deck.json",
+    "starterCode": "code/contoh.py",
+    "assignmentGuide": "assignments/tugas.md",
     "pptxDownload": null
+  },
+  "codeExample": {
+    "title": "Argumen Pemisah (sep) dan Akhiran (end) pada print()",
+    "code": "# Argumen Pemisah (sep) dan Akhiran (end) pada print()\nprint(\"Node-A\", \"Node-B\", \"Node-C\", sep=\" -> \")\nprint(\"2026\", \"11\", \"04\", sep=\"-\")\nprint(\"192\", \"168\", \"1\", \"1\", sep=\".\")\n\nprint(\"Menghubungkan ke pemancar\", end=\"...\")\nprint(\" [TERHUBUNG]\")\n\nprint(\"STATUS\", \"READY\", sep=\": \", end=\" | ID: BTS-01\\n\")",
+    "outputKey": "ch04-01",
+    "explanation": "Argumen sep mengontrol karakter pemisah antar nilai (default spasi), sedangkan argumen end mengontrol karakter penutup baris (default newline '\\n')."
+  },
+  "exercise": {
+    "title": "Latihan Terarah: Format Interaktif Telemetri",
+    "instructions": [
+      "Gunakan fungsi input() dan konversi ke float untuk menerima daya terima RSRP.",
+      "Gunakan format specifiers f-string :.2f, :.2e, dan :.1% untuk data rasio telemetri.",
+      "Susun tata letak tabel CLI menggunakan perataan kolom rata kiri (<) dan rata tengah (^)."
+    ],
+    "tips": "Pastikan mengonversi hasil input() sebelum melakukan operasi aritmatika.",
+    "time": "15 menit"
+  },
+  "quiz": {
+    "question": "Apakah output dari kode Python: print(f\"{0.875:.1%}\")?",
+    "options": [
+      "0.875%",
+      "87.5%",
+      "88%",
+      "0.88"
+    ],
+    "correctIndex": 1,
+    "explanation": "Penentu format :.1% secara otomatis mengalikan nilai desimal dengan 100, membulatkannya menjadi satu digit di belakang koma, dan menambahkan simbol % di ujung string (menghasilkan 87.5%).",
+    "hint": "Format persentase di Python otomatis mengalikan angka desimal dengan 100."
+  },
+  "assignment": {
+    "title": "Tugas Praktik 04: Generator Kartu Telemetri Node Jaringan",
+    "description": "Rancang program pembuat laporan status node telekomunikasi terformat profesional berbasis f-strings.",
+    "instructions": [
+      "Definisikan daftar koleksi dictionary parameter telemetri beberapa stasiun BTS.",
+      "Gunakan f-strings dan format specifiers untuk menyusun tabel laporan konsol dengan lebar kolom seragam.",
+      "Hitung dan tampilkan ringkasan rata-rata daya transmisi dan rasio packet loss di bawah tabel."
+    ],
+    "rubric": [
+      {
+        "criteria": "Penerapan f-Strings & Interpolasi",
+        "weight": 40,
+        "description": "Menggunakan f-strings secara konsisten tanpa operator lawas % atau konkatenasi string manual."
+      },
+      {
+        "criteria": "Format Specifiers & Alignment",
+        "weight": 30,
+        "description": "Menerapkan format persentase :.2%, desimal :.1f, dan perataan kolom sejajar vertikal."
+      },
+      {
+        "criteria": "Kepatuhan Gaya PEP 8",
+        "weight": 20,
+        "description": "Penamaan snake_case, modularitas fungsi, dan format kode bersih."
+      },
+      {
+        "criteria": "Logika Ringkasan Metrik",
+        "weight": 10,
+        "description": "Perhitungan nilai rata-rata daya pancar dan packet loss tepat."
+      }
+    ],
+    "starterCode": "\"\"\"\nTugas Praktik 04: Generator Kartu Telemetri Node Jaringan\n\"\"\"\ndef generate_laporan_telemetri(daftar_node: list[dict]) -> None:\n    print(\"=\" * 60)\n    print(f\"{'LAPORAN STATUS TELEMETRI':^60}\")\n    print(\"=\" * 60)\n    for n in daftar_node:\n        print(f\"{n['id']:<10} | {n['frekuensi']:^12.1f} MHz | {n['status']:>10}\")\n    print(\"=\" * 60)\n\nif __name__ == '__main__':\n    sample = [{'id': 'NODE-01', 'frekuensi': 1800.5, 'status': 'ONLINE'}]\n    generate_laporan_telemetri(sample)",
+    "starterFilename": "tugas_04.py",
+    "downloadMdUrl": "downloads/chapter-04/tugas.md",
+    "downloadPyUrl": "downloads/chapter-04/contoh.py"
   }
 }

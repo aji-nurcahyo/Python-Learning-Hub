@@ -1,0 +1,107 @@
+[
+  {
+    "title": "Operators & Expressions",
+    "body": "<p class=\"lead\">Aritmatika, perbandingan relasional, logika boolean, presedensi operator, dan kalkulasi telekomunikasi.</p><p class=\"note\">Level 1 · Python Foundations — Chapter 03</p>",
+    "kind": "cover",
+    "notes": "Selamat datang di Chapter 03: Operators & Expressions. Di sesi ini kita akan menguasai seluruh operator dasar Python dan aturan presedensinya."
+  },
+  {
+    "title": "Capaian Pembelajaran",
+    "body": "<ul><li>Menggunakan operator aritmatika (+, -, *, /, //, %, **).</li><li>Memahami perbedaan mendasar antara pembagian riil (/) dan pembagian bulat (//).</li><li>Menerapkan operator perbandingan (==, !=, >, <, >=, <=) untuk logika evaluasi.</li><li>Menganalisis operator logika (and, or, not) dan mekanisme short-circuit.</li><li>Menguasai hierarki presedensi operator PEMDAS dan penggunaan tanda kurung ().</li></ul>",
+    "kind": "content",
+    "notes": "Paparkan sasaran capaian pembelajaran bab 03."
+  },
+  {
+    "title": "Operator Aritmatika Inti",
+    "body": "<ul><li><code>+</code>, <code>-</code>, <code>*</code>: Penjumlahan, pengurangan, perkalian.</li><li><code>/</code>: Pembagian riil (selalu menghasilkan <code>float</code>).</li><li><code>//</code>: Pembagian bulat (floor division).</li><li><code>%</code>: Modulo (sisa hasil bagi bulat).</li><li><code>**</code>: Eksponensial (pangkat).</li></ul>",
+    "kind": "content",
+    "notes": "Tekankan bahwa di Python 3, operasi 10 / 2 menghasilkan 5.0 (float) dan bukan 5 (int)."
+  },
+  {
+    "title": "Demonstrasi Operator Aritmatika",
+    "body": "<p>Menjalankan berbagai operasi aritmatika pada dua bilangan bulat a=25 dan b=4.</p>",
+    "kind": "code",
+    "notes": "Amati perbedaan output antara 25 / 4 (6.25) dan 25 // 4 (6), serta 25 % 4 (1).",
+    "example": "ch03-01"
+  },
+  {
+    "title": "Operator Perbandingan (Relasional)",
+    "body": "<ul><li>Menghasilkan tipe boolean (<code>True</code> atau <code>False</code>).</li><li><code>==</code> (sama dengan) vs <code>=</code> (penugasan variabel).</li><li><code>!=</code>: tidak sama dengan.</li><li><code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code>: pembanding besaran nilai numerik.</li></ul>",
+    "kind": "content",
+    "notes": "Peringatkan peserta agar tidak tertukar antara tanda penugasan tunggal '=' dan pembanding kesetaraan '=='."
+  },
+  {
+    "title": "Evaluasi Perbandingan Sinyal RSRP",
+    "body": "<p>Membandingkan nilai daya sinyal terukur dengan ambang batas kualitas jaringan.</p>",
+    "kind": "code",
+    "notes": "Perhatikan bahwa angka negatif yang lebih besar (misal -88) bernilai lebih tinggi daripada -90.",
+    "example": "ch03-02"
+  },
+  {
+    "title": "Operator Logika: and, or, not",
+    "body": "<ul><li><code>A and B</code>: Bernilai True hanya jika A dan B keduanya True.</li><li><code>A or B</code>: Bernilai True jika salah satu atau keduanya True.</li><li><code>not A</code>: Membalik nilai kebenaran logika.</li><li>Dapat dikombinasikan untuk kriteria keputusan multi-kondisi.</li></ul>",
+    "kind": "content",
+    "notes": "Diskusikan tabel kebenaran dasar logika boolean."
+  },
+  {
+    "title": "Evaluasi Short-Circuit Logic",
+    "body": "<p>Pembuktian mekanisme penghematan evaluasi kondisi logika di interpreter Python.</p>",
+    "kind": "code",
+    "notes": "Jelaskan mengapa ekspresi (False and 10/0 == 0) tidak menimbulkan ZeroDivisionError.",
+    "example": "ch03-03"
+  },
+  {
+    "title": "Presedensi Operator (Hierarki Pengerjaan)",
+    "body": "<ul><li>1. <code>()</code> Tanda kurung (Prioritas Tertinggi).</li><li>2. <code>**</code> Eksponen.</li><li>3. <code>*</code>, <code>/</code>, <code>//</code>, <code>%</code> Perkalian & Pembagian.</li><li>4. <code>+</code>, <code>-</code> Penjumlahan & Pengurangan.</li><li>5. <code>==</code>, <code>!=</code>, <code>&gt;</code>, <code>&lt;</code> Relasional.</li><li>6. <code>not</code>, <code>and</code>, <code>or</code> Logika.</li></ul>",
+    "kind": "content",
+    "notes": "Ingatkan best-practice: selalu gunakan tanda kurung eksplisit jika ekspresi melibatkan banyak operator."
+  },
+  {
+    "title": "Presedensi & Compound Assignment",
+    "body": "<p>Perbandingan hasil dengan tanda kurung dan pemanfaatan operator penugasan gabungan <code>+=</code>, <code>*=</code>.</p>",
+    "kind": "code",
+    "notes": "Amati bagaimana tanda kurung mengubah urutan kalkulasi ekspresi secara signifikan.",
+    "example": "ch03-04"
+  },
+  {
+    "title": "Studi Kasus: Panjang Gelombang & Daya dBm",
+    "body": "<p>Perhitungan formula fisika gelombang radio: $\\lambda = c / f$ dan konversi daya $P_{\\text{dBm}} = 10 \\cdot \\log_{10}(P_{\\text{mW}})$.</p>",
+    "kind": "code",
+    "notes": "Gunakan modul bawaan math untuk fungsi math.log10(). Hubungkan dengan spesifikasi LTE Band 3 (1.8 GHz).",
+    "example": "ch03-05"
+  },
+  {
+    "title": "Kuis: Pembagian Python",
+    "body": "<p>Apakah tipe data dan nilai yang dihasilkan dari ekspresi <code>12 / 3</code> di Python 3?</p>",
+    "kind": "quiz",
+    "question": "Apakah tipe data dan nilai dari 12 / 3 di Python 3?",
+    "answer": "float dengan nilai 4.0.",
+    "notes": "Operator / selalu menghasilkan float. Untuk mendapatkan integer 4, gunakan operator floor division //."
+  },
+  {
+    "title": "Kuis: Short-Circuit Logic",
+    "body": "<p>Mengapa ekspresi <code>True or (5 / 0 == 0)</code> aman dijalankan di Python?</p>",
+    "kind": "quiz",
+    "question": "Mengapa True or (5 / 0 == 0) tidak menghasilkan galat pembagian dengan nol?",
+    "answer": "Karena sifat short-circuit: operan pertama bernilai True, sehingga operan kedua diabaikan sepenuhnya.",
+    "notes": "Pada operator 'or', jika operan kiri sudah True, hasil akhir dipastikan True sehingga operan kanan tidak dieksekusi."
+  },
+  {
+    "title": "Latihan Terarah Chapter 03",
+    "body": "<p class=\"lead\">Latihan Mandiri 03</p><ul><li>1. Hitung alokasi frekuensi kanal dengan operator modulo (%).</li><li>2. Implementasikan ekspresi logika gabungan untuk status alarm BTS.</li><li>3. Hitung redaman propagasi Free Space Path Loss (FSPL) dasar.</li></ul>",
+    "kind": "content",
+    "notes": "Bimbing peserta membuka exercises/exercise.md untuk petunjuk detail."
+  },
+  {
+    "title": "Tugas Praktik Chapter 03",
+    "body": "<p class=\"lead\">Tugas 03: Kalkulator Anggaran Daya Tautan (Link Budget)</p><p>Rancang kalkulator parameter daya pancar, penguatan antena, dan rugi redaman sinyal gelombang radio.</p><div class=\"callout\">Rubrik penilaian: Formula Aritmatika (40%), Logika Kondisi (30%), Kerapian PEP 8 (20%), Uji Validasi (10%).</div>",
+    "kind": "content",
+    "notes": "Jelaskan konsep link budget sederhana: P_rx = P_tx + G_tx + G_rx - PathLoss."
+  },
+  {
+    "title": "Ringkasan Bab 03",
+    "body": "<ul><li>Operator aritmatika: /, //, %, ** memiliki aturan tipe data spesifik di Python.</li><li>Operator relasional menghasilkan nilai boolean True atau False.</li><li>Operator logika and/or menerapkan evaluasi short-circuit untuk efisiensi dan keamanan eksekusi.</li><li>Gunakan tanda kurung () untuk kejelasan ekspresi matematika dan menghindari ambiguitas presedensi.</li></ul>",
+    "kind": "summary",
+    "notes": "Selesai Chapter 03. Lanjutkan ke Chapter 04 tentang Input Interaktif dan Output Terformat."
+  }
+]

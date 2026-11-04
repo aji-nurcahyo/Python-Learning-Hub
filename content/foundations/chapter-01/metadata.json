@@ -6,27 +6,91 @@
   "levelCategory": "foundations",
   "title": "Introduction to Python",
   "subtitle": "Filosofi, Ekosistem & Eksekusi Program Pertama",
-  "description": "Mengenal sejarah Python, Zen of Python, instalasi CPython, Colab/IDE, serta cara kerja interpreter.",
+  "description": "Mengenal sejarah Python, Zen of Python, instalasi CPython, serta siklus eksekusi program melalui bytecode dan PVM.",
   "competencyFocus": "PCEP 1.1: Dasar eksekusi & lingkungan Python",
-  "estimatedHours": 2,
+  "estimatedHours": 3,
   "difficulty": "Beginner",
-  "available": false,
+  "available": true,
   "prerequisites": [],
   "learningObjectives": [
     "Memahami perbedaan interpreted language dan compiled language",
     "Menjalankan program Python pertama melalui CLI dan script file",
-    "Mengenal kaidah penulisan komentar dan indentation"
+    "Mengenal kaidah penulisan komentar dan indentation standar PEP 8"
   ],
   "tags": [
     "Interpreter",
-    "Syntax",
-    "Setup"
+    "CPython",
+    "PEP 8",
+    "Syntax"
   ],
   "resources": {
-    "hasSlides": false,
-    "slidesDeck": null,
-    "starterCode": null,
-    "assignmentGuide": null,
+    "hasSlides": true,
+    "slidesDeck": "slides/deck.json",
+    "starterCode": "code/contoh.py",
+    "assignmentGuide": "assignments/tugas.md",
     "pptxDownload": null
+  },
+  "codeExample": {
+    "title": "Program Pertama: Fungsi print() dan Argumen",
+    "code": "# Program Pertama: Fungsi print() dan Berbagai Argumen\nprint(\"Selamat datang di Python Learning Hub!\")\nprint(\"Belajar Pemrograman Python untuk Rekayasa Telekomunikasi.\")\nprint(\"Versi:\", 3, \"Status:\", \"Aktif\")\nprint(100 + 200)",
+    "outputKey": "ch01-01",
+    "explanation": "Fungsi print() mencetak representasi teks dari argumen ke konsol. Argumen multi-nilai dipisahkan dengan koma dan secara otomatis dicetak dengan spasi pemisah."
+  },
+  "exercise": {
+    "title": "Latihan Terarah: Format Identitas Sistem",
+    "instructions": [
+      "Deklarasikan variabel nama_perangkat bertipe string dan id_node bertipe integer.",
+      "Gunakan fungsi print() dengan pemisah koma untuk mencetak baris ringkasan.",
+      "Cetak keluaran ke layar terminal dan periksa pesan kesalahan jika tanda kurung dihilangkan."
+    ],
+    "tips": "Perhatikan bahwa fungsi print() membutuhkan tanda kurung buka dan tutup berpasangan.",
+    "time": "15 menit"
+  },
+  "quiz": {
+    "question": "Manakah pernyataan yang BENAR mengenai cara kerja interpreter CPython?",
+    "options": [
+      "CPython menerjemahkan kode sumber langsung ke file binary .exe mesin fisik",
+      "CPython mengompilasi kode sumber ke bytecode (.pyc) lalu menjalankannya di Python Virtual Machine (PVM)",
+      "CPython tidak melakukan kompilasi apa pun dan membaca teks mentah baris per baris",
+      "CPython membutuhkan compiler eksternal seperti GCC sebelum kode dapat dijalankan"
+    ],
+    "correctIndex": 1,
+    "explanation": "CPython mengompilasi kode sumber (.py) menjadi bytecode internal (disimpan di folder __pycache__ sebagai .pyc) yang kemudian dieksekusi oleh Python Virtual Machine (PVM).",
+    "hint": "Ingat keberadaan direktori __pycache__ saat Anda menjalankan modul Python."
+  },
+  "assignment": {
+    "title": "Tugas Praktik 01: Verifikasi Environment Node Telekomunikasi",
+    "description": "Rancang skrip Python mandiri yang mengidentifikasi versi sistem operasi, versi interpreter Python, dan mencetak laporan inisialisasi node telekomunikasi.",
+    "instructions": [
+      "Gunakan modul bawaan sys dan platform untuk membaca metadata interpreter.",
+      "Cetak status kesiapan node telekomunikasi dalam format tabel bersih.",
+      "Terapkan konvensi docstring PEP 257 dan blok proteksi if __name__ == '__main__':."
+    ],
+    "rubric": [
+      {
+        "criteria": "Kebenaran Fungsional",
+        "weight": 40,
+        "description": "Skrip berhasil membaca modul sys dan platform, menghitung waktu propagasi, dan mencetak seluruh data."
+      },
+      {
+        "criteria": "Kepatuhan Gaya PEP 8",
+        "weight": 30,
+        "description": "Penamaan variabel snake_case, indentasi 4 spasi konsisten, spasi operator rapi."
+      },
+      {
+        "criteria": "Dokumentasi & Docstring",
+        "weight": 20,
+        "description": "Menyertakan docstring modul dan komentar penjelas yang informatif."
+      },
+      {
+        "criteria": "Struktur Eksekusi",
+        "weight": 10,
+        "description": "Menggunakan pola blok if __name__ == '__main__': standar."
+      }
+    ],
+    "starterCode": "\"\"\"\nTugas Praktik 01: Verifikasi Environment Node Telekomunikasi\n\"\"\"\nimport sys\nimport platform\n\ndef inspeksi_node() -> None:\n    nama_os = platform.system()\n    versi_python = sys.version.split()[0]\n    node_id = \"NODE-TELKOM-ITERA-01\"\n    print(\"=\" * 40)\n    print(f\"Node: {node_id} | OS: {nama_os} | Py: {versi_python}\")\n    print(\"=\" * 40)\n\nif __name__ == \"__main__\":\n    inspeksi_node()",
+    "starterFilename": "tugas_01.py",
+    "downloadMdUrl": "downloads/chapter-01/tugas.md",
+    "downloadPyUrl": "downloads/chapter-01/contoh.py"
   }
 }

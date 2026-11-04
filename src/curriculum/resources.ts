@@ -35,6 +35,38 @@ export function getAssetUrl(relativePath: string | null | undefined): string {
 const PPTX_VERIFIED_FILE = 'downloads/Materi_Pengkom_Pertemuan_9_10_Python.pptx';
 
 export const CHAPTER_RESOURCES_MAP: Record<number, ChapterResourceConfig> = {
+  1: {
+    chapterId: 1,
+    hasSlides: true,
+    slidesDeck: 'content/foundations/chapter-01/slides/deck.json',
+    powerpoint: null,
+    pythonFiles: ['downloads/chapter-01/contoh.py', 'downloads/examples/ch01-01.py'],
+    assignmentGuide: 'downloads/chapter-01/tugas.md',
+  },
+  2: {
+    chapterId: 2,
+    hasSlides: true,
+    slidesDeck: 'content/foundations/chapter-02/slides/deck.json',
+    powerpoint: null,
+    pythonFiles: ['downloads/chapter-02/contoh.py', 'downloads/examples/ch02-01.py'],
+    assignmentGuide: 'downloads/chapter-02/tugas.md',
+  },
+  3: {
+    chapterId: 3,
+    hasSlides: true,
+    slidesDeck: 'content/foundations/chapter-03/slides/deck.json',
+    powerpoint: null,
+    pythonFiles: ['downloads/chapter-03/contoh.py', 'downloads/examples/ch03-01.py'],
+    assignmentGuide: 'downloads/chapter-03/tugas.md',
+  },
+  4: {
+    chapterId: 4,
+    hasSlides: true,
+    slidesDeck: 'content/foundations/chapter-04/slides/deck.json',
+    powerpoint: null,
+    pythonFiles: ['downloads/chapter-04/contoh.py', 'downloads/examples/ch04-01.py'],
+    assignmentGuide: 'downloads/chapter-04/tugas.md',
+  },
   8: {
     chapterId: 8,
     hasSlides: true,

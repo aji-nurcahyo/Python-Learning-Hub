@@ -97,3 +97,4 @@ Setiap berkas modul `index.md` yang mengadopsi materi terbuka wajib menyertakan 
 1. `LICENSE`: Berkas lisensi utama repositori Python Learning Hub (MIT License).
 2. `public/downloads/LICENSE.upstream`: Salinan lisensi MIT repositori fondasi peramban slide Pengkom ITERA.
 3. `THIRD_PARTY_NOTICES.md`: Catatan hak cipta lengkap seluruh pustaka npm (React, Reveal.js, Shiki, KaTeX, Google Fonts) dan pustaka referensi Python.
+

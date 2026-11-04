@@ -103,3 +103,4 @@ Untuk memberikan identitas keilmuan yang khas bagi mahasiswa Teknik Telekomunika
 | Membaca file daftar belanjaan | Membaca dan mem-parsing berkas log router jaringan (*syslog*) | **Chapter 17** |
 | Class Hewan (Dog, Cat inheritance) | Class Perangkat Jaringan (NetworkDevice -> Router, Switch, BTS Tower) | **Chapter 19 & 20** |
 | Menghitung waktu unduh file internet | Simulasi latensi transmisi paket data dan kalkulasi jitter | **Chapter 27** |
+

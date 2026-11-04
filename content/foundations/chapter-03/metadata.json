@@ -6,29 +6,94 @@
   "levelCategory": "foundations",
   "title": "Operators & Expressions",
   "subtitle": "Aritmatika, Perbandingan, Logika & Presedensi",
-  "description": "Operasi matematika, operator modulo, pembagian bulat, perbandingan nilai, logika boolean, dan aturan presedensi operator.",
+  "description": "Operasi matematika dasar, pembagian bulat, modulo, perbandingan nilai, logika boolean short-circuit, dan aturan presedensi operator.",
   "competencyFocus": "PCEP 2.2: Operator numerik dan boolean",
   "estimatedHours": 3,
   "difficulty": "Beginner",
-  "available": false,
+  "available": true,
   "prerequisites": [
     "Chapter 02"
   ],
   "learningObjectives": [
     "Menggunakan operator aritmatika (+, -, *, /, //, %, **)",
     "Menerapkan operator perbandingan (==, !=, >, <, >=, <=)",
-    "Memahami evaluasi ekspresi logika dengan presedensi operator yang benar"
+    "Memahami evaluasi ekspresi logika dengan presedensi operator yang benar",
+    "Menganalisis mekanisme short-circuit evaluation pada operator and dan or"
   ],
   "tags": [
     "Arithmetic",
     "Logic",
-    "Precedence"
+    "Precedence",
+    "Operators"
   ],
   "resources": {
-    "hasSlides": false,
-    "slidesDeck": null,
-    "starterCode": null,
-    "assignmentGuide": null,
+    "hasSlides": true,
+    "slidesDeck": "slides/deck.json",
+    "starterCode": "code/contoh.py",
+    "assignmentGuide": "assignments/tugas.md",
     "pptxDownload": null
+  },
+  "codeExample": {
+    "title": "Operator Aritmatika Python",
+    "code": "# Operator Aritmatika Python\na = 25\nb = 4\n\nprint(\"a =\", a, \", b =\", b)\nprint(\"Penjumlahan (a + b):\", a + b)\nprint(\"Pengurangan (a - b):\", a - b)\nprint(\"Perkalian (a * b):\", a * b)\nprint(\"Pembagian Riil (a / b):\", a / b)\nprint(\"Pembagian Bulat (a // b):\", a // b)\nprint(\"Sisa Bagi / Modulo (a % b):\", a % b)\nprint(\"Eksponensial / Pangkat (a ** 2):\", a ** 2)",
+    "outputKey": "ch03-01",
+    "explanation": "Di Python 3, operator / selalu menghasilkan float (25 / 4 = 6.25). Operator // melakukan pembagian bulat yang dibulatkan ke bawah (25 // 4 = 6), dan % mengembalikan sisa hasil bagi (25 % 4 = 1)."
+  },
+  "exercise": {
+    "title": "Latihan Terarah: Alokasi Time-Slot & Logika Sinyal",
+    "instructions": [
+      "Gunakan pembagian bulat // dan modulo % untuk menghitung pembagian paket data ke dalam slot frame.",
+      "Susun ekspresi logika boolean multi-kondisi dengan operator and, or, dan not.",
+      "Hitung panjang gelombang elektromagnetik menggunakan rumus lambda = c / f."
+    ],
+    "tips": "Gunakan tanda kurung eksplisit untuk memastikan ekspresi bertingkat dievaluasi dalam urutan yang tepat.",
+    "time": "15 menit"
+  },
+  "quiz": {
+    "question": "Apakah hasil dan tipe data dari ekspresi 17 // 4 dan 17 % 4 secara berurutan di Python?",
+    "options": [
+      "4.25 (float) dan 1 (int)",
+      "4 (int) dan 1 (int)",
+      "4.0 (float) dan 1.0 (float)",
+      "5 (int) dan 2 (int)"
+    ],
+    "correctIndex": 1,
+    "explanation": "17 // 4 melakukan floor division menghasilkan integer 4. Sedangkan 17 % 4 menghitung sisa hasil bagi bulat menghasilkan integer 1.",
+    "hint": "Ingat bahwa floor division memotong sisa desimal dan menghasilkan bilangan bulat."
+  },
+  "assignment": {
+    "title": "Tugas Praktik 03: Kalkulator Anggaran Daya Tautan (Link Budget)",
+    "description": "Rancang kalkulator parameter daya pancar, penguatan antena, dan rugi redaman sinyal gelombang radio.",
+    "instructions": [
+      "Hitung daya sinyal terima P_rx dari penjumlahan daya pemancar, gain antena, dan pengurangan total redaman.",
+      "Hitung fade margin tautan dengan mengurangkan daya terima terhadap batas sensitivitas penerima.",
+      "Gunakan operator relasional untuk mengevaluasi kelayakan tautan (margin >= 10 dB)."
+    ],
+    "rubric": [
+      {
+        "criteria": "Akurasi Perhitungan Formula",
+        "weight": 40,
+        "description": "Formula link budget dan fade margin dihitung secara matematis tepat."
+      },
+      {
+        "criteria": "Penerapan Operator & Logika",
+        "weight": 30,
+        "description": "Menerapkan operator perbandingan dan logika boolean secara tepat."
+      },
+      {
+        "criteria": "Kepatuhan Gaya PEP 8",
+        "weight": 20,
+        "description": "Penamaan variabel snake_case deskriptif dan struktur kode rapi."
+      },
+      {
+        "criteria": "Pengujian Kasus Uji Ekstrem",
+        "weight": 10,
+        "description": "Menyertakan uji kasus kelayakan tautan normal dan kondisi tidak layak."
+      }
+    ],
+    "starterCode": "\"\"\"\nTugas Praktik 03: Kalkulator Anggaran Daya Tautan (Link Budget)\n\"\"\"\ndef hitung_link_budget(p_tx_dbm: float, g_tx_dbi: float, g_rx_dbi: float, l_fspl_db: float, l_misc_db: float) -> dict:\n    p_rx = p_tx_dbm + g_tx_dbi + g_rx_dbi - l_fspl_db - l_misc_db\n    margin = p_rx - (-95.0)\n    return {'p_rx': p_rx, 'margin': margin, 'layak': margin >= 10.0}\n\nif __name__ == '__main__':\n    print(hitung_link_budget(43.0, 18.0, 14.0, 142.5, 3.0))",
+    "starterFilename": "tugas_03.py",
+    "downloadMdUrl": "downloads/chapter-03/tugas.md",
+    "downloadPyUrl": "downloads/chapter-03/contoh.py"
   }
 }
