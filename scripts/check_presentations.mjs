@@ -37,7 +37,9 @@ const CANONICAL_TITLES = {
   25: 'Type Hints & Code Quality',
   26: 'Advanced Testing & Logging',
   27: 'Concurrent & Asynchronous Programming',
-  28: 'Networking & API Integration'
+  28: 'Networking & API Integration',
+  29: 'Software Architecture & Deployment',
+  30: 'Professional Capstone Project'
 };
 
 const FORBIDDEN_BRANDING_TERMS = [
@@ -64,7 +66,7 @@ console.log('▶ [1/2] Auditing Slide Decks & Branding Metadata...');
 const outputsPath = path.join(ROOT, 'src/code/outputs.json');
 const outputs = fs.existsSync(outputsPath) ? JSON.parse(fs.readFileSync(outputsPath, 'utf8')) : {};
 
-for (let ch = 1; ch <= 28; ch++) {
+for (let ch = 1; ch <= 30; ch++) {
   const chStr = String(ch).padStart(2, '0');
   const levelFolder = ch <= 12 ? 'foundations' : ch <= 22 ? 'intermediate' : 'professional';
   const deckPath = path.join(ROOT, `content/${levelFolder}/chapter-${chStr}/slides/deck.json`);
@@ -259,7 +261,7 @@ for (const res of testResolutions) {
     mobile: false
   });
 
-  for (let ch = 1; ch <= 28; ch++) {
+  for (let ch = 1; ch <= 30; ch++) {
     await send('Page.navigate', { url: `http://127.0.0.1:8932/index.html#chapter/${ch}/slides` });
     await new Promise(r => setTimeout(r, 450));
 

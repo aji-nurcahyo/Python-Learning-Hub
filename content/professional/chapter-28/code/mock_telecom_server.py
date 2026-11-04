@@ -98,3 +98,4 @@ class MockTelecomServer:
             return MockHttpResponse(201, {"message": "Metric recorded", "record": new_entry})
 
         return MockHttpResponse(404, {"error": f"Endpoint not found: {method} {path}"})
+

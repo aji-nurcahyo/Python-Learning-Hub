@@ -1,0 +1,144 @@
+[
+  {
+    "title": "Professional Capstone Project",
+    "subtitle": "Integrated Python Application — Professional Capstone",
+    "kind": "cover",
+    "body": "<p>Proyek Puncak Tingkat Profesional: Membangun Python Data Monitoring &amp; Automation Platform terintegrasi yang menggabungkan seluruh kompetensi rekayasa perangkat lunak dari Chapter 01 s.d. 29.</p>",
+    "notes": "Selamat datang di Chapter 30! Modul proyek puncak ini menguji kemampuan Anda merancang sistem perangkat lunak produksi yang utuh, modular, dan teruji."
+  },
+  {
+    "title": "Gambaran Umum &amp; Tujuan Proyek Puncak",
+    "kind": "content",
+    "body": "<ul><li><strong>Sistem yang Dibangun:</strong> Python Data Monitoring &amp; Automation Platform untuk observabilitas infrastruktur jaringan telekomunikasi.</li><li><strong>Tujuan Utama:</strong> Memvalidasi penguasaan Clean Architecture, OOP &amp; Design Patterns, pemrosesan konkuren, REST API, pengetikan statis, dan automated testing.</li><li><strong>Kemandirian Eksekusi:</strong> Seluruh sistem dirancang untuk dapat dijalankan secara offline dan mandiri tanpa ketergantungan pada layanan cloud berbayar.</li><li><strong>Standar Industri:</strong> Kode memenuhi standar PEP 8, Twelve-Factor configuration, dan siap dikemas sebagai modul Python yang dapat di-deploy.</li></ul>",
+    "notes": "Capstone ini mencerminkan tantangan dunia kerja nyata di mana seorang engineer harus mengintegrasikan berbagai subsistem menjadi satu platform terpadu."
+  },
+  {
+    "title": "Diagram Arsitektur Sistem Berlapis",
+    "kind": "content",
+    "body": "<ul><li><strong>Presentation Layer:</strong> CLI Dispatcher berbasis <code>argparse</code> untuk kendali operasional teknisi.</li><li><strong>Processing Services:</strong> TelemetryProcessingEngine mengorkestrasi validasi, transformasi, dan kalkulasi SLA.</li><li><strong>Data Sources:</strong> Abstraksi multi-sumber dari berkas CSV lokal dan mock REST API gateway.</li><li><strong>Storage Layer:</strong> LocalTelemetryStorage in-memory yang dilindungi <code>threading.Lock</code> untuk thread-safety.</li><li><strong>Reporter Layer:</strong> Generator laporan eksekutif otomatis berformat Markdown.</li></ul>",
+    "notes": "Setiap lapisan arsitektur hanya berkomunikasi melalui kontrak antarmuka yang didefinisikan secara longgar (loosely coupled)."
+  },
+  {
+    "title": "Layer 1: Ingesti Data CSV Lokal",
+    "kind": "code",
+    "example": "ch30-01",
+    "body": "<p>Menyerap aliran data telemetri mentah dari file CSV lokal dan mengonversinya menjadi record terstruktur.</p>",
+    "notes": "Modul csv bawaan digunakan secara defensif untuk memvalidasi kelengkapan kolom sebelum instansiasi objek."
+  },
+  {
+    "title": "Layer 2: Integrasi REST API Gateway",
+    "kind": "code",
+    "example": "ch30-02",
+    "body": "<p>Mengambil data kesehatan klaster jaringan dari endpoint REST API mock secara offline tanpa dependensi server eksternal.</p>",
+    "notes": "Mock gateway memungkinkan pengujian end-to-end berjalan secara konsisten di lingkungan CI/CD."
+  },
+  {
+    "title": "Layer 3: Mesin Validasi &amp; Transformasi SLA",
+    "kind": "code",
+    "example": "ch30-03",
+    "body": "<p>Mengevaluasi parameter fisik RSSI dan packet loss terhadap Service Level Agreement (SLA) untuk menentukan kebutuhan perawatan.</p>",
+    "notes": "Logika bisnis transformasi diisolasi penuh di dalam domain model tanpa ketergantungan pada format penyimpanan."
+  },
+  {
+    "title": "Diagram Aliran Data Platform",
+    "kind": "content",
+    "body": "<ul><li><strong>Tahap 1 (Ingestion):</strong> Penarikan data simultan dari file CSV lokal dan REST API.</li><li><strong>Tahap 2 (Validation):</strong> Pemeriksaan integritas skema data dan eliminasi anomali nilai corrupt.</li><li><strong>Tahap 3 (Concurrent Aggregation):</strong> Pemrosesan paralel partisi data menggunakan pool worker.</li><li><strong>Tahap 4 (Thread-Safe Persistence):</strong> Penyimpanan snapshot data ke storage engine ber-lock.</li><li><strong>Tahap 5 (Reporting):</strong> Sintesis metrik statistik ke dalam berkas laporan ringkasan eksekutif.</li></ul>",
+    "notes": "Aliran data linier satu arah memudahkan pelacakan bottleneck dan penerapan idempotensi."
+  },
+  {
+    "title": "Layer 4: Pemrosesan Aliran Data Konkuren",
+    "kind": "code",
+    "example": "ch30-04",
+    "body": "<p>Mendistribusikan beban kalkulasi agregasi telemetri ke sekumpulan worker thread secara paralel dan terisolasi.</p>",
+    "notes": "ThreadPoolExecutor mendaur ulang thread OS dan memangkas waktu pemrosesan ribuan record telemetri."
+  },
+  {
+    "title": "Layer 5: Penyimpanan Thread-Safe",
+    "kind": "code",
+    "example": "ch30-05",
+    "body": "<p>Mengamankan penyimpanan data bersama (shared in-memory storage) dari race condition menggunakan <code>threading.Lock</code>.</p>",
+    "notes": "Setiap operasi mutasi dan pembacaan indeks dilindungi oleh context manager with self._lock:."
+  },
+  {
+    "title": "Layer 6: Generator Laporan Otomatis",
+    "kind": "code",
+    "example": "ch30-06",
+    "body": "<p>Menyintesis hasil analisis agregasi statistik menjadi dokumen laporan performa berformat Markdown untuk stakeholder.</p>",
+    "notes": "Laporan Markdown dapat langsung dirender di web dashboard atau diekspor ke format PDF."
+  },
+  {
+    "title": "Layer 7: Antarmuka Komando Baris Perintah",
+    "kind": "code",
+    "example": "ch30-07",
+    "body": "<p>Menyediakan dispatcher CLI terpadu yang memetakan instruksi baris perintah ke pemanggilan service internal.</p>",
+    "notes": "Pengguna dapat memicu proses penyerapan data (--run) atau pencetakan laporan (--report) dengan mudah."
+  },
+  {
+    "title": "Layer 8: Monitoring &amp; Peringatan Otomatis",
+    "kind": "code",
+    "example": "ch30-08",
+    "body": "<p>Mengevaluasi parameter suhu dan beban CPU secara real-time serta mengklasifikasikan tingkat keparahan insiden jaringan.</p>",
+    "notes": "Peringatan insiden otomatis memicu tindakan pencegahan sebelum terjadi kegagalan fatal pada perangkat keras."
+  },
+  {
+    "title": "Manajemen Konfigurasi Twelve-Factor",
+    "kind": "content",
+    "body": "<ul><li><strong>Prinsip III (Config in Environment):</strong> Seluruh parameter sistem (ambang batas alarm, direktori data) dikonfigurasi via environment variables.</li><li><strong>Class PlatformConfig:</strong> Memuat dan memvalidasi konfigurasi saat inisialisasi aplikasi dengan fallback nilai aman.</li><li><strong>Keamanan Kredensial:</strong> Tidak ada rahasia atau URL koneksi yang ditulis langsung (hardcoded) di dalam repositori source code.</li><li><strong>Kemudahan Adaptasi:</strong> Memungkinkan transisi mulus dari lingkungan pengujian lokal ke container produksi.</li></ul>",
+    "notes": "Twelve-Factor App memastikan konfigurasi sistem dapat disesuaikan tanpa perlu mengubah basis kode program."
+  },
+  {
+    "title": "Strategi Pengujian Otomatis Menyeluruh",
+    "kind": "content",
+    "body": "<ul><li><strong>Piramida Uji Capstone:</strong> Unit test terisolasi untuk domain model, storage, transformer, dan CLI runner.</li><li><strong>Test Isolation:</strong> Setiap test case menggunakan in-memory storage baru dan data fixture terisolasi.</li><li><strong>Verifikasi Determinisme:</strong> Menguji kalkulasi persentase kesehatan klaster dan deteksi anomali ambang batas.</li><li><strong>Zero External Dependency:</strong> Pengujian berjalan 100% offline dan selesai dalam waktu hitungan milidetik.</li></ul>",
+    "notes": "Keberadaan suite unit test komprehensif adalah jaring pengaman utama saat melakukan refactoring kode."
+  },
+  {
+    "title": "Standar Packaging &amp; Entry Point",
+    "kind": "content",
+    "body": "<ul><li><strong>pyproject.toml (PEP 621):</strong> Mendeklarasikan dependensi platform, versi Python yang didukung, dan metadata proyek.</li><li><strong>Console Scripts Entry Point:</strong> Mendaftarkan command <code>monitor-platform</code> agar dapat dipanggil langsung dari terminal OS.</li><li><strong>Format Distribusi Modern:</strong> Siap dibangun menjadi paket biner Wheel (<code>.whl</code>) untuk instalasi cepat via <code>pip install .</code>.</li><li><strong>Reproducibility:</strong> Menjamin lingkungan komputasi yang seragam di seluruh mesin tim developer.</li></ul>",
+    "notes": "Aplikasi yang dikemas dengan baik memudahkan distribusi dan integrasi ke dalam image container."
+  },
+  {
+    "title": "Otomatisasi CI dengan GitHub Actions",
+    "kind": "content",
+    "body": "<ul><li><strong>Automated Quality Gate:</strong> Menjalankan linting (flake8/ruff), typechecking (mypy), dan unit tests pada setiap commit.</li><li><strong>Multi-OS Matrix:</strong> Memvalidasi eksekusi kode pada runner Linux, macOS, dan Windows.</li><li><strong>Coverage Reporting:</strong> Mengukur metrik cakupan baris kode untuk mencegah penurunan kualitas pengujian.</li><li><strong>Blokir Regresi:</strong> Pull request tidak dapat di-merge jika terdapat satu pun tahapan pengujian yang gagal.</li></ul>",
+    "notes": "Pipeline CI adalah standar baku industri untuk menjaga stabilitas perangkat lunak skala produksi."
+  },
+  {
+    "title": "Panduan Penginstalan &amp; Konfigurasi",
+    "kind": "content",
+    "body": "<ul><li><strong>Langkah 1:</strong> Buat lingkungan virtual terisolasi: <code>python -m venv venv</code>.</li><li><strong>Langkah 2:</strong> Aktifkan venv dan pasang paket dalam mode editable: <code>pip install -e .</code>.</li><li><strong>Langkah 3:</strong> Atur variabel lingkungan: <code>export APP_ENV=production</code>.</li><li><strong>Langkah 4:</strong> Jalankan platform melalui CLI: <code>python main.py --run --report</code>.</li><li><strong>Langkah 5:</strong> Verifikasi seluruh pengujian mandiri: <code>python -m unittest discover tests</code>.</li></ul>",
+    "notes": "Instruksi instalasi yang jelas memastikan pengembang baru dapat menjalankan aplikasi dalam hitungan menit."
+  },
+  {
+    "title": "Rubrik Penilaian Capstone (100 Poin)",
+    "kind": "content",
+    "body": "<ul><li><strong>Core Application Functionality (25 Poin):</strong> Alur ingest, penyimpanan, analisis, dan reporting berjalan mulus.</li><li><strong>Software Architecture &amp; OOP (20 Poin):</strong> Clean Architecture, modularitas, dan pemanfaatan Protocol.</li><li><strong>Data Processing &amp; Integration (15 Poin):</strong> Penyerapan CSV lokal dan integrasi REST API dengan parsing akurat.</li><li><strong>Error Handling &amp; Reliability (15 Poin):</strong> Thread-safety Lock dan penanganan kegagalan defensif.</li><li><strong>Testing &amp; Code Quality (15 Poin):</strong> Kepatuhan PEP 8, type hints lengkap, dan lolos uji unit 100%.</li><li><strong>Documentation &amp; Deployment (10 Poin):</strong> Konfigurasi Twelve-Factor dan packaging pyproject.toml.</li></ul>",
+    "notes": "Evaluasi dilakukan secara objektif berdasarkan indikator keberhasilan yang terukur."
+  },
+  {
+    "title": "Tugas Mandiri &amp; Template Starter Code",
+    "kind": "content",
+    "body": "<ul><li><strong>Panduan Tugas:</strong> Pelajari spesifikasi lengkap pada berkas <code>tugas.md</code>.</li><li><strong>Starter Code:</strong> Gunakan template <code>tugas.py</code> yang memuat kerangka dasar kelas dan fungsi pengujian asersi.</li><li><strong>Pemisahan Solusi:</strong> Implementasi referensi instruktur terisolasi di folder <code>code/</code> dan tidak dipublikasikan ke publik.</li><li><strong>Kunci Keberhasilan:</strong> Pastikan seluruh asersi mandiri di tugas.py menghasilkan keluaran [OK] 100% lulus.</li></ul>",
+    "notes": "Gunakan pemahaman dari seluruh chapter sebelumnya untuk menyempurnakan implementasi tugas akhir ini."
+  },
+  {
+    "title": "Tantangan Pengembangan Lanjutan",
+    "kind": "content",
+    "body": "<ul><li><strong>Tantangan 1 (Ekspor JSON):</strong> Tambahkan opsi ekspor ringkasan performa ke berkas JSON terstruktur.</li><li><strong>Tantangan 2 (Streaming WebSockets):</strong> Integrasikan koneksi real-time untuk pembaruan status simpul per detik.</li><li><strong>Tantangan 3 (Dashboard Visual):</strong> Bangun antarmuka visual sederhana berbasis Streamlit atau terminal Textual.</li><li><strong>Tantangan 4 (Multi-Stage Dockerfile):</strong> Buat konfigurasi container Docker yang ringkas berbasis Alpine Linux.</li></ul>",
+    "notes": "Tantangan ekstensi ini bersifat opsional untuk memperdalam portofolio rekayasa perangkat lunak Anda."
+  },
+  {
+    "title": "Refleksi Perjalanan Pembelajaran",
+    "kind": "content",
+    "body": "<ul><li><strong>Level 1 (Foundations - Ch 01 s.d. 12):</strong> Sintaks dasar, tipe data, perulangan, fungsi, dan capstone CLI pertama.</li><li><strong>Level 2 (Intermediate - Ch 13 s.d. 22):</strong> Algoritma, Big-O, file handling, exception, OOP, packaging, dan intermediate capstone.</li><li><strong>Level 3 (Professional - Ch 23 s.d. 30):</strong> Design patterns, metaprogramming, type hints, testing mendalam, concurrency, REST APIs, arsitektur bersih, dan professional capstone.</li><li><strong>Pencapaian:</strong> Anda telah menuntaskan seluruh 30 modul kurikulum standar industri!</li></ul>",
+    "notes": "Selamat atas dedikasi dan kerja keras Anda menuntaskan kurikulum lengkap Python Learning Hub!"
+  },
+  {
+    "title": "Penutupan Kurikulum Resmi",
+    "kind": "content",
+    "body": "<ul><li>Anda kini memiliki fondasi rekayasa perangkat lunak Python yang solid, modern, dan berstandar industri.</li><li>Teruslah membangun proyek-proyek nyata, berkontribusi pada repositori open source, dan menjelajahi teknologi baru.</li><li><strong>Platform:</strong> Python Learning Hub</li><li><strong>Creator:</strong> Aji Pamungkas Tri Nurcahyo</li><li><strong>Institusi:</strong> Institut Teknologi Sumatera (ITERA)</li></ul>",
+    "notes": "Terima kasih telah belajar bersama Python Learning Hub. Sukses selalu dalam perjalanan karir rekayasa perangkat lunak Anda!"
+  }
+]
+

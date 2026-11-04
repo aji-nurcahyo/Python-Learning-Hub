@@ -28,3 +28,4 @@ def main() -> None:
 # Guard if __name__ == '__main__': wajib untuk multiprocessing di Windows
 if __name__ == "__main__":
     main()
+

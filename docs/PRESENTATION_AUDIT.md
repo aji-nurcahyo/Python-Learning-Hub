@@ -2,7 +2,7 @@
 ## Python Learning Hub — Global Presentation Audit Report
 
 **Tanggal Audit:** 4 November 2026  
-**Status Audit:** **100% Selesai & Terverifikasi (All 28 Active Decks, 544 Slides)**  
+**Status Audit:** **100% Selesai & Terverifikasi (All 30 Active Decks, 586 Slides)**  
 **Platform:** Python Learning Hub  
 **Pengembang:** Aji Pamungkas Tri Nurcahyo  
 **Institusi Resmi:** Institut Teknologi Sumatera  
@@ -53,8 +53,10 @@ Sesuai instruksi baku perancangan platform:
 | **26** | Advanced Testing & Logging | 20 | Tidak ada | Sesuai standar resmi | Nihil | 20 slide modular, test fixtures, parameterized subtests, mocking, structured logging | **LULUS (100%)** |
 | **27** | Concurrent & Asynchronous Programming | 20 | Tidak ada | Sesuai standar resmi | Nihil | 20 slide modular, threading, ProcessPool, GIL, asyncio event loop, Lock synchronization | **LULUS (100%)** |
 | **28** | Networking & API Integration | 20 | Tidak ada | Sesuai standar resmi | Nihil | 20 slide modular, HTTP GET/POST, Bearer auth, timeout, backoff retry, pagination | **LULUS (100%)** |
+| **29** | Software Architecture & Deployment | 20 | Tidak ada | Sesuai standar resmi | Nihil | 20 slide modular, Clean Architecture, Dependency Injection, Twelve-Factor, Docker, CI/CD Actions | **LULUS (100%)** |
+| **30** | Professional Capstone Project | 22 | Tidak ada | Sesuai standar resmi | Nihil | 22 slide modular, architecture, async data ingestion, SQLite persistence, reporting & alerting | **LULUS (100%)** |
 
-**Total Slide yang Diaudit & Divalidasi:** **544 Slide di 28 Deck Aktif**
+**Total Slide yang Diaudit & Divalidasi:** **586 Slide di 30 Deck Aktif**
 
 ---
 

@@ -85,3 +85,4 @@ Jalankan skrip pengujian mandiri:
 python tugas.py
 ```
 Pastikan seluruh validasi status kode dan asersi paginasi lulus 100% tanpa error jaringan yang tidak tertangani.
+

@@ -2454,20 +2454,105 @@ if __name__ == "__main__":
     levelId: 3,
     number: '29',
     title: 'Software Architecture & Deployment',
-    subtitle: 'Clean Architecture, Twelve-Factor App, Docker & CI/CD Pipelines',
+    subtitle: 'Clean Architecture, Twelve-Factor App, Packaging & CI/CD',
     description:
-      'Membawa aplikasi ke produksi: prinsip Twelve-Factor, Layered / Clean Architecture, containerization dengan multi-stage Dockerfile, dan pipeline otomatisasi GitHub Actions.',
+      'Membawa aplikasi ke produksi: prinsip Twelve-Factor, Layered / Clean Architecture, Dependency Injection, packaging modern dengan pyproject.toml, dan pipeline otomatisasi GitHub Actions.',
     competencyFocus: 'Senior Engineering: Production deployment & architecture',
     estimatedHours: 6,
     difficulty: 'Advanced',
-    available: false,
+    available: true,
+    deckPath: '#chapter/29/slides',
+    tugasPath: '#chapter/29/task',
     prerequisites: ['Chapter 28'],
     learningObjectives: [
       'Menyusun struktur proyek Python sesuai prinsip Clean Architecture dan Twelve-Factor App',
-      'Membuat multi-stage Docker build yang ringkas dan aman untuk container produksi',
-      'Menulis workflow CI/CD terotomasi untuk linting, typechecking, dan running tests',
+      'Menerapkan Dependency Injection untuk memisahkan domain model dari dependensi infrastruktur',
+      'Mengonfigurasi packaging pyproject.toml PEP 621 dan workflow otomatisasi Continuous Integration (CI)',
     ],
-    tags: ['Docker', 'Clean Architecture', 'CI/CD', 'Twelve-Factor'],
+    tags: ['Software Architecture', 'Clean Architecture', 'Dependency Injection', 'CI/CD', 'Twelve-Factor', 'Packaging'],
+    codeExample: {
+      title: 'Dependency Injection dengan Protocol',
+      code: `from typing import Protocol
+
+class Notifier(Protocol):
+    def send(self, recipient: str, message: str) -> bool:
+        ...
+
+class MockNotifier:
+    def __init__(self) -> None:
+        self.sent_messages: list[tuple[str, str]] = []
+
+    def send(self, recipient: str, message: str) -> bool:
+        print(f" [MOCK] Mencatat pesan uji untuk {recipient}: '{message}'")
+        self.sent_messages.append((recipient, message))
+        return True
+
+class AlertService:
+    def __init__(self, notifier: Notifier) -> None:
+        self.notifier = notifier
+
+    def broadcast_incident(self, target: str, severity: str, details: str) -> bool:
+        formatted = f"[{severity.upper()}] Insiden Jaringan: {details}"
+        return self.notifier.send(target, formatted)
+
+def main() -> None:
+    print("Mendemonstrasikan Pola Dependency Injection (DI):\\n")
+    mock_engine = MockNotifier()
+    test_service = AlertService(notifier=mock_engine)
+    test_service.broadcast_incident("admin-test@itera.ac.id", "warning", "Fiber optic link down")
+    print(f"Total pesan terekam di mock: {len(mock_engine.sent_messages)}")
+
+if __name__ == "__main__":
+    main()`,
+      outputKey: 'ch29-03',
+      explanation:
+        'Dependency Injection memisahkan keterikatan langsung service dari implementasi konkret, memungkinkan penyuntikan mock notifier untuk pengetesan offline tanpa dependensi server fisik.',
+    },
+    exercise: {
+      title: 'Latihan Terarah: Domain Model, DI, Twelve-Factor Config, dan CLI',
+      instructions: [
+        'Pisahkan domain model BandwidthLimit dari ketergantungan luar.',
+        'Terapkan Dependency Injection menggunakan Protocol AuditLogger.',
+        'Muat pengaturan server dari environment variables dengan konversi tipe data.',
+        'Buat subcommand CLI ping dengan argparse.',
+      ],
+      tips: 'Hindari memanggil print() di dalam domain logic; serahkan formatting output pada layer presentasi/CLI.',
+      time: '45 menit',
+    },
+    quiz: {
+      question: 'Mengapa prinsip Twelve-Factor App mewajibkan konfigurasi aplikasi disimpan di dalam environment variables daripada ditulis langsung (hardcoded) di dalam source code?',
+      options: [
+        'Agar konfigurasi dapat diubah antar lingkungan (dev, staging, prod) tanpa mengubah atau mengompilasi ulang basis kode',
+        'Karena sistem operasi Windows hanya bisa membaca variabel lingkungan',
+        'Untuk mempercepat eksekusi interpreter Python sebesar dua kali lipat',
+        'Agar seluruh data rahasia dapat dibaca oleh pengguna umum di repositori publik',
+      ],
+      correctIndex: 0,
+      explanation:
+        'Menyimpan konfigurasi di environment variables memisahkan kode dari konfigurasi, menjaga keamanan rahasia (secrets), dan memungkinkan codebase yang sama berjalan di berbagai lingkungan deployment.',
+      hint: 'Pikirkan tentang prinsip portabilitas antar lingkungan pengembangan dan produksi.',
+    },
+    assignment: {
+      title: 'Tugas Praktik 29: Production-Ready Python Application',
+      description:
+        'Sempurnakan arsitektur berlapis Clean Architecture untuk sistem deployment telekomunikasi dengan domain model, in-memory repository, service ber-DI, Twelve-Factor config, dan dispatcher CLI.',
+      instructions: [
+        'Lengkapi AppConfig untuk membaca variabel lingkungan DEPLOY_ENV dan SERVICE_PORT.',
+        'Implementasikan InMemoryNodeRepository dengan method get_by_id dan list_by_cluster.',
+        'Bangun DeploymentService yang menyaring simpul operasional dari simpul maintenance.',
+        'Kembangkan execute_cli untuk menangani perintah status dan deploy.',
+      ],
+      rubric: [
+        { criteria: 'Separation of Concerns & Layering', weight: 25, description: 'Pemisahan tegas antara domain model, port repository, service layer, dan CLI presenter.' },
+        { criteria: 'Penerapan Dependency Injection', weight: 25, description: 'Service bergantung pada abstraksi repository, memungkinkan mock testing tanpa dependensi fisik.' },
+        { criteria: 'Twelve-Factor Configuration', weight: 20, description: 'Pembacaan konfigurasi dari environment variables dengan fallback default yang aman.' },
+        { criteria: 'CLI Dispatcher & Error Handling', weight: 15, description: 'Penanganan subcommands dengan argparse dan penanganan kesalahan klaster tidak valid.' },
+        { criteria: 'Kerapian Kode & Type Hints', weight: 15, description: 'Mengikuti standar PEP 8, type hints lengkap pada seluruh method, dan docstrings jelas.' },
+      ],
+      starterFilename: 'tugas_29.py',
+      downloadMdUrl: 'downloads/chapter-29/tugas.md',
+      downloadPyUrl: 'downloads/chapter-29/contoh.py',
+    },
   },
   {
     id: 30,
@@ -2475,20 +2560,108 @@ if __name__ == "__main__":
     levelId: 3,
     number: '30',
     title: 'Professional Capstone Project',
-    subtitle: 'Sistem Terdistribusi Skala Produksi: Async API & Pipeline Tercontainerisasi',
+    subtitle: 'Integrated Python Application — Python Data Monitoring & Automation Platform',
     description:
-      'Proyek puncak Level 3: membangun sistem backend asinkron berkinerja tinggi, dilengkapi static typing menyeluruh, test suite lengkap, arsitektur SOLID, dan siap deploy via Docker.',
-    competencyFocus: 'Senior Engineering Capstone',
+      'Proyek puncak Level 3: membangun sistem backend observabilitas telemetri terintegrasi, Clean Architecture, pemrosesan multi-sumber, thread-safety, dan pelaporan SLA otomatis.',
+    competencyFocus: 'Senior Engineering Capstone: End-to-End Production System',
     estimatedHours: 10,
     difficulty: 'Advanced',
-    available: false,
+    available: true,
+    deckPath: '#chapter/30/slides',
+    tugasPath: '#chapter/30/task',
     prerequisites: ['Chapter 23 – 29'],
     learningObjectives: [
-      'Mengintegrasikan asynchronous framework, design patterns, dan type hints dalam sistem nyata',
-      'Menghasilkan codebase berstandar industri dengan dokumentasi API dan instruksi deployment lengkap',
-      'Mencapai keandalan sistem dengan zero unhandled exceptions dan automated health monitoring',
+      'Mengintegrasikan Clean Architecture, Protocol subtyping, dan type hints dalam sistem produksi nyata',
+      'Membangun pipeline penyerapan multi-sumber (CSV dan REST API) yang aman secara konkuren',
+      'Menghasilkan dokumen laporan SLA otomatis dan suite pengujian unit terisolasi yang andal',
     ],
-    tags: ['Senior Capstone', 'Async Engine', 'Production Grade'],
+    tags: ['Senior Capstone', 'Clean Architecture', 'Production Grade', 'Data Platform', 'Telemetry'],
+    codeExample: {
+      title: 'Pipeline Ingesti dan Agregasi Telemetri Capstone',
+      code: `import csv
+import io
+from typing import Any
+
+CSV_DATA_STREAM = """device_id,timestamp,rssi_dbm,packet_loss_pct,status
+BTS-LAMPUNG-01,1700000000,-68.5,0.02,HEALTHY
+BTS-LAMPUNG-02,1700000010,-88.2,1.45,DEGRADED
+BTS-LAMPUNG-03,1700000020,-112.0,12.80,CRITICAL
+"""
+
+def ingest_telemetry_csv(raw_csv_text: str) -> list[dict[str, Any]]:
+    stream = io.StringIO(raw_csv_text.strip())
+    reader = csv.DictReader(stream)
+    records = []
+    for row in reader:
+        records.append({
+            "device_id": row["device_id"],
+            "timestamp": int(row["timestamp"]),
+            "rssi_dbm": float(row["rssi_dbm"]),
+            "packet_loss_pct": float(row["packet_loss_pct"]),
+            "status": row["status"],
+        })
+    return records
+
+def main() -> None:
+    print("Mengeksekusi Pipeline Ingesti Data Telemetri Mentah (Capstone Layer 1):\\n")
+    records = ingest_telemetry_csv(CSV_DATA_STREAM)
+    for rec in records:
+        print(f" -> [{rec['device_id']}] RSSI: {rec['rssi_dbm']} dBm | Loss: {rec['packet_loss_pct']}% | Status: {rec['status']}")
+    print(f"\\nTotal entri berhasil di-ingest: {len(records)} records.")
+
+if __name__ == "__main__":
+    main()`,
+      outputKey: 'ch30-01',
+      explanation:
+        'Alur penyerapan data telemetri membaca aliran data mentah dan mengonversinya secara defensif ke dalam entitas domain terstruktur untuk dievaluasi terhadap standar SLA.',
+    },
+    exercise: {
+      title: 'Latihan Terarah: Ingesti CSV, Thread-Safe Storage, Penggabungan Sumber, dan Badge SLA',
+      instructions: [
+        'Ekstraksi dan validasi rekaman CSV telemetri dengan penanganan nilai korup.',
+        'Bangun SafeMetricsAccumulator dengan proteksi threading.Lock.',
+        'Gabungkan data multi-sumber lokal dan remote dengan deduplikasi ID.',
+        'Format badge status kepatuhan SLA berformat Markdown.',
+      ],
+      tips: 'Gunakan threading.Lock dengan context manager with self._lock: untuk mencegah race condition.',
+      time: '60 menit',
+    },
+    quiz: {
+      question: 'Dalam arsitektur sistem monitoring telekomunikasi terdistribusi, mengapa lapisan Domain Model harus dirancang tanpa ketergantungan (dependencies) pada framework atau basis data fisik?',
+      options: [
+        'Agar logika bisnis inti dapat diuji secara terisolasi dan tidak terpengaruh oleh perubahan infrastruktur penyimpanan luar',
+        'Karena Python melarang import library di dalam class dataclass',
+        'Agar data dapat otomatis diunggah ke cloud tanpa konfigurasi',
+        'Karena framework basis data tidak mendukung tipe data float',
+      ],
+      correctIndex: 0,
+      explanation:
+        'Prinsip Clean Architecture menetapkan bahwa aturan bisnis domain adalah inti dari perangkat lunak. Mengisolasinya dari detail infrastruktur memastikan sistem fleksibel, mudah diuji, dan tahan terhadap perubahan teknologi eksternal.',
+      hint: 'Pikirkan tentang prinsip Dependency Inversion dan kemudahan unit testing.',
+    },
+    assignment: {
+      title: 'Tugas Praktik 30: Python Data Monitoring & Automation Platform',
+      description:
+        'Bangun platform pemantauan telemetri terpadu berskala produksi yang mengintegrasikan penyerapan multi-sumber, thread-safe storage, kalkulasi SLA, deteksi anomali, generator laporan Markdown, dan CLI dispatcher.',
+      instructions: [
+        'Lengkapi entitas domain TelemetryRecord dengan kriteria kesehatan is_healthy.',
+        'Implementasikan CsvTelemetrySource dan MockApiSource dengan subtyping Protocol.',
+        'Lindungi operasi penyimpanan pada StorageEngine menggunakan threading.Lock.',
+        'Bangun TelemetryEngine untuk analisis klaster dan deteksi anomali pelanggaran SLA.',
+        'Sintesis laporan eksekutif Markdown dengan MarkdownReporter.',
+      ],
+      rubric: [
+        { criteria: 'Core Application Functionality', weight: 25, description: 'Alur penyerapan data multi-sumber, penyimpanan, kalkulasi analitik, dan pelaporan berjalan mulus tanpa error.' },
+        { criteria: 'Software Architecture & OOP', weight: 20, description: 'Penerapan Clean Architecture yang bersih, pemisahan layer Domain/Ports/Services/CLI, dan penggunaan Protocol yang tepat.' },
+        { criteria: 'Data Processing & Integration', weight: 15, description: 'Kemampuan memproses stream CSV lokal dan integrasi endpoint REST API dengan parsing tipe data yang akurat.' },
+        { criteria: 'Error Handling & Reliability', weight: 15, description: 'Proteksi thread-safety menggunakan Lock, penanganan kegagalan parsing defensif, dan zero unhandled exceptions.' },
+        { criteria: 'Testing & Code Quality', weight: 15, description: 'Mematuhi standar PEP 8, memiliki type hints lengkap, modularitas tinggi, dan lolos uji asersi mandiri 100%.' },
+        { criteria: 'Documentation & Deployment Readiness', weight: 10, description: 'Konfigurasi Twelve-Factor berbasis environment variables dan struktur kode yang siap dikemas.' },
+      ],
+      starterFilename: 'tugas_30.py',
+      downloadMdUrl: 'downloads/chapter-30/tugas.md',
+      downloadPyUrl: 'downloads/chapter-30/contoh.py',
+    },
   },
 ];
 

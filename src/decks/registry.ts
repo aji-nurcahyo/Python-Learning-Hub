@@ -26,6 +26,8 @@ import ch25Slides from '../../content/professional/chapter-25/slides/deck.json';
 import ch26Slides from '../../content/professional/chapter-26/slides/deck.json';
 import ch27Slides from '../../content/professional/chapter-27/slides/deck.json';
 import ch28Slides from '../../content/professional/chapter-28/slides/deck.json';
+import ch29Slides from '../../content/professional/chapter-29/slides/deck.json';
+import ch30Slides from '../../content/professional/chapter-30/slides/deck.json';
 
 export interface SlideData {
   title: string;
@@ -68,14 +70,16 @@ export function getSlideDeckForChapter(chapterId: number): SlideData[] | null {
   if (chapterId === 26) return ch26Slides as SlideData[];
   if (chapterId === 27) return ch27Slides as SlideData[];
   if (chapterId === 28) return ch28Slides as SlideData[];
+  if (chapterId === 29) return ch29Slides as SlideData[];
+  if (chapterId === 30) return ch30Slides as SlideData[];
   return null;
 }
 
 // Backward-compatibility meeting helper
-export const meetings = Array.from({ length: 28 }, (_, i) => {
+export const meetings = Array.from({ length: 30 }, (_, i) => {
   const number = i + 1;
   const isAvail = [
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28,
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
   ].includes(number);
   return {
     number,
@@ -137,6 +141,10 @@ export const meetings = Array.from({ length: 28 }, (_, i) => {
         ? 'Concurrent & Asynchronous Programming'
         : number === 28
         ? 'Networking & API Integration'
+        : number === 29
+        ? 'Software Architecture & Deployment'
+        : number === 30
+        ? 'Professional Capstone Project'
         : 'Materi Pembelajaran',
     description: 'Modul pembelajaran Python Learning Hub.',
     tags: ['Python', 'Learning Hub'],

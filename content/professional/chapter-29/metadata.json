@@ -5,31 +5,33 @@
   "levelId": 3,
   "levelCategory": "professional",
   "title": "Software Architecture & Deployment",
-  "subtitle": "Clean Architecture, Twelve-Factor App, Docker & CI/CD Pipelines",
-  "description": "Membawa aplikasi ke produksi: prinsip Twelve-Factor, Layered / Clean Architecture, containerization dengan multi-stage Dockerfile, dan pipeline otomatisasi GitHub Actions.",
+  "subtitle": "Clean Architecture, Twelve-Factor App, Packaging & CI/CD",
+  "description": "Membawa aplikasi ke produksi: prinsip Twelve-Factor, Layered / Clean Architecture, Dependency Injection, packaging modern dengan pyproject.toml, dan pipeline otomatisasi GitHub Actions.",
   "competencyFocus": "Senior Engineering: Production deployment & architecture",
   "estimatedHours": 6,
   "difficulty": "Advanced",
-  "available": false,
+  "available": true,
   "prerequisites": [
     "Chapter 28"
   ],
   "learningObjectives": [
     "Menyusun struktur proyek Python sesuai prinsip Clean Architecture dan Twelve-Factor App",
-    "Membuat multi-stage Docker build yang ringkas dan aman untuk container produksi",
-    "Menulis workflow CI/CD terotomasi untuk linting, typechecking, dan running tests"
+    "Menerapkan Dependency Injection untuk memisahkan domain model dari dependensi infrastruktur",
+    "Mengonfigurasi packaging pyproject.toml PEP 621 dan workflow otomatisasi Continuous Integration (CI)"
   ],
   "tags": [
-    "Docker",
+    "Software Architecture",
     "Clean Architecture",
+    "Dependency Injection",
     "CI/CD",
-    "Twelve-Factor"
+    "Twelve-Factor",
+    "Packaging"
   ],
   "resources": {
-    "hasSlides": false,
-    "slidesDeck": null,
-    "starterCode": null,
-    "assignmentGuide": null,
+    "hasSlides": true,
+    "slidesDeck": "slides/deck.json",
+    "starterCode": "code/contoh.py",
+    "assignmentGuide": "assignments/tugas.md",
     "pptxDownload": null
   }
 }

@@ -5,30 +5,32 @@
   "levelId": 3,
   "levelCategory": "professional",
   "title": "Professional Capstone Project",
-  "subtitle": "Sistem Terdistribusi Skala Produksi: Async API & Pipeline Tercontainerisasi",
-  "description": "Proyek puncak Level 3: membangun sistem backend asinkron berkinerja tinggi, dilengkapi static typing menyeluruh, test suite lengkap, arsitektur SOLID, dan siap deploy via Docker.",
-  "competencyFocus": "Senior Engineering Capstone",
+  "subtitle": "Integrated Python Application — Python Data Monitoring & Automation Platform",
+  "description": "Proyek puncak Level 3: membangun sistem backend observabilitas telemetri terintegrasi, Clean Architecture, pemrosesan multi-sumber, thread-safety, dan pelaporan SLA otomatis.",
+  "competencyFocus": "Senior Engineering Capstone: End-to-End Production System",
   "estimatedHours": 10,
   "difficulty": "Advanced",
-  "available": false,
+  "available": true,
   "prerequisites": [
     "Chapter 23 – 29"
   ],
   "learningObjectives": [
-    "Mengintegrasikan asynchronous framework, design patterns, dan type hints dalam sistem nyata",
-    "Menghasilkan codebase berstandar industri dengan dokumentasi API dan instruksi deployment lengkap",
-    "Mencapai keandalan sistem dengan zero unhandled exceptions dan automated health monitoring"
+    "Mengintegrasikan Clean Architecture, Protocol subtyping, dan type hints dalam sistem produksi nyata",
+    "Membangun pipeline penyerapan multi-sumber (CSV dan REST API) yang aman secara konkuren",
+    "Menghasilkan dokumen laporan SLA otomatis dan suite pengujian unit terisolasi yang andal"
   ],
   "tags": [
     "Senior Capstone",
-    "Async Engine",
-    "Production Grade"
+    "Clean Architecture",
+    "Production Grade",
+    "Data Platform",
+    "Telemetry"
   ],
   "resources": {
-    "hasSlides": false,
-    "slidesDeck": null,
-    "starterCode": null,
-    "assignmentGuide": null,
+    "hasSlides": true,
+    "slidesDeck": "slides/deck.json",
+    "starterCode": "code/contoh.py",
+    "assignmentGuide": "assignments/tugas.md",
     "pptxDownload": null
   }
 }

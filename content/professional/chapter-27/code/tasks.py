@@ -53,3 +53,4 @@ def simulate_cpu_bound_task(task_id: str, n: int = 150_000) -> dict[str, Any]:
         "result_checksum": total % 1_000_007,
         "duration_sec": round(duration, 4),
     }
+

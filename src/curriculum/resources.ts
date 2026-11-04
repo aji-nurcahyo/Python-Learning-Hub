@@ -259,6 +259,22 @@ export const CHAPTER_RESOURCES_MAP: Record<number, ChapterResourceConfig> = {
     pythonFiles: ['downloads/chapter-28/contoh.py', 'downloads/examples/ch28-01.py'],
     assignmentGuide: 'downloads/chapter-28/tugas.md',
   },
+  29: {
+    chapterId: 29,
+    hasSlides: true,
+    slidesDeck: 'content/professional/chapter-29/slides/deck.json',
+    powerpoint: null,
+    pythonFiles: ['downloads/chapter-29/contoh.py', 'downloads/examples/ch29-01.py'],
+    assignmentGuide: 'downloads/chapter-29/tugas.md',
+  },
+  30: {
+    chapterId: 30,
+    hasSlides: true,
+    slidesDeck: 'content/professional/chapter-30/slides/deck.json',
+    powerpoint: null,
+    pythonFiles: ['downloads/chapter-30/contoh.py', 'downloads/examples/ch30-01.py'],
+    assignmentGuide: 'downloads/chapter-30/tugas.md',
+  },
 };
 
 /**

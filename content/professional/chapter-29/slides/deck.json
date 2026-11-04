@@ -1,0 +1,134 @@
+[
+  {
+    "title": "Software Architecture & Deployment",
+    "subtitle": "Clean Architecture, Twelve-Factor App, Packaging & CI/CD",
+    "kind": "cover",
+    "body": "<p>Rekayasa Sistem Perangkat Lunak Tingkat Produksi: Membangun aplikasi Python modular dengan Clean Architecture, Dependency Injection, Twelve-Factor configuration, packaging modern pyproject.toml, dan pipeline otomatisasi GitHub Actions.</p>",
+    "notes": "Selamat datang di Chapter 29! Modul ini membahas transisi dari penulisan skrip mandiri menjadi rekayasa perangkat lunak berskala industri yang siap rilis."
+  },
+  {
+    "title": "Monolit vs Arsitektur Modular",
+    "kind": "content",
+    "body": "<ul><li><strong>Monolit Tidak Terstruktur:</strong> Skrip tunggal di mana logika database, manipulasi string, dan output CLI bercampur baur; sangat rapuh dan sulit diuji.</li><li><strong>Arsitektur Modular:</strong> Membagi sistem menjadi komponen-komponen mandiri dengan tanggung jawab terisolasi (Separation of Concerns).</li><li><strong>Prinsip Ketergantungan:</strong> Komponen tingkat tinggi (domain logic) tidak boleh bergantung pada komponen tingkat rendah (database/jaringan).</li><li><strong>Keuntungan:</strong> Kode mudah diuji secara unit test, mudah dipelihara, dan dapat dikembangkan oleh tim besar secara paralel.</li></ul>",
+    "notes": "Arsitektur yang baik menunda keputusan teknis implementasi konkret dan memprioritaskan kejelasan model domain."
+  },
+  {
+    "title": "Pemisahan Layer Arsitektur Bersih",
+    "kind": "code",
+    "example": "ch29-01",
+    "body": "<p>Memisahkan entitas Domain bisnis murni dari port Interface dan implementasi konkret Infrastructure.</p>",
+    "notes": "Domain model tidak mengimpor modul eksternal apa pun, menjadikannya independen dari framework dan database."
+  },
+  {
+    "title": "Separation of Concerns: Bisnis vs CLI",
+    "kind": "content",
+    "body": "<ul><li><strong>Prinsip Inti:</strong> Jangan pernah meletakkan perintah <code>print()</code> atau <code>input()</code> langsung di dalam logika inti bisnis.</li><li><strong>Domain &amp; Service:</strong> Bertanggung jawab melakukan kalkulasi, validasi, dan orkestrasi data; mengembalikan nilai atau melempar exception.</li><li><strong>Controller / CLI:</strong> Bertanggung jawab mengurai argumen baris perintah, memformat keluaran untuk pengguna, dan menentukan exit code.</li><li><strong>Uji Cepat:</strong> Jika logika bisnis tidak dapat diuji tanpa memanggil terminal, berarti arsitektur belum terpisah dengan baik.</li></ul>",
+    "notes": "Pemisahan ini memungkinkan logika bisnis yang sama digunakan kembali pada REST API atau bot background worker."
+  },
+  {
+    "title": "Memisahkan Logika Bisnis dari CLI",
+    "kind": "code",
+    "example": "ch29-02",
+    "body": "<p>Mengisolasi kalkulasi utilisasi bandwidth murni dari penanganan argumen dan pesan kesalahan pada lapisan CLI.</p>",
+    "notes": "Class BandwidthCalculator dapat diuji dengan mudah menggunakan assert tanpa mensimulasikan sys.argv."
+  },
+  {
+    "title": "Dependency Injection & Inversion of Control",
+    "kind": "content",
+    "body": "<ul><li><strong>Keterikatan Kuat (Tight Coupling):</strong> Sebuah class membuat instance dependensinya secara langsung di dalam constructor menggunakan operator instansiasi.</li><li><strong>Dependency Injection (DI):</strong> Dependensi disuntikkan dari luar (biasanya via parameter <code>__init__</code>), bukan dibuat sendiri.</li><li><strong>Abstraksi via Protocol:</strong> Definisikan antarmuka menggunakan <code>typing.Protocol</code> agar implementasi konkret dapat ditukar kapan saja.</li><li><strong>Dukungan Testing:</strong> Sangat memudahkan unit testing karena dependensi eksternal (email/database) dapat digantikan oleh mock object.</li></ul>",
+    "notes": "Dependency Injection adalah fondasi utama dalam menciptakan kode yang fleksibel terhadap perubahan infrastruktur."
+  },
+  {
+    "title": "Implementasi Dependency Injection",
+    "kind": "code",
+    "example": "ch29-03",
+    "body": "<p>Menyuntikkan implementasi notifikasi (Mock vs Email) ke dalam AlertService tanpa mengubah satu baris pun kode service.</p>",
+    "notes": "AlertService hanya peduli bahwa objek yang diterimanya mematuhi kontrak method send() pada Notifier Protocol."
+  },
+  {
+    "title": "Metodologi Twelve-Factor App",
+    "kind": "content",
+    "body": "<ul><li><strong>I. Codebase:</strong> Satu basis kode terlacak di Git, banyak deployment (dev, staging, prod).</li><li><strong>III. Config:</strong> Simpan seluruh konfigurasi di lingkungan sistem (Environment Variables), bukan di hardcoded code.</li><li><strong>IV. Backing Services:</strong> Perlakukan database, cache, dan message broker sebagai sumber daya yang dapat dilampirkan (*attached resources*).</li><li><strong>VI. Processes:</strong> Eksekusi aplikasi sebagai satu atau lebih proses nir-status (*stateless*) dan nir-berbagi (*share-nothing*).</li></ul>",
+    "notes": "Twelve-Factor App adalah pedoman arsitektur standar industri untuk membangun aplikasi cloud-native yang portabel."
+  },
+  {
+    "title": "Konfigurasi Berbasis Environment Variables",
+    "kind": "code",
+    "example": "ch29-04",
+    "body": "<p>Membaca konfigurasi aplikasi dari variabel lingkungan sistem operasi dengan fallback nilai default yang aman.</p>",
+    "notes": "Data rahasia seperti credential database tidak boleh disimpan di repositori Git, melainkan disuntikkan saat runtime."
+  },
+  {
+    "title": "Observabilitas & Structured Logging",
+    "kind": "content",
+    "body": "<ul><li><strong>Mengapa Bukan Print?</strong> Fungsi print tidak memiliki timestamp, penanda level keparahan (*severity*), dan sulit disaring (*filter*).</li><li><strong>Structured Logging (JSON):</strong> Format standar industri yang mempermudah agregasi log pada CloudWatch, Datadog, atau ElasticSearch.</li><li><strong>Tingkat Keparahan Standar:</strong> DEBUG (diagnostik mendalam), INFO (operasi normal), WARNING (anomali ringan), ERROR (kegagalan aksi).</li><li><strong>Keamanan Log:</strong> Wajib menyamarkan atau menghapus kredensial, token API, dan data sensitif pengguna dari catatan log.</li></ul>",
+    "notes": "Log terstruktur memangkas waktu investigasi insiden produksi secara dramatis melalui kueri field JSON."
+  },
+  {
+    "title": "Konfigurasi Structured JSON Logging",
+    "kind": "code",
+    "example": "ch29-05",
+    "body": "<p>Menerapkan custom logging formatter yang mengonversi record log ke format JSON dengan metadata observabilitas.</p>",
+    "notes": "Setiap baris log dicetak sebagai objek JSON tunggal yang siap dikonsumsi oleh agregator log cloud."
+  },
+  {
+    "title": "Standar Packaging: pyproject.toml (PEP 621)",
+    "kind": "content",
+    "body": "<ul><li><strong>Evolusi Packaging:</strong> Menggantikan <code>setup.py</code> dan <code>setup.cfg</code> lama dengan satu file konfigurasi standar deklaratif.</li><li><strong>Build System:</strong> Menentukan build backend seperti Flit, Hatch, Poetry, atau Setuptools secara terstandar (PEP 517/518).</li><li><strong>Metadata Deklaratif:</strong> Menyimpan nama paket, versi, deskripsi, daftar dependensi, dan entry points CLI.</li><li><strong>Reproducibility:</strong> Menjamin paket dapat dibangun secara konsisten di mesin developer maupun runner CI.</li></ul>",
+    "notes": "pyproject.toml adalah standar modern Python Packaging Authority (PyPA) untuk semua proyek baru."
+  },
+  {
+    "title": "Validasi Metadata Paket pyproject.toml",
+    "kind": "code",
+    "example": "ch29-06",
+    "body": "<p>Membaca dan memvalidasi deklarasi paket standar PEP 621 menggunakan parser modul bawaan <code>tomllib</code>.</p>",
+    "notes": "tomllib diperkenalkan sebagai modul bawaan sejak Python 3.11 untuk membaca konfigurasi berbasis format TOML."
+  },
+  {
+    "title": "CLI Entry Point dengan Subcommands",
+    "kind": "code",
+    "example": "ch29-07",
+    "body": "<p>Membangun antarmuka baris perintah modular dengan subcommand <code>status</code> dan <code>deploy</code> menggunakan <code>argparse</code>.</p>",
+    "notes": "Subcommand membagi fungsionalitas CLI yang kompleks menjadi instruksi terfokus seperti halnya perintah git atau docker."
+  },
+  {
+    "title": "Eksekusi Programatis Automated Test Suite",
+    "kind": "code",
+    "example": "ch29-08",
+    "body": "<p>Mengeksekusi test runner secara programatis untuk memverifikasi kelulusan kode di dalam skrip pipeline deployment.</p>",
+    "notes": "Jika ada satu test yang gagal, pipeline secara otomatis menghentikan rilis untuk mencegah deployment cacat."
+  },
+  {
+    "title": "Format Distribusi: Wheel vs SDist",
+    "kind": "code",
+    "example": "ch29-09",
+    "body": "<p>Menganalisis tag penamaan paket standar Wheel (<code>.whl</code>) yang mempercepat instalasi tanpa kompilasi ulang kode.</p>",
+    "notes": "Wheel adalah format biner siap pasang, sedangkan Source Distribution (.tar.gz) berisi source code mentah yang memerlukan tahap build."
+  },
+  {
+    "title": "Continuous Integration dengan GitHub Actions",
+    "kind": "code",
+    "example": "ch29-10",
+    "body": "<p>Memvalidasi deklarasi workflow GitHub Actions CI untuk otomatisasi linting, typechecking, dan pengetesan kode.</p>",
+    "notes": "Continuous Integration menjalankan verifikasi otomatis pada setiap pull request sebelum kode digabungkan ke branch main."
+  },
+  {
+    "title": "Mini Project: Production-Ready Application",
+    "kind": "content",
+    "body": "<ul><li><strong>Arsitektur Berlapis Lengkap:</strong> Domain Model, Repository Port, Service Layer (DI), Config Twelve-Factor, dan CLI.</li><li><strong>Ketahanan Sistem:</strong> Memisahkan simpul aktif dari simpul dalam masa perawatan secara otomatis saat deployment.</li><li><strong>Pengujian Otomatis:</strong> Dilengkapi unit test suite menyeluruh dengan 100% kelulusan tanpa dependensi server luar.</li></ul>",
+    "notes": "Proyek ini mencerminkan struktur repositori perangkat lunak produksi yang memenuhi standar industri."
+  },
+  {
+    "title": "Latihan Praktik Mandiri",
+    "kind": "content",
+    "body": "<ul><li><strong>Latihan 1:</strong> Membangun model domain murni BandwidthLimit tanpa dependensi luar.</li><li><strong>Latihan 2:</strong> Menerapkan Dependency Injection dengan Protocol AuditLogger.</li><li><strong>Latihan 3:</strong> Memuat pengaturan server dari environment variables dengan konversi tipe.</li><li><strong>Latihan 4:</strong> Membuat CLI subcommand ping menggunakan argparse.</li></ul>",
+    "notes": "Panduan pengerjaan langkah demi langkah dan kode solusi acuan tersedia lengkap di exercise.md."
+  },
+  {
+    "title": "Tugas Proyek: Production-Ready Python App",
+    "kind": "content",
+    "body": "<ul><li><strong>Tugas Utama:</strong> Sempurnakan modul <code>tugas.py</code> dengan arsitektur berlapis Clean Architecture.</li><li><strong>Komponen Wajib:</strong> Domain NetworkNode, AppConfig Twelve-Factor, InMemoryNodeRepository, dan DeploymentService.</li><li><strong>Penilaian (100 Poin):</strong> Separation of Concerns (25), Dependency Injection (25), Twelve-Factor Config (20), CLI (15), Kode & Type Hints (15).</li></ul>",
+    "notes": "Pastikan semua pengujian mandiri di tugas.py menghasilkan status lulus 100%."
+  }
+]
+
