@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#2563eb" />
+    <meta name="author" content="Aji Pamungkas Tri Nurcahyo" />
+    <meta
+      name="description"
+      content="Halaman tidak ditemukan — Python Learning Hub oleh Aji Pamungkas Tri Nurcahyo."
+    />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%232563eb'/><text x='16' y='21' font-family='monospace' font-weight='700' font-size='14' fill='white' text-anchor='middle'>py_</text></svg>" />
+    <title>Halaman Tidak Ditemukan — Python Learning Hub</title>
+    <script>
+      // Single-Page Application (SPA) redirect handler for GitHub Pages & static hosting
+      (function() {
+        var l = window.location;
+        var path = l.pathname;
+        if (path.endsWith('/404.html') || path.endsWith('/404')) {
+          return;
+        }
+
+        var segments = path.split('/').filter(Boolean);
+        var isGitHubPages = l.hostname.endsWith('github.io');
+        var repoName = 'python-learning-hub';
+        var hasRepoPrefix = segments.length > 0 && segments[0] === repoName;
+        
+        var base = (isGitHubPages || hasRepoPrefix) ? '/' + (hasRepoPrefix ? segments[0] : repoName) + '/' : '/';
+        var routeSegments = hasRepoPrefix ? segments.slice(1) : segments;
+        var route = routeSegments.join('/');
+
+        if (route.startsWith('pertemuan-')) {
+          var targetMeeting = base + route + (route.includes('.html') ? '' : '/index.html') + l.search + l.hash;
+          l.replace(targetMeeting);
+          return;
+        }
+
+        if (route) {
+          var target = base + '#' + route + (l.search ? (route.includes('?') ? '&' : '?') + l.search.slice(1) : '') + l.hash;
+          l.replace(target);
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <noscript>
+      <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 40px; text-align: center; color: #0f172a;">
+        <h2>Halaman Tidak Ditemukan</h2>
+        <p>Halaman yang Anda tuju tidak tersedia atau telah dipindahkan.</p>
+        <p><a href="./index.html" style="color: #2563eb; text-decoration: underline;">Kembali ke Beranda Python Learning Hub</a></p>
+      </div>
+    </noscript>
+  </body>
+</html>

@@ -1,0 +1,5 @@
+rsrp = [-82, -107, -95, -89]
+lemah = [x for x in rsrp if x < -100]
+selisih = [x + 100 for x in rsrp]
+print(lemah)     # [-107]
+print(selisih)   # [18, -7, 5, 11]
