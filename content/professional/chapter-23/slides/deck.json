@@ -1,0 +1,132 @@
+[
+  {
+    "title": "Advanced OOP & Design Patterns",
+    "subtitle": "Abstract Base Classes, Dataclasses, Composition & Design Patterns",
+    "kind": "cover",
+    "body": "<p>Rekayasa Berorientasi Objek Tingkat Lanjut: Merancang sistem modular dengan Abstract Base Classes (ABC), Dataclasses, prinsip komposisi, serta pola desain creational dan behavioral standar industri.</p>",
+    "notes": "Selamat datang di Level 3: Professional Python Engineering! Chapter 23 membahas perancangan arsitektur berorientasi objek yang tangguh."
+  },
+  {
+    "title": "Tantangan Arsitektur Perangkat Lunak",
+    "kind": "content",
+    "body": "<ul><li><strong>Ketergantungan Erat (Tight Coupling):</strong> Mengubah satu modul memaksa perubahan di puluhan file lainnya.</li><li><strong>Hierarki Pewarisan Rapuh:</strong> Deep inheritance tree menciptakan 'God Class' yang sulit diuji dan dipelihara.</li><li><strong>Solusi:</strong> Antarmuka eksplisit via Abstract Base Classes dan pemanfaatan Composition over Inheritance.</li></ul>",
+    "notes": "Di level profesional, tujuan utama OOP adalah memfasilitasi skalabilitas dan kemudahan pengujian."
+  },
+  {
+    "title": "Abstract Base Classes (ABC) & @abstractmethod",
+    "kind": "code",
+    "example": "ch23-01",
+    "body": "<p>Menggunakan modul <code>abc</code> untuk mendefinisikan kontrak interface yang mewajibkan implementasi konkret pada subclass.</p>",
+    "notes": "Instansiasi langsung terhadap AbstractDevice akan ditolak oleh CPython runtime dengan TypeError."
+  },
+  {
+    "title": "Karakteristik & Manfaat Abstraksi",
+    "kind": "content",
+    "body": "<ul><li><strong>Penegakan Kontrak:</strong> Subclass wajib mengimplementasikan seluruh method beranotasi <code>@abstractmethod</code>.</li><li><strong>Polimorfisme Terjamin:</strong> Konsumen modul dapat memperlakukan semua subclass dengan antarmuka seragam.</li><li><strong>Pemisahan Definisi dan Realisasi:</strong> Memisahkan logika 'apa yang harus dilakukan' dari 'bagaimana melakukannya'.</li></ul>",
+    "notes": "ABC bertindak seperti Interface pada bahasa seperti Java atau TypeScript, namun dengan fleksibilitas dinamis Python."
+  },
+  {
+    "title": "Konfigurasi Data dengan Dataclass",
+    "kind": "code",
+    "example": "ch23-02",
+    "body": "<p>Mendefinisikan skema konfigurasi jaringan yang immutable menggunakan <code>@dataclass(frozen=True)</code>.</p>",
+    "notes": "Dataclass secara otomatis menghasilkan method __init__, __repr__, dan __eq__ tanpa boiler-plate manual."
+  },
+  {
+    "title": "Enkapsulasi & Validasi Nilai Property",
+    "kind": "code",
+    "example": "ch23-03",
+    "body": "<p>Melindungi integritas atribut internal dengan decorator <code>@property</code> dan <code>@setter</code> untuk validasi batas aman sinyal.</p>",
+    "notes": "Setter melempar ValueError saat menerima nilai daya transmisi di luar rentang legal."
+  },
+  {
+    "title": "Composition over Inheritance",
+    "kind": "code",
+    "example": "ch23-04",
+    "body": "<p>Membangun simpul jaringan melalui agregasi objek penyedia daya (PowerSupply) dan pencatat telemetri (TelemetryLogger).</p>",
+    "notes": "Komposisi (has-a) jauh lebih fleksibel dan mudah di-mocking dalam unit test dibanding pewarisan ganda (is-a)."
+  },
+  {
+    "title": "Prinsip Desain SOLID Tingkat Dasar",
+    "kind": "content",
+    "body": "<ul><li><strong>S - Single Responsibility:</strong> Satu class hanya bertanggung jawab atas satu fungsionalitas inti.</li><li><strong>O - Open/Closed:</strong> Terbuka untuk ekstensi, namun tertutup untuk modifikasi kode inti.</li><li><strong>L - Liskov Substitution:</strong> Subclass harus dapat menggantikan class induk tanpa merusak program.</li><li><strong>D - Dependency Inversion:</strong> Bergantung pada abstraksi (ABC), bukan implementasi konkret.</li></ul>",
+    "notes": "Prinsip SOLID memandu arsitektur perangkat lunak agar tetap adaptif terhadap kebutuhan bisnis baru."
+  },
+  {
+    "title": "Pola Desain Kreasi: Factory Pattern",
+    "kind": "code",
+    "example": "ch23-05",
+    "body": "<p>Mengisolasi logika pembuatan instance perangkat ke dalam <code>DeviceFactory</code> berbasis string identifier.</p>",
+    "notes": "Kode pemanggil tidak perlu mengimpor class konkret seperti RadioDevice secara langsung."
+  },
+  {
+    "title": "Mengapa Menggunakan Factory Pattern?",
+    "kind": "content",
+    "body": "<ul><li><strong>Enkapsulasi Instansiasi:</strong> Logika penentuan tipe dan inisialisasi parameter terpusat di satu tempat.</li><li><strong>Kemudahan Registrasi:</strong> Penambahan tipe perangkat baru cukup didaftarkan ke factory registry.</li><li><strong>Menghilangkan Kondisional Bersarang:</strong> Menghilangkan deretan panjang <code>if-elif-else</code> di lapisan aplikasi.</li></ul>",
+    "notes": "Sangat umum diterapkan pada parsing konfigurasi JSON/YAML yang menentukan driver perangkat yang aktif."
+  },
+  {
+    "title": "Pola Desain Perilaku: Strategy Pattern",
+    "kind": "code",
+    "example": "ch23-06",
+    "body": "<p>Menukar algoritma pengkodean payload transmisi secara dinamis saat runtime dengan Strategy Pattern.</p>",
+    "notes": "Transmitter dapat beralih dari PlainStrategy ke HexStrategy tanpa perlu diinstansiasi ulang."
+  },
+  {
+    "title": "Injeksi Dependensi (Dependency Injection)",
+    "kind": "code",
+    "example": "ch23-07",
+    "body": "<p>Menginjeksikan layanan notifikasi ke dalam kelas pemantau melalui parameter constructor.</p>",
+    "notes": "Dengan dependency injection, unit test dapat dengan mudah mengganti ConsoleNotifier dengan MockNotifier."
+  },
+  {
+    "title": "Refactoring Tight Coupling ke Loose Coupling",
+    "kind": "code",
+    "example": "ch23-08",
+    "body": "<p>Mengganti ketergantungan erat pada basis data fisik menjadi ketergantungan abstrak pada StorageBackend.</p>",
+    "notes": "Kode auditor kini dapat berjalan di atas penyimpanan memori, file lokal, atau cloud storage."
+  },
+  {
+    "title": "Observer Pattern: Notifikasi Peristiwa",
+    "kind": "content",
+    "body": "<ul><li><strong>Subject (Publisher):</strong> Memelihara daftar observer dan memicu broadcast saat terjadi perubahan status.</li><li><strong>Observer (Subscriber):</strong> Menerima sinyal notifikasi dan mengeksekusi aksi independen.</li><li><strong>Kelebihan:</strong> Menghilangkan polling loop berkala dan mereduksi konsumsi CPU idle.</li></ul>",
+    "notes": "Contoh: Modul deteksi alarm memicu notifikasi ke antarmuka teknisi dan sistem pencatatan insiden."
+  },
+  {
+    "title": "Perangkap Desain: Overengineering",
+    "kind": "content",
+    "body": "<ul><li><strong>Premature Abstraction:</strong> Membuat puluhan layer ABC untuk script sederhana yang hanya dijalankan satu kali.</li><li><strong>Pewarisan Berlebihan:</strong> Menggunakan subclassing bertingkat 5 level alih-alih fungsi murni.</li><li><strong>YAGNI:</strong> <em>You Aren't Gonna Need It</em> — rancanglah abstraksi saat kebutuhan variabilitas benar-benar terbukti.</li></ul>",
+    "notes": "Gunakan design pattern sebagai alat pemecah masalah nyata, bukan tujuan estetika semata."
+  },
+  {
+    "title": "Mini Project: Extensible Device Manager",
+    "kind": "content",
+    "body": "<ul><li><strong>Integrasi Penuh:</strong> Memadukan ABC, Dataclass, Factory, dan Strategy ke dalam sistem manajemen klaster.</li><li><strong>Uji Komposisi:</strong> Mengelola koleksi perangkat tanpa pewarisan berjenjang.</li><li><strong>Verifikasi Otomatis:</strong> Dilengkapi unit test komprehensif untuk memastikan isolasi komponen.</li></ul>",
+    "notes": "Arsitektur ini siap diekstensi dengan tipe perangkat dan algoritma diagnostik baru kapan saja."
+  },
+  {
+    "title": "Latihan Praktik Mandiri",
+    "kind": "content",
+    "body": "<ul><li><strong>Latihan 1:</strong> Validasi kontrak class antena menggunakan modul ABC.</li><li><strong>Latihan 2:</strong> Dataclass konfigurasi saluran frekuensi yang immutable (frozen).</li><li><strong>Latihan 3:</strong> Registrasi dinamis pada class AntennaFactory.</li><li><strong>Latihan 4:</strong> Kompresi payload transmisi menggunakan Strategy Pattern.</li></ul>",
+    "notes": "Panduan pengerjaan langkah demi langkah tersedia di content/professional/chapter-23/exercises/exercise.md."
+  },
+  {
+    "title": "Tugas Proyek: Network Controller System",
+    "kind": "content",
+    "body": "<ul><li><strong>Tujuan:</strong> Membangun pengontrol jaringan cerdas berbasis pola desain profesional.</li><li><strong>Persyaratan:</strong> AbstractNode, NodeFactory terpusat, dan TrafficRoutingStrategy.</li><li><strong>Pengujian:</strong> Uji alokasi prioritas dan round-robin dengan unit test terverifikasi.</li><li><strong>Panduan & Template:</strong> Buka <code>tugas.md</code> dan <code>tugas.py</code> di repositori.</li></ul>",
+    "notes": "Gunakan rubrik penilaian 100 poin sebagai acuan standar rekayasa perangkat lunak Anda."
+  },
+  {
+    "title": "Ringkasan Materi Chapter 23",
+    "kind": "content",
+    "body": "<ul><li>ABC menjamin konsistensi antarmuka melalui penegakan kontrak method abstrak.</li><li>Dataclass menyederhanakan deklarasi objek data yang terstruktur dan aman.</li><li>Pilihlah komposisi dibanding pewarisan untuk arsitektur yang mudah diuji dan dievolusikan.</li><li>Terapkan Factory dan Strategy Pattern untuk mereduksi kondisional berbelit.</li></ul>",
+    "notes": "Dengan fondasi pola desain ini, kita siap melangkah ke metaprogramming dan decorators di Chapter 24."
+  },
+  {
+    "title": "Referensi & Bacaan Lanjutan",
+    "kind": "content",
+    "body": "<ul><li>Python Documentation — <code>abc</code>: Abstract Base Classes</li><li>Python Documentation — <code>dataclasses</code>: Data Classes (PEP 557)</li><li>Design Patterns: Elements of Reusable Object-Oriented Software (Gang of Four)</li><li>Clean Architecture & SOLID Principles by Robert C. Martin</li></ul>",
+    "notes": "Pelajari dokumentasi resmi Python untuk fitur lanjutan seperti __subclasshook__ dan register()."
+  }
+]
+

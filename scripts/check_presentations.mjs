@@ -31,7 +31,11 @@ const CANONICAL_TITLES = {
   19: 'Object-Oriented Programming I',
   20: 'Object-Oriented Programming II',
   21: 'Packages, Environments & Testing',
-  22: 'Intermediate Capstone Project'
+  22: 'Intermediate Capstone Project',
+  23: 'Advanced OOP & Design Patterns',
+  24: 'Decorators, Generators & Context Managers',
+  25: 'Type Hints & Code Quality',
+  26: 'Advanced Testing & Logging'
 };
 
 const FORBIDDEN_BRANDING_TERMS = [
@@ -58,9 +62,9 @@ console.log('▶ [1/2] Auditing Slide Decks & Branding Metadata...');
 const outputsPath = path.join(ROOT, 'src/code/outputs.json');
 const outputs = fs.existsSync(outputsPath) ? JSON.parse(fs.readFileSync(outputsPath, 'utf8')) : {};
 
-for (let ch = 1; ch <= 22; ch++) {
+for (let ch = 1; ch <= 26; ch++) {
   const chStr = String(ch).padStart(2, '0');
-  const levelFolder = ch <= 12 ? 'foundations' : 'intermediate';
+  const levelFolder = ch <= 12 ? 'foundations' : ch <= 22 ? 'intermediate' : 'professional';
   const deckPath = path.join(ROOT, `content/${levelFolder}/chapter-${chStr}/slides/deck.json`);
 
   if (!fs.existsSync(deckPath)) {
@@ -220,6 +224,20 @@ function send(method, params = {}) {
   });
 }
 
+async function safeEval(params, maxRetries = 3) {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      return await send('Runtime.evaluate', params);
+    } catch (err) {
+      if (err?.code === -32000 && attempt < maxRetries) {
+        await new Promise((r) => setTimeout(r, 250));
+        continue;
+      }
+      throw err;
+    }
+  }
+}
+
 await send('Page.enable');
 
 const testResolutions = [
@@ -239,11 +257,11 @@ for (const res of testResolutions) {
     mobile: false
   });
 
-  for (let ch = 1; ch <= 22; ch++) {
+  for (let ch = 1; ch <= 26; ch++) {
     await send('Page.navigate', { url: `http://127.0.0.1:8932/index.html#chapter/${ch}/slides` });
-    await new Promise(r => setTimeout(r, 400));
+    await new Promise(r => setTimeout(r, 450));
 
-    const countRes = await send('Runtime.evaluate', {
+    const countRes = await safeEval({
       expression: `document.querySelectorAll('.reveal .slides > section').length`,
       returnByValue: true
     });
@@ -251,7 +269,7 @@ for (const res of testResolutions) {
 
     let chIssues = 0;
     for (let i = 0; i < sCount; i++) {
-      const slideRes = await send('Runtime.evaluate', {
+      const slideRes = await safeEval({
         expression: `(async () => {
           if (window.Reveal) window.Reveal.slide(${i}, 0);
           await new Promise(r => setTimeout(r, 40));

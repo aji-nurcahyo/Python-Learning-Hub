@@ -1872,20 +1872,97 @@ print("Device Model:", dev1.to_dict())`,
     levelId: 3,
     number: '23',
     title: 'Advanced OOP & Design Patterns',
-    subtitle: 'Abstract Base Classes, Composition, Factory, Singleton & Strategy',
+    subtitle: 'Abstract Base Classes, Composition, Factory & Strategy',
     description:
-      'Prinsip desain rekayasa perangkat lunak: Abstract Base Classes (abc), Composition over Inheritance, Factory Pattern, Singleton, Observer, dan Strategy.',
+      'Prinsip desain rekayasa perangkat lunak: Abstract Base Classes (abc), Composition over Inheritance, Factory Pattern, Strategy, Dependency Injection, dan SOLID principles.',
     competencyFocus: 'Senior Engineering: Clean architecture & patterns',
     estimatedHours: 6,
     difficulty: 'Advanced',
-    available: false,
+    available: true,
+    deckPath: '#chapter/23/slides',
+    tugasPath: '#chapter/23/task',
     prerequisites: ['Level 2'],
     learningObjectives: [
       'Mendefinisikan kontrak interface yang ketat menggunakan @abstractmethod',
       'Menerapkan komposisi komponen untuk loose coupling daripada deep inheritance',
       'Mengimplementasikan pola creational dan behavioral patterns standar industri',
     ],
-    tags: ['Design Patterns', 'ABC', 'Architecture', 'SOLID'],
+    tags: ['Design Patterns', 'ABC', 'Architecture', 'SOLID', 'OOP'],
+    codeExample: {
+      title: 'Abstract Base Class (ABC) & @abstractmethod',
+      code: `from abc import ABC, abstractmethod
+
+class AbstractDevice(ABC):
+    def __init__(self, device_id: str, name: str) -> None:
+        self.device_id = device_id
+        self.name = name
+
+    @abstractmethod
+    def ping(self) -> bool:
+        pass
+
+    @abstractmethod
+    def get_status(self) -> str:
+        pass
+
+class Router(AbstractDevice):
+    def ping(self) -> bool:
+        return True
+
+    def get_status(self) -> str:
+        return f"Router [{self.device_id}] {self.name} aktif (routing table: OK)"
+
+r = Router("RTR-01", "Gateway Utama")
+print(r.get_status())`,
+      outputKey: 'ch23-01',
+      explanation:
+        'Abstract Base Class (ABC) menjamin bahwa setiap subclass wajib mengimplementasikan seluruh method beranotasi @abstractmethod sebelum dapat diinstansiasi.',
+    },
+    exercise: {
+      title: 'Latihan Terarah: Kontrak Abstraksi dan Factory Pattern',
+      instructions: [
+        'Definisikan AbstractAntenna dengan abstract method calculate_gain_dbi().',
+        'Buat dataclass konfigurasi RadioChannelConfig dengan flag frozen=True.',
+        'Implementasikan AntennaFactory terpusat dengan registrasi dinamis.',
+        'Terapkan Strategy Pattern untuk kompresi data transmisi telemetri.',
+      ],
+      tips: 'Utamakan komposisi objek dibanding pewarisan hirarki bertingkat dalam perancangan sistem.',
+      time: '45 menit',
+    },
+    quiz: {
+      question: 'Apa konsekuensi langsung jika sebuah class mewarisi ABC dan lupa mengimplementasikan salah satu method beranotasi @abstractmethod?',
+      options: [
+        'Class tersebut tidak dapat diinstansiasi dan Python akan melempar TypeError saat runtime instansiasi',
+        'Program tetap berjalan normal tetapi nilai kembalian method otomatis menjadi string kosong',
+        'File Python akan terhapus secara otomatis oleh sistem operasi',
+        'Python akan menghentikan interpreter dan mengharuskan kompilasi ulang dari source C',
+      ],
+      correctIndex: 0,
+      explanation:
+        'CPython interpreter melarang pembuatan instance dari class yang masih memuat method abstrak yang belum diimplementasikan dengan memicu TypeError.',
+      hint: 'Pikirkan tentang peran penegakan kontrak antarmuka pada abstraksi.',
+    },
+    assignment: {
+      title: 'Tugas Praktik 23: Extensible Network Controller System',
+      description:
+        'Rancang dan bangun sistem pengontrol jaringan modular yang menerapkan Abstract Base Classes (ABC), Dataclasses, Factory Pattern, dan Strategy Pattern.',
+      instructions: [
+        'Definisikan AbstractNode dengan property setter tervalidasi dan abstract method process_traffic().',
+        'Terapkan NodeConfig menggunakan @dataclass(frozen=True).',
+        'Kembangkan NodeFactory yang memproduksi EdgeRouter dan AggregationSwitch secara dinamis.',
+        'Implementasikan antarmuka TrafficRoutingStrategy dengan implementasi prioritas dan round-robin.',
+      ],
+      rubric: [
+        { criteria: 'Abstraksi & Kontrak ABC', weight: 25, description: 'ABC dirancang bersih, abstract method ditegakkan, dan property setter memvalidasi input.' },
+        { criteria: 'Pola Desain Factory', weight: 20, description: 'Factory mampu menginstansiasi node secara dinamis dan melempar ValueError pada tipe tidak valid.' },
+        { criteria: 'Pola Desain Strategy', weight: 20, description: 'Algoritma perutean dienkapsulasi dan dapat saling dipertukarkan secara dinamis saat runtime.' },
+        { criteria: 'Komposisi & Loose Coupling', weight: 20, description: 'Controller mengelola node melalui komposisi tanpa deep inheritance yang kaku.' },
+        { criteria: 'Standar Kode & Type Hints', weight: 15, description: 'Type hints lengkap, docstring jelas, dan kode teruji bebas crash.' },
+      ],
+      starterFilename: 'tugas_23.py',
+      downloadMdUrl: 'downloads/chapter-23/tugas.md',
+      downloadPyUrl: 'downloads/chapter-23/contoh.py',
+    },
   },
   {
     id: 24,
@@ -1899,7 +1976,9 @@ print("Device Model:", dev1.to_dict())`,
     competencyFocus: 'Senior Engineering: Metaprogramming & memory efficiency',
     estimatedHours: 5,
     difficulty: 'Advanced',
-    available: false,
+    available: true,
+    deckPath: '#chapter/24/slides',
+    tugasPath: '#chapter/24/task',
     prerequisites: ['Chapter 23'],
     learningObjectives: [
       'Membuat decorator serbaguna untuk logging, caching, dan timing eksekusi',
@@ -1907,6 +1986,75 @@ print("Device Model:", dev1.to_dict())`,
       'Menulis class dan generator-based context manager dengan @contextmanager',
     ],
     tags: ['Decorators', 'Generators', 'Context Managers', 'Metaprogramming'],
+    codeExample: {
+      title: 'Audit Logging Decorator dengan functools.wraps',
+      code: `import functools
+from typing import Callable, Any
+
+def audit_logger(func: Callable[..., Any]) -> Callable[..., Any]:
+    @functools.wraps(func)
+    def wrapper(*args: Any, **kwargs: Any) -> Any:
+        print(f"[CALL] {func.__name__} dengan {args}")
+        result = func(*args, **kwargs)
+        print(f"[DONE] {func.__name__} -> {result}")
+        return result
+    return wrapper
+
+@audit_logger
+def calculate_loss(distance_km: float) -> float:
+    return round(32.4 + 20 * (distance_km ** 0.5), 2)
+
+res = calculate_loss(4.0)
+print("Hasil:", res)`,
+      outputKey: 'ch24-01',
+      explanation:
+        'Decorator membungkus fungsi target dengan logika audit tambahan tanpa merusak identitas metadata fungsi asli berkat @functools.wraps.',
+    },
+    exercise: {
+      title: 'Latihan Terarah: Metaprogramming & Aliran Data Streaming',
+      instructions: [
+        'Bangun decorator factory @retry(max_attempts=3) untuk toleransi error.',
+        'Tulis generator bilangan prima tanpa batas berbasis evaluasi lazy.',
+        'Rancang generator pipeline 3-tahap untuk menyaring baris log error.',
+        'Buat context manager lock sementara menggunakan @contextmanager.',
+      ],
+      tips: 'Gunakan yield untuk memproses aliran data raksasa dengan konsumsi memori konstan O(1).',
+      time: '45 menit',
+    },
+    quiz: {
+      question: 'Mengapa penggunaan @functools.wraps(func) sangat dianjurkan saat membuat decorator Python?',
+      options: [
+        'Mempertahankan nama (__name__), docstring (__doc__), dan signature fungsi asli agar tidak tertimpa nama wrapper',
+        'Melipatgandakan kecepatan CPU saat mengeksekusi perhitungan floating point',
+        'Mengonversi kode Python secara otomatis menjadi bahasa assembly',
+        'Mencegah pengguna lain mengedit file Python di editor teks',
+      ],
+      correctIndex: 0,
+      explanation:
+        'Tanpa @functools.wraps, fungsi yang didekorasi akan kehilangan nama aslinya dan menyulitkan proses debugging, inspeksi, dan penulisan dokumentasi.',
+      hint: 'Pikirkan apa yang terjadi pada __name__ fungsi saat dibungkus fungsi lain.',
+    },
+    assignment: {
+      title: 'Tugas Praktik 24: Streaming Telemetry Ingestion Engine',
+      description:
+        'Kembangkan mesin pemrosesan data telemetri streaming berefisiensi tinggi dengan menerapkan decorator, generator pipeline, dan context manager.',
+      instructions: [
+        'Terapkan decorator @enforce_range untuk memvalidasi batas sinyal numerik.',
+        'Bangun rantai generator multi-tahap (stream_records -> filter_outliers -> transform_records).',
+        'Implementasikan ChannelLeaseContext dengan protokol __enter__ dan __exit__ untuk manajemen spektrum.',
+        'Pastikan pemrosesan pipeline berjalan lazy tanpa memuat seluruh rekaman ke memori RAM.',
+      ],
+      rubric: [
+        { criteria: 'Kualitas & Preservasi Decorator', weight: 25, description: 'Decorator factory menggunakan wraps, validasi parameter melempar exception tepat.' },
+        { criteria: 'Efisiensi Generator Pipeline', weight: 25, description: 'Menggunakan yield murni tanpa konversi list intermediate, chaining mulus.' },
+        { criteria: 'Manajemen Sumber Daya Context', weight: 25, description: 'Protokol __enter__ dan __exit__ menangani pembebasan resource secara deterministik.' },
+        { criteria: 'Integrasi Pipeline Terpadu', weight: 15, description: 'Aliran data melewati fungsi berdekorator di dalam context manager tanpa kendala.' },
+        { criteria: 'Dokumentasi & Type Annotations', weight: 10, description: 'Kode rapi, type hints lengkap, dan mengikuti panduan bahasa teknis.' },
+      ],
+      starterFilename: 'tugas_24.py',
+      downloadMdUrl: 'downloads/chapter-24/tugas.md',
+      downloadPyUrl: 'downloads/chapter-24/contoh.py',
+    },
   },
   {
     id: 25,
@@ -1914,20 +2062,84 @@ print("Device Model:", dev1.to_dict())`,
     levelId: 3,
     number: '25',
     title: 'Type Hints & Code Quality',
-    subtitle: 'Mypy Static Typing, Generic Types, Pydantic & Linters (Ruff)',
+    subtitle: 'Static Typing, Generics, Protocol & Code Quality (Ruff/Mypy)',
     description:
-      'Meningkatkan keandalan codebase besar: type hints mendalam (Generic, Union, Optional, Protocol), static type checking dengan mypy, validasi data Pydantic, dan linter Ruff.',
+      'Meningkatkan keandalan codebase besar: type hints mendalam (Generic, Union, Protocol, TypedDict), static type checking dengan mypy, validasi data defensif, dan linter Ruff.',
     competencyFocus: 'Senior Engineering: Type safety & static analysis',
     estimatedHours: 5,
     difficulty: 'Advanced',
-    available: false,
+    available: true,
+    deckPath: '#chapter/25/slides',
+    tugasPath: '#chapter/25/task',
     prerequisites: ['Chapter 24'],
     learningObjectives: [
-      'Menerapkan static typing lengkap pada fungsi dan class method',
-      'Menggunakan Pydantic untuk data validation dan parsing payload terstruktur',
-      'Mengintegrasikan linter dan formatter otomatis untuk menjaga konsistensi tim',
+      'Menerapkan static typing lengkap pada fungsi, dataclass, dan generic containers',
+      'Menggunakan TypedDict dan Protocol untuk antarmuka struktural tipe aman',
+      'Mengintegrasikan linter Ruff dan type checker mypy untuk menjaga konsistensi tim',
     ],
-    tags: ['Type Hints', 'mypy', 'Pydantic', 'Code Quality'],
+    tags: ['Type Hints', 'mypy', 'Protocol', 'Generics', 'Code Quality', 'PEP 8'],
+    codeExample: {
+      title: 'Anotasi Fungsi dengan Union Modern (Python 3.10+)',
+      code: `def calculate_snr(signal_power: float, noise_power: float) -> float:
+    if noise_power <= 0:
+        raise ValueError("Noise power harus lebih besar dari nol")
+    return round(signal_power / noise_power, 3)
+
+def format_frequency(mhz: int | float, precision: int = 2) -> str:
+    return f"{mhz:.{precision}f} MHz"
+
+snr = calculate_snr(100.5, 2.1)
+print(f"SNR Linear : {snr}")
+print(f"Freq (int) : {format_frequency(1800)}")`,
+      outputKey: 'ch25-01',
+      explanation:
+        'Sintaksis union pipa modern (int | float) menyederhanakan deklarasi tipe tanpa perlu mengimpor Union dari modul typing.',
+    },
+    exercise: {
+      title: 'Latihan Terarah: Sistem Anotasi Tipe dan Analisis Statis',
+      instructions: [
+        'Terapkan type narrowing menggunakan isinstance() pada union int | float | str.',
+        'Definisikan skema GatewayProfile menggunakan TypedDict dan NotRequired.',
+        'Bangun antarmuka duck-typing formal Loggable dengan typing.Protocol.',
+        'Implementasikan wadah generik BoundedBuffer[T] menggunakan TypeVar.',
+      ],
+      tips: 'Hindari penggunaan tipe Any secara berlebihan agar manfaat static checking tetap maksimal.',
+      time: '45 menit',
+    },
+    quiz: {
+      question: 'Apakah CPython interpreter secara otomatis membatalkan eksekusi runtime jika kita melewatkan tipe data yang salah ke fungsi yang memiliki type hints?',
+      options: [
+        'Tidak, CPython mengabaikan type hints saat runtime; pengecekan tipe harus dilakukan melalui static checker (mypy) atau validasi defensif',
+        'Ya, CPython otomatis melempar TypeError saat tipe parameter tidak cocok dengan anotasi',
+        'Ya, script akan otomatis terhapus dari hard disk jika tipe salah',
+        'Tergantung apakah file disimpan dengan format UTF-8 atau ASCII',
+      ],
+      correctIndex: 0,
+      explanation:
+        'Type hints di Python murni merupakan instruksi metadata statis untuk IDE dan linter (seperti mypy). Interpreter tidak melakukan runtime type enforcement otomatis.',
+      hint: 'Ingat perbedaan antara static type checking dan runtime dynamic typing.',
+    },
+    assignment: {
+      title: 'Tugas Praktik 25: Type-Safe Network Observability Toolkit',
+      description:
+        'Rancang pustaka utilitas telemetri tipe aman yang memanfaatkan TypedDict, Protocol structural subtyping, generic repository, dan validasi runtime.',
+      instructions: [
+        'Definisikan skema MetricPayload menggunakan TypedDict dengan field opsional tags via NotRequired.',
+        'Buat antarmuka MetricEncoder berbasis typing.Protocol dengan runtime_checkable.',
+        'Implementasikan JsonMetricEncoder dan LineProtocolEncoder yang memenuhi protokol secara struktural.',
+        'Bangun wadah penyimpanan generik MetricStore[T] dan MetricService beranotasi lengkap.',
+      ],
+      rubric: [
+        { criteria: 'Kualitas Type Annotations', weight: 25, description: 'Type hints lengkap pada parameter, return type, dan atribut dengan sintaks modern.' },
+        { criteria: 'Penerapan TypedDict & Protocol', weight: 25, description: 'TypedDict dan Protocol structural subtyping diimplementasikan tepat.' },
+        { criteria: 'Implementasi Generic Class', weight: 20, description: 'TypeVar dan Generic[T] digunakan tanpa kebocoran tipe Any.' },
+        { criteria: 'Validasi Runtime Defensif', weight: 15, description: 'Pemeriksaan isinstance melindungi sistem saat menerima input runtime cacat.' },
+        { criteria: 'Kepatuhan PEP 8 & Kerapian Kode', weight: 15, description: 'Penamaan konsisten, docstring profesional, dan struktur rapi.' },
+      ],
+      starterFilename: 'tugas_25.py',
+      downloadMdUrl: 'downloads/chapter-25/tugas.md',
+      downloadPyUrl: 'downloads/chapter-25/contoh.py',
+    },
   },
   {
     id: 26,
@@ -1935,20 +2147,98 @@ print("Device Model:", dev1.to_dict())`,
     levelId: 3,
     number: '26',
     title: 'Advanced Testing & Logging',
-    subtitle: 'Mocks, Fixtures, Parametrize, Coverage & Structured Logging',
+    subtitle: 'Test Fixtures, Parameterized Tests, Mocking & Structured Logging',
     description:
-      'Testing skala produksi: mocking external I/O dengan unittest.mock, pytest fixtures, parameterized test, benchmarking, serta logging terstruktur JSON.',
+      'Testing skala produksi: mocking external I/O dengan unittest.mock, fixtures, parameterized tests, exception testing, serta logging terstruktur.',
     competencyFocus: 'Senior Engineering: Production telemetry & testing',
     estimatedHours: 5,
     difficulty: 'Advanced',
-    available: false,
+    available: true,
+    deckPath: '#chapter/26/slides',
+    tugasPath: '#chapter/26/task',
     prerequisites: ['Chapter 25'],
     learningObjectives: [
-      'Melakukan isolasi dependensi eksternal (API/Database) menggunakan mock dan patch',
-      'Menulis reusable fixtures dan parameterized tests pada pytest',
-      'Mengonfigurasi logging terstruktur yang siap diintegrasikan ke log aggregator (ELK/CloudWatch)',
+      'Melakukan isolasi dependensi eksternal menggunakan MagicMock dan patch',
+      'Menulis reusable fixtures dan parameterized tests pada unittest dan pytest',
+      'Mengonfigurasi logging terstruktur dan memverifikasinya melalui assertLogs',
     ],
-    tags: ['Mocking', 'pytest', 'Fixtures', 'Logging'],
+    tags: ['Mocking', 'Fixtures', 'Logging', 'Testing', 'Parameterized'],
+    codeExample: {
+      title: 'Pengujian dengan Fixture setUp & tearDown',
+      code: `import unittest
+
+class DeviceDatabase:
+    def __init__(self) -> None:
+        self.devices: dict[str, str] = {}
+    def insert(self, dev_id: str, model: str) -> None:
+        self.devices[dev_id] = model
+    def clear(self) -> None:
+        self.devices.clear()
+
+class TestDeviceDatabase(unittest.TestCase):
+    def setUp(self) -> None:
+        self.db = DeviceDatabase()
+        self.db.insert("SW-01", "Cisco Catalyst")
+    def tearDown(self) -> None:
+        self.db.clear()
+    def test_insert_and_retrieve(self) -> None:
+        self.assertEqual(len(self.db.devices), 1)
+        self.assertEqual(self.db.devices["SW-01"], "Cisco Catalyst")
+
+suite = unittest.defaultTestLoader.loadTestsFromTestCase(TestDeviceDatabase)
+runner = unittest.TextTestRunner(verbosity=0)
+res = runner.run(suite)
+print(f"Uji Fixture Selesai | Sukses: {res.wasSuccessful()}")`,
+      outputKey: 'ch26-01',
+      explanation:
+        'Siklus hidup setUp dan tearDown menjamin bahwa setiap test case dieksekusi dalam lingkungan status yang bersih dan terisolasi.',
+    },
+    exercise: {
+      title: 'Latihan Terarah: Mocking, Subtests dan Observabilitas',
+      instructions: [
+        'Gunakan setUp dan tearDown untuk mengisolasi status in-memory cache.',
+        'Tulis pengujian berparameter multi-skenario dengan self.subTest().',
+        'Isolasi panggilan API eksternal menggunakan unittest.mock.MagicMock.',
+        'Verifikasi emisi log level WARNING menggunakan self.assertLogs.',
+      ],
+      tips: 'Mocking ditujukan untuk I/O eksternal lambat atau tak stabil; jangan me-mock logika domain internal.',
+      time: '45 menit',
+    },
+    quiz: {
+      question: 'Apa fungsi utama dari method tearDown() pada class unittest.TestCase?',
+      options: [
+        'Membersihkan status dan sumber daya (reset database, hapus temp files) setelah setiap test case selesai',
+        'Mengompilasi ulang kode Python ke format bytecode biner',
+        'Menutup jendela aplikasi editor teks secara otomatis',
+        'Mengirimkan hasil laporan pengujian ke server remote via email',
+      ],
+      correctIndex: 0,
+      explanation:
+        'tearDown() bertindak sebagai mekanisme pembersihan (cleanup) untuk memastikan tidak ada residu atau efek samping yang mencemari test case berikutnya.',
+      hint: 'Pikirkan tentang prinsip isolasi pengujian.',
+    },
+    assignment: {
+      title: 'Tugas Praktik 26: Production Telemetry Test Suite',
+      description:
+        'Bangun suite pengujian otomatis lengkap untuk menguji layanan TelecomInfrastructureManager dengan mocking, exception testing, dan verifikasi logging.',
+      instructions: [
+        'Konfigurasikan mock RemoteSwitchGateway menggunakan MagicMock.',
+        'Uji skenario sukses reboot port dan verifikasi method invocation dengan assert_called_once_with.',
+        'Uji skenario kegagalan dan pastikan emisi log level WARNING tertangkap via assertLogs.',
+        'Terapkan pengujian berparameter untuk batas nomor port switch (1-48).',
+        'Uji operasi pencadangan berkas dalam lingkungan isolasi tempfile.TemporaryDirectory.',
+      ],
+      rubric: [
+        { criteria: 'Kualitas Isolasi & Mocking', weight: 25, description: 'MagicMock diterapkan efektif, pemanggilan method terverifikasi tanpa I/O fisik.' },
+        { criteria: 'Pengujian Kegagalan & Exception', weight: 20, description: 'assertRaises memverifikasi penolakan input ilegal dan error handling tepat.' },
+        { criteria: 'Parameterized Subtesting', weight: 20, description: 'Pengujian batas nomor port terstruktur rapi menggunakan self.subTest.' },
+        { criteria: 'Observabilitas & Verifikasi Log', weight: 20, description: 'assertLogs memverifikasi pencatatan log audit pada level keparahan yang tepat.' },
+        { criteria: 'Isolasi Lingkungan & Format', weight: 15, description: 'Menggunakan tempfile untuk I/O file, type hints lengkap, dan kode PEP 8.' },
+      ],
+      starterFilename: 'tugas_26.py',
+      downloadMdUrl: 'downloads/chapter-26/tugas.md',
+      downloadPyUrl: 'downloads/chapter-26/contoh.py',
+    },
   },
   {
     id: 27,

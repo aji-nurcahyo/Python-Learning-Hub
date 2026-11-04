@@ -1,0 +1,132 @@
+[
+  {
+    "title": "Advanced Testing & Logging",
+    "subtitle": "Test Fixtures, Parameterized Tests, Mocking & Structured Logging",
+    "kind": "cover",
+    "body": "<p>Pengujian Tingkat Lanjut & Observabilitas Produksi: Merancang test suite tangguh dengan fixtures, mocking dependensi I/O eksternal, exception testing, serta logging terstruktur untuk telemetri sistem.</p>",
+    "notes": "Selamat datang di Chapter 26! Bab penutup Batch 1 Level 3 ini berfokus pada jaminan mutu dan visibilitas operasional aplikasi."
+  },
+  {
+    "title": "Piramida Pengujian Perangkat Lunak",
+    "kind": "content",
+    "body": "<ul><li><strong>Unit Tests (Dasar):</strong> Menguji fungsi atau class terkecil dalam isolasi total. Sangat cepat (milidetik).</li><li><strong>Integration Tests (Tengah):</strong> Menguji interaksi antar beberapa modul internal.</li><li><strong>End-to-End Tests (Puncak):</strong> Menguji alur sistem dari antarmuka pengguna hingga basis data.</li><li><strong>Prinsip:</strong> Fondasi kokoh dibangun dengan jumlah unit tests terbanyak.</li></ul>",
+    "notes": "Unit test yang baik harus deterministik, cepat, dan tidak bergantung pada kondisi eksternal seperti jaringan internet."
+  },
+  {
+    "title": "Test Fixtures: Setup & Teardown",
+    "kind": "code",
+    "example": "ch26-01",
+    "body": "<p>Menggunakan siklus hidup <code>setUp()</code> dan <code>tearDown()</code> untuk menjamin isolasi status antar pengujian.</p>",
+    "notes": "Setiap test case mendapatkan objek database baru yang bersih sehingga hasil uji tidak saling mencemari."
+  },
+  {
+    "title": "Prinsip Isolasi & Idempotensi Uji",
+    "kind": "content",
+    "body": "<ul><li><strong>Test Isolation:</strong> Urutan eksekusi test tidak boleh memengaruhi hasil (hasil uji A tidak boleh bergantung pada uji B).</li><li><strong>Idempotensi:</strong> Menjalankan pengujian 100 kali berturut-turut harus menghasilkan status kelulusan yang persis sama.</li><li><strong>Hindari Shared Mutable State:</strong> Jangan menyimpan variabel global yang dimutasi di dalam badan test case.</li></ul>",
+    "notes": "Pelanggaran isolasi adalah penyebab utama terciptanya flaky tests (uji yang terkadang lulus dan terkadang gagal)."
+  },
+  {
+    "title": "Parameterized Testing & subTest",
+    "kind": "code",
+    "example": "ch26-02",
+    "body": "<p>Menguji puluhan skenario input dan ekspektasi menggunakan satu method pengujian dengan <code>self.subTest()</code>.</p>",
+    "notes": "Jika satu skenario gagal, subTest memastikan skenario berikutnya tetap dievaluasi hingga selesai."
+  },
+  {
+    "title": "Exception Testing dengan assertRaises",
+    "kind": "code",
+    "example": "ch26-03",
+    "body": "<p>Menguji jalur kegagalan aplikasi: memastikan fungsi melempar <code>ValueError</code> saat menerima alamat IP yang cacat.</p>",
+    "notes": "Context manager assertRaises memeriksa baik tipe exception maupun kecocokan substring pada pesan error."
+  },
+  {
+    "title": "Mocking Eksternal dengan patch",
+    "kind": "code",
+    "example": "ch26-04",
+    "body": "<p>Mengisolasi dependensi jaringan fisik menggunakan <code>MagicMock</code> untuk mengembalikan respons gateway buatan.</p>",
+    "notes": "Unit test dapat dijalankan secara offline tanpa ketergantungan pada server gateway sungguhan."
+  },
+  {
+    "title": "Kapan Harus Melakukan Mocking?",
+    "kind": "content",
+    "body": "<ul><li><strong>Lakukan Mocking Pada:</strong> Panggilan API eksternal pihak ketiga, pengiriman SMS/surel, transaksi pembayaran, dan antarmuka hardware.</li><li><strong>Jangan Me-mock:</strong> Logika internal domain murni atau modul sederhana yang berada di bawah kendali kita.</li><li><strong>Verifikasi Interaksi:</strong> Gunakan <code>mock.assert_called_once_with(...)</code> untuk memvalidasi parameter kirim.</li></ul>",
+    "notes": "Overmocking dapat menyebabkan pengujian menguji implementasi tiruan alih-alih perilaku kode nyata."
+  },
+  {
+    "title": "Isolasi Berkas dengan tempfile",
+    "kind": "code",
+    "example": "ch26-05",
+    "body": "<p>Menguji operasi penulisan file ke dalam direktori sementara yang otomatis dihapus bersih setelah blok context selesai.</p>",
+    "notes": "Menghindari polusi file sampah di direktori repositori pengembang atau mesin CI/CD."
+  },
+  {
+    "title": "Branch Coverage & Analisis Jalur",
+    "kind": "code",
+    "example": "ch26-06",
+    "body": "<p>Merancang test cases yang mengeksekusi seluruh cabang percabangan logika <code>if-elif-else</code> (100% Branch Coverage).</p>",
+    "notes": "Cakupan baris tinggi (line coverage) belum tentu mencakup seluruh kombinasi logika percabangan."
+  },
+  {
+    "title": "Fondasi Logging: Level & Hierarki",
+    "kind": "content",
+    "body": "<ul><li><strong>DEBUG:</strong> Rincian diagnostik mendalam untuk penelusuran bug saat pengembangan.</li><li><strong>INFO:</strong> Konfirmasi bahwa alur sistem berjalan sesuai yang diharapkan.</li><li><strong>WARNING:</strong> Indikasi peristiwa tidak biasa (misal: sinyal mendekati ambang batas).</li><li><strong>ERROR:</strong> Terjadi kegagalan fungsi, namun aplikasi masih dapat melanjutkan operasi.</li><li><strong>CRITICAL:</strong> Kerusakan fatal yang menyebabkan sistem berhenti total.</li></ul>",
+    "notes": "Jangan gunakan print() untuk pemantauan server produksi; gunakan modul logging bawaan Python."
+  },
+  {
+    "title": "Konfigurasi Logging Terstruktur",
+    "kind": "code",
+    "example": "ch26-07",
+    "body": "<p>Mengonfigurasi handler, formatter terstandar, dan level filter pada logger internal aplikasi.</p>",
+    "notes": "Pesan level DEBUG secara otomatis disaring keluar karena logger diatur pada ambang batas INFO."
+  },
+  {
+    "title": "Pengujian Log dengan assertLogs",
+    "kind": "code",
+    "example": "ch26-08",
+    "body": "<p>Menguji apakah sistem secara tepat mengeluarkan log peringatan saat terjadi kegagalan sinkronisasi tautan radio.</p>",
+    "notes": "assertLogs bertindak sebagai context manager yang menangkap seluruh rekaman log di dalam blok with."
+  },
+  {
+    "title": "Pengujian dengan Framework pytest",
+    "kind": "content",
+    "body": "<ul><li><strong>pytest:</strong> Framework pengujian pihak ketiga terpopuler di ekosistem Python modern.</li><li><strong>Sintaksis Ringkas:</strong> Cukup gunakan pernyataan standar <code>assert a == b</code> tanpa boilerplate class.</li><li><strong>Fitur Unggulan:</strong> Reusable fixtures (<code>@pytest.fixture</code>), parameterized tests (<code>@pytest.mark.parametrize</code>), dan plugin ecosystem yang kaya.</li></ul>",
+    "notes": "pytest kompatibel penuh dan dapat menjalankan seluruh pengujian berbasis unittest secara mulus."
+  },
+  {
+    "title": "Antipattern dalam Pengujian",
+    "kind": "content",
+    "body": "<ul><li><strong>Sleeping in Tests:</strong> Menggunakan <code>time.sleep()</code> untuk menunggu operasi asinkron alih-alih polling kondisi.</li><li><strong>Testing Implementation Details:</strong> Menguji atribut privat internal alih-alih perilaku publik objek.</li><li><strong>Assertion Roulette:</strong> Banyak assertion dalam satu test tanpa pesan error yang jelas jika salah satu gagal.</li></ul>",
+    "notes": "Fokuskan pengujian pada kontrak keluaran (output behavior), bukan detail cara kerja internal."
+  },
+  {
+    "title": "Mini Project: Reliable Application Testing",
+    "kind": "content",
+    "body": "<ul><li><strong>Sistem Teruji:</strong> TelecomMonitoringService memproses kesehatan simpul dengan mock external client.</li><li><strong>Observabilitas:</strong> Mengintegrasikan pencatatan log audit terstruktur untuk setiap peristiwa penting.</li><li><strong>Cakupan Lengkap:</strong> 6 unit tests memvalidasi skenario normal, kegagalan jaringan, dan verifikasi log.</li></ul>",
+    "notes": "Arsitektur pengujian ini siap diintegrasikan ke pipeline Continuous Integration (CI)."
+  },
+  {
+    "title": "Latihan Praktik Mandiri",
+    "kind": "content",
+    "body": "<ul><li><strong>Latihan 1:</strong> Isolasi state komponen in-memory cache dengan setUp dan tearDown.</li><li><strong>Latihan 2:</strong> Pengujian berparameter pada batas validasi LTE band.</li><li><strong>Latihan 3:</strong> Mocking pemanggilan API cuaca dengan MagicMock.</li><li><strong>Latihan 4:</strong> Verifikasi pencatatan log keamanan menggunakan assertLogs.</li></ul>",
+    "notes": "Panduan pengerjaan langkah demi langkah tersedia di exercise.md."
+  },
+  {
+    "title": "Tugas Proyek: Production Telemetry Test Suite",
+    "kind": "content",
+    "body": "<ul><li><strong>Tujuan:</strong> Membangun test suite lengkap untuk memvalidasi TelecomInfrastructureManager.</li><li><strong>Fitur Wajib:</strong> Fixtures, mock gateway, exception testing, parameterized subtests, dan assertLogs.</li><li><strong>Panduan & Template:</strong> Buka <code>tugas.md</code> dan <code>tugas.py</code> di repositori.</li><li><strong>Penilaian:</strong> Evaluasi ketat berdasarkan rubrik standar 100 poin.</li></ul>",
+    "notes": "Pastikan seluruh test case berjalan mandiri dan lulus 100%."
+  },
+  {
+    "title": "Ringkasan Materi Chapter 26",
+    "kind": "content",
+    "body": "<ul><li>Pengujian unit yang cepat dan terisolasi adalah jaring pengaman utama saat refactoring kode.</li><li>Mocking memungkinkan kita menguji kegagalan jaringan dan skenario ekstrem yang sulit dibuat di dunia nyata.</li><li>Structured logging memberikan visibilitas operasional yang krusial bagi teknisi di sistem produksi.</li></ul>",
+    "notes": "Selamat! Anda telah menuntaskan seluruh modul Batch 1 Level 3: Professional Python Engineering."
+  },
+  {
+    "title": "Referensi & Bacaan Lanjutan",
+    "kind": "content",
+    "body": "<ul><li>Python Documentation — <code>unittest</code>: Unit testing framework</li><li>Python Documentation — <code>unittest.mock</code>: Mock object library</li><li>Python Documentation — <code>logging</code>: Logging facility for Python</li><li>pytest Documentation — Comprehensive Testing in Python (docs.pytest.org)</li></ul>",
+    "notes": "Eksplorasi modul coverage.py (pytest-cov) untuk mengukur metrik cakupan baris pada proyek Anda."
+  }
+]
+

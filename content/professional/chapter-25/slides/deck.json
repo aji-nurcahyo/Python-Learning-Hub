@@ -1,0 +1,132 @@
+[
+  {
+    "title": "Type Hints & Code Quality",
+    "subtitle": "Static Typing, Generics, TypedDict, Protocol & PEP 8",
+    "kind": "cover",
+    "body": "<p>Rekayasa Kualitas Kode & Typing Statis: Memanfaatkan sistem anotasi tipe Python modern, Generic types, TypedDict, Protocol structural subtyping, serta alat analisis statis (mypy & Ruff).</p>",
+    "notes": "Selamat datang di Chapter 25! Bab ini membahas bagaimana menjaga stabilitas dan keterbacaan basis kode Python skala besar."
+  },
+  {
+    "title": "Dinamika vs Statis di Python",
+    "kind": "content",
+    "body": "<ul><li><strong>Dynamic Typing:</strong> Python memeriksa tipe variabel saat runtime, bukan saat kompilasi.</li><li><strong>Kelebihan:</strong> Fleksibel, cepat untuk prototyping, dan sintaksis sangat ringkas.</li><li><strong>Tantangan di Sistem Besar:</strong> Sulit mendeteksi salah passing tipe sebelum kode dieksekusi di server produksi.</li><li><strong>Solusi Modern:</strong> Type Hints (PEP 484) dan Static Type Checking (mypy).</li></ul>",
+    "notes": "Type hints tidak memperlambat eksekusi runtime Python karena diabaikan oleh CPython interpreter saat eksekusi."
+  },
+  {
+    "title": "Anotasi Fungsi & Modern Union",
+    "kind": "code",
+    "example": "ch25-01",
+    "body": "<p>Mendokumentasikan kontrak tipe parameter dan return value menggunakan sintaksis modern Union <code>int | float</code> (PEP 604).</p>",
+    "notes": "Sintaksis pipa '|' menggantikan Union lama dari modul typing pada Python 3.10 ke atas."
+  },
+  {
+    "title": "Nilai Opsional & Type Narrowing",
+    "kind": "code",
+    "example": "ch25-02",
+    "body": "<p>Mengelola nilai opsional <code>str | None</code> dan melakukan validasi runtime menggunakan <code>isinstance()</code>.</p>",
+    "notes": "Static type checker secara cerdas mempersempit tipe variabel di dalam blok if isinstance."
+  },
+  {
+    "title": "Struktur Kamus dengan TypedDict",
+    "kind": "code",
+    "example": "ch25-03",
+    "body": "<p>Menetapkan skema tipe ketat pada dictionary biasa menggunakan <code>TypedDict</code> dan penanda <code>NotRequired</code>.</p>",
+    "notes": "TypedDict tetaplah dict standar saat runtime, namun diinspeksi secara ketat oleh mypy saat statis."
+  },
+  {
+    "title": "Mengapa Memilih TypedDict?",
+    "kind": "content",
+    "body": "<ul><li><strong>Kompatibilitas JSON Murni:</strong> Tidak memerlukan serialisasi khusus layaknya objek class rumit.</li><li><strong>Autocompletion IDE:</strong> Editor otomatis menyarankan nama kunci dictionary yang legal.</li><li><strong>Deteksi Kunci Hilang:</strong> Linter langsung menandai kesalahan penulisan typo pada kunci dictionary.</li></ul>",
+    "notes": "Sangat ideal untuk payload pertukaran data API REST atau telemetri format JSON."
+  },
+  {
+    "title": "Protokol & Subtyping Struktural",
+    "kind": "code",
+    "example": "ch25-04",
+    "body": "<p>Mendefinisikan antarmuka duck-typing formal menggunakan <code>typing.Protocol</code> tanpa ketergantungan inheritance.</p>",
+    "notes": "Objek apa pun yang memiliki method serialize_payload otomatis dianggap memenuhi kontrak Transmittable."
+  },
+  {
+    "title": "Nominal vs Structural Subtyping",
+    "kind": "content",
+    "body": "<ul><li><strong>Nominal Subtyping (Class Inheritance / ABC):</strong> Hubungan tipe harus dinyatakan eksplisit: <code>class Child(Parent):</code>.</li><li><strong>Structural Subtyping (Protocol / Duck Typing):</strong> Hubungan tipe ditentukan oleh bentuk struktur method yang dimiliki objek.</li><li><em>'If it walks like a duck and quacks like a duck, it is a duck.'</em></li></ul>",
+    "notes": "Protocol diperkenalkan di PEP 544 untuk memberikan kekuatan static checking pada fleksibilitas duck-typing Python."
+  },
+  {
+    "title": "Generic Containers & TypeVar",
+    "kind": "code",
+    "example": "ch25-05",
+    "body": "<p>Membangun wadah penyimpanan generik <code>TelemetryRepository[T]</code> yang menjaga konsistensi tipe elemen.</p>",
+    "notes": "TypeVar T bertindak sebagai placeholder tipe yang dispesifikasikan saat instansiasi kelas."
+  },
+  {
+    "title": "Callable Annotations pada Pipeline",
+    "kind": "code",
+    "example": "ch25-06",
+    "body": "<p>Menentukan signature fungsi callback yang valid menggunakan anotasi <code>Callable[[float], float]</code>.</p>",
+    "notes": "Menjamin bahwa fungsi kalibrasi yang dilewatkan selalu menerima dan mengembalikan tipe float."
+  },
+  {
+    "title": "Pemeriksaan Statis vs Validasi Runtime",
+    "kind": "code",
+    "example": "ch25-07",
+    "body": "<p>Type hints statis tidak menolak tipe salah secara otomatis saat runtime, sehingga validasi defensif tetap krusial.</p>",
+    "notes": "Mypy mendeteksi bug sebelum kode dijalankan, sedangkan isinstance melindungi runtime saat menerima input pengguna."
+  },
+  {
+    "title": "Standar PEP 8 & Kualitas Kode",
+    "kind": "code",
+    "example": "ch25-08",
+    "body": "<p>Menerapkan konvensi penamaan standar Python: PascalCase untuk class, snake_case untuk method, dan UPPER_SNAKE untuk konstanta.</p>",
+    "notes": "Kerapian kode meningkatkan produktivitas tim dan mempermudah onboarding pengembang baru."
+  },
+  {
+    "title": "Perkakas Analisis Statis: Mypy & Ruff",
+    "kind": "content",
+    "body": "<ul><li><strong>Mypy:</strong> Static type checker resmi untuk mengevaluasi anotasi tipe di seluruh codebase tanpa eksekusi.</li><li><strong>Ruff:</strong> Linter dan code formatter generasi baru yang ditulis dalam Rust, 10-100x lebih cepat dari flake8/black.</li><li><strong>Otomatisasi CI/CD:</strong> Menjalankan linter dan type checker di pipeline git mencegah degradasi kualitas kode.</li></ul>",
+    "notes": "Ruff kini menjadi standar industri de-facto di ekosistem modern Python."
+  },
+  {
+    "title": "Jebakan Antipattern Anotasi Tipe",
+    "kind": "content",
+    "body": "<ul><li><strong>Overuse <code>Any</code>:</strong> Menggunakan <code>Any</code> secara sembarangan mematikan seluruh manfaat static checking.</li><li><strong>Mutable Default Argument:</strong> Menggunakan <code>def func(data: list = []):</code> yang menyebabkan bug state leak antar pemanggilan.</li><li><strong>Abaikan Error Mypy:</strong> Menambahkan <code># type: ignore</code> tanpa menyelidiki akar inkonsistensi tipe.</li></ul>",
+    "notes": "Gunakan tipe opsional atau union yang presisi daripada lari ke Any."
+  },
+  {
+    "title": "Mini Project: Typed Python Library",
+    "kind": "content",
+    "body": "<ul><li><strong>Pustaka Lengkap:</strong> Memadukan TypedDict, Protocol struktural, Generic repository, dan TelemetryService.</li><li><strong>Verifikasi Otomatis:</strong> Teruji lulus melalui suite pengujian <code>test_typing.py</code>.</li><li><strong>Arsitektur Bersih:</strong> Memisahkan skema tipe domain, protokol, wadah, dan layer layanan.</li></ul>",
+    "notes": "Pola ini menjadi standar acuan saat membangun SDK dan library Python publik."
+  },
+  {
+    "title": "Latihan Praktik Mandiri",
+    "kind": "content",
+    "body": "<ul><li><strong>Latihan 1:</strong> Type narrowing dengan union types <code>int | float | str</code>.</li><li><strong>Latihan 2:</strong> Skema <code>GatewayProfile</code> dengan TypedDict dan NotRequired.</li><li><strong>Latihan 3:</strong> Subtyping struktural antarmuka <code>Loggable</code> via Protocol.</li><li><strong>Latihan 4:</strong> Container generik <code>BoundedBuffer[T]</code> menggunakan TypeVar.</li></ul>",
+    "notes": "Panduan langkah demi langkah dapat diakses di content/professional/chapter-25/exercises/exercise.md."
+  },
+  {
+    "title": "Tugas Praktik: Network Observability Toolkit",
+    "kind": "content",
+    "body": "<ul><li><strong>Tujuan:</strong> Membangun toolkit telemetri tipe aman berstandar industri penuh.</li><li><strong>Persyaratan:</strong> MetricPayload (TypedDict), MetricEncoder (Protocol), dan MetricStore (Generic).</li><li><strong>Panduan & Template:</strong> Buka <code>tugas.md</code> dan <code>tugas.py</code> di repositori.</li><li><strong>Standar Penilaian:</strong> Rubrik 100 poin mencakup type hints, Protocol, Generic, dan PEP 8.</li></ul>",
+    "notes": "Pastikan kode Anda bebas dari penolakan tipe statis dan lulus validasi runtime."
+  },
+  {
+    "title": "Refactoring Kode untuk Readability",
+    "kind": "content",
+    "body": "<ul><li>Bagi fungsi panjang menjadi subfungsi-fungsi kecil yang memiliki satu tugas tunggal.</li><li>Gunakan nama variabel deskriptif yang mencerminkan domain masalah (hindari <code>x</code>, <code>temp</code>, <code>data1</code>).</li><li>Dokumentasikan asumsi dan batasan algoritma melalui type hints dan docstring Google/Sphinx.</li></ul>",
+    "notes": "Code is read much more often than it is written — Guido van Rossum."
+  },
+  {
+    "title": "Ringkasan Materi Chapter 25",
+    "kind": "content",
+    "body": "<ul><li>Type hints memberikan dokumentasi yang dapat diverifikasi secara otomatis oleh mesin.</li><li>TypedDict dan Protocol memberikan type safety pada idiom alami Python tanpa merusak dinamika runtime.</li><li>Generic class memungkinkan pembuatan abstraksi wadah data yang fleksibel dan aman.</li><li>Gunakan Ruff dan mypy untuk menegakkan standar kualitas kode tim secara otomatis.</li></ul>",
+    "notes": "Di bab selanjutnya (Chapter 26), kita akan melengkapi keandalan sistem dengan Advanced Testing & Logging."
+  },
+  {
+    "title": "Referensi & Bacaan Lanjutan",
+    "kind": "content",
+    "body": "<ul><li>Python Documentation — <code>typing</code>: Support for type hints (PEP 484, 544, 589, 604)</li><li>Mypy Documentation — Static Type Checker for Python</li><li>Ruff Documentation — Extremely fast Python linter and code formatter</li><li>Robust Python by Patrick Viafore (O'Reilly Media)</li></ul>",
+    "notes": "Buku 'Robust Python' sangat disarankan untuk pendalaman type safety di sistem skala besar."
+  }
+]
+

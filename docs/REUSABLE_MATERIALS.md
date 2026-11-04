@@ -116,5 +116,9 @@ Untuk memberikan identitas keilmuan yang khas bagi mahasiswa Teknik Telekomunika
 | Hierarki Hewan (Animal -> Mammal/Bird) & Polimorfisme | Hierarki perangkat telekomunikasi (`TransceiverNode`, `CellularAntenna`, `MicrowaveLink`, `FiberOpticNode`), duck typing audit diagnostik, dunder method (`__str__`, `__repr__`, `__eq__`, `__hash__`), dan deduplikasi set BTS | **Chapter 20** |
 | Setup kalkulator dasar tanpa struktur modul | Paket modular rekayasa telekomunikasi (`telecom_toolkit`), modern `pyproject.toml`, link budget calculator, parameterized testing SNR/Shannon, exception testing | **Chapter 21** |
 | Aplikasi inventaris toko retail generik | **Inventory Management System (Telecom Infrastructure)**: OOP terpadu, persistence atomic write JSON, schema validation, domain exceptions, audit logging, CLI, dan 7 unit tests | **Chapter 22** |
+| Pola Desain Toko Online / GUI Widget | **Extensible Device Management System**: Abstract Base Class (`AbstractDevice`), Factory Pattern (`DeviceFactory`), Strategy Pattern (`DiagnosticStrategy`), komposisi klaster, unit tests | **Chapter 23** |
+| Decorator otentikasi web generik | **Streaming Telemetry Ingestion Engine**: Decorator validasi rentang nilai, pipeline generator lazy multi-tahap (`yield`), context manager alokasi kanal frekuensi | **Chapter 24** |
+| Type hints umum kalkulator | **Type-Safe Network Observability Toolkit**: Skema `TypedDict` (`MetricPayload`), structural subtyping `Protocol` (`MetricEncoder`), generic store `Generic[T]`, static checking mypy & Ruff | **Chapter 25** |
+| Pengujian dasar penambahan angka | **Automated Test Suite & Production Telemetry System**: Test fixtures, mocking external gateway client dengan `MagicMock` & `patch`, `assertRaises`, parameterized `subTest`, dan `assertLogs` | **Chapter 26** |
 | Menghitung waktu unduh file internet | Simulasi latensi transmisi paket data dan kalkulasi jitter | **Chapter 27** |
 

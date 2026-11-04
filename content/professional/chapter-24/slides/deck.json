@@ -1,0 +1,132 @@
+[
+  {
+    "title": "Decorators, Generators & Context Managers",
+    "subtitle": "Metaprogramming, functools.wraps, yield & contextlib",
+    "kind": "cover",
+    "body": "<p>Metaprogramming dan Efisiensi Eksekusi: Merancang decorator berparameter, membangun pipeline streaming data berbasis generator (yield), serta mengelola alokasi sumber daya dengan context manager.</p>",
+    "notes": "Selamat datang di Chapter 24! Bab ini membahas teknik tingkat lanjut untuk kode Python yang ekspresif dan efisien memori."
+  },
+  {
+    "title": "Fungsi Kelas Pertama & Closures",
+    "kind": "content",
+    "body": "<ul><li><strong>First-Class Citizens:</strong> Fungsi di Python adalah objek biasa yang dapat disimpan dalam variabel, dioperasikan sebagai argumen, dan dikembalikan dari fungsi lain.</li><li><strong>Nested Functions:</strong> Fungsi yang didefinisikan di dalam tubuh fungsi lain.</li><li><strong>Closure:</strong> Fungsi dalam yang tetap mengingat variabel dari lingkup luarnya (*enclosing scope*) meskipun fungsi luar telah selesai dieksekusi.</li></ul>",
+    "notes": "Closure merupakan fondasi teknis utama di balik terciptanya mekanisme decorator di Python."
+  },
+  {
+    "title": "Audit Logging Decorator & wraps",
+    "kind": "code",
+    "example": "ch24-01",
+    "body": "<p>Membungkus fungsi kalkulasi path loss menggunakan decorator <code>@audit_logger</code> dengan preservasi metadata via <code>functools.wraps</code>.</p>",
+    "notes": "Tanpa wraps, pemanggilan __name__ dan __doc__ akan merujuk pada wrapper alih-alih fungsi asli."
+  },
+  {
+    "title": "Anatomi dan Alur Kerja Decorator",
+    "kind": "content",
+    "body": "<ul><li>Sintaksis <code>@decorator</code> adalah syntactic sugar dari: <code>func = decorator(func)</code>.</li><li>Menerima fungsi target sebagai parameter dan mengembalikan fungsi wrapper baru.</li><li>Wrapper mengeksekusi logika pra-pemrosesan, memanggil fungsi asli dengan <code>*args</code> dan <code>**kwargs</code>, lalu menjalankan pasca-pemrosesan.</li></ul>",
+    "notes": "Decorator memungkinkan kita menyisipkan cross-cutting concerns seperti logging dan otentikasi tanpa mengubah kode fungsi."
+  },
+  {
+    "title": "Pengukuran Waktu Eksekusi",
+    "kind": "code",
+    "example": "ch24-02",
+    "body": "<p>Mengukur latensi eksekusi fungsi secara transparan menggunakan <code>time.perf_counter()</code> di dalam wrapper decorator.</p>",
+    "notes": "Teknik ini sangat berguna untuk memantau bottleneck kinerja pada fungsi pemrosesan sinyal."
+  },
+  {
+    "title": "Parameterized Decorators",
+    "kind": "code",
+    "example": "ch24-03",
+    "body": "<p>Membangun decorator factory <code>@validate_range(min_val, max_val)</code> yang menerima parameter konfigurasi batas toleransi.</p>",
+    "notes": "Diperlukan tiga lapisan fungsi bertingkat: factory -> decorator -> wrapper."
+  },
+  {
+    "title": "Decorator Stacking (Penumpukan)",
+    "kind": "content",
+    "body": "<ul><li>Beberapa decorator dapat diterapkan secara bertumpuk pada satu fungsi:</li><li><code>@decorator_a</code><br><code>@decorator_b</code><br><code>def func(): pass</code></li><li><strong>Urutan Pembungkusan:</strong> Dari bawah ke atas: <code>func = decorator_a(decorator_b(func))</code>.</li><li><strong>Urutan Eksekusi:</strong> Dari atas ke bawah saat runtime.</li></ul>",
+    "notes": "Pastikan urutan penumpukan logis (misalnya validasi otentikasi diletakkan sebelum caching)."
+  },
+  {
+    "title": "Generator Functions & Kata Kunci yield",
+    "kind": "content",
+    "body": "<ul><li><strong>Fungsi Normal:</strong> Mengeksekusi instruksi hingga <code>return</code> dan menghancurkan frame stack lokal.</li><li><strong>Generator Function:</strong> Memuat setidaknya satu kata kunci <code>yield</code>. Mengembalikan objek generator saat dipanggil.</li><li><strong>State Preservation:</strong> Eksekusi dijeda pada titik <code>yield</code> dan dapat dilanjutkan kembali saat <code>next()</code> dipanggil.</li></ul>",
+    "notes": "Generator sangat ideal untuk mengolah dataset raksasa tanpa membebani memori RAM komputer."
+  },
+  {
+    "title": "Deret Fibonacci & Evaluasi Lazy",
+    "kind": "code",
+    "example": "ch24-04",
+    "body": "<p>Menghasilkan deret Fibonacci tanpa batas secara lazy: nilai baru hanya dihitung saat diminta oleh pemanggil.</p>",
+    "notes": "Generator infinite loop tidak menyebabkan Out-Of-Memory karena hanya satu nilai yang berada di RAM pada satu waktu."
+  },
+  {
+    "title": "Streaming Data Telemetri dengan yield",
+    "kind": "code",
+    "example": "ch24-05",
+    "body": "<p>Mensimulasikan pembacaan paket telemetri satu per satu tanpa menampung seluruh daftar rekaman di memori.</p>",
+    "notes": "Sangat aplikatif untuk pembacaan file log gigabyte atau streaming soket jaringan."
+  },
+  {
+    "title": "Generator Pipeline Chaining",
+    "kind": "code",
+    "example": "ch24-06",
+    "body": "<p>Merangkai generator multi-tahap (source -> filter -> transform) layaknya pipa data Unix (pipeline).</p>",
+    "notes": "Setiap elemen data mengalir dari hulu ke hilir secara instan tanpa membuat array intermediate penampung."
+  },
+  {
+    "title": "Protokol Context Manager",
+    "kind": "content",
+    "body": "<ul><li>Pernyataan <code>with</code> menjamin alokasi dan dealokasi sumber daya secara deterministik.</li><li><strong>Method <code>__enter__()</code>:</strong> Mengalokasikan resource (buka file, kunci mutex, sambung soket) dan mengembalikan target <code>as</code>.</li><li><strong>Method <code>__exit__()</code>:</strong> Menjamin pembersihan resource, bahkan jika terjadi unhandled exception di dalam blok <code>with</code>.</li></ul>",
+    "notes": "Mencegah resource leak seperti file descriptor habis atau database connection menggantung."
+  },
+  {
+    "title": "Class-based Context Manager Protocol",
+    "kind": "code",
+    "example": "ch24-07",
+    "body": "<p>Mengimplementasikan pengelolaan sesi jaringan dengan protokol <code>__enter__</code> dan <code>__exit__</code>.</p>",
+    "notes": "Parameter __exit__ menerima exc_type, exc_val, dan exc_tb untuk mendeteksi error."
+  },
+  {
+    "title": "Context Manager dengan @contextlib",
+    "kind": "code",
+    "example": "ch24-08",
+    "body": "<p>Menyederhanakan pembuatan context manager menggunakan fungsi generator berdekorator <code>@contextmanager</code>.</p>",
+    "notes": "Blok sebelum yield bertindak sebagai __enter__, sedangkan blok finally bertindak sebagai __exit__."
+  },
+  {
+    "title": "Kesalahan Umum & Jebakan Antipattern",
+    "kind": "content",
+    "body": "<ul><li><strong>Lupa <code>@functools.wraps</code>:</strong> Menyebabkan fungsi kehilangan nama aslinya dan merusak modul inspeksi/debugging.</li><li><strong>Generator Exhaustion:</strong> Mengiterasi generator yang telah habis (exhausted) tanpa membuat generator baru.</li><li><strong>Menelan Exception di <code>__exit__</code>:</strong> Mengembalikan nilai <code>True</code> tanpa sengaja sehingga menyembunyikan crash sistem penting.</li></ul>",
+    "notes": "Hanya kembalikan True di __exit__ jika Anda memang bermaksud menangani dan meniadakan exception tersebut."
+  },
+  {
+    "title": "Mini Project: Data Processing Pipeline",
+    "kind": "content",
+    "body": "<ul><li><strong>Integrasi Penuh:</strong> Memadukan decorator validasi skema, generator pipeline lazy, dan context manager timer.</li><li><strong>Keandalan:</strong> Menguji alur streaming telemetri dengan penolakan data derau secara selektif.</li><li><strong>Verifikasi Otomatis:</strong> Dilengkapi unit test komprehensif pada paket modul.</li></ul>",
+    "notes": "Buka content/professional/chapter-24/code/ untuk melihat arsitektur lengkap proyek ini."
+  },
+  {
+    "title": "Latihan Praktik Mandiri",
+    "kind": "content",
+    "body": "<ul><li><strong>Latihan 1:</strong> Decorator factory <code>@retry</code> untuk toleransi kegagalan jaringan.</li><li><strong>Latihan 2:</strong> Generator bilangan prima tanpa batas dengan evaluasi lazy.</li><li><strong>Latihan 3:</strong> Pipeline penyaring baris log error dari stream teks.</li><li><strong>Latihan 4:</strong> Context manager lock sumber daya berbasis <code>@contextmanager</code>.</li></ul>",
+    "notes": "Petunjuk pengerjaan lengkap dapat dibaca pada exercise.md."
+  },
+  {
+    "title": "Tugas Praktik: Telemetry Ingestion Engine",
+    "kind": "content",
+    "body": "<ul><li><strong>Tujuan:</strong> Membangun mesin pemrosesan data telemetri streaming berefisiensi tinggi.</li><li><strong>Fitur Wajib:</strong> Decorator validasi rentang nilai, pipeline agregasi sinyal, dan ChannelLeaseContext.</li><li><strong>Panduan & Template:</strong> Buka <code>tugas.md</code> dan <code>tugas.py</code> di repositori.</li><li><strong>Penilaian:</strong> Evaluasi ketat berdasarkan rubrik standar 100 poin.</li></ul>",
+    "notes": "Pastikan tugas Anda berjalan bersih tanpa konsumsi memori berlebih."
+  },
+  {
+    "title": "Ringkasan Materi Chapter 24",
+    "kind": "content",
+    "body": "<ul><li>Decorator mengisolasi aspek lintas fungsional (cross-cutting) tanpa merusak logika inti.</li><li>Generator memproses data tak terbatas dengan footprint memori O(1).</li><li>Context manager menjamin cleanup sumber daya yang deterministik dan tahan crash.</li></ul>",
+    "notes": "Dengan penguasaan metaprogramming ini, kita siap memperkuat kualitas kode dengan Type Hints di Chapter 25."
+  },
+  {
+    "title": "Referensi & Bacaan Lanjutan",
+    "kind": "content",
+    "body": "<ul><li>Python Documentation — PEP 318: Decorators for Functions and Methods</li><li>Python Documentation — PEP 255 & PEP 342: Simple and Coroutine Generators</li><li>Python Documentation — <code>contextlib</code>: Utilities for with-statement contexts</li><li>Fluent Python by Luciano Ramalho (Chapters on Decorators & Iterators)</li></ul>",
+    "notes": "Eksplorasi generator delegation (yield from) untuk modularitas pipeline tingkat lanjut."
+  }
+]
+

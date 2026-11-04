@@ -20,6 +20,10 @@ import ch19Slides from '../../content/intermediate/chapter-19/slides/deck.json';
 import ch20Slides from '../../content/intermediate/chapter-20/slides/deck.json';
 import ch21Slides from '../../content/intermediate/chapter-21/slides/deck.json';
 import ch22Slides from '../../content/intermediate/chapter-22/slides/deck.json';
+import ch23Slides from '../../content/professional/chapter-23/slides/deck.json';
+import ch24Slides from '../../content/professional/chapter-24/slides/deck.json';
+import ch25Slides from '../../content/professional/chapter-25/slides/deck.json';
+import ch26Slides from '../../content/professional/chapter-26/slides/deck.json';
 
 export interface SlideData {
   title: string;
@@ -56,13 +60,19 @@ export function getSlideDeckForChapter(chapterId: number): SlideData[] | null {
   if (chapterId === 20) return ch20Slides as SlideData[];
   if (chapterId === 21) return ch21Slides as SlideData[];
   if (chapterId === 22) return ch22Slides as SlideData[];
+  if (chapterId === 23) return ch23Slides as SlideData[];
+  if (chapterId === 24) return ch24Slides as SlideData[];
+  if (chapterId === 25) return ch25Slides as SlideData[];
+  if (chapterId === 26) return ch26Slides as SlideData[];
   return null;
 }
 
 // Backward-compatibility meeting helper
-export const meetings = Array.from({ length: 22 }, (_, i) => {
+export const meetings = Array.from({ length: 26 }, (_, i) => {
   const number = i + 1;
-  const isAvail = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22].includes(number);
+  const isAvail = [
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
+  ].includes(number);
   return {
     number,
     available: isAvail,
@@ -111,6 +121,14 @@ export const meetings = Array.from({ length: 22 }, (_, i) => {
         ? 'Packages, Environments & Testing'
         : number === 22
         ? 'Intermediate Capstone Project'
+        : number === 23
+        ? 'Advanced OOP & Design Patterns'
+        : number === 24
+        ? 'Decorators, Generators & Context Managers'
+        : number === 25
+        ? 'Type Hints & Code Quality'
+        : number === 26
+        ? 'Advanced Testing & Logging'
         : 'Materi Pembelajaran',
     description: 'Modul pembelajaran Python Learning Hub.',
     tags: ['Python', 'Learning Hub'],

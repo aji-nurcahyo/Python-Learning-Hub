@@ -211,6 +211,38 @@ export const CHAPTER_RESOURCES_MAP: Record<number, ChapterResourceConfig> = {
     pythonFiles: ['downloads/chapter-22/contoh.py', 'downloads/examples/ch22-01.py'],
     assignmentGuide: 'downloads/chapter-22/tugas.md',
   },
+  23: {
+    chapterId: 23,
+    hasSlides: true,
+    slidesDeck: 'content/professional/chapter-23/slides/deck.json',
+    powerpoint: null,
+    pythonFiles: ['downloads/chapter-23/contoh.py', 'downloads/examples/ch23-01.py'],
+    assignmentGuide: 'downloads/chapter-23/tugas.md',
+  },
+  24: {
+    chapterId: 24,
+    hasSlides: true,
+    slidesDeck: 'content/professional/chapter-24/slides/deck.json',
+    powerpoint: null,
+    pythonFiles: ['downloads/chapter-24/contoh.py', 'downloads/examples/ch24-01.py'],
+    assignmentGuide: 'downloads/chapter-24/tugas.md',
+  },
+  25: {
+    chapterId: 25,
+    hasSlides: true,
+    slidesDeck: 'content/professional/chapter-25/slides/deck.json',
+    powerpoint: null,
+    pythonFiles: ['downloads/chapter-25/contoh.py', 'downloads/examples/ch25-01.py'],
+    assignmentGuide: 'downloads/chapter-25/tugas.md',
+  },
+  26: {
+    chapterId: 26,
+    hasSlides: true,
+    slidesDeck: 'content/professional/chapter-26/slides/deck.json',
+    powerpoint: null,
+    pythonFiles: ['downloads/chapter-26/contoh.py', 'downloads/examples/ch26-01.py'],
+    assignmentGuide: 'downloads/chapter-26/tugas.md',
+  },
 };
 
 /**
