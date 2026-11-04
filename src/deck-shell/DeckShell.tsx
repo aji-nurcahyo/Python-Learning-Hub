@@ -34,7 +34,9 @@ export function DeckShell({
     if (!host.current) return;
     const api = new Reveal(host.current, {
       plugins: [Notes],
-      hash: true,
+      hash: false, // CRITICAL: Disabled to prevent Reveal from overwriting SPA hash route (#/chapter/X/slides)
+      respondToHashChanges: false,
+      history: false,
       controls: true,
       controlsLayout: 'edges',
       progress: true,

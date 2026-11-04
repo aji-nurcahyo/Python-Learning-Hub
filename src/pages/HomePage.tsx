@@ -9,6 +9,7 @@ import {
 } from '../curriculum';
 import { DifficultyBadge } from '../components/DifficultyBadge';
 import { Icon } from '../ui/Icon';
+import { getAssetUrl } from '../curriculum/resources';
 
 interface HomePageProps {
   onNavigateLevel: (levelId: number) => void;
@@ -446,7 +447,7 @@ export function HomePage({
           </div>
           <div className="pedagogy-actions">
             <a
-              href="downloads/Materi_Pengkom_Pertemuan_9_10_Python.pptx"
+              href={getAssetUrl('downloads/Materi_Pengkom_Pertemuan_9_10_Python.pptx')}
               className="button subtle"
               download
             >

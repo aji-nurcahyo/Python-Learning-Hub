@@ -1,6 +1,7 @@
 import { Icon } from '../ui/Icon';
 import { DifficultyBadge } from './DifficultyBadge';
 import type { Chapter } from '../curriculum';
+import { hasInteractivePresentation } from '../curriculum/resources';
 
 interface ChapterHeaderProps {
   chapter: Chapter;
@@ -68,14 +69,27 @@ export function ChapterHeader({
         {chapter.available && (
           <div className="chapter-launch-bar">
             <div className="launch-group">
-              <button
-                type="button"
-                className="button primary button-lg"
-                onClick={() => (onNavigateSlides ? onNavigateSlides(chapter.id) : (location.hash = `chapter/${chapter.id}/slides`))}
-              >
-                <Icon name="slideshow" size={20} />
-                <span>Buka Presentasi Interaktif Reveal.js</span>
-              </button>
+              {(chapter.resources?.hasSlides ?? hasInteractivePresentation(chapter.id)) ? (
+                <button
+                  type="button"
+                  className="button primary button-lg"
+                  onClick={() => (onNavigateSlides ? onNavigateSlides(chapter.id) : (location.hash = `chapter/${chapter.id}/slides`))}
+                >
+                  <Icon name="slideshow" size={20} />
+                  <span>Buka Presentasi Interaktif Reveal.js</span>
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  className="button subtle button-lg"
+                  disabled
+                  title="Slide presentasi interaktif sedang disiapkan untuk modul ini"
+                  style={{ opacity: 0.65, cursor: 'not-allowed' }}
+                >
+                  <Icon name="slideshow" size={20} />
+                  <span>Slide Sedang Disiapkan</span>
+                </button>
+              )}
               <button
                 type="button"
                 className="button subtle button-lg"

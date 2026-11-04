@@ -22,7 +22,7 @@ import 'katex/dist/katex.min.css';
 import './theme/styles.css';
 
 const path = location.pathname;
-const base = './';
+const base = import.meta.env.BASE_URL || './';
 
 // Common Hub Header
 function Header({
@@ -497,7 +497,7 @@ function Task({
         </button>
         <a
           className="button subtle"
-          href={`${base}downloads/pertemuan-${meeting >= 10 ? '09' : '10'}/contoh.py`}
+          href={`${base}downloads/chapter-${String(meeting).padStart(2, '0')}/contoh.py`}
           download
         >
           <Icon name="download" size={16} /> <span>Unduh Contoh Python (.py)</span>

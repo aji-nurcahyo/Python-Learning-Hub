@@ -374,8 +374,8 @@ export const CHAPTERS: Chapter[] = [
       ],
       starterCode: `# Template Starter Code - Chapter 08\ndef ringkas_sinyal(data_sinyal: list[float]) -> tuple[float, float, float]:\n    """Menghitung nilai minimum, maksimum, dan rata-rata dari list sinyal."""\n    if not data_sinyal:\n        return (0.0, 0.0, 0.0)\n    # Tuliskan logika Anda di sini\n    pass`,
       starterFilename: 'tugas_08.py',
-      downloadMdUrl: 'downloads/pertemuan-10/tugas.md',
-      downloadPyUrl: 'downloads/pertemuan-10/contoh.py',
+      downloadMdUrl: 'downloads/chapter-08/tugas.md',
+      downloadPyUrl: 'downloads/chapter-08/contoh.py',
     },
   },
   {
@@ -398,8 +398,8 @@ export const CHAPTERS: Chapter[] = [
       'Memilih struktur data yang tepat untuk kebutuhan query data tabular dan sensor',
     ],
     tags: ['Dictionary', 'Sets', 'Hash Maps', 'Key-Value'],
-    deckPath: '#chapter/08/slides',
-    tugasPath: '#chapter/08/task',
+    deckPath: '#chapter/09/slides',
+    tugasPath: '#chapter/09/task',
     codeExample: {
       title: 'Struktur Data Dictionary & Hash Key-Value',
       code: `# Struktur Data Dictionary & Hash Key-Value\nsensor = {"id": "S01", "lokasi": "Gedung A", "rsrp": -80}\nprint(sensor["id"])\nprint(sensor.get("status", "tidak tersedia"))\nprint(sensor.items())`,
@@ -443,8 +443,8 @@ export const CHAPTERS: Chapter[] = [
       ],
       starterCode: `# Template Starter Code - Chapter 09\ndef tambah_sensor(registry: dict, id_sensor: str, lokasi: str, rsrp: float) -> bool:\n    """Mendaftarkan sensor baru ke registry."""\n    pass`,
       starterFilename: 'tugas_09.py',
-      downloadMdUrl: 'downloads/pertemuan-10/tugas.md',
-      downloadPyUrl: 'downloads/pertemuan-10/contoh.py',
+      downloadMdUrl: 'downloads/chapter-09/tugas.md',
+      downloadPyUrl: 'downloads/chapter-09/contoh.py',
     },
   },
   {
@@ -513,8 +513,8 @@ export const CHAPTERS: Chapter[] = [
       ],
       starterCode: `# Template Starter Code - Chapter 10\ndef konversi_suhu(celsius: float) -> float:\n    """Mengonversi nilai suhu dari Celsius ke Fahrenheit.\n    \n    Args:\n        celsius (float): Derajat suhu dalam Celsius.\n    Returns:\n        float: Derajat suhu dalam Fahrenheit.\n    """\n    return (celsius * 9 / 5) + 32`,
       starterFilename: 'tugas_10.py',
-      downloadMdUrl: 'downloads/pertemuan-09/tugas.md',
-      downloadPyUrl: 'downloads/pertemuan-09/contoh.py',
+      downloadMdUrl: 'downloads/chapter-10/tugas.md',
+      downloadPyUrl: 'downloads/chapter-10/contoh.py',
     },
   },
   {
@@ -538,8 +538,8 @@ export const CHAPTERS: Chapter[] = [
       'Menangani ValueError dan ZeroDivisionError menggunakan blok try-except dasar',
     ],
     tags: ['Modules', 'Docstrings', 'Import', 'Exception Basics'],
-    deckPath: '#chapter/10/slides',
-    tugasPath: '#chapter/10/task',
+    deckPath: '#chapter/11/slides',
+    tugasPath: '#chapter/11/task',
     codeExample: {
       title: 'Ekstraksi Docstring Standar PEP 257',
       code: `# Ekstraksi Docstring Standar PEP 257\ndef konversi_c_ke_f(celsius):\n    """Konversi suhu dari Celsius ke Fahrenheit.\n\n    Args:\n        celsius (float): Suhu dalam Celsius.\n    Returns:\n        float: Suhu dalam Fahrenheit.\n    """\n    return celsius * 9 / 5 + 32\n\nprint(konversi_c_ke_f.__doc__)`,
@@ -583,8 +583,8 @@ export const CHAPTERS: Chapter[] = [
       ],
       starterCode: `# Template Starter Code - Chapter 11\n# signal_proc.py\ndef filter_sinyal(samples: list[float], threshold: float) -> list[float]:\n    """Menyaring sampel sinyal di atas nilai ambang batas."""\n    pass`,
       starterFilename: 'tugas_11.py',
-      downloadMdUrl: 'downloads/pertemuan-09/tugas.md',
-      downloadPyUrl: 'downloads/pertemuan-09/contoh.py',
+      downloadMdUrl: 'downloads/chapter-11/tugas.md',
+      downloadPyUrl: 'downloads/chapter-11/contoh.py',
     },
   },
   {
@@ -643,7 +643,7 @@ export const CHAPTERS: Chapter[] = [
     competencyFocus: 'PCAP 1.2: Comprehensions dan protokol iterasi',
     estimatedHours: 4,
     difficulty: 'Intermediate',
-    available: true,
+    available: false,
     prerequisites: ['Chapter 08', 'Chapter 09'],
     learningObjectives: [
       'Menulis list comprehension dengan klausa filter kondisi if secara idiomatis',
@@ -651,8 +651,6 @@ export const CHAPTERS: Chapter[] = [
       'Memahami protokol iterator dan perbandingan memori list vs generator expression',
     ],
     tags: ['Comprehension', 'Generators', 'Iterators', 'Filtering'],
-    deckPath: '#chapter/08/slides',
-    tugasPath: '#chapter/08/task',
   },
   {
     id: 15,
@@ -666,7 +664,7 @@ export const CHAPTERS: Chapter[] = [
     competencyFocus: 'PCAP 1.3: Algoritma pencarian dan pengurutan terapan',
     estimatedHours: 5,
     difficulty: 'Intermediate',
-    available: true,
+    available: false,
     prerequisites: ['Chapter 08', 'Chapter 14'],
     learningObjectives: [
       'Mengimplementasikan linear search pada data tidak terurut dengan penanganan kasus None',
@@ -674,8 +672,6 @@ export const CHAPTERS: Chapter[] = [
       'Mengurutkan data dictionary kompleks menggunakan sorted(data, key=lambda x: ...)',
     ],
     tags: ['Algorithms', 'Linear Search', 'Selection Sort', 'Sorting'],
-    deckPath: '#chapter/08/slides',
-    tugasPath: '#chapter/08/task',
   },
   {
     id: 16,

@@ -1,9 +1,9 @@
 [
   {
-    "title": "Struktur Data, Comprehension, Searching & Sorting",
-    "body": "<p class=\"lead\">Mengolah kumpulan data Python dan menerapkan algoritma sederhana.</p><p class=\"note\">Lanjutan dari modul fungsi dan modularitas</p>",
+    "title": "Dictionaries, Sets & Hash Structures",
+    "body": "<p class=\"lead\">Struktur data berbasis hash: pemetaan asosiatif key-value O(1) dan operasi himpunan unik matematika.</p><p class=\"note\">Level 1 · Python Foundations — Chapter 09</p>",
     "kind": "cover",
-    "notes": "Bahas struktur data, comprehension, searching & sorting. Diskusikan dan analisis menjelaskan alasan jawabannya sebelum melanjutkan."
+    "notes": "Selamat datang di Chapter 09: Dictionaries & Sets. Pada sesi ini kita membahas mapping data key-value dan himpunan set untuk optimasi query."
   },
   {
     "title": "Capaian pembelajaran",

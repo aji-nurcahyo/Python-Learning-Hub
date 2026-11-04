@@ -1,4 +1,4 @@
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync, statSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -34,17 +34,35 @@ if (existsSync(nojekyllPath)) {
   console.warn('! Warning: .nojekyll not found in dist/. Jekyll may ignore underscore-prefixed assets on GitHub Pages.');
 }
 
-// Check downloads folder
-const downloadsPath = resolve(dist, 'downloads');
-if (existsSync(downloadsPath)) {
-  console.log('✓ Static downloads directory is present in dist/');
+// Check PPTX physical download in dist/
+const pptxPath = resolve(dist, 'downloads/Materi_Pengkom_Pertemuan_9_10_Python.pptx');
+if (existsSync(pptxPath)) {
+  const stat = statSync(pptxPath);
+  if (stat.size > 50000) {
+    console.log(`✓ PowerPoint binary present in dist/: Materi_Pengkom_Pertemuan_9_10_Python.pptx (${Math.round(stat.size / 1024)} KB)`);
+  } else {
+    console.error(`✗ PowerPoint file too small in dist/ (${stat.size} bytes)`);
+    passed = -999;
+  }
 } else {
-  console.warn('! Warning: downloads directory not found in dist/.');
+  console.error('✗ PowerPoint file missing in dist/downloads/');
+  passed = -999;
 }
 
-console.log(`\nAll production routes and static markers verified successfully.`);
+// Check Chapter starter downloads in dist/
+const ch08Code = resolve(dist, 'downloads/chapter-08/contoh.py');
+const ch10Code = resolve(dist, 'downloads/chapter-10/contoh.py');
+if (existsSync(ch08Code) && existsSync(ch10Code)) {
+  console.log('✓ Chapter starter code packages present in dist/downloads/');
+} else {
+  console.error('✗ Chapter starter code missing in dist/downloads/');
+  passed = -999;
+}
+
 if (passed === routes.length) {
+  console.log('\nAll production routes, presentations, PPTX files, and static markers verified successfully.');
   process.exit(0);
 } else {
+  console.error('\nProduction artifact verification failed.');
   process.exit(1);
 }

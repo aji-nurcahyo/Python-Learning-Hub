@@ -10,7 +10,7 @@
   "competencyFocus": "PCAP 1.3: Algoritma pencarian dan pengurutan terapan",
   "estimatedHours": 5,
   "difficulty": "Intermediate",
-  "available": true,
+  "available": false,
   "prerequisites": [
     "Chapter 08",
     "Chapter 14"
@@ -31,6 +31,6 @@
     "slidesDeck": null,
     "starterCode": null,
     "assignmentGuide": null,
-    "pptxDownload": "downloads/Materi_Pengkom_Pertemuan_9_10_Python.pptx"
+    "pptxDownload": null
   }
 }

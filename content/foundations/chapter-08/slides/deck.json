@@ -1,9 +1,9 @@
 [
   {
-    "title": "Struktur Data, Comprehension, Searching & Sorting",
-    "body": "<p class=\"lead\">Mengolah kumpulan data Python dan menerapkan algoritma sederhana.</p><p class=\"note\">Lanjutan dari modul fungsi dan modularitas</p>",
+    "title": "Lists, Tuples & Sequences",
+    "body": "<p class=\"lead\">Mengolah kumpulan sequence data terurut: konsep mutabilitas, operasi list, dan tuple unpacking.</p><p class=\"note\">Level 1 · Python Foundations — Chapter 08</p>",
     "kind": "cover",
-    "notes": "Bahas struktur data, comprehension, searching & sorting. Diskusikan dan analisis menjelaskan alasan jawabannya sebelum melanjutkan."
+    "notes": "Selamat datang di Chapter 08: Lists & Tuples. Pada sesi ini kita akan membedakan list mutable dan tuple immutable serta penerapannya pada data telekomunikasi."
   },
   {
     "title": "Capaian pembelajaran",

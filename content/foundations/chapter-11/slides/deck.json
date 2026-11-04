@@ -1,9 +1,9 @@
 [
   {
-    "title": "Function Design, Module & Docstring",
-    "body": "<p class=\"lead\">Review Python, merancang fungsi, menata kode modular, dan mendokumentasikan program.</p><p class=\"note\">Contoh kasus: pengolahan data pengukuran sinyal</p>",
+    "title": "Modules, Packages & Docstrings",
+    "body": "<p class=\"lead\">Organisasi kode multi-berkas, Standard Library, penulisan docstring PEP 257, dan penanganan error dasar.</p><p class=\"note\">Level 1 · Python Foundations — Chapter 11</p>",
     "kind": "cover",
-    "notes": "Bahas function design, module & docstring. Diskusikan dan analisis menjelaskan alasan jawabannya sebelum melanjutkan."
+    "notes": "Selamat datang di Chapter 11: Modules & Basic Exceptions. Pada sesi ini kita belajar membuat modul buatan sendiri dan proteksi __name__ == \"__main__\"."
   },
   {
     "title": "Capaian pembelajaran",

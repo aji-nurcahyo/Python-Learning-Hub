@@ -6,6 +6,7 @@ import { LearningObjectives } from './LearningObjectives';
 import { PrerequisiteList } from './PrerequisiteList';
 import { ChapterNavigation } from './ChapterNavigation';
 import { ResourceDownloads } from './ResourceDownloads';
+import { getChapterResources } from '../curriculum/resources';
 
 interface ChapterLayoutProps {
   chapter: Chapter;
@@ -173,10 +174,16 @@ export function ChapterLayout({
 
             {overviewChildren}
 
-            <ResourceDownloads
-              starterCodeUrl={chapter.resources?.starterCode ? `content/${chapter.levelCategory}/chapter-${chapter.number}/${chapter.resources.starterCode}` : undefined}
-              guideUrl={chapter.resources?.assignmentGuide ? `content/${chapter.levelCategory}/chapter-${chapter.number}/${chapter.resources.assignmentGuide}` : undefined}
-            />
+            {(() => {
+              const res = getChapterResources(chapter.id);
+              return (
+                <ResourceDownloads
+                  pptxUrl={res.powerpoint}
+                  starterCodeUrl={res.pythonFiles[0] || (chapter.resources?.starterCode ? `downloads/chapter-${chapter.number}/contoh.py` : undefined)}
+                  guideUrl={res.assignmentGuide || (chapter.resources?.assignmentGuide ? `downloads/chapter-${chapter.number}/tugas.md` : undefined)}
+                />
+              );
+            })()}
           </div>
         )}
 

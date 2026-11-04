@@ -28,7 +28,7 @@
   "resources": {
     "hasSlides": true,
     "slidesDeck": "slides/deck.json",
-    "starterCode": "assignments/tugas_09.py",
+    "starterCode": "code/contoh.py",
     "assignmentGuide": "assignments/tugas.md",
     "pptxDownload": "downloads/Materi_Pengkom_Pertemuan_9_10_Python.pptx"
   },

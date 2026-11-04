@@ -1,9 +1,9 @@
 [
   {
-    "title": "Function Design, Module & Docstring",
-    "body": "<p class=\"lead\">Review Python, merancang fungsi, menata kode modular, dan mendokumentasikan program.</p><p class=\"note\">Contoh kasus: pengolahan data pengukuran sinyal</p>",
+    "title": "Functions & Scope",
+    "body": "<p class=\"lead\">Modularitas kode, deklarasi fungsi def, parameter, nilai balik return, dan aturan scope LEGB.</p><p class=\"note\">Level 1 · Python Foundations — Chapter 10</p>",
     "kind": "cover",
-    "notes": "Bahas function design, module & docstring. Diskusikan dan analisis menjelaskan alasan jawabannya sebelum melanjutkan."
+    "notes": "Selamat datang di Chapter 10: Functions & Scope. Pada sesi ini kita merancang fungsi reusable, membedakan print vs return, dan mengisolasi ruang lingkup variabel."
   },
   {
     "title": "Capaian pembelajaran",
