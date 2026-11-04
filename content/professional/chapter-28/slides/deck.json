@@ -1,0 +1,133 @@
+[
+  {
+    "title": "Networking & API Integration",
+    "subtitle": "HTTP Protocols, REST Architecture, Authentication & Resilient Clients",
+    "kind": "cover",
+    "body": "<p>Integrasi Jaringan & Konsumsi REST API Tingkat Produksi: Membangun client tangguh dengan Bearer token authentication, timeout guard, exponential backoff retry, pagination handling, dan sanitasi kredensial pada audit logging.</p>",
+    "notes": "Selamat datang di Chapter 28! Modul ini membahas pilar komunikasi terdistribusi yang menghubungkan aplikasi Python dengan ekosistem mikroservis dan cloud."
+  },
+  {
+    "title": "Arsitektur Client-Server & Protokol HTTP",
+    "kind": "content",
+    "body": "<ul><li><strong>Client-Server Model:</strong> Klien menginisiasi request melalui socket TCP/IP, dan server memproses serta mengembalikan response.</li><li><strong>Protokol HTTP/1.1 & HTTP/2:</strong> Protokol berbasis teks dan biner nir-status (stateless) di atas layer transport TCP.</li><li><strong>Anatomi Request:</strong> Request Line (Method + URI + Version), Headers (Metadata), dan Optional Body (Payload).</li><li><strong>Anatomi Response:</strong> Status Line (Code + Reason), Response Headers, dan Response Body (HTML, JSON, atau Binary).</li></ul>",
+    "notes": "Sifat stateless HTTP berarti server tidak menyimpan konteks pengguna antar-request kecuali dibantu oleh token atau sesi."
+  },
+  {
+    "title": "HTTP GET: Mengambil Data dari Layanan Eksternal",
+    "kind": "code",
+    "example": "ch28-01",
+    "body": "<p>Mengirimkan permintaan HTTP GET untuk mengambil data status simpul jaringan dan memverifikasi status code.</p>",
+    "notes": "Metode GET bersifat aman (safe) dan idempoten, artinya pemanggilan berulang kali tidak mengubah status resource di server."
+  },
+  {
+    "title": "Anatomi URL & Query Parameters",
+    "kind": "content",
+    "body": "<ul><li><strong>Struktur URL:</strong> <code>scheme://host:port/path?query#fragment</code>.</li><li><strong>Query Parameters:</strong> Pasangan kunci-nilai setelah tanda tanya (<code>?key=value&amp;sort=asc</code>) untuk filtering, sorting, dan pagination.</li><li><strong>URL Percent-Encoding:</strong> Karakter khusus dan spasi wajib di-encode (misal spasi menjadi <code>%20</code> atau <code>+</code>).</li><li><strong>Best Practice:</strong> Gunakan pustaka standar seperti <code>urllib.parse.urlencode</code> untuk mencegah celah injeksi parameter.</li></ul>",
+    "notes": "Selalu hindari penggabungan string manual untuk parameter URL guna mencegah kesalahan sintaks."
+  },
+  {
+    "title": "Pengkodean Query Parameter secara Dinamis",
+    "kind": "code",
+    "example": "ch28-02",
+    "body": "<p>Menyusun URL dengan query parameter ter-encode secara aman menggunakan pustaka standar <code>urllib.parse</code>.</p>",
+    "notes": "Fungsi urlencode secara otomatis menangani karakter khusus dan spasi sesuai spesifikasi RFC 3986."
+  },
+  {
+    "title": "Serialisasi JSON & Pertukaran Data",
+    "kind": "content",
+    "body": "<ul><li><strong>JSON (JavaScript Object Notation):</strong> Standar pertukaran data berbasis teks paling universal dalam RESTful APIs.</li><li><strong>Serialisasi (dumps):</strong> Mengonversi struktur data Python (dict, list) menjadi teks string JSON.</li><li><strong>Deserialisasi (loads):</strong> Mengurai teks string JSON kembali menjadi objek Python asli.</li><li><strong>Parsing Defensif:</strong> Gunakan method <code>.get()</code> dengan nilai fallback agar terhindar dari fatal <code>KeyError</code> akibat skema berubah.</li></ul>",
+    "notes": "Jangan pernah mengasumsikan struktur response API eksternal selalu lengkap dan tidak pernah berubah."
+  },
+  {
+    "title": "Parsing Payload JSON secara Defensif",
+    "kind": "code",
+    "example": "ch28-03",
+    "body": "<p>Membaca payload JSON secara defensif dengan validasi tipe data dan penanganan nilai hilang (missing keys).</p>",
+    "notes": "Klien produksi yang tangguh selalu memperlakukan data dari jaringan sebagai data yang tidak tepercaya (untrusted)."
+  },
+  {
+    "title": "Metode HTTP & Semantik REST",
+    "kind": "content",
+    "body": "<ul><li><strong>GET:</strong> Membaca resource (Idempoten & Safe).</li><li><strong>POST:</strong> Membuat resource baru di server (Non-idempoten).</li><li><strong>PUT:</strong> Mengganti seluruh data resource yang sudah ada secara utuh (Idempoten).</li><li><strong>PATCH:</strong> Memperbarui sebagian atribut spesifik dari suatu resource (Bisa idempoten).</li><li><strong>DELETE:</strong> Menghapus resource dari basis data server (Idempoten).</li></ul>",
+    "notes": "RESTful API menggunakan kata kerja HTTP secara semantik untuk merepresentasikan aksi CRUD (Create, Read, Update, Delete)."
+  },
+  {
+    "title": "HTTP POST: Mengirim Payload ke Server",
+    "kind": "code",
+    "example": "ch28-04",
+    "body": "<p>Mengirimkan data telemetri baru ke endpoint API menggunakan metode HTTP POST dan header Content-Type application/json.</p>",
+    "notes": "Header Content-Type memberitahu server bagaimana cara mengurai format bodi request yang dikirimkan."
+  },
+  {
+    "title": "Klasifikasi Kode Status HTTP",
+    "kind": "content",
+    "body": "<ul><li><strong>1xx (Informational):</strong> Permintaan diterima dan proses sedang berlanjut (misal 101 Switching Protocols).</li><li><strong>2xx (Success):</strong> Operasi sukses (200 OK, 201 Created, 204 No Content).</li><li><strong>3xx (Redirection):</strong> Resource berpindah alamat (301 Moved Permanently, 304 Not Modified).</li><li><strong>4xx (Client Error):</strong> Kesalahan di sisi klien (400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found, 429 Too Many Requests).</li><li><strong>5xx (Server Error):</strong> Kesalahan internal di sisi server (500 Internal Error, 502 Bad Gateway, 503 Service Unavailable, 504 Gateway Timeout).</li></ul>",
+    "notes": "Pembedaan kode status 4xx dan 5xx sangat penting untuk menentukan apakah request layak di-retry atau tidak."
+  },
+  {
+    "title": "Penanganan Status Code & Error Jalur Jaringan",
+    "kind": "code",
+    "example": "ch28-05",
+    "body": "<p>Mengevaluasi respons server dan menangani kode kegagalan 4xx dan 5xx dengan percabangan yang terstruktur.</p>",
+    "notes": "Error 4xx memerlukan perbaikan parameter atau autentikasi, sedangkan 5xx sering kali dapat diatasi dengan mekanisme retry."
+  },
+  {
+    "title": "Proteksi Sistem dengan Request Timeout",
+    "kind": "code",
+    "example": "ch28-06",
+    "body": "<p>Mengonfigurasi batas waktu timeout pada panggilan jaringan untuk mencegah thread menggantung (hanging) tanpa batas.</p>",
+    "notes": "Tanpa timeout eksplisit, socket koneksi dapat menggantung selamanya dan menghabiskan resource memori aplikasi."
+  },
+  {
+    "title": "Autentikasi API: Bearer Token & Keamanan",
+    "kind": "content",
+    "body": "<ul><li><strong>Bearer Token (RFC 6750):</strong> Token string yang dikirim melalui header <code>Authorization: Bearer &lt;token&gt;</code>.</li><li><strong>Prinsip 12-Factor App:</strong> Jangan pernah menyimpan kredensial atau API key di dalam repositori source code (hardcoding).</li><li><strong>Environment Variables:</strong> Ambil token dari sistem operasi menggunakan <code>os.environ.get('API_KEY')</code>.</li><li><strong>Audit Log Sanitization:</strong> Samarkan token sebelum dicatat ke file log agar rahasia produksi tidak bocor ke publik.</li></ul>",
+    "notes": "Kebocoran API key di repositori publik adalah salah satu insiden keamanan siber paling umum di industri."
+  },
+  {
+    "title": "Bearer Token & Log Sanitization",
+    "kind": "code",
+    "example": "ch28-07",
+    "body": "<p>Membaca token dari variabel lingkungan dan menerapkan algoritma penyamaran (masking) sebelum mencatat header ke log audit.</p>",
+    "notes": "Masking menyisakan beberapa karakter awal dan akhir agar teknisi tetap dapat mengidentifikasi versi kunci tanpa melihat seluruh rahasia."
+  },
+  {
+    "title": "Pola Klien HTTP Asinkron Non-Blocking",
+    "kind": "code",
+    "example": "ch28-08",
+    "body": "<p>Mengirim beberapa request HTTP ke endpoint yang berbeda secara simultan menggunakan coroutine dan <code>asyncio.gather</code>.</p>",
+    "notes": "Pola asinkron ini memangkas total waktu tunggu I/O secara dramatis saat mengumpulkan data dari puluhan API eksternal."
+  },
+  {
+    "title": "Mekanisme Traversal Paginasi REST API",
+    "kind": "code",
+    "example": "ch28-09",
+    "body": "<p>Menjelajahi data terpaginasi (page-based pagination) secara berulang hingga semua entri berhasil dikumpulkan lengkap.</p>",
+    "notes": "Paginasi mencegah transfer data bervolume jutaan record sekaligus yang dapat menyebabkan Out of Memory (OOM)."
+  },
+  {
+    "title": "Retry Cerdas dengan Exponential Backoff",
+    "kind": "code",
+    "example": "ch28-10",
+    "body": "<p>Menghadapi gangguan sementara (HTTP 503 / 429) dengan pengulangan terkontrol dan pertambahan jeda eksponensial.</p>",
+    "notes": "Eksponential backoff mencegah fenomena 'thundering herd problem' yang dapat memperparah beban server yang sedang pulih."
+  },
+  {
+    "title": "Mini Project: REST API Data Client",
+    "kind": "content",
+    "body": "<ul><li><strong>Tujuan Sistem:</strong> Mengembangkan klien HTTP profesional yang siap terhubung dengan infrastruktur telekomunikasi.</li><li><strong>Fitur Terpadu:</strong> Autentikasi Bearer, validasi schema response, traversal paginasi, dan recovery dari transient fault.</li><li><strong>Keamanan:</strong> Logging tersanitasi otomatis dan injeksi kredensial berbasis lingkungan.</li></ul>",
+    "notes": "Klien ini dirancang dengan pendekatan modular sehingga mudah diuji secara unit test secara offline."
+  },
+  {
+    "title": "Latihan Praktik Mandiri",
+    "kind": "content",
+    "body": "<ul><li><strong>Latihan 1:</strong> Membangun query parameter ter-encode dengan urllib.parse.</li><li><strong>Latihan 2:</strong> Ekstraksi metrik sensor dari payload JSON yang tidak lengkap.</li><li><strong>Latihan 3:</strong> Mengonsumsi endpoint paginasi dengan loop while dan flag has_next.</li><li><strong>Latihan 4:</strong> Membuat fungsi sanitasi header sebelum operasi audit logging.</li></ul>",
+    "notes": "Panduan pengerjaan mandiri dan kunci jawaban lengkap tersedia pada exercise.md."
+  },
+  {
+    "title": "Tugas Proyek & Ringkasan Bab",
+    "kind": "content",
+    "body": "<ul><li><strong>Tugas Proyek:</strong> Lengkapi ProductionApiClient pada <code>tugas.py</code> dengan evaluasi 100 poin.</li><li><strong>Kunci Sukses:</strong> Selalu terapkan batas timeout pada socket jaringan dan perlakukan response eksternal secara defensif.</li><li><strong>Referensi Resmi:</strong> Python urllib Docs, Requests Developer Guide, RFC 7231 (HTTP Semantics), dan RFC 6750 (Bearer Token).</li></ul>",
+    "notes": "Selamat! Anda telah menuntaskan seluruh modul Batch 2 Level 3: Professional Python Engineering."
+  }
+]

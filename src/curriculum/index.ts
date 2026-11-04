@@ -2252,7 +2252,9 @@ print(f"Uji Fixture Selesai | Sukses: {res.wasSuccessful()}")`,
     competencyFocus: 'Senior Engineering: High-performance concurrency',
     estimatedHours: 6,
     difficulty: 'Advanced',
-    available: false,
+    available: true,
+    deckPath: '#chapter/27/slides',
+    tugasPath: '#chapter/27/task',
     prerequisites: ['Chapter 26'],
     learningObjectives: [
       'Membedakan model eksekusi threading, multiprocessing, dan event loop asyncio',
@@ -2260,6 +2262,79 @@ print(f"Uji Fixture Selesai | Sukses: {res.wasSuccessful()}")`,
       'Menulis arsitektur non-blocking async/await menggunakan asyncio.gather() dan async context managers',
     ],
     tags: ['AsyncIO', 'Multiprocessing', 'Threading', 'Concurrency'],
+    codeExample: {
+      title: 'Pemrosesan Paralel dengan ThreadPoolExecutor',
+      code: `from concurrent.futures import ThreadPoolExecutor
+import time
+
+def fetch_rf_metrics(channel_id: int) -> dict[str, int | float]:
+    time.sleep(0.01)
+    return {
+        "channel_id": channel_id,
+        "frequency_mhz": 1800.0 + (channel_id * 5),
+        "power_dbm": -75.0 + (channel_id % 3),
+    }
+
+def main() -> None:
+    channels = [1, 2, 3, 4]
+    print(f"Mengeksekusi pengambilan data {len(channels)} kanal via ThreadPoolExecutor...")
+    with ThreadPoolExecutor(max_workers=3) as executor:
+        results = list(executor.map(fetch_rf_metrics, channels))
+
+    for item in results:
+        print(f" -> Kanal {item['channel_id']}: {item['frequency_mhz']} MHz | Power: {item['power_dbm']} dBm")
+
+if __name__ == "__main__":
+    main()`,
+      outputKey: 'ch27-03',
+      explanation:
+        'ThreadPoolExecutor mendaur ulang thread dalam pool terkelola dan mengeksekusi operasi I/O secara paralel dengan urutan hasil yang deterministik.',
+    },
+    exercise: {
+      title: 'Latihan Terarah: ThreadPool, Lock, Asyncio, dan Timeout',
+      instructions: [
+        'Jalankan pemeriksaan multi-IP secara konkuren dengan ThreadPoolExecutor.',
+        'Cegah race condition pada kuota bersama dengan threading.Lock.',
+        'Kumpulkan data telemetri multi-sensor secara non-blocking via asyncio.gather.',
+        'Terapkan penanganan timeout satelit dengan asyncio.wait_for.',
+      ],
+      tips: 'Gunakan context manager with lock: untuk menjamin pelepasan lock otomatis meski terjadi error.',
+      time: '45 menit',
+    },
+    quiz: {
+      question: 'Mengapa multiprocessing lebih disukai daripada multithreading untuk tugas CPU-bound pada implementasi standar CPython?',
+      options: [
+        'Karena Global Interpreter Lock (GIL) membatasi eksekusi bytecode Python ke satu thread pada satu saat di satu proses',
+        'Karena proses tidak menggunakan memori komputer sama sekali',
+        'Karena thread di Python hanya bisa dijalankan pada sistem operasi Linux',
+        'Karena multiprocessing otomatis mengubah kode Python menjadi instruksi GPU',
+      ],
+      correctIndex: 0,
+      explanation:
+        'GIL di CPython mencegah eksekusi paralel multi-core untuk thread Python. Memisahkan komputasi ke dalam proses independen memungkinkan setiap core CPU menjalankan interpreter CPython masing-masing.',
+      hint: 'Ingat keterbatasan Global Interpreter Lock.',
+    },
+    assignment: {
+      title: 'Tugas Praktik 27: Concurrent Task Processing System',
+      description:
+        'Rancang dan implementasikan framework pemrosesan konkuren berkecepatan tinggi yang membagi beban kerja I/O-bound ke ThreadPool, menangani coroutine asinkron dengan timeout, dan mengamankan metrik dengan threading.Lock.',
+      instructions: [
+        'Implementasikan SafeMetricsTracker menggunakan threading.Lock.',
+        'Bangun ConcurrentTaskProcessor dengan eksekusi ThreadPoolExecutor.',
+        'Tangani kumpulan endpoint asinkron dengan asyncio.gather dan batas timeout.',
+        'Kompilasi ringkasan metrik keberhasilan, kegagalan, dan timeout.',
+      ],
+      rubric: [
+        { criteria: 'Arsitektur Thread-Safe (Lock)', weight: 25, description: 'Implementasi SafeMetricsTracker menggunakan threading.Lock secara presisi tanpa race condition.' },
+        { criteria: 'Integrasi ThreadPoolExecutor', weight: 25, description: 'Eksekusi batch I/O-bound menggunakan thread pool dengan pemanfaatan future dan as_completed.' },
+        { criteria: 'Eksekusi Asyncio & Timeout', weight: 25, description: 'Pola coroutine async/await, asyncio.gather, dan penanganan TimeoutError dengan wait_for.' },
+        { criteria: 'Penanganan Error & Determinisme', weight: 15, description: 'Kegagalan satu worker tidak menghentikan sistem; hasil deterministik dan terurut.' },
+        { criteria: 'Kerapian Kode & Type Hints', weight: 10, description: 'Type annotations komprehensif, docstrings informatif, dan kode bersih PEP 8.' },
+      ],
+      starterFilename: 'tugas_27.py',
+      downloadMdUrl: 'downloads/chapter-27/tugas.md',
+      downloadPyUrl: 'downloads/chapter-27/contoh.py',
+    },
   },
   {
     id: 28,
@@ -2267,20 +2342,111 @@ print(f"Uji Fixture Selesai | Sukses: {res.wasSuccessful()}")`,
     levelId: 3,
     number: '28',
     title: 'Networking & API Integration',
-    subtitle: 'HTTP Clients (httpx/requests), REST, WebSockets & Serialization',
+    subtitle: 'HTTP Clients, REST Architecture, Authentication & Resilient APIs',
     description:
-      'Komunikasi antar sistem: konsumsi REST API eksternal, async HTTP client dengan httpx, koneksi real-time WebSockets, penanganan rate limit, dan retry strategies.',
+      'Komunikasi antar sistem: konsumsi REST API eksternal, Bearer token authentication, safe logging, handling pagination, request timeouts, dan strategi retry dengan exponential backoff.',
     competencyFocus: 'Senior Engineering: Distributed systems & API integration',
     estimatedHours: 5,
     difficulty: 'Advanced',
-    available: false,
+    available: true,
+    deckPath: '#chapter/28/slides',
+    tugasPath: '#chapter/28/task',
     prerequisites: ['Chapter 27'],
     learningObjectives: [
       'Membangun client HTTP robust dengan headers autentikasi, timeouts, dan exponential backoff retry',
-      'Mengintegrasikan streaming WebSockets untuk pembaruan data real-time',
-      'Menata lapisan service layer yang mengisolasi komunikasi jaringan dari logika domain bisnis',
+      'Mengonsumsi dan mengotomasi penjelajahan pagination dataset REST API secara tuntas',
+      'Menata lapisan service layer yang mengisolasi komunikasi jaringan dari logika domain bisnis secara aman',
     ],
-    tags: ['Networking', 'REST API', 'httpx', 'WebSockets'],
+    tags: ['Networking', 'REST API', 'HTTP', 'Authentication', 'Pagination'],
+    codeExample: {
+      title: 'Pengiriman Request HTTP POST dengan Payload JSON',
+      code: `import json
+
+class MockPostClient:
+    def post(self, url: str, json_data: dict, headers: dict) -> dict:
+        if headers.get("Content-Type") != "application/json":
+            return {"status_code": 415, "body": "Unsupported Media Type"}
+
+        payload_bytes = json.dumps(json_data).encode("utf-8")
+        return {
+            "status_code": 201,
+            "body": {
+                "message": "Resource created successfully",
+                "received_id": json_data.get("device_id"),
+                "bytes_transferred": len(payload_bytes),
+            },
+        }
+
+def main() -> None:
+    client = MockPostClient()
+    endpoint = "https://api.telecom.internal/v1/devices"
+    payload = {
+        "device_id": "SW-DIST-01",
+        "vendor": "Cisco",
+        "ports": 48,
+        "is_poe": True,
+    }
+    req_headers = {
+        "Content-Type": "application/json",
+        "User-Agent": "TelecomController/2.0",
+    }
+
+    print(f"Mengirim HTTP POST ke {endpoint}...")
+    resp = client.post(endpoint, json_data=payload, headers=req_headers)
+    print(f"Status Code: {resp['status_code']}")
+    print(f"Respons Body: {resp['body']}")
+
+if __name__ == "__main__":
+    main()`,
+      outputKey: 'ch28-04',
+      explanation:
+        'HTTP POST mentransmisikan payload berformat JSON dalam request body beserta header Content-Type application/json untuk membuat resource baru di server.',
+    },
+    exercise: {
+      title: 'Latihan Terarah: Query Encoding, JSON Defensif, Paginasi dan Sanitasi',
+      instructions: [
+        'Enkripsi query parameter URL menggunakan urllib.parse.urlencode.',
+        'Ekstraksi nilai dari dictionary JSON yang tidak lengkap secara defensif.',
+        'Jelajahi halaman API terpaginasi secara iteratif dengan loop while.',
+        'Terapkan masking kredensial pada header sebelum mencatat ke file log.',
+      ],
+      tips: 'Gunakan method dict.get() untuk menghindari KeyError saat mem-parsing JSON eksternal.',
+      time: '45 menit',
+    },
+    quiz: {
+      question: 'Mengapa strategi retry dengan Exponential Backoff lebih direkomendasikan daripada immediate retry saat menghadapi HTTP 503 Service Unavailable?',
+      options: [
+        'Untuk memberi waktu server pulih dan mencegah kelebihan beban akibat thundering herd problem',
+        'Karena protokol TCP mewajibkan setiap paket data menunggu minimal 10 menit',
+        'Agar server otomatis mengubah respons menjadi status 200 OK',
+        'Karena Python tidak mengizinkan pengiriman request ulang tanpa delay',
+      ],
+      correctIndex: 0,
+      explanation:
+        'Immediate retry beruntun dari ribuan klien dapat melumpuhkan server yang sedang kewalahan. Menambahkan jeda eksponensial memberi kesempatan bagi server upstream untuk kembali stabil.',
+      hint: 'Pikirkan tentang dampak penumpukan request pada server yang sedang sibuk.',
+    },
+    assignment: {
+      title: 'Tugas Praktik 28: Production REST API Client',
+      description:
+        'Bangun modul klien REST API andal untuk sistem telekomunikasi dengan fitur Bearer token authentication, logging tersanitasi, traversal pagination otomatis, dan ketahanan terhadap transient error via exponential backoff.',
+      instructions: [
+        'Implementasikan injeksi token dari environment variable dan sanitasi header mask_token.',
+        'Bangun request_with_retry menggunakan pola exponential backoff.',
+        'Implementasikan get_all_sites untuk mengonsumsi seluruh halaman API paginasi.',
+        'Implementasikan submit_telemetry via HTTP POST dengan verifikasi status 201.',
+      ],
+      rubric: [
+        { criteria: 'Autentikasi & Log Sanitization', weight: 20, description: 'Manajemen Bearer token aman dan fungsi masking header efektif mencegah kebocoran secret.' },
+        { criteria: 'Penanganan Paginasi API', weight: 25, description: 'Traversal seluruh halaman dataset terpaginasi secara otomatis tanpa data tertinggal.' },
+        { criteria: 'Exponential Backoff Retry', weight: 25, description: 'Algoritma retry dengan pertambahan delay adaptif saat menerima respons status 503 atau 429.' },
+        { criteria: 'Kepatuhan Payload & HTTP Method', weight: 15, description: 'Payload POST JSON terformat benar, validasi status code 200, 201, 401 teruji akurat.' },
+        { criteria: 'Kerapian Kode & Type Hints', weight: 15, description: 'Tipe data anotasi lengkap, pemisahan tanggung jawab class bersih, dan mematuhi PEP 8.' },
+      ],
+      starterFilename: 'tugas_28.py',
+      downloadMdUrl: 'downloads/chapter-28/tugas.md',
+      downloadPyUrl: 'downloads/chapter-28/contoh.py',
+    },
   },
   {
     id: 29,

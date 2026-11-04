@@ -120,5 +120,6 @@ Untuk memberikan identitas keilmuan yang khas bagi mahasiswa Teknik Telekomunika
 | Decorator otentikasi web generik | **Streaming Telemetry Ingestion Engine**: Decorator validasi rentang nilai, pipeline generator lazy multi-tahap (`yield`), context manager alokasi kanal frekuensi | **Chapter 24** |
 | Type hints umum kalkulator | **Type-Safe Network Observability Toolkit**: Skema `TypedDict` (`MetricPayload`), structural subtyping `Protocol` (`MetricEncoder`), generic store `Generic[T]`, static checking mypy & Ruff | **Chapter 25** |
 | Pengujian dasar penambahan angka | **Automated Test Suite & Production Telemetry System**: Test fixtures, mocking external gateway client dengan `MagicMock` & `patch`, `assertRaises`, parameterized `subTest`, dan `assertLogs` | **Chapter 26** |
-| Menghitung waktu unduh file internet | Simulasi latensi transmisi paket data dan kalkulasi jitter | **Chapter 27** |
+| Multithreading dasar & sleep sleep loop | **Concurrent Task Processing System**: ThreadPoolExecutor untuk I/O paralel, ProcessPoolExecutor untuk komputasi CPU, asyncio event loop, cancellation & timeout, mitigasi race condition dengan `threading.Lock` | **Chapter 27** |
+| Mengambil data situs cuaca generik | **REST API Data Client**: Integrasi HTTP klien, Bearer token authentication dari environment variables, penanganan pagination otomatis, proteksi timeout, retry eksponensial untuk transient faults (503), dan sanitasi kredensial pada log | **Chapter 28** |
 

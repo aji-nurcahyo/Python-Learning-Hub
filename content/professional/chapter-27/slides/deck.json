@@ -1,0 +1,132 @@
+[
+  {
+    "title": "Concurrent & Asynchronous Programming",
+    "subtitle": "Threading, Multiprocessing, Asyncio & Task Concurrency",
+    "kind": "cover",
+    "body": "<p>Pemrograman Konkuren & Asinkron Modern di Python: Menguasai Threading untuk I/O-bound, ProcessPool untuk CPU-bound, pemahaman mendalam GIL, mitigasi Race Condition dengan Lock, serta efisiensi Event Loop asyncio.</p>",
+    "notes": "Selamat datang di Chapter 27! Modul ini membahas teknik rekayasa perangkat lunak untuk menangani pemrosesan data volume tinggi secara efisien dan responsif."
+  },
+  {
+    "title": "Konkurensi vs Paralelisme",
+    "kind": "content",
+    "body": "<ul><li><strong>Concurrency (Konkurensi):</strong> Kemampuan mengelola dan menjalankan beberapa tugas dalam rentang waktu yang sama (interleaving/time-slicing). Berfokus pada struktur sistem.</li><li><strong>Parallelism (Paralelisme):</strong> Kemampuan mengeksekusi beberapa instruksi secara fisik simultan pada beberapa core CPU yang berbeda. Berfokus pada eksekusi hardware.</li><li><strong>I/O-Bound Workload:</strong> Tugas yang didominasi oleh waktu tunggu jaringan atau disk (optimal dengan Threading atau asyncio).</li><li><strong>CPU-Bound Workload:</strong> Tugas yang didominasi oleh kalkulasi matematika atau algoritma berat (memerlukan Multiprocessing).</li></ul>",
+    "notes": "Perbedaan mendasar antara konkurensi dan paralelisme menentukan strategi arsitektur sistem yang akan kita pilih."
+  },
+  {
+    "title": "Eksekusi Sekuensial & Waktu Tunggu I/O",
+    "kind": "code",
+    "example": "ch27-01",
+    "body": "<p>Menjalankan task satu per satu secara sekuensial menyebabkan CPU menganggur selama menunggu respons I/O.</p>",
+    "notes": "Total waktu eksekusi sekuensial adalah penjumlahan linier dari waktu tunggu setiap operasi I/O."
+  },
+  {
+    "title": "Threading & Siklus Hidup Thread",
+    "kind": "content",
+    "body": "<ul><li><strong>Thread of Execution:</strong> Unit eksekusi terkecil di dalam sebuah proses OS yang berbagi ruang memori yang sama.</li><li><strong>Siklus Hidup Thread:</strong> Inisialisasi (<code>threading.Thread</code>), Start (<code>start()</code>), Eksekusi Runnable, dan Penggabungan Kembali (<code>join()</code>).</li><li><strong>Keuntungan:</strong> Biaya alokasi memori ringan dan berbagi data (in-memory) secara instan antar thread.</li><li><strong>Tantangan:</strong> Akses ke variabel yang sama tanpa pengaman memicu race condition.</li></ul>",
+    "notes": "Metode join() sangat krusial untuk memastikan thread utama tidak keluar sebelum worker threads selesai bekerja."
+  },
+  {
+    "title": "Implementasi Dasar Threading",
+    "kind": "code",
+    "example": "ch27-02",
+    "body": "<p>Membuat worker threads independen menggunakan modul standar <code>threading.Thread</code> dan menunggu dengan <code>join()</code>.</p>",
+    "notes": "Perhatikan bagaimana output dari worker threads dapat saling bersilangan karena dijadwalkan oleh kernel OS."
+  },
+  {
+    "title": "ThreadPoolExecutor: Eksekusi Terkelola",
+    "kind": "code",
+    "example": "ch27-03",
+    "body": "<p>Menggunakan modul <code>concurrent.futures</code> untuk mengelola thread pool secara efisien tanpa membuat thread manual.</p>",
+    "notes": "ThreadPoolExecutor mendaur ulang thread yang ada sehingga mencegah overhead pembuatan thread berulang kali."
+  },
+  {
+    "title": "Memahami Global Interpreter Lock (GIL)",
+    "kind": "content",
+    "body": "<ul><li><strong>Apa itu GIL?</strong> Mekanisme muteks pada implementasi CPython standar yang memastikan hanya satu thread yang mengeksekusi bytecode Python pada satu waktu.</li><li><strong>Mengapa GIL Ada?</strong> Menjaga manajemen memori CPython (reference counting) tetap aman dan cepat untuk single-threaded code.</li><li><strong>Fakta Kritis:</strong> GIL adalah detail implementasi CPython, bukan fitur universal dari bahasa Python itu sendiri (misalnya Jython atau PEP 703 free-threaded CPython).</li><li><strong>Solusi CPU-Bound:</strong> Gunakan proses terpisah (multiprocessing) agar setiap proses memiliki interpreter dan ruang memori sendiri.</li></ul>",
+    "notes": "Untuk I/O-bound, GIL dilepas selama pemanggilan socket atau disk, sehingga threading tetap sangat efektif."
+  },
+  {
+    "title": "Komputasi Paralel dengan ProcessPoolExecutor",
+    "kind": "code",
+    "example": "ch27-04",
+    "body": "<p>Memanfaatkan multi-core CPU dengan <code>ProcessPoolExecutor</code> yang dilindungi guard <code>__name__ == '__main__'</code> di Windows.</p>",
+    "notes": "Guard __name__ == '__main__' wajib ada pada platform Windows untuk mencegah rekursi spawning proses anak."
+  },
+  {
+    "title": "Arsitektur Event Loop & Asyncio",
+    "kind": "content",
+    "body": "<ul><li><strong>Single-Threaded Cooperative Multitasking:</strong> Asyncio berjalan pada satu thread tunggal, berganti tugas secara kooperatif saat menemukan operasi I/O yang ditandai <code>await</code>.</li><li><strong>Event Loop:</strong> Orkestrator pusat yang memantau socket jaringan, timer, dan menjadwalkan coroutine yang siap dieksekusi.</li><li><strong>Efisiensi Sangat Tinggi:</strong> Mampu menangani puluhan ribu koneksi konkuren tanpa overhead memori pembuatan thread OS.</li><li><strong>Prinsip Emas:</strong> Jangan pernah memanggil fungsi blocking (seperti <code>time.sleep</code>) di dalam coroutine; gunakan selalu <code>asyncio.sleep</code>.</li></ul>",
+    "notes": "Model asinkron sangat populer dalam backend modern seperti FastAPI, Sanic, dan aiohttp."
+  },
+  {
+    "title": "Coroutine Dasar: async & await",
+    "kind": "code",
+    "example": "ch27-05",
+    "body": "<p>Mendefinisikan fungsi coroutine menggunakan kata kunci <code>async def</code> dan menjalankannya dengan <code>asyncio.run()</code>.</p>",
+    "notes": "Pemanggilan coroutine tanpa await hanya akan menghasilkan objek coroutine, bukan mengeksekusi fungsinya."
+  },
+  {
+    "title": "Eksekusi Konkuren dengan asyncio.gather",
+    "kind": "code",
+    "example": "ch27-06",
+    "body": "<p>Menjadwalkan dan menjalankan kumpulan coroutine secara simultan dan mengumpulkan hasilnya dalam satu pemanggilan.</p>",
+    "notes": "asyncio.gather mempertahankan urutan hasil sesuai dengan urutan task yang diberikan pada parameter."
+  },
+  {
+    "title": "Timeout & Pembatalan Tugas Terkendali",
+    "kind": "code",
+    "example": "ch27-07",
+    "body": "<p>Menerapkan batas waktu dengan <code>asyncio.wait_for()</code> untuk mencegah task yang menggantung (hanging) memblokir sistem.</p>",
+    "notes": "Ketika batas waktu tercapai, asyncio secara otomatis memicu pembatalan (Task.cancel()) pada coroutine terkait."
+  },
+  {
+    "title": "Bahaya Concurrency: Race Condition",
+    "kind": "content",
+    "body": "<ul><li><strong>Race Condition:</strong> Keadaan cacat di mana hasil keluaran bergantung pada urutan eksekusi tak terprediksi dari beberapa thread yang mengakses <em>shared mutable state</em> secara bersamaan.</li><li><strong>Critical Section:</strong> Bagian kode di mana akses ke sumber daya bersama terjadi dan harus dilindungi.</li><li><strong>Mekanisme Mutual Exclusion (Mutex):</strong> Mengizinkan hanya satu thread yang boleh berada di dalam critical section pada satu waktu.</li><li><strong>threading.Lock:</strong> Primitif sinkronisasi Python standar dengan metode <code>acquire()</code> dan <code>release()</code>.</li></ul>",
+    "notes": "Gunakan selalu context manager 'with lock:' agar pelepasan lock terjamin meski terjadi runtime exception."
+  },
+  {
+    "title": "Sinkronisasi Data dengan threading.Lock",
+    "kind": "code",
+    "example": "ch27-08",
+    "body": "<p>Mengamankan operasi mutasi counter bersama melintasi multiple thread menggunakan context manager <code>with lock:</code>.</p>",
+    "notes": "Tanpa Lock, pembaruan variabel counter (read-modify-write) akan mengalami lost updates."
+  },
+  {
+    "title": "Pencegahan Deadlock & Propagasi Exception",
+    "kind": "content",
+    "body": "<ul><li><strong>Deadlock:</strong> Kondisi kebuntuan fatal di mana dua atau lebih thread saling menunggu pelepasan lock yang dipegang pihak lain.</li><li><strong>Aturan Lock Ordering:</strong> Selalu peroleh beberapa lock dalam urutan hierarki yang konsisten di seluruh kode.</li><li><strong>Timeout pada Lock:</strong> Gunakan parameter <code>timeout</code> pada <code>lock.acquire()</code> daripada menunggu tanpa batas.</li><li><strong>Exception dalam Worker:</strong> Tangkap exception di dalam target worker agar tidak hilang senyap (gunakan <code>future.exception()</code>).</li></ul>",
+    "notes": "Deadlock dapat dihindari dengan merancang arsitektur nir-status (stateless) atau membatasi kepemilikan shared resources."
+  },
+  {
+    "title": "Matriks Keputusan Model Konkurensi",
+    "kind": "code",
+    "example": "ch27-09",
+    "body": "<p>Panduan logis dalam memilih antara Eksekusi Sekuensial, Threading, Multiprocessing, dan Asyncio berdasarkan jenis beban kerja.</p>",
+    "notes": "Memilih model konkurensi yang salah dapat menurunkan performa atau meningkatkan kompleksitas kode secara tidak perlu."
+  },
+  {
+    "title": "Mini Project: Concurrent Task Processing System",
+    "kind": "content",
+    "body": "<ul><li><strong>Tujuan Sistem:</strong> Membangun framework pemrosesan task yang terdistribusi antara ThreadPool dan asyncio coroutines.</li><li><strong>Komponen Terpadu:</strong> SafeMetricsTracker (terproteksi Lock), worker threads, dan pembatalan task timeout.</li><li><strong>Observabilitas:</strong> Mengumpulkan ringkasan metrik keberhasilan, timeout, dan kegagalan tanpa race condition.</li></ul>",
+    "notes": "Proyek ini mencerminkan arsitektur sistem pipeline telemetri pada infrastruktur jaringan skala nyata."
+  },
+  {
+    "title": "Latihan Praktik Mandiri",
+    "kind": "content",
+    "body": "<ul><li><strong>Latihan 1:</strong> Mempercepat ping multi-IP menggunakan ThreadPoolExecutor.</li><li><strong>Latihan 2:</strong> Melindungi pengurangan saldo kuota dari race condition dengan threading.Lock.</li><li><strong>Latihan 3:</strong> Mengumpulkan metrik dari multiple sensor secara asinkron dengan asyncio.gather.</li><li><strong>Latihan 4:</strong> Menangani timeout koneksi satelit secara elegan dengan asyncio.wait_for.</li></ul>",
+    "notes": "Langkah pengerjaan dan kode solusi acuan tersedia lengkap di exercise.md."
+  },
+  {
+    "title": "Tugas Proyek: Concurrent Task Processing System",
+    "kind": "content",
+    "body": "<ul><li><strong>Tugas Utama:</strong> Lengkapi modul <code>tugas.py</code> dengan SafeMetricsTracker dan ConcurrentTaskProcessor.</li><li><strong>Kebutuhan Kritis:</strong> Implementasi context manager Lock yang thread-safe, pool eksekusi I/O, dan penanganan timeout.</li><li><strong>Penilaian (100 Poin):</strong> Thread-safety (25), ThreadPool (25), Asyncio & Timeout (25), Error Handling (15), Kode & Type Hints (10).</li></ul>",
+    "notes": "Pastikan semua pengujian mandiri di tugas.py menghasilkan status lulus 100%."
+  },
+  {
+    "title": "Ringkasan Materi & Referensi Resmi",
+    "kind": "content",
+    "body": "<ul><li>Gunakan <code>ThreadPoolExecutor</code> untuk tugas I/O sederhana dan <code>asyncio</code> untuk koneksi I/O skala masif.</li><li>Gunakan <code>ProcessPoolExecutor</code> untuk melewati limitasi GIL pada kalkulasi berat CPU.</li><li>Lindungi selalu shared mutable state dengan <code>threading.Lock</code>.</li><li><strong>Referensi:</strong> Python Documentation (threading, multiprocessing, concurrent.futures, asyncio).</li></ul>",
+    "notes": "Selamat! Anda kini telah menguasai fondasi arsitektur komputasi konkuren di Python."
+  }
+]

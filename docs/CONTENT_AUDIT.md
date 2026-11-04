@@ -16,12 +16,12 @@ Pemeriksaan membedakan secara tegas antara **metadata/kerangka silabus** (judul,
 
 ### Metrik Status Kelengkapan Konten:
 - **Total Modul Chapter:** 30 Chapter
-- **Modul Berstatus Lengkap & Aktif (*Production Ready*):** 26 Chapter (**86.7%**) — Level 1: Foundations (Ch 01–12), Level 2: Intermediate (Ch 13–22), & Level 3 Batch 1 (Ch 23–26) 100% LENGKAP & TERVERIFIKASI!
-- **Modul Berstatus Kerangka Silabus (*Pending Content Creation*):** 4 Chapter (**13.3%**) — Level 3 Batch 2 & Capstone (Chapter 27–30)
-- **Total Slide Presentasi Reveal.js Aktif:** 504 Slide (26 Decks Terstandarisasi)
-- **Total Skrip Contoh Python Terverifikasi CPython:** 172 Program Mandiri
-- **Total Soal Latihan & Kuis Terintegrasi:** 91 Latihan Terarah, 26 Kuis Konsep Interaktif, 26 Tugas Berubrik
-- **Total Automated Python Unit Tests:** 66 Unit Tests Aktif & Lulus 100%
+- **Modul Berstatus Lengkap & Aktif (*Production Ready*):** 28 Chapter (**93.3%**) — Level 1: Foundations (Ch 01–12), Level 2: Intermediate (Ch 13–22), & Level 3 Batch 1–2 (Ch 23–28) 100% LENGKAP & TERVERIFIKASI!
+- **Modul Berstatus Kerangka Silabus (*Pending Content Creation*):** 2 Chapter (**6.7%**) — Level 3 Batch 3 & Capstone (Chapter 29–30)
+- **Total Slide Presentasi Reveal.js Aktif:** 544 Slide (28 Decks Terstandarisasi)
+- **Total Skrip Contoh Python Terverifikasi CPython:** 191 Program Mandiri
+- **Total Soal Latihan & Kuis Terintegrasi:** 99 Latihan Terarah, 28 Kuis Konsep Interaktif, 28 Tugas Berubrik
+- **Total Automated Python Unit Tests:** 77 Unit Tests Aktif & Lulus 100%
 - **Panduan Standar Penulisan Teknis:** Mengacu pada `docs/TECHNICAL_LANGUAGE_GUIDE.md`
 
 ---
@@ -75,8 +75,8 @@ Setiap chapter dinilai berdasarkan 7 dimensi kelengkapan materi:
 | **Ch 24** | L3 | `24-decorators-generators-context` — Decorators & Context | `[V]` | `[V]` (20) | `[V]` (8) | `[V]` | `[V]` | `[V]` | `[V]` | **Siap Belajar** |
 | **Ch 25** | L3 | `25-type-hints-quality` — Type Hints & Quality | `[V]` | `[V]` (20) | `[V]` (8) | `[V]` | `[V]` | `[V]` | `[V]` | **Siap Belajar** |
 | **Ch 26** | L3 | `26-advanced-testing-logging` — Testing & Logging | `[V]` | `[V]` (20) | `[V]` (8) | `[V]` | `[V]` | `[V]` | `[V]` | **Siap Belajar** |
-| **Ch 27** | L3 | `27-concurrency-async` — Concurrency & Async | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | Pending |
-| **Ch 28** | L3 | `28-networking-apis` — Networking & REST APIs | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | Pending |
+| **Ch 27** | L3 | `27-concurrency-async` — Concurrency & Async | `[V]` | `[V]` (20) | `[V]` (9) | `[V]` | `[V]` | `[V]` | `[V]` | **Siap Belajar** |
+| **Ch 28** | L3 | `28-networking-apis` — Networking & REST APIs | `[V]` | `[V]` (20) | `[V]` (10) | `[V]` | `[V]` | `[V]` | `[V]` | **Siap Belajar** |
 | **Ch 29** | L3 | `29-architecture-deployment` — Architecture & Docker | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | Pending |
 | **Ch 30** | L3 | `30-professional-capstone` — Professional Capstone | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | Pending |
 

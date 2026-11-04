@@ -86,6 +86,8 @@ const activeChecks = [
   'professional/chapter-24',
   'professional/chapter-25',
   'professional/chapter-26',
+  'professional/chapter-27',
+  'professional/chapter-28',
 ];
 
 for (const ch of activeChecks) {

@@ -100,17 +100,18 @@ Setiap fase memiliki gerbang kualitas (*quality gates*) yang harus dipenuhi sebe
 | **Ch 24** | `24-decorators-generators-context` — Yield, Custom Decorator | 6 Jam | [DOCS] Sec 9.9, [CS50P] Wk 9 | **SELESAI (100%)**: `index.md`, 20 slide, 8 contoh kode, 4 latihan, 1 tugas, test suite (4 tests) |
 | **Ch 25** | `25-type-hints-quality` — Type Annotations, mypy, Protocol | 5 Jam | PEP 484, 544, 589, 604, Ruff | **SELESAI (100%)**: `index.md`, 20 slide, 8 contoh kode, 4 latihan, 1 tugas, test suite (4 tests) |
 | **Ch 26** | `26-advanced-testing-logging` — Fixtures, Mock, Production Logs | 6 Jam | [PYTEST], Python Docs `logging` | **SELESAI (100%)**: `index.md`, 20 slide, 8 contoh kode, 4 latihan, 1 tugas, test suite (6 tests) |
-| **Ch 27** | `27-concurrency-async` — Threading, Multiprocessing, asyncio | 7 Jam | Python Docs `asyncio` | `index.md`, 22 slide, 7 contoh kode, 4 latihan, 1 tugas |
-| **Ch 28** | `28-networking-apis` — Sockets, HTTP, FastAPI Microservices | 7 Jam | FastAPI Docs, Python `socket` | `index.md`, 22 slide, 7 contoh kode, 4 latihan, 1 tugas |
+| **Ch 27** | `27-concurrency-async` — Threading, Multiprocessing, asyncio | 7 Jam | Python Docs `asyncio` | **SELESAI (100%)**: `index.md`, 20 slide, 9 contoh kode, 4 latihan, 1 tugas, test suite (5 tests) |
+| **Ch 28** | `28-networking-apis` — HTTP Clients, REST, Retry, Pagination | 7 Jam | Python `urllib`, RFC 7231 | **SELESAI (100%)**: `index.md`, 20 slide, 10 contoh kode, 4 latihan, 1 tugas, test suite (6 tests) |
 | **Ch 29** | `29-architecture-deployment` — Clean Arch, Docker, CI/CD | 7 Jam | 12-Factor App, Docker Docs | `index.md`, 20 slide, 6 contoh kode, 4 latihan, 1 tugas |
 | **Ch 30** | `30-professional-capstone` — Enterprise Cloud-Native Capstone | 8 Jam | Enterprise Production Specs | Panduan arsitektur REST API Dockerized CI/CD |
 
 *Status Kemajuan:*
 - **Level 1: Python Foundations (Chapter 01 s.d. 12):** **100% Selesai & Terverifikasi**
 - **Level 2: Intermediate Python (Chapter 13 s.d. 22):** **100% Selesai & Terverifikasi**
-- **Level 3: Professional Python — Batch 1 (Chapter 23 s.d. 26):** **100% Selesai & Terverifikasi** (CPython 3, Slide Decks, Unittest suites, Typecheck, Build, Routes).
+- **Level 3: Professional Python — Batch 1 (Chapter 23 s.d. 26):** **100% Selesai & Terverifikasi**
+- **Level 3: Professional Python — Batch 2 (Chapter 27 s.d. 28):** **100% Selesai & Terverifikasi** (CPython 3, Slide Decks, Unittest suites, Typecheck, Build, Routes).
 
-*Milestone Fase 4 (Batch 1 — Professional Core):* **TERCAPAI 100%**. Seluruh modul inti rekayasa profesional (Advanced OOP & Design Patterns, Metaprogramming Decorators & Generators, Static Type Checking & Code Quality, serta Advanced Testing & Structured Logging) telah selesai, teruji dengan 19 unit tests spesifik, dan terintegrasi penuh ke dalam sistem! Total modul aktif kurikulum mencapai **26 dari 30 Chapter (86.7%)**.
+*Milestone Fase 4 (Batch 1 & Batch 2 — Professional Core & Distributed Systems):* **TERCAPAI 100%**. Seluruh modul inti rekayasa profesional (Advanced OOP & Design Patterns, Metaprogramming Decorators & Generators, Static Type Checking & Code Quality, Advanced Testing & Structured Logging, Concurrent & Asynchronous Programming, serta Networking & REST API Integration) telah selesai, teruji dengan 30 unit tests spesifik, dan terintegrasi penuh ke dalam sistem! Total modul aktif kurikulum mencapai **28 dari 30 Chapter (93.3%)**.
 
 ---
 

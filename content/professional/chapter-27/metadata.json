@@ -10,7 +10,7 @@
   "competencyFocus": "Senior Engineering: High-performance concurrency",
   "estimatedHours": 6,
   "difficulty": "Advanced",
-  "available": false,
+  "available": true,
   "prerequisites": [
     "Chapter 26"
   ],
@@ -26,10 +26,10 @@
     "Concurrency"
   ],
   "resources": {
-    "hasSlides": false,
-    "slidesDeck": null,
-    "starterCode": null,
-    "assignmentGuide": null,
+    "hasSlides": true,
+    "slidesDeck": "slides/deck.json",
+    "starterCode": "code/contoh.py",
+    "assignmentGuide": "assignments/tugas.md",
     "pptxDownload": null
   }
 }

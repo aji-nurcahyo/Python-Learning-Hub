@@ -5,31 +5,32 @@
   "levelId": 3,
   "levelCategory": "professional",
   "title": "Networking & API Integration",
-  "subtitle": "HTTP Clients (httpx/requests), REST, WebSockets & Serialization",
-  "description": "Komunikasi antar sistem: konsumsi REST API eksternal, async HTTP client dengan httpx, koneksi real-time WebSockets, penanganan rate limit, dan retry strategies.",
+  "subtitle": "HTTP Clients, REST Architecture, Authentication & Resilient APIs",
+  "description": "Komunikasi antar sistem: konsumsi REST API eksternal, Bearer token authentication, safe logging, handling pagination, request timeouts, dan strategi retry dengan exponential backoff.",
   "competencyFocus": "Senior Engineering: Distributed systems & API integration",
   "estimatedHours": 5,
   "difficulty": "Advanced",
-  "available": false,
+  "available": true,
   "prerequisites": [
     "Chapter 27"
   ],
   "learningObjectives": [
     "Membangun client HTTP robust dengan headers autentikasi, timeouts, dan exponential backoff retry",
-    "Mengintegrasikan streaming WebSockets untuk pembaruan data real-time",
-    "Menata lapisan service layer yang mengisolasi komunikasi jaringan dari logika domain bisnis"
+    "Mengonsumsi dan mengotomasi penjelajahan pagination dataset REST API secara tuntas",
+    "Menata lapisan service layer yang mengisolasi komunikasi jaringan dari logika domain bisnis secara aman"
   ],
   "tags": [
     "Networking",
     "REST API",
-    "httpx",
-    "WebSockets"
+    "HTTP",
+    "Authentication",
+    "Pagination"
   ],
   "resources": {
-    "hasSlides": false,
-    "slidesDeck": null,
-    "starterCode": null,
-    "assignmentGuide": null,
+    "hasSlides": true,
+    "slidesDeck": "slides/deck.json",
+    "starterCode": "code/contoh.py",
+    "assignmentGuide": "assignments/tugas.md",
     "pptxDownload": null
   }
 }
