@@ -34,3 +34,4 @@ for idx, s in enumerate(students):
         break
 
 print(f"\nTotal data akhir: {len(students)} mahasiswa.")
+

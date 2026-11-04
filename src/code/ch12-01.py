@@ -12,3 +12,4 @@ mahasiswa: list[dict[str, object]] = [
 print(f"Total mahasiswa terdaftar: {len(mahasiswa)}")
 for mhs in mahasiswa:
     print(f"- NIM: {mhs['nim']} | Nama: {mhs['name']:<18} | Nilai: {mhs['grade']}")
+

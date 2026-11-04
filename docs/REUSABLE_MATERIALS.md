@@ -106,6 +106,10 @@ Untuk memberikan identitas keilmuan yang khas bagi mahasiswa Teknik Telekomunika
 | Menghitung luas persegi / lingkaran | Menghitung Signal-to-Noise Ratio (SNR) dan konversi daya dBm ke Watt | **Chapter 03 & 10** |
 | Daftar nilai ujian mahasiswa | Array pengukuran daya terima sinyal seluler (RSRP dalam dBm) | **Chapter 08** |
 | Kamus kontak telepon nama-nomor | Basis data parameter pemancar BTS (Cell ID, Azimuth, Frekuensi, Status) | **Chapter 09** |
+| Kalkulasi diskon & filter belanja | Higher-order pipeline telemetri jaringan, closure filter rentang frekuensi | **Chapter 13** |
+| List comprehension angka kuadrat | Transformasi skala sinyal dBm ke mW & inverted map IP ke host BTS | **Chapter 14** |
+| Sorting angka acak integer | Pemeringkatan metrik BTS & transmisi multi-kriteria (latensi, RSRP) | **Chapter 15** |
+| Benchmarking umum loop timer | Profiling empiris deduplikasi sinyal dan perbandingan Big-O time.perf_counter() | **Chapter 16** |
 | Membaca file daftar belanjaan | Membaca dan mem-parsing berkas log router jaringan (*syslog*) | **Chapter 17** |
 | Class Hewan (Dog, Cat inheritance) | Class Perangkat Jaringan (NetworkDevice -> Router, Switch, BTS Tower) | **Chapter 19 & 20** |
 | Menghitung waktu unduh file internet | Simulasi latensi transmisi paket data dan kalkulasi jitter | **Chapter 27** |

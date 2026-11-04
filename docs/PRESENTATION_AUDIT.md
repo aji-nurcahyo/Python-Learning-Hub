@@ -2,7 +2,7 @@
 ## Python Learning Hub — Global Presentation Audit Report
 
 **Tanggal Audit:** 4 November 2026  
-**Status Audit:** **100% Selesai & Terverifikasi (All 11 Active Decks, 202 Slides)**  
+**Status Audit:** **100% Selesai & Terverifikasi (All 16 Active Decks, 304 Slides)**  
 **Platform:** Python Learning Hub  
 **Pengembang:** Aji Pamungkas Tri Nurcahyo  
 **Institusi Resmi:** Institut Teknologi Sumatera  
@@ -36,8 +36,13 @@ Sesuai instruksi baku perancangan platform:
 | **09** | Dictionaries, Sets & Hash Structures | 21 | Jejak "pertemuan 10" & path legacy `pertemuan-10/contoh.py` | Footer lama pada komponen | Refleksi slide lama menunjuk Pertemuan 10 | Refleksi diperbarui ke Chapter 10, notes dibersihkan | **LULUS (100%)** |
 | **10** | Functions & Scope | 20 | Jejak "pertemuan 9" pada notes tugas/rubrik/refleksi | Footer lama pada komponen | Slide 9: RSRP (9px), Slide 14: Docstring (191px) | Pembersihan notes legacy, eliminasi math-card duplikat di slide docstring | **LULUS (100%)** |
 | **11** | Modules & Basic Exceptions | 20 | Judul lama "Modules, Packages & Docstrings", jejak "pertemuan 9" | Footer lama pada komponen | Slide 9: RSRP (9px), Slide 14: Docstring (191px) | Judul diselaraskan ke "Modules & Basic Exceptions", cover baku diterapkan, eliminasi overflow | **LULUS (100%)** |
+| **12** | Foundations Capstone Project | 22 | Tidak ada | Sesuai standar resmi | Sesuai standar resmi | Implementasi modular capstone, layout grid 16:9 aman | **LULUS (100%)** |
+| **13** | Advanced Functions | 20 | Tidak ada | Sesuai standar resmi | Nihil | 20 slide modular, closure & higher-order functions | **LULUS (100%)** |
+| **14** | Comprehensions & Iterators | 20 | Tidak ada | Sesuai standar resmi | Nihil | 20 slide modular, comprehension & lazy evaluation | **LULUS (100%)** |
+| **15** | Searching & Sorting Algorithms | 20 | Tidak ada | Sesuai standar resmi | Nihil | 20 slide modular, linear/binary search & sorting | **LULUS (100%)** |
+| **16** | Algorithm Analysis & Problem Solving | 20 | Tidak ada | Sesuai standar resmi | Nihil | 20 slide modular, notasi Big-O & benchmarking | **LULUS (100%)** |
 
-**Total Slide yang Diaudit & Divalidasi:** **202 Slide di 11 Deck Aktif**
+**Total Slide yang Diaudit & Divalidasi:** **304 Slide di 16 Deck Aktif**
 
 ---
 

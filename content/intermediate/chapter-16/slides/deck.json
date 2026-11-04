@@ -1,0 +1,131 @@
+[
+  {
+    "title": "Algorithm Analysis & Problem Solving",
+    "body": "<p class=\"lead\">Notasi Big-O, Space-Time Tradeoffs, Benchmarking Empiris, dan Desain Solusi Komputasi.</p><p class=\"note\">Level 2 · Intermediate Python — Chapter 16</p>",
+    "kind": "cover",
+    "notes": "Selamat datang di Chapter 16: Algorithm Analysis & Problem Solving. Pada bab ini kita mempelajari cara menganalisis dan membandingkan efisiensi algoritma secara formal dan empiris."
+  },
+  {
+    "title": "Capaian Pembelajaran Modul",
+    "body": "<ul><li>Menjelaskan konsep asimtotik waktu dan ruang menggunakan notasi Big-O.</li><li>Menganalisis kelas kompleksitas: O(1), O(log n), O(n), O(n log n), dan O(n^2).</li><li>Memahami konsep Space-Time Tradeoff untuk optimasi algoritma data.</li><li>Merancang eksperimen benchmarking empiris presisi dengan time.perf_counter().</li><li>Memverifikasi kebenaran fungsional algoritma terhadap kasus-kasus batas ekstrem.</li></ul>",
+    "kind": "content",
+    "notes": "Tinjau capaian pembelajaran analitis ini. Kemampuan analisis algoritma adalah tolok ukur utama seorang software engineer profesional."
+  },
+  {
+    "title": "Notasi Big-O: Bahasa Efisiensi",
+    "body": "<ul><li><strong>Definisi:</strong> Notasi matematika untuk mendeskripsikan batas atas laju pertumbuhan waktu atau ruang saat ukuran input (N) mendekati tak hingga.</li><li><strong>Fokus Asimtotik:</strong> Mengabaikan konstanta pengali dan suku-suku berderajat rendah ($3N^2 + 50N + 100 \\to O(N^2)$).</li><li><strong>Bukan Detik Jam Dinding:</strong> Big-O memprediksi skalabilitas jumlah operasi, bukan durasi detik spesifik pada prosesor tertentu.</li></ul>",
+    "kind": "content",
+    "notes": "Tekankan kepada siswa bahwa Big-O menjawab pertanyaan: 'Bagaimana perilaku program kita saat data bertambah 10 kali lipat atau 1000 kali lipat?'"
+  },
+  {
+    "title": "Operasi Waktu Konstan vs Linier",
+    "body": "<p>Membandingkan akses hash $O(1)$ pada Set/Dict dengan pencarian linier $O(n)$ pada List.</p>",
+    "kind": "code",
+    "example": "ch16-01",
+    "notes": "Tunjukkan bahwa pada set 100.000 elemen, waktu pencarian hampir seketika (0.01 ms) karena indeks hash independen dari ukuran N."
+  },
+  {
+    "title": "Skalabilitas Linier vs Logaritmik",
+    "body": "<p>Menyelidiki pertumbuhan operasi pencarian seiring lonjakan ukuran input dari 10 hingga 1.000.000.</p>",
+    "kind": "code",
+    "example": "ch16-02",
+    "notes": "Soroti lonjakan spektakuler: untuk 1 juta data, linear search butuh 1 juta operasi, sedangkan binary search selesai dalam 20 operasi."
+  },
+  {
+    "title": "Hirarki Kelas Kompleksitas Waktu",
+    "body": "<ul><li><strong>$O(1)$ &mdash; Konstan:</strong> Akses indeks list, lookup hash dictionary, operasi matematika aritmatika.</li><li><strong>$O(\\log n)$ &mdash; Logaritmik:</strong> Binary Search, penelusuran pohon biner seimbang.</li><li><strong>$O(n)$ &mdash; Linier:</strong> Linear Search, for loop tunggal, fungsi <code>sum()</code>, <code>min()</code>, <code>max()</code>.</li><li><strong>$O(n \\log n)$ &mdash; Linearitmik:</strong> Algoritma sorting modern (Timsort, Merge Sort, Quicksort).</li><li><strong>$O(n^2)$ &mdash; Kuadratik:</strong> Nested loops bersarang dua tingkat (Bubble, Selection Sort).</li></ul>",
+    "kind": "content",
+    "notes": "Jelaskan analogi kurva pertumbuhan untuk memvisualisasikan mengapa O(n^2) tidak dapat bertahan pada data besar."
+  },
+  {
+    "title": "Ledakan Kuadratik vs Linearitmik",
+    "body": "<p>Perbandingan laju pertumbuhan kuadratik $O(n^2)$ terhadap algoritma efisien $O(n \\log n)$.</p>",
+    "kind": "code",
+    "example": "ch16-03",
+    "notes": "Perhatikan rasio penghematan: pada 5000 elemen, Timsort 400 kali lebih cepat daripada Bubble Sort."
+  },
+  {
+    "title": "Batasan Big-O: Teori vs Realita",
+    "body": "<ul><li>Big-O mengabaikan konstanta perangkat keras: algoritma $O(n)$ yang kompleks bisa lebih lambat daripada $O(n^2)$ untuk $N \\le 5$.</li><li>CPython overhead: pemanggilan fungsi dan penanganan objek dinamis menambah konstanta latensi.</li><li>CPU Cache Locality: array contiguous memory yang ramah cache prosesor sering kali mengalahkan struktur pointer.</li><li>Oleh karena itu, analisis teoritis Big-O wajib dilengkapi dengan pengujian empiris terukur.</li></ul>",
+    "kind": "content",
+    "notes": "Inilah alasan mengapa kita tidak boleh hanya mengandalkan rumus Big-O di atas kertas tanpa melakukan benchmarking nyata."
+  },
+  {
+    "title": "Kompleksitas Ruang Memori",
+    "body": "<p>Membandingkan algoritma hemat memori $O(1)$ dengan pemrosesan duplikasi data $O(n)$.</p>",
+    "kind": "code",
+    "example": "ch16-04",
+    "notes": "Tunjukkan perbedaan footprint memori antara pemrosesan generator streaming dengan penampung list penuh."
+  },
+  {
+    "title": "Space-Time Tradeoffs",
+    "body": "<ul><li><strong>Hukum Pertukaran:</strong> Kinerja CPU sering kali dapat ditingkatkan drastis dengan mengorbankan memori RAM tambahan, dan sebaliknya.</li><li><strong>Contoh Klasik:</strong> Menggunakan Hash Table atau Set untuk mendeteksi duplikat mereduksi waktu dari $O(n^2)$ ke $O(n)$, dengan biaya memori $O(n)$.</li><li><strong>Caching & Memoization:</strong> Menyimpan hasil perhitungan sebelumnya agar fungsi tidak mengulang kalkulasi yang sama.</li></ul>",
+    "kind": "content",
+    "notes": "Diskusikan bagaimana insinyur memilih apakah sistem mereka lebih terbatas oleh memori (seperti embedded router) atau waktu (seperti sistem streaming video)."
+  },
+  {
+    "title": "Benchmarking Empiris Presisi",
+    "body": "<p>Mengukur durasi eksekusi menggunakan <code>time.perf_counter()</code> dengan rata-rata multi-repetisi.</p>",
+    "kind": "code",
+    "example": "ch16-05",
+    "notes": "Jelaskan mengapa time.perf_counter() jauh lebih presisi untuk benchmark daripada time.time() yang dapat terpengaruh sinkronisasi jam NTP."
+  },
+  {
+    "title": "Metodologi Pengukuran yang Adil",
+    "body": "<ul><li><strong>Pisahkan Tahap Setup:</strong> Jangan menghitung waktu pembuatan dataset uji ke dalam durasi algoritma yang diuji.</li><li><strong>Gunakan Repetisi Berganda:</strong> Jalankan minimal 5&ndash;10 kali dan ambil rata-ratanya untuk meredam gangguan background task OS.</li><li><strong>Uji Berbagai Karakteristik Data:</strong> Evaluasi pada data acak, data terurut, data terbalik, dan data homogen (duplikat).</li><li><strong>Gunakan Warmup Run:</strong> Satu pemanggilan awal untuk memuat kode ke CPU cache sebelum pengukuran dimulai.</li></ul>",
+    "kind": "content",
+    "notes": "Ini adalah standar pengujian ilmiah dalam eksperimen rekayasa perangkat lunak."
+  },
+  {
+    "title": "Kebenaran vs Kecepatan Ekstrem",
+    "body": "<p>Algoritma tercepat di dunia tidak ada gunanya jika menghasilkan jawaban salah pada kasus batas.</p>",
+    "kind": "code",
+    "example": "ch16-06",
+    "notes": "Tunjukkan bagaimana pencarian maksimum yang tidak siap menghadapi list kosong akan melempar ValueError atau IndexError jika tidak ditangani."
+  },
+  {
+    "title": "Pengujian Kasus Batas (Edge Cases)",
+    "body": "<ul><li><strong>Koleksi Kosong:</strong> <code>[]</code>, string kosong <code>\"\"</code>, atau himpunan kosong <code>set()</code>.</li><li><strong>Elemen Tunggal:</strong> <code>[42]</code> &mdash; Menguji apakah loop inisialisasi menangani indeks 0 dengan benar.</li><li><strong>Nilai Ekstrem:</strong> Bilangan negatif, desimal presisi, nilai nol, atau angka sangat besar.</li><li><strong>Semua Duplikat:</strong> <code>[5, 5, 5, 5]</code> &mdash; Menguji algoritma sorting dan deteksi pivot.</li><li><strong>Kasus Terbalik:</strong> Menguji ketahanan worst-case algoritma pengurutan.</li></ul>",
+    "kind": "content",
+    "notes": "Pengembang senior selalu menguji kasus-kasus batas ini sebelum kode diserahkan ke tahap produksi."
+  },
+  {
+    "title": "Dekomposisi Masalah & Tradeoff",
+    "body": "<p>Mendekomposisi masalah deteksi duplikat menjadi dua pendekatan algoritma yang berbeda.</p>",
+    "kind": "code",
+    "example": "ch16-07",
+    "notes": "Tunjukkan perbandingan langsung antara brute-force O(n^2) dan pendekatan hash set O(n)."
+  },
+  {
+    "title": "Langkah Rekayasa Pemecahan Masalah",
+    "body": "<ul><li><strong>1. Pahami Masalah:</strong> Identifikasi format input, batasan ukuran N, tipe data, dan output yang diminta.</li><li><strong>2. Selesaikan Kasus Contoh Manual:</strong> Hitung hasil untuk data sampel kecil di atas kertas.</li><li><strong>3. Rancang Solusi Sederhana (Brute Force):</strong> Pastikan logika dasar benar sebelum berpikir tentang optimasi.</li><li><strong>4. Identifikasi Titik Hambat (Bottleneck):</strong> Cari nested loops yang dapat dieliminasi dengan struktur hash atau sorting.</li><li><strong>5. Refaktor & Verifikasi Kasus Batas:</strong> Tulis unit test untuk menjamin kebenaran solusi.</li></ul>",
+    "kind": "content",
+    "notes": "Kerangka kerja 5 langkah ini adalah metodologi standar pemecahan masalah algoritma (problem solving workflow)."
+  },
+  {
+    "title": "Mini Proyek: Performance Comparator",
+    "body": "<ul><li><strong>Tujuan:</strong> Membangun platform laboratorium mini untuk menganalisis dan membandingkan performa algoritma.</li><li><strong>Fitur Unggulan:</strong> Analisis teoritis Big-O, benchmarking empiris multi-repetisi, dan komparasi Space-Time Tradeoff.</li><li><strong>Edukasi:</strong> Mengubah konsep abstrak asimtotik menjadi data waktu milidetik riil yang terukur di konsol.</li></ul><div class=\"callout\">Penguasaan analisis algoritma membebaskan perekayasa dari ketergantungan pada tebak-tebakan performa.</div>",
+    "kind": "content",
+    "notes": "Bahas bagaimana modul benchmarker.py menyajikan bukti empiris dari teori komputasi yang telah dipelajari."
+  },
+  {
+    "title": "Spesifikasi Tugas: Performance Lab",
+    "body": "<ul><li>Lengkapi modul <code>tugas_16.py</code> dengan fungsi estimasi teoritis Big-O dan runner benchmarking empiris.</li><li>Bandingkan kecepatan Linear Search vs Binary Search pada berbagai skala input.</li><li>Demonstrasikan Space-Time Tradeoff pada deteksi elemen duplikat (Brute Force vs Hash Set).</li><li>Sertakan pengujian ketahanan kasus batas (list kosong, angka negatif, duplikat).</li><li>Pastikan seluruh 100 poin rubrik evaluasi terpenuhi secara sempurna.</li></ul>",
+    "kind": "exercise",
+    "notes": "Jelaskan instruksi pengerjaan tugas akhir Batch 1 dan ekspektasi kedalaman analisis laporan konsol."
+  },
+  {
+    "title": "Refleksi Akhir Phase 2, Batch 1",
+    "body": "<ul><li>Selamat! Anda telah menuntaskan empat bab fundamental Level 2 (Chapter 13&ndash;16).</li><li>Anda kini menguasai fungsi tingkat lanjut, koleksi ekspresif, algoritma pencarian/pengurutan, serta analisis Big-O.</li><li>Kemampuan komputasi Anda kini berada pada level menengah yang siap menghadapi tantangan rekayasa perangkat lunak nyata.</li></ul><p class=\"note\">Bab selanjutnya (Chapter 17&ndash;18): Penyimpanan Data Permanen (File I/O & JSON) dan Penanganan Eksepsi Kokoh!</p>",
+    "kind": "content",
+    "notes": "Apresiasi pencapaian belajar peserta. Refleksikan lompatan signifikan dari pemrograman prosedural ke analisis algoritma terukur."
+  },
+  {
+    "title": "Cek Pemahaman: Hash vs Binary Search",
+    "body": "<p>Evaluasi pemahaman kritis tentang trade-off struktur data.</p>",
+    "kind": "question",
+    "question": "Jika Hash Table (Set/Dict) memiliki waktu pencarian O(1), mengapa kita masih membutuhkan Binary Search O(log n)?",
+    "answer": "Karena Hash Table memerlukan memori tambahan yang besar untuk tabel bucket dan TIDAK menjaga urutan data. Binary Search bekerja langsung pada array terurut tanpa alokasi memori tambahan (O(1) space) dan memungkinkan pencarian rentang (range queries, seperti mencari semua nilai antara 10 dan 50).",
+    "notes": "Beri waktu peserta untuk menganalisis keunggulan spesifik binary search pada struktur data terurut dan pencarian rentang."
+  }
+]

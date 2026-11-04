@@ -1,0 +1,131 @@
+[
+  {
+    "title": "Comprehensions & Iterators",
+    "body": "<p class=\"lead\">List, Dict, Set Comprehensions, Generator Expressions, dan Protokol Iterator.</p><p class=\"note\">Level 2 · Intermediate Python — Chapter 14</p>",
+    "kind": "cover",
+    "notes": "Selamat datang di Chapter 14: Comprehensions & Iterators. Pada modul ini kita mempelajari cara menulis transformasi data yang ekspresif, ringkas, dan hemat memori."
+  },
+  {
+    "title": "Capaian Pembelajaran Modul",
+    "body": "<ul><li>Menulis transformasi koleksi data menggunakan list comprehension idiomatis.</li><li>Menerapkan pemfilteran kondisional (klausa if) dan percabangan (if-else).</li><li>Membangun dictionary comprehension dan set comprehension untuk deduplikasi.</li><li>Membedakan konsep iterable, iterator, dan mekanisme lazy evaluation.</li><li>Mengoptimalkan efisiensi memori RAM menggunakan generator expression.</li></ul>",
+    "kind": "content",
+    "notes": "Tinjau sasaran pembelajaran. Comprehension adalah ciri khas kode Python yang elegan ('Pythonic') untuk pengolahan dataset terstruktur."
+  },
+  {
+    "title": "List Comprehensions Dasar & Filter",
+    "body": "<p>Menggantikan perulangan akumulator imperatif dengan ekspresi deklaratif satu baris yang efisien.</p>",
+    "kind": "code",
+    "example": "ch14-01",
+    "notes": "Tunjukkan perbedaan posisi klausa if di belakang (sebagai filter) versus ekspresi if-else di depan (sebagai pemilih nilai)."
+  },
+  {
+    "title": "Anatomi Sintaksis List Comprehension",
+    "body": "<ul><li><strong>Pola Pemfilteran:</strong> <code>[ekspresi for item in iterable if kondisi]</code> &mdash; Elemen hanya dimasukkan jika kondisi bernilai True.</li><li><strong>Pola Percabangan Nilai:</strong> <code>[opsi_a if kondisi else opsi_b for item in iterable]</code> &mdash; Memilih nilai transformasi berdasarkan pengujian.</li><li><strong>Kecepatan Eksekusi:</strong> Dieksekusi pada level bytecode CPython yang dioptimalkan, sering kali lebih cepat daripada loop append manual.</li></ul>",
+    "kind": "content",
+    "notes": "Jelaskan bahwa list comprehension menciptakan objek list baru secara utuh di memori saat baris tersebut dievaluasi."
+  },
+  {
+    "title": "Nested Comprehension: Matriks 2D",
+    "body": "<p>Pembangkitan grid koordinat dan perataan struktur bersarang (matrix flattening).</p>",
+    "kind": "code",
+    "example": "ch14-02",
+    "notes": "Perhatikan urutan loop pada nested comprehension: urutan for baris in matriks for item in baris persis sama dengan urutan penulisan for loop bersarang biasa."
+  },
+  {
+    "title": "Batas Kewajaran: Keterbacaan Kode",
+    "body": "<ul><li><strong>Kaidah The Zen of Python:</strong> <em>\"Readability counts\"</em> dan <em>\"Flat is better than nested\"</em>.</li><li>Gunakan nested comprehension maksimal untuk dua tingkat perulangan sederhana (seperti meratakan matriks).</li><li>Jika logika transformasi memerlukan lebih dari dua tingkat perulangan atau filter kompleks, kembalilah menggunakan for loop standar.</li><li>Kode yang mudah dibaca jauh lebih bernilai daripada kode satu baris yang membingungkan rekan tim.</li></ul>",
+    "kind": "content",
+    "notes": "Ingatkan bahwa kepintaran menulis kode satu baris tidak boleh mengorbankan kemudahan pemeliharaan perangkat lunak."
+  },
+  {
+    "title": "Dictionary Comprehensions",
+    "body": "<p>Pembuatan tabel indeks asosiatif, transformasi nilai kamus, dan pembalikan kunci-nilai (inversion).</p>",
+    "kind": "code",
+    "example": "ch14-03",
+    "notes": "Tunjukkan bagaimana dict comprehension dengan sintaks kurung kurawal dan titik dua {k: v} membuat lookup hash seketika."
+  },
+  {
+    "title": "Pola Pemanfaatan Dict Comprehension",
+    "body": "<ul><li><strong>Indeks Cepat:</strong> Mengonversi list of dicts menjadi kamus berpencarian $O(1)$ berdasarkan kunci primer: <code>{r['id']: r for r in data}</code>.</li><li><strong>Inversi Kamus:</strong> Membalik relasi pemetaan: <code>{nilai: kunci for kunci, nilai in kamus.items()}</code> (pastikan nilai unik).</li><li><strong>Penyaringan Atribut:</strong> Membuang pasangan kunci yang tidak relevan atau bernilai kosong secara otomatis.</li></ul>",
+    "kind": "content",
+    "notes": "Diskusikan bahaya inversi kamus jika terdapat nilai yang duplikat, di mana entri terakhir akan menimpa entri sebelumnya."
+  },
+  {
+    "title": "Set Comprehensions & Deduplikasi",
+    "body": "<p>Ekstraksi nilai unik dari aliran log dan normalisasi teks secara otomatis tanpa duplikasi.</p>",
+    "kind": "code",
+    "example": "ch14-04",
+    "notes": "Set comprehension secara alami menghilangkan duplikasi data dan sangat bermanfaat untuk mendata entitas unik seperti MAC address atau IP."
+  },
+  {
+    "title": "Protokol Iterator: iter() dan next()",
+    "body": "<p>Memahami mekanisme di balik for loop melalui antarmuka <code>iter()</code> dan pengambilan lazy <code>next()</code>.</p>",
+    "kind": "code",
+    "example": "ch14-05",
+    "notes": "Jelaskan bahwa for loop di Python sebenarnya memanggil iter() di awal lalu memanggil next() berulang kali hingga StopIteration ditangkap."
+  },
+  {
+    "title": "Iterable vs Iterator",
+    "body": "<ul><li><strong>Iterable:</strong> Objek yang memiliki metode <code>__iter__()</code> dan dapat diiterasi (misal: <code>list</code>, <code>tuple</code>, <code>dict</code>, <code>str</code>).</li><li><strong>Iterator:</strong> Objek aliran data yang memiliki status posisi internal dan mengimplementasikan metode <code>__next__()</code>.</li><li><strong>Satu Arah:</strong> Iterator hanya dapat dikonsumsi sekali dari depan ke belakang. Setelah habis, iterator tidak dapat di-reset kembali.</li></ul>",
+    "kind": "content",
+    "notes": "Gunakan analogi pita kaset atau dispenser permen yang hanya bisa maju dan keluar satu per satu."
+  },
+  {
+    "title": "Perkakas Iterasi: enumerate() & zip()",
+    "body": "<p>Menomori urutan elemen dengan <code>enumerate()</code> dan memasangkan multi-koleksi paralel dengan <code>zip()</code>.</p>",
+    "kind": "code",
+    "example": "ch14-06",
+    "notes": "Tunjukkan bahwa zip() berhenti saat koleksi terpendek habis. Untuk menangani panjang berbeda, itertools.zip_longest dapat digunakan."
+  },
+  {
+    "title": "Comprehension vs map() & filter()",
+    "body": "<ul><li>Fungsi bawaan <code>map()</code> dan <code>filter()</code> adalah peninggalan paradigma fungsional klasik.</li><li>Dalam Python modern, list comprehension dan generator expression hampir selalu lebih disukai karena sintaksnya lebih mudah dibaca.</li><li>Comprehension tidak memerlukan ekspresi <code>lambda</code> tambahan untuk melakukan pemfilteran dan transformasi sekaligus.</li></ul>",
+    "kind": "content",
+    "notes": "Bahas panduan resmi Guido van Rossum mengenai keunggulan keterbacaan list comprehension dibandingkan map/filter dengan lambda."
+  },
+  {
+    "title": "Generator Expressions (Lazy Evaluation)",
+    "body": "<p>Menggunakan tanda kurung biasa <code>(...)</code> untuk memproses sequence masif tanpa membebani memori RAM.</p>",
+    "kind": "code",
+    "example": "ch14-07",
+    "notes": "Soroti perbedaan drastis pemakaian memori antara 100.000 list utuh (~800 KB) dibandingkan generator expression (~100 byte)."
+  },
+  {
+    "title": "Perbandingan Memori: List vs Generator",
+    "body": "<ul><li><strong>List Comprehension:</strong> Evaluasi *eager* &mdash; Seluruh elemen langsung dihitung dan disimpan sekaligus di RAM. Cocok jika data perlu diindeks berkali-kali.</li><li><strong>Generator Expression:</strong> Evaluasi *lazy* &mdash; Nilai hanya dihitung satu per satu saat diminta oleh konsumen (on-demand).</li><li><strong>Skalabilitas Data:</strong> Generator dapat memproses aliran data berukuran miliaran baris atau stream tanpa mengalami <em>Out Of Memory (OOM)</em>.</li></ul>",
+    "kind": "content",
+    "notes": "Ini adalah konsep fundamental yang membedakan pemrogram pemula dari perekayasa perangkat lunak data berkinerja tinggi."
+  },
+  {
+    "title": "Praktik Terbaik Menulis Comprehension",
+    "body": "<ul><li>Jaga panjang baris agar tidak melebihi batas keterbacaan (pecah menjadi beberapa baris jika perlu).</li><li>Hindari menimbulkan efek samping (*side effects*) seperti memanggil fungsi <code>print()</code> di dalam comprehension.</li><li>Gunakan generator jika hasil hanya akan diiterasi satu kali (misal: diumpankan ke fungsi <code>sum()</code>, <code>max()</code>, atau <code>min()</code>).</li><li>Gunakan list jika Anda memerlukan pengindeksan acak, mutasi elemen, atau pemotongan (*slicing*).</li></ul>",
+    "kind": "content",
+    "notes": "Tekankan bahwa comprehension dirancang untuk menghasilkan data baru, bukan untuk memicu operasi I/O terminal."
+  },
+  {
+    "title": "Mini Proyek: Dataset Transformation Toolkit",
+    "body": "<ul><li><strong>Tujuan:</strong> Membangun modul utilitas pemrosesan dataset rekaman IoT/sensor secara ekspresif.</li><li><strong>Komponen:</strong> Mengintegrasikan list comprehension (filter daya), dict comprehension (indeks host), set comprehension (deduplikasi), dan generator stream.</li><li><strong>Pencapaian:</strong> Kode transformasi data kompleks dapat ditulis dalam fungsi-fungsi murni yang sangat ringkas dan efisien.</li></ul><div class=\"callout\">Koleksi ekspresif mentransformasi kode prosedural kaku menjadi manipulasi data yang deklaratif dan elegan.</div>",
+    "kind": "content",
+    "notes": "Bahas arsitektur mini proyek transform_toolkit.py dan bagaimana fungsi-fungsinya dapat digunakan kembali di proyek nyata."
+  },
+  {
+    "title": "Spesifikasi Tugas: Dataset Transformation Toolkit",
+    "body": "<ul><li>Lengkapi modul <code>tugas_14.py</code> sesuai panduan spesifikasi dan rubrik 100 poin.</li><li>Gunakan list comprehension untuk pemfilteran sinyal daya bertingkat.</li><li>Terapkan dict comprehension untuk memetakan IP ke nama host dan set comprehension untuk isolasi zona.</li><li>Gunakan nested comprehension untuk flattening matriks dan generator untuk streaming lazy.</li><li>Pastikan seluruh fungsi lolos uji otomatis sebelum pengumpulan tugas.</li></ul>",
+    "kind": "exercise",
+    "notes": "Jelaskan ekspektasi penilaian tugas Chapter 14 dan pentingnya menyelesaikan tugas tanpa for loop imperatif berlebih."
+  },
+  {
+    "title": "Studi Kasus: Alur Transformasi Telemetri",
+    "body": "<ul><li>1. <strong>Input:</strong> Aliran ribuan log sensor mentah dengan format string dan anomali.</li><li>2. <strong>Set Comprehension:</strong> Mengisolasi jenis sensor unik untuk verifikasi perangkat terpasang.</li><li>3. <strong>Dict Comprehension:</strong> Membangun lookup table cepat berdasarkan ID sensor.</li><li>4. <strong>Generator Expression:</strong> Menyaring dan mengalirkan data valid langsung ke modul analitik.</li></ul>",
+    "kind": "content",
+    "notes": "Gambarkan arsitektur pipeline data hulu ke hilir untuk memperjelas penerapan nyata di industri telekomunikasi."
+  },
+  {
+    "title": "Cek Pemahaman: Tipe Objek Generator",
+    "body": "<p>Uji pemahaman Anda tentang perbedaan list dan generator expression.</p>",
+    "kind": "question",
+    "question": "Apakah hasil dari type((x ** 2 for x in range(5)))?",
+    "answer": "Tipe objek yang dihasilkan adalah 'generator', bukan 'tuple'. Meskipun menggunakan tanda kurung biasa (), Python menginterpretasikannya sebagai generator expression. Untuk membuat tuple comprehension, harus memanggil eksplisit: tuple(x ** 2 for x in range(5)).",
+    "notes": "Beri waktu peserta untuk menganalisis jebakan sintaksis umum tanda kurung generator vs tuple."
+  }
+]

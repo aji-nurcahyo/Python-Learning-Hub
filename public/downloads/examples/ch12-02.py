@@ -38,3 +38,4 @@ print("\nHasil Uji Validasi Nilai:")
 for g in test_cases_grade:
     ok, msg, res = validate_grade(g)
     print(f"  Nilai '{g}': {'VALID' if ok else 'INVALID'} -> {msg}")
+

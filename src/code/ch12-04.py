@@ -25,3 +25,4 @@ for query in queries:
     print(f"Pencarian '{query}': ditemukan {len(matched)} mahasiswa")
     for m in matched:
         print(f"  -> NIM: {m['nim']} | Nama: {m['name']} | Nilai: {m['grade']}")
+

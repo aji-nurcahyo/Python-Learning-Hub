@@ -87,3 +87,4 @@ def validate_grade(grade_input: Any) -> tuple[bool, str, float | None]:
         return False, f"Nilai {val:.2f} di luar jangkauan valid. Nilai harus berada dalam rentang 0.0 s.d. 100.0.", None
 
     return True, "Nilai valid.", round(val, 2)
+

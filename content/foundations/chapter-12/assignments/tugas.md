@@ -94,3 +94,4 @@ Total: 3 mahasiswa terdaftar.
 | **3. Validasi Masukan & Ketahanan Sistem** | 20% | Pencegahan duplikasi NIM, validasi tipe nilai dan rentang numerik 0–100, penanganan masukan kosong atau salah format, dan ketahanan terhadap potensi *runtime error*. |
 | **4. Analisis Statistik & Fitur Analitik** | 20% | Perhitungan nilai rata-rata, deteksi nilai ekstrem (tertinggi/terendah), identifikasi mahasiswa peraih skor tertinggi, serta pemetaan predikat huruf (A, B, C, D, E) tepat. |
 | **5. Kerapian Kode, Type Hints & Format CLI** | 20% | Mematuhi konvensi PEP 8, memiliki type hints lengkap pada parameter dan return value, docstrings jelas, dan tampilan antarmuka CLI rapi terstruktur. |
+

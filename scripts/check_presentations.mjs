@@ -21,7 +21,11 @@ const CANONICAL_TITLES = {
   9: 'Dictionaries, Sets & Hash Structures',
   10: 'Functions & Scope',
   11: 'Modules & Basic Exceptions',
-  12: 'Foundations Capstone Project'
+  12: 'Foundations Capstone Project',
+  13: 'Advanced Functions',
+  14: 'Comprehensions & Iterators',
+  15: 'Searching & Sorting Algorithms',
+  16: 'Algorithm Analysis & Problem Solving'
 };
 
 const FORBIDDEN_BRANDING_TERMS = [
@@ -48,9 +52,10 @@ console.log('▶ [1/2] Auditing Slide Decks & Branding Metadata...');
 const outputsPath = path.join(ROOT, 'src/code/outputs.json');
 const outputs = fs.existsSync(outputsPath) ? JSON.parse(fs.readFileSync(outputsPath, 'utf8')) : {};
 
-for (let ch = 1; ch <= 12; ch++) {
+for (let ch = 1; ch <= 16; ch++) {
   const chStr = String(ch).padStart(2, '0');
-  const deckPath = path.join(ROOT, `content/foundations/chapter-${chStr}/slides/deck.json`);
+  const levelFolder = ch <= 12 ? 'foundations' : 'intermediate';
+  const deckPath = path.join(ROOT, `content/${levelFolder}/chapter-${chStr}/slides/deck.json`);
 
   if (!fs.existsSync(deckPath)) {
     console.error(`❌ Chapter ${chStr}: deck.json missing at ${deckPath}`);
@@ -228,7 +233,7 @@ for (const res of testResolutions) {
     mobile: false
   });
 
-  for (let ch = 1; ch <= 12; ch++) {
+  for (let ch = 1; ch <= 16; ch++) {
     await send('Page.navigate', { url: `http://127.0.0.1:8932/index.html#chapter/${ch}/slides` });
     await new Promise(r => setTimeout(r, 400));
 

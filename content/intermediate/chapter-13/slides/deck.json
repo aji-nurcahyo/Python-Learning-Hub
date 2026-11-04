@@ -1,0 +1,131 @@
+[
+  {
+    "title": "Advanced Functions",
+    "body": "<p class=\"lead\">*args, **kwargs, Lambda, First-Class Citizens, Closures, dan Rekursi.</p><p class=\"note\">Level 2 · Intermediate Python — Chapter 13</p>",
+    "kind": "cover",
+    "notes": "Selamat datang di Chapter 13: Advanced Functions. Bab awal Level 2 ini memperdalam fleksibilitas pemanggilan fungsi, paradigma pemrograman fungsional, dan closure memori."
+  },
+  {
+    "title": "Capaian Pembelajaran Modul",
+    "body": "<ul><li>Menguasai pemanggilan fungsi dinamis menggunakan <code>*args</code> dan <code>**kwargs</code>.</li><li>Menerapkan pembatas sintaksis positional-only (<code>/</code>) dan keyword-only (<code>*</code>).</li><li>Menghindari jebakan objek mutable pada nilai parameter default.</li><li>Memahami fungsi sebagai first-class object dan higher-order functions.</li><li>Membangun fungsi closure untuk enkapsulasi state fungsional dan rekursi.</li></ul>",
+    "kind": "content",
+    "notes": "Tinjau capaian pembelajaran tingkat menengah ini. Fokus kita adalah menulis fungsi yang fleksibel, aman, dan dapat digunakan ulang."
+  },
+  {
+    "title": "Parameter Posisi, Default, dan Kata Kunci",
+    "body": "<p>Pembatasan cara pemanggilan fungsi dengan penanda <code>/</code> (positional-only) dan <code>*</code> (keyword-only).</p>",
+    "kind": "code",
+    "example": "ch13-01",
+    "notes": "Gunakan penanda slash untuk memaksa argumen posisi dan bintang untuk memaksa argumen kata kunci, sesuai PEP 570."
+  },
+  {
+    "title": "Pembatas Sintaksis: Positional vs Keyword",
+    "body": "<ul><li><strong>Positional-Only (<code>/</code>):</strong> Semua parameter di sebelah kiri garis miring HANYA dapat dipanggil berdasarkan urutan posisi.</li><li><strong>Keyword-Only (<code>*</code>):</strong> Semua parameter di sebelah kanan tanda bintang WAJIB dipanggil dengan nama argumennya.</li><li><strong>Keuntungan:</strong> Mencegah kesalahan argumen tertukar dan menjaga stabilitas antarmuka fungsi publik (*API contracts*).</li></ul>",
+    "kind": "content",
+    "notes": "Diskusikan mengapa positional-only penting untuk fungsi bawaan CPython seperti len() atau math.sin() di mana nama parameter tidak esensial."
+  },
+  {
+    "title": "Arbitrary Arguments: *args dan **kwargs",
+    "body": "<p>Menangkap argumen posisi tak hingga dalam bentuk tuple dan argumen kata kunci dalam bentuk dictionary.</p>",
+    "kind": "code",
+    "example": "ch13-02",
+    "notes": "Tekankan bahwa nama variabel args dan kwargs adalah konvensi PEP 8. Yang menentukan sifat arbitrary adalah simbol bintangnya."
+  },
+  {
+    "title": "Mekanisme Argument Unpacking",
+    "body": "<ul><li><strong>Unpacking Sequence (<code>*</code>):</strong> Memecah list atau tuple menjadi argumen posisi mandiri: <code>func(*daftar_data)</code>.</li><li><strong>Unpacking Mapping (<code>**</code>):</strong> Memecah pasangan kunci-nilai kamus dictionary menjadi argumen kata kunci: <code>func(**opsi)</code>.</li><li><strong>Fleksibilitas Tinggi:</strong> Memudahkan penyambungan data dinamis ke fungsi tanpa perlu mengekstrak elemen satu per satu.</li></ul>",
+    "kind": "content",
+    "notes": "Jelaskan analogi unpacking seperti membuka kotak kardus dan mengeluarkan isinya langsung ke atas meja parameter."
+  },
+  {
+    "title": "Jebakan Mutable Default Argument",
+    "body": "<p>Nilai default dievaluasi sekali saat fungsi didefinisikan, bukan setiap kali fungsi dipanggil.</p>",
+    "kind": "code",
+    "example": "ch13-03",
+    "notes": "Tunjukkan mengapa daftar riwayat pada panggilan kedua masih memuat pesan dari panggilan pertama jika default adalah list kosong."
+  },
+  {
+    "title": "Pola Idiomatis Sentinel None",
+    "body": "<ul><li><strong>Masalah:</strong> Menggunakan mutable default seperti <code>def func(data=[])</code> menyebabkan semua pemanggilan berbagi list memori yang sama.</li><li><strong>Solusi Idiomatis:</strong> Pasang nilai default sebagai <code>None</code>: <code>def func(data=None)</code>.</li><li><strong>Inisialisasi Internal:</strong> Di dalam badan fungsi, buat instance list baru jika parameter bernilai <code>None</code>: <code>if data is None: data = []</code>.</li></ul>",
+    "kind": "content",
+    "notes": "Ini adalah salah satu bug paling sering ditemui dalam wawancara kerja Python dan pengembangan perangkat lunak tingkat menengah."
+  },
+  {
+    "title": "Fungsi Sebagai First-Class Citizen",
+    "body": "<p>Fungsi dapat disimpan dalam variabel, dimasukkan ke koleksi, dan diteruskan sebagai argumen fungsi lain.</p>",
+    "kind": "code",
+    "example": "ch13-04",
+    "notes": "Tekankan bahwa fungsi di Python adalah objek biasa yang memiliki tipe 'function' dan dapat diperlakukan layaknya data skalar."
+  },
+  {
+    "title": "Higher-Order Functions & Pipeline",
+    "body": "<ul><li><strong>Higher-Order Function:</strong> Fungsi yang menerima fungsi lain sebagai argumen atau mengembalikan fungsi sebagai hasilnya.</li><li><strong>Pemisahan Algoritma:</strong> Struktur iterasi dipisahkan dari formula transformasi komputasi yang diterapkan.</li><li><strong>Pipeline Chaining:</strong> Rangkaian fungsi transformasi data dapat dijalankan berurutan secara modular dan teruji.</li></ul>",
+    "kind": "content",
+    "notes": "Bahas bagaimana konsep higher-order functions menjadi fondasi library pengolahan data modern seperti PySpark, Pandas, dan PyTorch."
+  },
+  {
+    "title": "Ekspresi Lambda & Custom Sorting",
+    "body": "<p>Fungsi anonim satu baris untuk transformasi singkat bersama <code>sorted()</code>, <code>map()</code>, dan <code>filter()</code>.</p>",
+    "kind": "code",
+    "example": "ch13-05",
+    "notes": "Ingatkan bahwa lambda dibatasi oleh satu ekspresi tanpa pernyataan seperti if bersarang kompleks atau loop for."
+  },
+  {
+    "title": "Pedoman Penggunaan Lambda yang Sehat",
+    "body": "<ul><li>Gunakan lambda hanya jika operasinya sederhana dan langsung digunakan sekali saja (misalnya sebagai parameter <code>key</code>).</li><li>Jika logika transformasi membutuhkan komentar penjelasan atau lebih dari satu baris, gunakan deklarasi <code>def</code> standar.</li><li>Hindari memberikan nama pada ekspresi lambda (<code>f = lambda x: ...</code>), gunakan <code>def f(x):</code> sesuai rekomendasi PEP 8.</li></ul>",
+    "kind": "content",
+    "notes": "Keterbacaan kode (readability) selalu menjadi prioritas utama dalam panduan gaya resmi Python."
+  },
+  {
+    "title": "Closures & Enclosing Scope",
+    "body": "<p>Fungsi bersarang yang mengingat dan mempertahankan variabel lingkungan luar (lexical scope).</p>",
+    "kind": "code",
+    "example": "ch13-06",
+    "notes": "Tunjukkan bagaimana variabel hitungan tetap tersimpan di memori meskipun fungsi pembuatnya (buat_pencacah) telah selesai dieksekusi."
+  },
+  {
+    "title": "Kata Kunci nonlocal pada Closure",
+    "body": "<ul><li>Secara default, penugasan variabel di dalam fungsi bersarang akan menciptakan variabel lokal baru.</li><li>Kata kunci <code>nonlocal</code> memberitahu Python untuk memodifikasi variabel pada <em>enclosing scope</em> (bukan global).</li><li>Closure memungkinkan pembuatan generator fungsi yang memiliki memori internal tanpa memerlukan class OOP lengkap.</li></ul>",
+    "kind": "content",
+    "notes": "Bedakan scope local, enclosing, global, dan built-in (LEGB rule) yang telah dipelajari di Chapter 10."
+  },
+  {
+    "title": "Rekursi vs Iterasi",
+    "body": "<p>Fungsi yang memanggil dirinya sendiri dengan <em>base case</em> untuk menghentikan siklus rekursi.</p>",
+    "kind": "code",
+    "example": "ch13-07",
+    "notes": "Tekankan bahaya RecursionError (melebihi batas stack frame) jika base case tidak didefinisikan dengan benar."
+  },
+  {
+    "title": "Prinsip Perancangan Fungsi Rekursif",
+    "body": "<ul><li><strong>1. Base Case:</strong> Kondisi terminasi eksplisit yang mengembalikan nilai tanpa panggilan rekursif lanjutan.</li><li><strong>2. Recursive Step:</strong> Memanggil fungsi sendiri dengan argumen yang semakin mendekati base case.</li><li><strong>3. Rekursi vs Iterasi:</strong> Rekursi elegan untuk struktur pohon (tree), namun iterasi loop lebih hemat alokasi memori stack.</li></ul>",
+    "kind": "content",
+    "notes": "Diskusikan kedalaman rekursi default Python (biasanya 1000 frame) menggunakan sys.getrecursionlimit()."
+  },
+  {
+    "title": "Function Annotations & Type Hints",
+    "body": "<ul><li>Anotasi tipe data: <code>def proses(data: list[float], faktor: float = 1.0) -&gt; list[float]:</code></li><li>Anotasi diakses saat runtime melalui atribut metadata <code>__annotations__</code>.</li><li>Anotasi tidak memaksa konversi tipe saat runtime, melainkan memandu penganalisis statis seperti <code>mypy</code> dan auto-complete IDE.</li><li>Gunakan modul standar <code>typing</code> (seperti <code>Callable</code>, <code>Any</code>, <code>Union</code>) untuk tipe kompleks.</li></ul>",
+    "kind": "content",
+    "notes": "Type hints sangat esensial dalam pengembangan perangkat lunak modern untuk menangkap bug tipe data sejak tahap penulisan kode."
+  },
+  {
+    "title": "Mini Proyek: Flexible Data Processor",
+    "body": "<ul><li><strong>Tujuan:</strong> Membangun mesin pemroses dataset numerik yang dapat dikonfigurasi secara dinamis.</li><li><strong>Arsitektur Fungsional:</strong> Mengombinasikan closures (scaler & threshold filter), higher-order pipeline, dan dynamic aggregator.</li><li><strong>Dukungan Dinamis:</strong> Mendukung metrik analitik tambahan di masa depan melalui <code>**kwargs</code> tanpa mengubah kode inti.</li></ul><div class=\"callout\">Modularitas fungsional memungkinkan pembuatan pipeline data yang sangat fleksibel dan mudah diuji.</div>",
+    "kind": "content",
+    "notes": "Bahas bagaimana mini proyek ini mendemonstrasikan integrasi nyata seluruh konsep di Chapter 13."
+  },
+  {
+    "title": "Spesifikasi Tugas: Telemetry Pipeline Engine",
+    "body": "<ul><li>Lengkapi modul <code>tugas_13.py</code> dengan fungsi closure, higher-order pipeline, dan dynamic aggregator.</li><li>Terapkan pembatas parameter <code>/</code> (positional-only) dan <code>*</code> (keyword-only) secara tepat.</li><li>Pastikan tidak ada galat mutable default argument (gunakan sentinel <code>None</code>).</li><li>Sertakan perhitungan metrik kustom melalui <code>**kwargs</code> dan format pelaporan konsol rapi.</li><li>Uji dengan dataset telemetri sensor sebelum dikumpulkan.</li></ul>",
+    "kind": "exercise",
+    "notes": "Jelaskan panduan pengerjaan tugas mandiri dan kriteria kelengkapan berkas."
+  },
+  {
+    "title": "Cek Pemahaman: Desain Parameter",
+    "body": "<p>Evaluasi pemahaman Anda mengenai sintaksis parameter tingkat lanjut Python.</p>",
+    "kind": "question",
+    "question": "Mengapa kode def f(a, b=[], /): dianggap buruk menurut konvensi rekayasa Python?",
+    "answer": "Pertama, b=[] menggunakan mutable default argument yang mempertahankan modifikasi antar pemanggilan. Kedua, parameter setelah tanda / seharusnya diletakkan sebelum / jika dimaksudkan sebagai positional-only, atau b dibuat dengan default None.",
+    "notes": "Beri waktu peserta untuk menganalisis dua kelemahan fatal pada deklarasi parameter tersebut."
+  }
+]

@@ -1,0 +1,131 @@
+[
+  {
+    "title": "Searching & Sorting Algorithms",
+    "body": "<p class=\"lead\">Linear Search, Binary Search, Bubble Sort, Selection Sort, Insertion Sort, dan Timsort.</p><p class=\"note\">Level 2 · Intermediate Python — Chapter 15</p>",
+    "kind": "cover",
+    "notes": "Selamat datang di Chapter 15: Searching & Sorting Algorithms. Sesi ini membahas algoritma klasik pencarian dan pengurutan data beserta implementasi praktisnya di Python."
+  },
+  {
+    "title": "Capaian Pembelajaran Modul",
+    "body": "<ul><li>Mengimplementasikan algoritma Linear Search dan Binary Search secara mandiri.</li><li>Memahami prasyarat data terurut pada Binary Search untuk mencapai efisiensi O(log n).</li><li>Menguasai mekanisme pertukaran data pada Bubble, Selection, dan Insertion Sort.</li><li>Memanfaatkan fungsi bawaan sorted() dan .sort() dengan custom key lambda.</li><li>Menganalisis stabilitas pengurutan (stable sort) dan efisiensi algoritma Timsort.</li></ul>",
+    "kind": "content",
+    "notes": "Tinjau capaian pembelajaran algoritma dasar ini sebagai fondasi penalaran komputasional."
+  },
+  {
+    "title": "Pencarian Linier (Linear Search)",
+    "body": "<p>Menelusuri elemen satu per satu dari awal hingga akhir list tanpa prasyarat urutan data.</p>",
+    "kind": "code",
+    "example": "ch15-01",
+    "notes": "Linear search adalah metode paling sederhana namun membutuhkan O(n) perbandingan pada kasus terburuk."
+  },
+  {
+    "title": "Karakteristik Linear Search",
+    "body": "<ul><li><strong>Kelebihan:</strong> Bekerja pada sembarang kumpulan data tanpa perlu diurutkan terlebih dahulu.</li><li><strong>Kelemahan:</strong> Sangat lambat untuk dataset masif (skala jutaan data membutuhkan jutaan pengecekan).</li><li><strong>Kasus Terbaik:</strong> $O(1)$ saat target berada tepat di elemen pertama.</li><li><strong>Kasus Terburuk:</strong> $O(n)$ saat target berada di indeks terakhir atau tidak ada sama sekali.</li></ul>",
+    "kind": "content",
+    "notes": "Jelaskan bahwa linear search adalah satu-satunya pilihan rasional jika data datang secara acak dan hanya dicari sekali saja."
+  },
+  {
+    "title": "Pencarian Biner (Binary Search)",
+    "body": "<p>Strategi divide and conquer: membagi rentang pencarian menjadi separuh pada setiap iterasi.</p>",
+    "kind": "code",
+    "example": "ch15-02",
+    "notes": "Tunjukkan bagaimana 10 elemen hanya membutuhkan maksimal 4 perbandingan karena log2(10) sekitar 3.32."
+  },
+  {
+    "title": "Prasyarat Mutlak Binary Search",
+    "body": "<ul><li><strong>Wajib Terurut:</strong> Binary search HANYA valid jika koleksi data telah terurut (ascending atau descending).</li><li>Jika diterapkan pada data acak, binary search akan menghasilkan jawaban salah atau mengabaikan target yang ada.</li><li><strong>Efisiensi Eksponensial:</strong> Pada dataset 1.000.000 elemen, binary search menemukan target maksimal dalam 20 perbandingan ($2^{20} \\approx 1.048.576$).</li></ul>",
+    "kind": "content",
+    "notes": "Tekankan bahwa biaya mengurutkan data di awal (O(n log n)) akan sangat terbayar jika pencarian dilakukan berkali-kali."
+  },
+  {
+    "title": "Bubble Sort Teroptimasi",
+    "body": "<p>Membandingkan pasangan elemen bertetangga dan menukarnya hingga nilai terbesar mengapung ke ujung.</p>",
+    "kind": "code",
+    "example": "ch15-03",
+    "notes": "Perhatikan penambahan variabel boolean swapped untuk mendeteksi apakah data sudah terurut lebih cepat."
+  },
+  {
+    "title": "Mekanisme & Kompleksitas Bubble Sort",
+    "body": "<ul><li>Setiap putaran mengapungkan nilai terbesar yang belum terurut ke posisi paling belakang.</li><li><strong>Optimasi Flag:</strong> Jika satu putaran penuh tidak ada pertukaran elemen, loop dihentikan seketika.</li><li><strong>Kasus Terburuk:</strong> $O(n^2)$ saat data terbalik.</li><li><strong>Kasus Terbaik:</strong> $O(n)$ saat data sudah terurut sempurna dari awal.</li></ul>",
+    "kind": "content",
+    "notes": "Bubble sort sangat baik untuk tujuan pembelajaran visual, namun tidak digunakan dalam aplikasi produksi skala besar."
+  },
+  {
+    "title": "Pengurutan Seleksi (Selection Sort)",
+    "body": "<p>Mencari elemen terkecil pada sisa array dan menukarnya ke posisi indeks aktif.</p>",
+    "kind": "code",
+    "example": "ch15-04",
+    "notes": "Selection sort meminimalkan jumlah operasi swap fisik (maksimal n kali pertukaran)."
+  },
+  {
+    "title": "Pengurutan Sisip (Insertion Sort)",
+    "body": "<p>Menyisipkan elemen ke bagian prefix yang telah terurut, analog dengan menyusun kartu di tangan.</p>",
+    "kind": "code",
+    "example": "ch15-05",
+    "notes": "Insertion sort sangat kencang jika data sudah hampir terurut (nearly sorted), mendekati performa O(n)."
+  },
+  {
+    "title": "Karakteristik Insertion Sort",
+    "body": "<ul><li><strong>Adaptif:</strong> Waktu eksekusi sangat cepat untuk data yang hampir terurut.</li><li><strong>In-Place:</strong> Membutuhkan ruang memori tambahan minimal $O(1)$.</li><li><strong>Stabil:</strong> Tidak mengubah urutan relatif elemen yang memiliki nilai kembar.</li><li>Bagian inti dari algoritma hibrida Timsort yang digunakan secara internal oleh Python.</li></ul>",
+    "kind": "content",
+    "notes": "Bahas mengapa Insertion Sort tetap relevan dan dipakai oleh mesin runtime modern untuk sub-array berukuran kecil."
+  },
+  {
+    "title": "Pengurutan Bawaan Python: Timsort",
+    "body": "<p>Perbandingan <code>sorted()</code> (non-destruktif) vs <code>.sort()</code> (in-place mutasi).</p>",
+    "kind": "code",
+    "example": "ch15-06",
+    "notes": "Tekankan kepada siswa: untuk aplikasi nyata, SELALU prioritaskan fungsi bawaan sorted() daripada menulis algoritma sorting manual."
+  },
+  {
+    "title": "Mengapa Timsort Mengungguli Algoritma Manual",
+    "body": "<ul><li><strong>Algoritma Hibrida CPython:</strong> Mengombinasikan Merge Sort dan Insertion Sort berkecepatan tinggi yang ditulis dalam bahasa C murni.</li><li><strong>Kompleksitas Kasus Terburuk:</strong> $O(n \\log n)$ &mdash; Jauh melampaui algoritma kuadratik $O(n^2)$ pada dataset besar.</li><li><strong>Deteksi Pola Alami:</strong> Sangat adaptif memanfaatkan sub-deret yang sudah terurut secara parsial di dunia nyata.</li></ul>",
+    "kind": "content",
+    "notes": "Timsort diciptakan oleh Tim Peters pada tahun 2002 dan kini juga diadopsi oleh Java, Android, dan mesin JavaScript V8."
+  },
+  {
+    "title": "Pemeringkatan Rekaman Kompleks",
+    "body": "<p>Mengurutkan struktur data multi-kriteria menggunakan parameter <code>key</code> dan tuple lambda.</p>",
+    "kind": "code",
+    "example": "ch15-07",
+    "notes": "Tunjukkan teknik penggunaan tanda minus (-nilai) untuk melakukan sorting descending pada atribut numerik sekunder."
+  },
+  {
+    "title": "Konsep Stable Sort",
+    "body": "<ul><li><strong>Definisi:</strong> Algoritma dikatakan <em>stabil (stable)</em> jika mempertahankan urutan asli elemen-elemen yang memiliki nilai pembanding yang sama.</li><li><strong>Pentingnya Stabilitas:</strong> Memungkinkan pengurutan bertingkat secara independen (misal: urutkan abjad nama dahulu, lalu urutkan prioritas kelas).</li><li>Fungsi bawaan Python <code>sorted()</code> dan metode <code>.sort()</code> dijamin 100% stabil.</li></ul>",
+    "kind": "content",
+    "notes": "Berikan contoh visual dua siswa yang memiliki nilai sama 85, urutan mereka di tabel hasil tidak akan tertukar dari urutan aslinya."
+  },
+  {
+    "title": "Matriks Perbandingan Algoritma",
+    "body": "<ul><li><strong>Linear Search:</strong> Waktu $O(n)$, Memori $O(1)$, Data acak bebas.</li><li><strong>Binary Search:</strong> Waktu $O(\\log n)$, Memori $O(1)$, Wajib data terurut.</li><li><strong>Bubble / Selection / Insertion Sort:</strong> Waktu rata-rata $O(n^2)$, Insertion unggul di data hampir terurut.</li><li><strong>Timsort (sorted):</strong> Waktu $O(n \\log n)$, Memori $O(n)$, Standar industri produksi.</li></ul>",
+    "kind": "content",
+    "notes": "Rangkum perbandingan kompleksitas waktu dan memori sebagai bekal melangkah ke Chapter 16 (Big-O analysis)."
+  },
+  {
+    "title": "Mini Proyek: Search & Ranking System",
+    "body": "<ul><li><strong>Tujuan:</strong> Membangun sistem evaluasi metrik node jaringan dengan pencarian dan pemeringkatan ganda.</li><li><strong>Fitur Inti:</strong> Pencarian linier ID node, pencarian biner alokasi kanal frekuensi, dan perbandingan 3 algoritma pengurutan.</li><li><strong>Pemeringkatan NOC:</strong> Mengurutkan klien jaringan berdasarkan kombinasi latensi terendah dan bandwidth terbesar.</li></ul><div class=\"callout\">Memahami algoritma klasik melatih kepekaan logika dalam memilih perkakas komputasi yang tepat.</div>",
+    "kind": "content",
+    "notes": "Jelaskan bagaimana mini proyek search_sort.py menghubungkan teori algoritma klasik dengan kebutuhan monitoring jaringan."
+  },
+  {
+    "title": "Spesifikasi Tugas: Network Metric Engine",
+    "body": "<ul><li>Lengkapi modul <code>tugas_15.py</code> dengan Linear Search, Binary Search, dan 3 sorting klasik manual.</li><li>Dilarang memakai <code>sorted()</code> pada fungsi manual Bubble, Selection, dan Insertion Sort.</li><li>Gunakan <code>sorted()</code> dengan tuple lambda hanya untuk pemeringkatan performa multi-kriteria.</li><li>Uji ketahanan kode pada list kosong, nilai negatif, elemen duplikat, dan data terbalik.</li><li>Pastikan seluruh 100 poin rubrik terpenuhi dengan baik.</li></ul>",
+    "kind": "exercise",
+    "notes": "Ingatkan batasan tugas: pengurutan klasik harus ditulis secara manual untuk membuktikan pemahaman logika algoritma."
+  },
+  {
+    "title": "Panduan Memilih Algoritma yang Tepat",
+    "body": "<ul><li>Jika mencari 1 kali pada data dinamis yang sering berubah &rarr; Gunakan <strong>Linear Search</strong>.</li><li>Jika mencari ribuan kali pada dataset statis &rarr; <strong>Urutkan sekali</strong>, lalu gunakan <strong>Binary Search</strong> atau <strong>Dictionary Hash</strong>.</li><li>Dalam kode proyek aplikasi nyata &rarr; Selalu gunakan <strong>sorted()</strong> atau <strong>.sort()</strong> bawaan Python.</li></ul>",
+    "kind": "content",
+    "notes": "Berikan panduan pragmatis engineering agar siswa tahu kapan harus menerapkan teori dan kapan harus memakai fitur bawaan bahasa."
+  },
+  {
+    "title": "Cek Pemahaman: Binary Search Data Acak",
+    "body": "<p>Evaluasi pemahaman kritis tentang prasyarat algoritma pencarian.</p>",
+    "kind": "question",
+    "question": "Apa yang terjadi jika Binary Search dieksekusi pada list yang belum terurut [40, 10, 50, 20, 30] mencari target 10?",
+    "answer": "Binary Search dapat gagal menemukan 10 (mengembalikan None) karena saat membandingkan dengan nilai tengah 50, algoritma secara keliru berasumsi bahwa nilai 10 pasti berada di sebelah kiri atau kanan terurut. Tanpa data terurut, separuh data yang dipangkas mungkin justru memuat target yang dicari.",
+    "notes": "Beri waktu peserta untuk menganalisis mengapa eliminasi separuh ruang pencarian runtuh jika data tidak terurut."
+  }
+]

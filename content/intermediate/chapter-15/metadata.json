@@ -6,31 +6,100 @@
   "levelCategory": "intermediate",
   "title": "Searching & Sorting Algorithms",
   "subtitle": "Linear Search, Binary Search, Selection Sort & Timsort (sorted)",
-  "description": "Studi algoritma klasik: linear search O(n), binary search O(log n), selection sort O(n²), pemanfaatan sorted() dengan custom key lambda, dan reverse.",
+  "description": "Studi algoritma klasik: linear search O(n), binary search O(log n), bubble sort, selection sort, insertion sort O(n²), serta pemanfaatan sorted() dengan custom key lambda.",
   "competencyFocus": "PCAP 1.3: Algoritma pencarian dan pengurutan terapan",
   "estimatedHours": 5,
   "difficulty": "Intermediate",
-  "available": false,
+  "available": true,
   "prerequisites": [
     "Chapter 08",
     "Chapter 14"
   ],
   "learningObjectives": [
     "Mengimplementasikan linear search pada data tidak terurut dengan penanganan kasus None",
-    "Mengimplementasikan selection sort secara manual untuk memahami mekanisme swap data",
-    "Mengurutkan data dictionary kompleks menggunakan sorted(data, key=lambda x: ...)"
+    "Mengimplementasikan binary search O(log n) dengan prasyarat data terurut",
+    "Memahami mekanisme pertukaran data pada Bubble Sort, Selection Sort, dan Insertion Sort",
+    "Mengurutkan data dictionary kompleks menggunakan sorted(data, key=lambda x: ...)",
+    "Menganalisis konsep pengurutan stabil (stable sort) dan efisiensi algoritma Timsort"
   ],
   "tags": [
     "Algorithms",
     "Linear Search",
+    "Binary Search",
     "Selection Sort",
-    "Sorting"
+    "Bubble Sort",
+    "Insertion Sort",
+    "Timsort"
   ],
   "resources": {
-    "hasSlides": false,
-    "slidesDeck": null,
-    "starterCode": null,
-    "assignmentGuide": null,
+    "hasSlides": true,
+    "slidesDeck": "slides/deck.json",
+    "starterCode": "code/contoh.py",
+    "assignmentGuide": "assignments/tugas.md",
     "pptxDownload": null
+  },
+  "codeExample": {
+    "title": "Pencarian Biner (Binary Search) O(log n)",
+    "code": "# Pencarian biner pada deret frekuensi terurut\nfrekuensi = [100, 250, 450, 800, 900, 1800, 2100, 2600, 3500]\nkiri, kanan = 0, len(frekuensi) - 1\ntarget = 2100\nindeks = None\n\nwhile kiri <= kanan:\n    tengah = (kiri + kanan) // 2\n    if frekuensi[tengah] == target:\n        indeks = tengah\n        break\n    elif frekuensi[tengah] < target:\n        kiri = tengah + 1\n    else:\n        kanan = tengah - 1\n\nprint(f\"Target {target} ditemukan pada indeks ke-{indeks}\")",
+    "outputKey": "ch15-02",
+    "explanation": "Binary search membagi ruang pencarian menjadi setengah pada setiap langkah perbandingan, menghasilkan kompleksitas waktu O(log n) dengan syarat data telah terurut."
+  },
+  "exercise": {
+    "title": "Latihan Terarah: Eksplorasi Algoritma Pencarian & Pengurutan",
+    "instructions": [
+      "Modifikasi binary search untuk mencari elemen pertama yang melampaui ambang batas (lower bound).",
+      "Urutkan antrean tugas transmisi berdasarkan prioritas dengan prinsip stable sort.",
+      "Hitung total operasi swap pada Bubble Sort untuk data acak vs data terbalik.",
+      "Implementasikan fungsi penyisipan terurut (streaming insertion) pada data terurut."
+    ],
+    "tips": "Binary search hanya valid jika koleksi data telah diurutkan terlebih dahulu.",
+    "time": "40 menit"
+  },
+  "quiz": {
+    "question": "Mengapa fungsi bawaan Python 'sorted()' umumnya jauh lebih disukai daripada implementasi Bubble Sort atau Selection Sort buatan sendiri?",
+    "options": [
+      "sorted() menggunakan Timsort hibrida berkecepatan O(n log n) yang ditulis dalam bahasa C dan terbukti stabil serta adaptif",
+      "Karena fungsi sorted() tidak mengonsumsi memori sama sekali (0 byte)",
+      "Karena Python melarang penulisan algoritma sorting manual",
+      "Karena Bubble Sort tidak dapat mengurutkan bilangan bernilai negatif"
+    ],
+    "correctIndex": 0,
+    "explanation": "Fungsi bawaan Python sorted() mengimplementasikan algoritma Timsort (kombinasi Merge Sort dan Insertion Sort) yang diimplementasikan dalam C murni. Timsort memiliki performa kasus terburuk O(n log n) yang jauh lebih cepat daripada algoritma kuadratik O(n²), adaptif terhadap pola data yang sudah hampir terurut, dan menjamin kestabilan (stable sort).",
+    "hint": "Pikirkan perbedaan kompleksitas waktu antara O(n log n) dan O(n²) serta bahasa implementasi internal CPython."
+  },
+  "assignment": {
+    "title": "Tugas Praktik 15: Network Metric Search & Ranking Engine",
+    "description": "Rancang mesin pencarian dan pemeringkatan metrik jaringan telekomunikasi yang memadukan linear search, binary search, tiga algoritma sorting klasik manual (Bubble, Selection, Insertion), dan pemeringkatan multi-kriteria berbasis Timsort.",
+    "instructions": [
+      "Implementasikan fungsi linear search untuk pencarian ID node dan binary search untuk kanal frekuensi.",
+      "Implementasikan tiga algoritma pengurutan manual murni (Bubble, Selection, dan Insertion Sort).",
+      "Implementasikan pemeringkatan performa multi-kriteria BTS (latensi terendah dan RSRP terkuat) menggunakan sorted().",
+      "Pastikan kode menangani kasus batas: list kosong, satu elemen, duplikat, dan angka negatif."
+    ],
+    "rubric": [
+      {
+        "criteria": "Kebenaran Linear & Binary Search",
+        "weight": 25,
+        "description": "Pencarian akurat, menghormati prasyarat list terurut, dan menangani target nihil."
+      },
+      {
+        "criteria": "Implementasi Bubble & Selection Sort",
+        "weight": 25,
+        "description": "Bubble Sort (dengan deteksi early stop) dan Selection Sort manual berjalan lancar."
+      },
+      {
+        "criteria": "Implementasi Insertion Sort & Stabilitas",
+        "weight": 25,
+        "description": "Insertion Sort menggeser prefix dengan tepat dan memahami konsep pengurutan stabil."
+      },
+      {
+        "criteria": "Pemeringkatan Multi-Kriteria Timsort & Edge Cases",
+        "weight": 25,
+        "description": "Custom lambda key multi-atribut, penanganan kasus batas (kosong/duplikat), dan format rapi."
+      }
+    ],
+    "starterFilename": "tugas_15.py",
+    "downloadMdUrl": "downloads/chapter-15/tugas.md",
+    "downloadPyUrl": "downloads/chapter-15/contoh.py"
   }
 }

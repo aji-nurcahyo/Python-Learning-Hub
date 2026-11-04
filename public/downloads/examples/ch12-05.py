@@ -33,3 +33,4 @@ print(f"Total Mahasiswa : {stats['total']}")
 print(f"Rata-rata Nilai : {stats['avg']:.2f}")
 print(f"Nilai Tertinggi : {stats['max']:.2f} ({', '.join(stats['top'])})")
 print(f"Nilai Terendah  : {stats['min']:.2f} ({', '.join(stats['bottom'])})")
+

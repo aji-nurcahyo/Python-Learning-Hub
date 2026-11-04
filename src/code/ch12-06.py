@@ -29,3 +29,4 @@ for rank, s in enumerate(ranked, start=1):
     score = float(s["grade"])
     predikat = get_grade_category(score)
     print(f"{rank:<5} | {s['nim']:<10} | {s['name']:<18} | {score:<6.2f} | {predikat:<8}")
+

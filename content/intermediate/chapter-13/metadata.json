@@ -6,30 +6,98 @@
   "levelCategory": "intermediate",
   "title": "Advanced Functions",
   "subtitle": "*args, **kwargs, Lambda, First-Class Citizens & Closures",
-  "description": "Menerapkan fungsi fleksibel dengan arbitrary arguments (*args, **kwargs), fungsi anonim lambda, fungsi sebagai argumen (higher-order), dan closures.",
+  "description": "Menerapkan fungsi fleksibel dengan arbitrary arguments (*args, **kwargs), fungsi anonim lambda, fungsi sebagai argumen (higher-order), closures, dan rekursi.",
   "competencyFocus": "PCAP 1.1: Pemrograman fungsional & argument unpacking",
   "estimatedHours": 4,
   "difficulty": "Intermediate",
-  "available": false,
+  "available": true,
   "prerequisites": [
     "Level 1"
   ],
   "learningObjectives": [
-    "Menerima jumlah argumen variabel dengan *args dan keyword arguments dengan **kwargs",
-    "Menulis ekspresi lambda untuk operasi transformasi singkat",
-    "Memahami mekanisme closure memori pada nested functions"
+    "Menerapkan arbitrary arguments dengan *args dan arbitrary keyword arguments dengan **kwargs",
+    "Menggunakan pembatas sintaksis positional-only (/) dan keyword-only (*)",
+    "Menghindari jebakan mutable default arguments menggunakan idiom sentinel None",
+    "Menerapkan ekspresi lambda untuk fungsi satu baris dan custom key sorting",
+    "Membangun fungsi closure untuk enkapsulasi state fungsional dan rekursi"
   ],
   "tags": [
     "*args",
     "**kwargs",
     "Lambda",
-    "Closures"
+    "Closures",
+    "Higher-Order Functions",
+    "Recursion"
   ],
   "resources": {
-    "hasSlides": false,
-    "slidesDeck": null,
-    "starterCode": null,
-    "assignmentGuide": null,
+    "hasSlides": true,
+    "slidesDeck": "slides/deck.json",
+    "starterCode": "code/contoh.py",
+    "assignmentGuide": "assignments/tugas.md",
     "pptxDownload": null
+  },
+  "codeExample": {
+    "title": "Positional-Only, Keyword-Only, dan Parameter Default",
+    "code": "# Konfigurasi parameter dengan pembatas / dan *\ndef konfigurasi_node(node_id: int, /, frekuensi_mhz: float, *, mode: str = \"AUTO\") -> str:\n    return f\"Node #{node_id} @ {frekuensi_mhz:.1f} MHz [Mode: {mode}]\"\n\nprint(konfigurasi_node(101, 2412.0, mode=\"MANUAL\"))\nprint(konfigurasi_node(102, frekuensi_mhz=5180.0))",
+    "outputKey": "ch13-01",
+    "explanation": "Sintaksis / memastikan parameter sebelah kiri hanya dapat diisi secara posisi, sedangkan * memastikan parameter sebelah kanan wajib diisi sebagai argumen kata kunci (keyword-only)."
+  },
+  "exercise": {
+    "title": "Latihan Terarah: Dynamic Function Design & Closures",
+    "instructions": [
+      "Rancang fungsi akumulator metrik sinyal berbasis *args.",
+      "Urutkan daftar paket jaringan berdasarkan prioritas dan latensi menggunakan lambda.",
+      "Bangun generator fungsi penguji tegangan nominal berbasis closure.",
+      "Buat fungsi rekursif penelusuran kedalaman topologi pohon jaringan."
+    ],
+    "tips": "Gunakan kata kunci nonlocal pada fungsi bersarang ketika ingin memodifikasi variabel di enclosing scope.",
+    "time": "30 menit"
+  },
+  "quiz": {
+    "question": "Mengapa deklarasi fungsi 'def simpan_log(pesan, riwayat=[])' dianggap sebagai praktik buruk di Python?",
+    "options": [
+      "Objek list default dievaluasi sekali saat fungsi didefinisikan dan dibagi antar pemanggilan berikutnya",
+      "Python tidak mengizinkan tanda kurung siku di dalam tanda kurung fungsi",
+      "Parameter riwayat akan otomatis berubah tipe menjadi tuple",
+      "Fungsi tersebut akan menimbulkan SyntaxError saat dijalankan"
+    ],
+    "correctIndex": 0,
+    "explanation": "Nilai default dievaluasi satu kali pada saat definisi fungsi (definition-time). Jika objek default bersifat mutable (seperti list atau dict), mutasi pada pemanggilan pertama akan terbawa ke pemanggilan berikutnya. Gunakan sentinel None sebagai gantinya.",
+    "hint": "Ingat perbedaan waktu evaluasi antara saat fungsi didefinisikan dan saat fungsi dipanggil."
+  },
+  "assignment": {
+    "title": "Tugas Praktik 13: Flexible Telemetry Pipeline Engine",
+    "description": "Rancang arsitektur mesin pemroses data telemetri yang mengintegrasikan higher-order pipeline chaining, predicate filter closures, serta dynamic aggregators berbasis *args dan **kwargs.",
+    "instructions": [
+      "Implementasikan fungsi closure pembuat filter ambang batas (buat_filter_rentang).",
+      "Implementasikan fungsi higher-order eksekusi rantai transformasi (jalankan_pipeline).",
+      "Implementasikan fungsi agregator dinamis dengan parameter positional-only dan **kwargs.",
+      "Hindari penggunaan mutable default arguments dan gunakan sentinel None."
+    ],
+    "rubric": [
+      {
+        "criteria": "Desain Higher-Order & Pipeline Chaining",
+        "weight": 30,
+        "description": "Fungsi pipeline mengeksekusi transformasi data berantai secara presisi."
+      },
+      {
+        "criteria": "Implementasi Closure & Lexical Scope",
+        "weight": 25,
+        "description": "Closure mempertahankan state ambang batas secara independen."
+      },
+      {
+        "criteria": "Pemanfaatan *args, **kwargs & Parameter Constraints",
+        "weight": 25,
+        "description": "Menerapkan pembatas / dan * serta unpacking secara tepat."
+      },
+      {
+        "criteria": "Kebersihan Kode, Type Hints & Sentinel None",
+        "weight": 20,
+        "description": "Kode bersih, type hints lengkap, dan tidak ada mutable default bug."
+      }
+    ],
+    "starterFilename": "tugas_13.py",
+    "downloadMdUrl": "downloads/chapter-13/tugas.md",
+    "downloadPyUrl": "downloads/chapter-13/contoh.py"
   }
 }

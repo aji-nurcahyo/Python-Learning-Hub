@@ -6,29 +6,98 @@
   "levelCategory": "intermediate",
   "title": "Algorithm Analysis & Problem Solving",
   "subtitle": "Notasi Big-O, Space-Time Tradeoffs & Strategi Algoritmik",
-  "description": "Menganalisis efisiensi algoritma secara formal: notasi O(1), O(log n), O(n), O(n²), memory footprint, dan teknik pemecahan masalah komputasi.",
+  "description": "Menganalisis efisiensi algoritma secara formal: notasi O(1), O(log n), O(n), O(n log n), O(n²), memory footprint, benchmarking time.perf_counter(), dan teknik dekomposisi pemecahan masalah.",
   "competencyFocus": "PCAP 1.4: Kompleksitas komputasi & optimasi",
-  "estimatedHours": 4,
+  "estimatedHours": 5,
   "difficulty": "Intermediate",
-  "available": false,
+  "available": true,
   "prerequisites": [
     "Chapter 15"
   ],
   "learningObjectives": [
-    "Menentukan kompleksitas waktu kasus terbaik, rata-rata, dan terburuk",
-    "Membandingkan efisiensi struktur data (list lookup vs set/dict lookup)",
-    "Mengoptimalkan algoritma dari kuadratik O(n²) ke linier O(n)"
+    "Menganalisis kompleksitas waktu asimtotik algoritma menggunakan notasi Big-O",
+    "Membedakan skenario analisis performa: Best-Case, Average-Case, dan Worst-Case",
+    "Mengukur konsumsi memori dan menganalisis space-time tradeoffs",
+    "Melakukan benchmarking empiris presisi tinggi dengan modul time.perf_counter()",
+    "Menerapkan strategi pemecahan masalah terstruktur dan optimasi bottleneck komputasi"
   ],
   "tags": [
     "Big-O",
-    "Complexity",
-    "Optimization"
+    "Complexity Analysis",
+    "Space-Time Tradeoffs",
+    "Benchmarking",
+    "Performance Optimization",
+    "Problem Solving"
   ],
   "resources": {
-    "hasSlides": false,
-    "slidesDeck": null,
-    "starterCode": null,
-    "assignmentGuide": null,
+    "hasSlides": true,
+    "slidesDeck": "slides/deck.json",
+    "starterCode": "code/contoh.py",
+    "assignmentGuide": "assignments/tugas.md",
     "pptxDownload": null
+  },
+  "codeExample": {
+    "title": "Benchmarking Operasi O(1) vs O(n)",
+    "code": "import time\n\nN = 100_000\ndaftar_elemen = list(range(N))\nhimpunan_elemen = set(range(N))\ntarget = N - 1\n\nt0 = time.perf_counter()\nada_di_list = target in daftar_elemen\nwaktu_list = (time.perf_counter() - t0) * 1000\n\nt0 = time.perf_counter()\nada_di_set = target in himpunan_elemen\nwaktu_set = (time.perf_counter() - t0) * 1000\n\nprint(f\"List O(n): {waktu_list:.4f} ms | Set O(1): {waktu_set:.4f} ms\")",
+    "outputKey": "ch16-01",
+    "explanation": "Pencarian keanggotaan pada list membutuhkan pemindaian berurutan O(n), sedangkan hash set melakukan kalkulasi hash tabel dengan kompleksitas rata-rata O(1)."
+  },
+  "exercise": {
+    "title": "Latihan Terarah: Analisis & Optimasi Algoritmik",
+    "instructions": [
+      "Lakukan profiling perbandingan waktu iterasi list vs generator untuk 1.000.000 angka.",
+      "Optimalkan fungsi pencarian pasangan angka yang menjumlahkan target S dari O(n²) menjadi O(n).",
+      "Analisis konsumsi memori tumpukan rekursi pada fungsi faktorial vs pendekatan iteratif.",
+      "Ukur kestabilan durasi eksekusi dengan variasi 10 kali run menggunakan time.perf_counter()."
+    ],
+    "tips": "Selalu sertakan warm-up run dan hitung rata-rata durasi agar hasil benchmarking tidak terdistorsi oleh aktivitas background OS.",
+    "time": "40 menit"
+  },
+  "quiz": {
+    "question": "Sebuah fungsi memproses list berukuran n dengan loop bersarang ganda (nested loop) di mana kedua loop beriterasi dari 0 hingga n. Berapakah kompleksitas waktu fungsi tersebut?",
+    "options": [
+      "O(n²)",
+      "O(n log n)",
+      "O(2n)",
+      "O(n)"
+    ],
+    "correctIndex": 0,
+    "explanation": "Ketika loop luar beriterasi n kali dan untuk setiap iterasinya loop dalam juga berjalan n kali, total operasi dasar yang dieksekusi adalah n * n = n², sehingga kompleksitas waktunya adalah kuadratik atau O(n²).",
+    "hint": "Kalikan jumlah iterasi loop luar dengan jumlah iterasi loop dalam."
+  },
+  "assignment": {
+    "title": "Tugas Praktik 16: Telemetry Processing Benchmark & Optimization Suite",
+    "description": "Rancang perangkat lunak analisis performa algoritma telekomunikasi yang membandingkan kompleksitas waktu dan ruang berbagai metode deduplikasi sinyal, lookup gateway, serta deteksi anomali transmisi.",
+    "instructions": [
+      "Implementasikan fungsi deduplikasi kuadratik O(n²) dan bandingkan dengan deduplikasi O(n) berbasis set.",
+      "Lakukan pengukuran empiris presisi tinggi pada berbagai skala masukan (n = 100, 1.000, 10.000).",
+      "Bandingkan waktu pencarian linear search vs dictionary lookup pada dataset sinyal telekomunikasi.",
+      "Format laporan benchmarking dalam tabel terstruktur lengkap dengan rasio akselerasi (speedup factor)."
+    ],
+    "rubric": [
+      {
+        "criteria": "Ketepatan Analisis Teoretis & Kompleksitas",
+        "weight": 25,
+        "description": "Karakterisasi notasi Big-O untuk tiap fungsi akurat dan sesuai kaidah asimtotik."
+      },
+      {
+        "criteria": "Implementasi Optimasi O(n²) ke O(n)",
+        "weight": 25,
+        "description": "Solusi optimal memanfaatkan space-time tradeoff (set/dict) dengan hasil output identik."
+      },
+      {
+        "criteria": "Metodologi Benchmarking Presisi Tinggi",
+        "weight": 25,
+        "description": "Penggunaan time.perf_counter() dengan warm-up, multi-iterasi, dan perhitungan rata-rata/min yang valid."
+      },
+      {
+        "criteria": "Kualitas Pelaporan & Penanganan Edge Cases",
+        "weight": 25,
+        "description": "Tabel laporan perbandingan performa rapi serta penanganan dataset kosong dan elemen duplikat."
+      }
+    ],
+    "starterFilename": "tugas_16.py",
+    "downloadMdUrl": "downloads/chapter-16/tugas.md",
+    "downloadPyUrl": "downloads/chapter-16/contoh.py"
   }
 }

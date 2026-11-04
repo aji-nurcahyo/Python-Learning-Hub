@@ -68,8 +68,14 @@ const activeChecks = [
   'foundations/chapter-06',
   'foundations/chapter-07',
   'foundations/chapter-08',
+  'foundations/chapter-09',
   'foundations/chapter-10',
+  'foundations/chapter-11',
   'foundations/chapter-12',
+  'intermediate/chapter-13',
+  'intermediate/chapter-14',
+  'intermediate/chapter-15',
+  'intermediate/chapter-16',
 ];
 
 for (const ch of activeChecks) {

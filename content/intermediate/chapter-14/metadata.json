@@ -10,7 +10,7 @@
   "competencyFocus": "PCAP 1.2: Comprehensions dan protokol iterasi",
   "estimatedHours": 4,
   "difficulty": "Intermediate",
-  "available": false,
+  "available": true,
   "prerequisites": [
     "Chapter 08",
     "Chapter 09"
@@ -18,19 +18,86 @@
   "learningObjectives": [
     "Menulis list comprehension dengan klausa filter kondisi if secara idiomatis",
     "Membangun dictionary comprehension dan set comprehension untuk transformasi data tabular",
-    "Memahami protokol iterator dan perbandingan memori list vs generator expression"
+    "Memahami protokol iterator dan perbandingan memori list vs generator expression",
+    "Menerapkan enumerate() dan zip() untuk manipulasi data multi-koleksi paralel",
+    "Meratakan matriks bersarang 2D menggunakan nested comprehension"
   ],
   "tags": [
     "Comprehension",
     "Generators",
     "Iterators",
-    "Filtering"
+    "Filtering",
+    "Lazy Evaluation"
   ],
   "resources": {
-    "hasSlides": false,
-    "slidesDeck": null,
-    "starterCode": null,
-    "assignmentGuide": null,
+    "hasSlides": true,
+    "slidesDeck": "slides/deck.json",
+    "starterCode": "code/contoh.py",
+    "assignmentGuide": "assignments/tugas.md",
     "pptxDownload": null
+  },
+  "codeExample": {
+    "title": "List Comprehension Dasar dan Pemfilteran Kondisional",
+    "code": "# Transformasi dan pemfilteran sinyal daya\nsinyal_dbm = [-115.0, -98.2, -84.0, -70.5, -62.0]\ndaya_mw = [round(10 ** (p / 10), 6) for p in sinyal_dbm]\nsinyal_kuat = [s for s in sinyal_dbm if s >= -90.0]\n\nprint(\"Daya (mW)  :\", daya_mw)\nprint(\"Sinyal Kuat:\", sinyal_kuat)",
+    "outputKey": "ch14-01",
+    "explanation": "List comprehension memadukan perulangan for dan filter if dalam satu ekspresi ringkas untuk menghasilkan koleksi data baru secara deklaratif."
+  },
+  "exercise": {
+    "title": "Latihan Terarah: Transformasi Koleksi Ekspresif",
+    "instructions": [
+      "Ekstraksi log SNR menggunakan list comprehension dengan ternary if-else.",
+      "Lakukan inversi kamus node IP ke hostname dengan filter nama akses.",
+      "Gabungkan aliran data sensor paralel menggunakan zip() dan enumerate().",
+      "Bangun generator deret bilangan prima untuk streaming evaluasi lazy."
+    ],
+    "tips": "Gunakan kurung siku [] untuk list comprehension (eager) dan kurung biasa () untuk generator expression (lazy).",
+    "time": "30 menit"
+  },
+  "quiz": {
+    "question": "Apakah perbedaan mendasar antara list comprehension [x for x in data] dan generator expression (x for x in data)?",
+    "options": [
+      "List comprehension mengevaluasi seluruh data ke memori RAM seketika (eager), sedangkan generator expression mengevaluasi data satu per satu saat diminta (lazy)",
+      "List comprehension hanya mendukung bilangan bulat, sedangkan generator expression mendukung semua tipe data",
+      "Generator expression menghasilkan objek bertipe tuple, sedangkan list comprehension bertipe list",
+      "Generator expression lebih lambat dan mengonsumsi memori lebih besar daripada list comprehension"
+    ],
+    "correctIndex": 0,
+    "explanation": "List comprehension bersifat eager dan mengalokasikan seluruh elemen di RAM sekaligus, sedangkan generator expression bersifat lazy yang menghemat memori karena nilai hanya dihitung saat metode next() dipanggil.",
+    "hint": "Ingat perbandingan ukuran memori menggunakan sys.getsizeof() pada dataset besar."
+  },
+  "assignment": {
+    "title": "Tugas Praktik 14: Dataset Transformation Toolkit",
+    "description": "Rancang pustaka utilitas pemrosesan data telemetri yang mengintegrasikan list comprehension, dict comprehension, set comprehension, nested matrix flattening, dan memory-safe generator expressions.",
+    "instructions": [
+      "Implementasikan pemfilteran dan penskalaan daya menggunakan list comprehension.",
+      "Implementasikan pembuatan peta indeks IP ke nama host menggunakan dict comprehension.",
+      "Ekstrak himpunan zona unik yang telah dinormalisasi menggunakan set comprehension.",
+      "Ratakan matriks 2D menjadi 1D menggunakan nested comprehension dan bangun generator stream."
+    ],
+    "rubric": [
+      {
+        "criteria": "Penguasaan List & Nested Comprehensions",
+        "weight": 25,
+        "description": "Menerapkan list comprehension dan nested flattening secara presisi tanpa loop imperatif manual."
+      },
+      {
+        "criteria": "Penguasaan Dict & Set Comprehensions",
+        "weight": 25,
+        "description": "Mampu menginversi dan membangun mapping kamus serta deduplikasi himpunan unik secara bersih."
+      },
+      {
+        "criteria": "Protokol Iterator & Generator Expression",
+        "weight": 25,
+        "description": "Menerapkan generator expression bertipe lazy, memahami interaksi iter(), next(), dan efisiensi memori."
+      },
+      {
+        "criteria": "Pemanfaatan Enumerate, Zip & Standar PEP 8",
+        "weight": 25,
+        "description": "Menggunakan enumerate() dan zip() secara idiomatis, kode memiliki type hints lengkap, dan format rapi."
+      }
+    ],
+    "starterFilename": "tugas_14.py",
+    "downloadMdUrl": "downloads/chapter-14/tugas.md",
+    "downloadPyUrl": "downloads/chapter-14/contoh.py"
   }
 }

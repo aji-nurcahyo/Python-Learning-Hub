@@ -16,11 +16,11 @@ Pemeriksaan membedakan secara tegas antara **metadata/kerangka silabus** (judul,
 
 ### Metrik Status Kelengkapan Konten:
 - **Total Modul Chapter:** 30 Chapter
-- **Modul Berstatus Lengkap & Aktif (*Production Ready*):** 12 Chapter (**40.0%**) — Level 1: Python Foundations (Chapter 01 s.d. 12) 100% LENGKAP!
-- **Modul Berstatus Kerangka Silabus (*Pending Content Creation*):** 18 Chapter (**60.0%**) — Chapter 13–30
-- **Total Slide Presentasi Reveal.js Aktif:** 224 Slide (12 Decks Terstandarisasi)
-- **Total Skrip Contoh Python Terverifikasi CPython:** 70 Program Mandiri
-- **Total Soal Latihan & Kuis Terintegrasi:** 35 Latihan Terarah, 12 Kuis Konsep Interaktif, 12 Tugas Berubrik
+- **Modul Berstatus Lengkap & Aktif (*Production Ready*):** 16 Chapter (**53.3%**) — Level 1: Python Foundations (Ch 01–12) & Level 2 Batch 1 (Ch 13–16) 100% LENGKAP!
+- **Modul Berstatus Kerangka Silabus (*Pending Content Creation*):** 14 Chapter (**46.7%**) — Chapter 17–30
+- **Total Slide Presentasi Reveal.js Aktif:** 304 Slide (16 Decks Terstandarisasi)
+- **Total Skrip Contoh Python Terverifikasi CPython:** 98 Program Mandiri
+- **Total Soal Latihan & Kuis Terintegrasi:** 51 Latihan Terarah, 16 Kuis Konsep Interaktif, 16 Tugas Berubrik
 
 ---
 
@@ -59,10 +59,10 @@ Setiap chapter dinilai berdasarkan 7 dimensi kelengkapan materi:
 | **Ch 10** | L1 | `10-functions-scope` — Functions & Scope | `[P]` | `[V]` (20) | `[V]` (2) | `[V]` | `[V]` | `[V]` | `[-]` | **Siap Belajar** |
 | **Ch 11** | L1 | `11-modules-basic-exceptions` — Modules & Basic Exceptions | `[P]` | `[V]` (20) | `[V]` (2) | `[V]` | `[V]` | `[V]` | `[-]` | **Siap Belajar** |
 | **Ch 12** | L1 | `12-foundations-capstone` — Foundations Capstone Project | `[V]` | `[V]` (22) | `[V]` (6) | `[V]` | `[V]` | `[V]` | `[V]` | **Siap Belajar** |
-| **Ch 13** | L2 | `13-advanced-functions` — Advanced Functions | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | Pending |
-| **Ch 14** | L2 | `14-comprehensions-iterators` — Comprehensions & Iterators | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | Pending |
-| **Ch 15** | L2 | `15-searching-sorting-algorithms` — Searching & Sorting | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | Pending |
-| **Ch 16** | L2 | `16-algorithm-analysis-problem-solving` — Algorithm Analysis | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | Pending |
+| **Ch 13** | L2 | `13-advanced-functions` — Advanced Functions | `[V]` | `[V]` (20) | `[V]` (7) | `[V]` | `[V]` | `[V]` | `[V]` | **Siap Belajar** |
+| **Ch 14** | L2 | `14-comprehensions-iterators` — Comprehensions & Iterators | `[V]` | `[V]` (20) | `[V]` (7) | `[V]` | `[V]` | `[V]` | `[V]` | **Siap Belajar** |
+| **Ch 15** | L2 | `15-searching-sorting-algorithms` — Searching & Sorting | `[V]` | `[V]` (20) | `[V]` (7) | `[V]` | `[V]` | `[V]` | `[V]` | **Siap Belajar** |
+| **Ch 16** | L2 | `16-algorithm-analysis-problem-solving` — Algorithm Analysis | `[V]` | `[V]` (20) | `[V]` (7) | `[V]` | `[V]` | `[V]` | `[V]` | **Siap Belajar** |
 | **Ch 17** | L2 | `17-file-handling-serialization` — File Handling & Data | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | Pending |
 | **Ch 18** | L2 | `18-exception-handling-debugging` — Exception & Debugging | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | Pending |
 | **Ch 19** | L2 | `19-oop-fundamentals` — OOP I: Classes & Objects | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | `[-]` | Pending |

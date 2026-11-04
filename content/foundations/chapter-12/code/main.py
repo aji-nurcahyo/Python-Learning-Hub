@@ -214,3 +214,4 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         print("\n\nOperasi dihentikan oleh pengguna. Keluar...")
         sys.exit(0)
+

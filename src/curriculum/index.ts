@@ -1048,18 +1048,74 @@ def calculate_statistics(students: list[dict[str, Any]]) -> dict[str, Any]:
     title: 'Advanced Functions',
     subtitle: '*args, **kwargs, Lambda, First-Class Citizens & Closures',
     description:
-      'Menerapkan fungsi fleksibel dengan arbitrary arguments (*args, **kwargs), fungsi anonim lambda, fungsi sebagai argumen (higher-order), dan closures.',
+      'Menerapkan fungsi fleksibel dengan arbitrary arguments (*args, **kwargs), fungsi anonim lambda, fungsi sebagai argumen (higher-order), closures, dan rekursi.',
     competencyFocus: 'PCAP 1.1: Pemrograman fungsional & argument unpacking',
     estimatedHours: 4,
     difficulty: 'Intermediate',
-    available: false,
+    available: true,
     prerequisites: ['Level 1'],
     learningObjectives: [
-      'Menerima jumlah argumen variabel dengan *args dan keyword arguments dengan **kwargs',
-      'Menulis ekspresi lambda untuk operasi transformasi singkat',
-      'Memahami mekanisme closure memori pada nested functions',
+      'Menerapkan arbitrary arguments dengan *args dan arbitrary keyword arguments dengan **kwargs',
+      'Menggunakan pembatas sintaksis positional-only (/) dan keyword-only (*)',
+      'Menghindari jebakan mutable default arguments menggunakan idiom sentinel None',
+      'Menerapkan ekspresi lambda untuk fungsi satu baris dan custom key sorting',
+      'Membangun fungsi closure untuk enkapsulasi state fungsional dan rekursi',
     ],
-    tags: ['*args', '**kwargs', 'Lambda', 'Closures'],
+    tags: ['*args', '**kwargs', 'Lambda', 'Closures', 'Higher-Order Functions', 'Recursion'],
+    deckPath: '#chapter/13/slides',
+    tugasPath: '#chapter/13/task',
+    codeExample: {
+      title: 'Positional-Only, Keyword-Only, dan Parameter Default',
+      code: `# Konfigurasi parameter dengan pembatas / dan *\ndef konfigurasi_node(node_id: int, /, frekuensi_mhz: float, *, mode: str = "AUTO") -> str:\n    return f"Node #{node_id} @ {frekuensi_mhz:.1f} MHz [Mode: {mode}]"\n\nprint(konfigurasi_node(101, 2412.0, mode="MANUAL"))\nprint(konfigurasi_node(102, frekuensi_mhz=5180.0))`,
+      outputKey: 'ch13-01',
+      explanation:
+        'Sintaksis / memastikan parameter sebelah kiri hanya dapat diisi secara posisi, sedangkan * memastikan parameter sebelah kanan wajib diisi sebagai argumen kata kunci (keyword-only).',
+    },
+    exercise: {
+      title: 'Latihan Terarah: Dynamic Function Design & Closures',
+      instructions: [
+        'Rancang fungsi akumulator metrik sinyal berbasis *args.',
+        'Urutkan daftar paket jaringan berdasarkan prioritas dan latensi menggunakan lambda.',
+        'Bangun generator fungsi penguji tegangan nominal berbasis closure.',
+        'Buat fungsi rekursif penelusuran kedalaman topologi pohon jaringan.',
+      ],
+      tips: 'Gunakan kata kunci nonlocal pada fungsi bersarang ketika ingin memodifikasi variabel di enclosing scope.',
+      time: '30 menit',
+    },
+    quiz: {
+      question:
+        "Mengapa deklarasi fungsi 'def simpan_log(pesan, riwayat=[])' dianggap sebagai praktik buruk di Python?",
+      options: [
+        'Objek list default dievaluasi sekali saat fungsi didefinisikan dan dibagi antar pemanggilan berikutnya',
+        'Python tidak mengizinkan tanda kurung siku di dalam tanda kurung fungsi',
+        'Parameter riwayat akan otomatis berubah tipe menjadi tuple',
+        'Fungsi tersebut akan menimbulkan SyntaxError saat dijalankan',
+      ],
+      correctIndex: 0,
+      explanation:
+        'Nilai default dievaluasi satu kali pada saat definisi fungsi (definition-time). Jika objek default bersifat mutable (seperti list atau dict), mutasi pada pemanggilan pertama akan terbawa ke pemanggilan berikutnya. Gunakan sentinel None sebagai gantinya.',
+      hint: 'Ingat perbedaan waktu evaluasi antara saat fungsi didefinisikan dan saat fungsi dipanggil.',
+    },
+    assignment: {
+      title: 'Tugas Praktik 13: Flexible Telemetry Pipeline Engine',
+      description:
+        'Rancang arsitektur mesin pemroses data telemetri yang mengintegrasikan higher-order pipeline chaining, predicate filter closures, serta dynamic aggregators berbasis *args dan **kwargs.',
+      instructions: [
+        'Implementasikan fungsi closure pembuat filter ambang batas (buat_filter_rentang).',
+        'Implementasikan fungsi higher-order eksekusi rantai transformasi (jalankan_pipeline).',
+        'Implementasikan fungsi agregator dinamis dengan parameter positional-only dan **kwargs.',
+        'Hindari penggunaan mutable default arguments dan gunakan sentinel None.',
+      ],
+      rubric: [
+        { criteria: 'Desain Higher-Order & Pipeline Chaining', weight: 30, description: 'Fungsi pipeline mengeksekusi transformasi data berantai secara presisi.' },
+        { criteria: 'Implementasi Closure & Lexical Scope', weight: 25, description: 'Closure mempertahankan state ambang batas secara independen.' },
+        { criteria: 'Pemanfaatan *args, **kwargs & Parameter Constraints', weight: 25, description: 'Menerapkan pembatas / dan * serta unpacking secara tepat.' },
+        { criteria: 'Kebersihan Kode, Type Hints & Sentinel None', weight: 20, description: 'Kode bersih, type hints lengkap, dan tidak ada mutable default bug.' },
+      ],
+      starterFilename: 'tugas_13.py',
+      downloadMdUrl: 'downloads/chapter-13/tugas.md',
+      downloadPyUrl: 'downloads/chapter-13/contoh.py',
+    },
   },
   {
     id: 14,
@@ -1073,14 +1129,70 @@ def calculate_statistics(students: list[dict[str, Any]]) -> dict[str, Any]:
     competencyFocus: 'PCAP 1.2: Comprehensions dan protokol iterasi',
     estimatedHours: 4,
     difficulty: 'Intermediate',
-    available: false,
+    available: true,
     prerequisites: ['Chapter 08', 'Chapter 09'],
     learningObjectives: [
       'Menulis list comprehension dengan klausa filter kondisi if secara idiomatis',
       'Membangun dictionary comprehension dan set comprehension untuk transformasi data tabular',
       'Memahami protokol iterator dan perbandingan memori list vs generator expression',
+      'Menerapkan enumerate() dan zip() untuk manipulasi data multi-koleksi paralel',
+      'Meratakan matriks bersarang 2D menggunakan nested comprehension',
     ],
-    tags: ['Comprehension', 'Generators', 'Iterators', 'Filtering'],
+    tags: ['Comprehension', 'Generators', 'Iterators', 'Filtering', 'Lazy Evaluation'],
+    deckPath: '#chapter/14/slides',
+    tugasPath: '#chapter/14/task',
+    codeExample: {
+      title: 'List Comprehension Dasar dan Pemfilteran Kondisional',
+      code: `# Transformasi dan pemfilteran sinyal daya\nsinyal_dbm = [-115.0, -98.2, -84.0, -70.5, -62.0]\ndaya_mw = [round(10 ** (p / 10), 6) for p in sinyal_dbm]\nsinyal_kuat = [s for s in sinyal_dbm if s >= -90.0]\n\nprint("Daya (mW)  :", daya_mw)\nprint("Sinyal Kuat:", sinyal_kuat)`,
+      outputKey: 'ch14-01',
+      explanation:
+        'List comprehension memadukan perulangan for dan filter if dalam satu ekspresi ringkas untuk menghasilkan koleksi data baru secara deklaratif.',
+    },
+    exercise: {
+      title: 'Latihan Terarah: Transformasi Koleksi Ekspresif',
+      instructions: [
+        'Ekstraksi log SNR menggunakan list comprehension dengan ternary if-else.',
+        'Lakukan inversi kamus node IP ke hostname dengan filter nama akses.',
+        'Gabungkan aliran data sensor paralel menggunakan zip() dan enumerate().',
+        'Bangun generator deret bilangan prima untuk streaming evaluasi lazy.',
+      ],
+      tips: 'Gunakan kurung siku [] untuk list comprehension (eager) dan kurung biasa () untuk generator expression (lazy).',
+      time: '30 menit',
+    },
+    quiz: {
+      question:
+        'Apakah perbedaan mendasar antara list comprehension [x for x in data] dan generator expression (x for x in data)?',
+      options: [
+        'List comprehension mengevaluasi seluruh data ke memori RAM seketika (eager), sedangkan generator expression mengevaluasi data satu per satu saat diminta (lazy)',
+        'List comprehension hanya mendukung bilangan bulat, sedangkan generator expression mendukung semua tipe data',
+        'Generator expression menghasilkan objek bertipe tuple, sedangkan list comprehension bertipe list',
+        'Generator expression lebih lambat dan mengonsumsi memori lebih besar daripada list comprehension',
+      ],
+      correctIndex: 0,
+      explanation:
+        'List comprehension bersifat eager dan mengalokasikan seluruh elemen di RAM sekaligus, sedangkan generator expression bersifat lazy yang menghemat memori karena nilai hanya dihitung saat metode next() dipanggil.',
+      hint: 'Ingat perbandingan ukuran memori menggunakan sys.getsizeof() pada dataset besar.',
+    },
+    assignment: {
+      title: 'Tugas Praktik 14: Dataset Transformation Toolkit',
+      description:
+        'Rancang pustaka utilitas pemrosesan data telemetri yang mengintegrasikan list comprehension, dict comprehension, set comprehension, nested matrix flattening, dan memory-safe generator expressions.',
+      instructions: [
+        'Implementasikan pemfilteran dan penskalaan daya menggunakan list comprehension.',
+        'Implementasikan pembuatan peta indeks IP ke nama host menggunakan dict comprehension.',
+        'Ekstrak himpunan zona unik yang telah dinormalisasi menggunakan set comprehension.',
+        'Ratakan matriks 2D menjadi 1D menggunakan nested comprehension dan bangun generator stream.',
+      ],
+      rubric: [
+        { criteria: 'Penguasaan List & Nested Comprehensions', weight: 25, description: 'Menerapkan list comprehension dan nested flattening secara presisi tanpa loop imperatif manual.' },
+        { criteria: 'Penguasaan Dict & Set Comprehensions', weight: 25, description: 'Mampu menginversi dan membangun mapping kamus serta deduplikasi himpunan unik secara bersih.' },
+        { criteria: 'Protokol Iterator & Generator Expression', weight: 25, description: 'Menerapkan generator expression bertipe lazy, memahami interaksi iter(), next(), dan efisiensi memori.' },
+        { criteria: 'Pemanfaatan Enumerate, Zip & Standar PEP 8', weight: 25, description: 'Menggunakan enumerate() dan zip() secara idiomatis, kode memiliki type hints lengkap, dan format rapi.' },
+      ],
+      starterFilename: 'tugas_14.py',
+      downloadMdUrl: 'downloads/chapter-14/tugas.md',
+      downloadPyUrl: 'downloads/chapter-14/contoh.py',
+    },
   },
   {
     id: 15,
@@ -1090,18 +1202,74 @@ def calculate_statistics(students: list[dict[str, Any]]) -> dict[str, Any]:
     title: 'Searching & Sorting Algorithms',
     subtitle: 'Linear Search, Binary Search, Selection Sort & Timsort (sorted)',
     description:
-      'Studi algoritma klasik: linear search O(n), binary search O(log n), selection sort O(n²), pemanfaatan sorted() dengan custom key lambda, dan reverse.',
+      'Studi algoritma klasik: linear search O(n), binary search O(log n), bubble sort, selection sort, insertion sort O(n²), serta pemanfaatan sorted() dengan custom key lambda.',
     competencyFocus: 'PCAP 1.3: Algoritma pencarian dan pengurutan terapan',
     estimatedHours: 5,
     difficulty: 'Intermediate',
-    available: false,
+    available: true,
     prerequisites: ['Chapter 08', 'Chapter 14'],
     learningObjectives: [
       'Mengimplementasikan linear search pada data tidak terurut dengan penanganan kasus None',
-      'Mengimplementasikan selection sort secara manual untuk memahami mekanisme swap data',
+      'Mengimplementasikan binary search O(log n) dengan prasyarat data terurut',
+      'Memahami mekanisme pertukaran data pada Bubble Sort, Selection Sort, dan Insertion Sort',
       'Mengurutkan data dictionary kompleks menggunakan sorted(data, key=lambda x: ...)',
+      'Menganalisis konsep pengurutan stabil (stable sort) dan efisiensi algoritma Timsort',
     ],
-    tags: ['Algorithms', 'Linear Search', 'Selection Sort', 'Sorting'],
+    tags: ['Algorithms', 'Linear Search', 'Binary Search', 'Selection Sort', 'Bubble Sort', 'Insertion Sort', 'Timsort'],
+    deckPath: '#chapter/15/slides',
+    tugasPath: '#chapter/15/task',
+    codeExample: {
+      title: 'Pencarian Biner (Binary Search) O(log n)',
+      code: `# Pencarian biner pada deret frekuensi terurut\nfrekuensi = [100, 250, 450, 800, 900, 1800, 2100, 2600, 3500]\nkiri, kanan = 0, len(frekuensi) - 1\ntarget = 2100\nindeks = None\n\nwhile kiri <= kanan:\n    tengah = (kiri + kanan) // 2\n    if frekuensi[tengah] == target:\n        indeks = tengah\n        break\n    elif frekuensi[tengah] < target:\n        kiri = tengah + 1\n    else:\n        kanan = tengah - 1\n\nprint(f"Target {target} ditemukan pada indeks ke-{indeks}")`,
+      outputKey: 'ch15-02',
+      explanation:
+        'Binary search membagi ruang pencarian menjadi setengah pada setiap langkah perbandingan, menghasilkan kompleksitas waktu O(log n) dengan syarat data telah terurut.',
+    },
+    exercise: {
+      title: 'Latihan Terarah: Eksplorasi Algoritma Pencarian & Pengurutan',
+      instructions: [
+        'Modifikasi binary search untuk mencari elemen pertama yang melampaui ambang batas (lower bound).',
+        'Urutkan antrean tugas transmisi berdasarkan prioritas dengan prinsip stable sort.',
+        'Hitung total operasi swap pada Bubble Sort untuk data acak vs data terbalik.',
+        'Implementasikan fungsi penyisipan terurut (streaming insertion) pada data terurut.',
+      ],
+      tips: 'Binary search hanya valid jika koleksi data telah diurutkan terlebih dahulu.',
+      time: '40 menit',
+    },
+    quiz: {
+      question:
+        "Mengapa fungsi bawaan Python 'sorted()' umumnya jauh lebih disukai daripada implementasi Bubble Sort atau Selection Sort buatan sendiri?",
+      options: [
+        'sorted() menggunakan Timsort hibrida berkecepatan O(n log n) yang ditulis dalam bahasa C dan terbukti stabil serta adaptif',
+        'Karena fungsi sorted() tidak mengonsumsi memori sama sekali (0 byte)',
+        'Karena Python melarang penulisan algoritma sorting manual',
+        'Karena Bubble Sort tidak dapat mengurutkan bilangan bernilai negatif',
+      ],
+      correctIndex: 0,
+      explanation:
+        'Fungsi bawaan Python sorted() mengimplementasikan algoritma Timsort (kombinasi Merge Sort dan Insertion Sort) yang diimplementasikan dalam C murni. Timsort memiliki performa kasus terburuk O(n log n) yang jauh lebih cepat daripada algoritma kuadratik O(n²), adaptif terhadap pola data yang sudah hampir terurut, dan menjamin kestabilan (stable sort).',
+      hint: 'Pikirkan perbedaan kompleksitas waktu antara O(n log n) dan O(n²) serta bahasa implementasi internal CPython.',
+    },
+    assignment: {
+      title: 'Tugas Praktik 15: Network Metric Search & Ranking Engine',
+      description:
+        'Rancang mesin pencarian dan pemeringkatan metrik jaringan telekomunikasi yang memadukan linear search, binary search, tiga algoritma sorting klasik manual (Bubble, Selection, Insertion), dan pemeringkatan multi-kriteria berbasis Timsort.',
+      instructions: [
+        'Implementasikan fungsi linear search untuk pencarian ID node dan binary search untuk kanal frekuensi.',
+        'Implementasikan tiga algoritma pengurutan manual murni (Bubble, Selection, dan Insertion Sort).',
+        'Implementasikan pemeringkatan performa multi-kriteria BTS (latensi terendah dan RSRP terkuat) menggunakan sorted().',
+        'Pastikan kode menangani kasus batas: list kosong, satu elemen, duplikat, dan angka negatif.',
+      ],
+      rubric: [
+        { criteria: 'Kebenaran Linear & Binary Search', weight: 25, description: 'Pencarian akurat, menghormati prasyarat list terurut, dan menangani target nihil.' },
+        { criteria: 'Implementasi Bubble & Selection Sort', weight: 25, description: 'Bubble Sort (dengan deteksi early stop) dan Selection Sort manual berjalan lancar.' },
+        { criteria: 'Implementasi Insertion Sort & Stabilitas', weight: 25, description: 'Insertion Sort menggeser prefix dengan tepat dan memahami konsep pengurutan stabil.' },
+        { criteria: 'Pemeringkatan Multi-Kriteria Timsort & Edge Cases', weight: 25, description: 'Custom lambda key multi-atribut, penanganan kasus batas (kosong/duplikat), dan format rapi.' },
+      ],
+      starterFilename: 'tugas_15.py',
+      downloadMdUrl: 'downloads/chapter-15/tugas.md',
+      downloadPyUrl: 'downloads/chapter-15/contoh.py',
+    },
   },
   {
     id: 16,
@@ -1111,18 +1279,69 @@ def calculate_statistics(students: list[dict[str, Any]]) -> dict[str, Any]:
     title: 'Algorithm Analysis & Problem Solving',
     subtitle: 'Notasi Big-O, Space-Time Tradeoffs & Strategi Algoritmik',
     description:
-      'Menganalisis efisiensi algoritma secara formal: notasi O(1), O(log n), O(n), O(n²), memory footprint, dan teknik pemecahan masalah komputasi.',
+      'Menganalisis efisiensi algoritma secara formal: notasi O(1), O(log n), O(n), O(n log n), O(n²), memory footprint, benchmarking time.perf_counter(), dan teknik dekomposisi pemecahan masalah.',
     competencyFocus: 'PCAP 1.4: Kompleksitas komputasi & optimasi',
-    estimatedHours: 4,
+    estimatedHours: 5,
     difficulty: 'Intermediate',
-    available: false,
+    available: true,
     prerequisites: ['Chapter 15'],
     learningObjectives: [
-      'Menentukan kompleksitas waktu kasus terbaik, rata-rata, dan terburuk',
-      'Membandingkan efisiensi struktur data (list lookup vs set/dict lookup)',
-      'Mengoptimalkan algoritma dari kuadratik O(n²) ke linier O(n)',
+      'Menganalisis kompleksitas waktu asimtotik algoritma menggunakan notasi Big-O',
+      'Membedakan skenario analisis performa: Best-Case, Average-Case, dan Worst-Case',
+      'Mengukur konsumsi memori dan menganalisis space-time tradeoffs',
+      'Melakukan benchmarking empiris presisi tinggi dengan modul time.perf_counter()',
+      'Menerapkan strategi pemecahan masalah terstruktur dan optimasi bottleneck komputasi',
     ],
-    tags: ['Big-O', 'Complexity', 'Optimization'],
+    tags: ['Big-O', 'Complexity Analysis', 'Space-Time Tradeoffs', 'Benchmarking', 'Performance Optimization', 'Problem Solving'],
+    deckPath: '#chapter/16/slides',
+    tugasPath: '#chapter/16/task',
+    codeExample: {
+      title: 'Benchmarking Operasi O(1) vs O(n)',
+      code: `import time\n\nN = 100_000\ndaftar_elemen = list(range(N))\nhimpunan_elemen = set(range(N))\ntarget = N - 1\n\nt0 = time.perf_counter()\nada_di_list = target in daftar_elemen\nwaktu_list = (time.perf_counter() - t0) * 1000\n\nt0 = time.perf_counter()\nada_di_set = target in himpunan_elemen\nwaktu_set = (time.perf_counter() - t0) * 1000\n\nprint(f"List O(n): {waktu_list:.4f} ms | Set O(1): {waktu_set:.4f} ms")`,
+      outputKey: 'ch16-01',
+      explanation:
+        'Pencarian keanggotaan pada list membutuhkan pemindaian berurutan O(n), sedangkan hash set melakukan kalkulasi hash tabel dengan kompleksitas rata-rata O(1).',
+    },
+    exercise: {
+      title: 'Latihan Terarah: Analisis & Optimasi Algoritmik',
+      instructions: [
+        'Lakukan profiling perbandingan waktu iterasi list vs generator untuk 1.000.000 angka.',
+        'Optimalkan fungsi pencarian pasangan angka yang menjumlahkan target S dari O(n²) menjadi O(n).',
+        'Analisis konsumsi memori tumpukan rekursi pada fungsi faktorial vs pendekatan iteratif.',
+        'Ukur kestabilan durasi eksekusi dengan variasi 10 kali run menggunakan time.perf_counter().',
+      ],
+      tips: 'Selalu sertakan warm-up run dan hitung rata-rata durasi agar hasil benchmarking tidak terdistorsi oleh aktivitas background OS.',
+      time: '40 menit',
+    },
+    quiz: {
+      question:
+        'Sebuah fungsi memproses list berukuran n dengan loop bersarang ganda (nested loop) di mana kedua loop beriterasi dari 0 hingga n. Berapakah kompleksitas waktu fungsi tersebut?',
+      options: ['O(n²)', 'O(n log n)', 'O(2n)', 'O(n)'],
+      correctIndex: 0,
+      explanation:
+        'Ketika loop luar beriterasi n kali dan untuk setiap iterasinya loop dalam juga berjalan n kali, total operasi dasar yang dieksekusi adalah n * n = n², sehingga kompleksitas waktunya adalah kuadratik atau O(n²).',
+      hint: 'Kalikan jumlah iterasi loop luar dengan jumlah iterasi loop dalam.',
+    },
+    assignment: {
+      title: 'Tugas Praktik 16: Telemetry Processing Benchmark & Optimization Suite',
+      description:
+        'Rancang perangkat lunak analisis performa algoritma telekomunikasi yang membandingkan kompleksitas waktu dan ruang berbagai metode deduplikasi sinyal, lookup gateway, serta deteksi anomali transmisi.',
+      instructions: [
+        'Implementasikan fungsi deduplikasi kuadratik O(n²) dan bandingkan dengan deduplikasi O(n) berbasis set.',
+        'Lakukan pengukuran empiris presisi tinggi pada berbagai skala masukan (n = 100, 1.000, 10.000).',
+        'Bandingkan waktu pencarian linear search vs dictionary lookup pada dataset sinyal telekomunikasi.',
+        'Format laporan benchmarking dalam tabel terstruktur lengkap dengan rasio akselerasi (speedup factor).',
+      ],
+      rubric: [
+        { criteria: 'Ketepatan Analisis Teoretis & Kompleksitas', weight: 25, description: 'Karakterisasi notasi Big-O untuk tiap fungsi akurat dan sesuai kaidah asimtotik.' },
+        { criteria: 'Implementasi Optimasi O(n²) ke O(n)', weight: 25, description: 'Solusi optimal memanfaatkan space-time tradeoff (set/dict) dengan hasil output identik.' },
+        { criteria: 'Metodologi Benchmarking Presisi Tinggi', weight: 25, description: 'Penggunaan time.perf_counter() dengan warm-up, multi-iterasi, dan perhitungan rata-rata/min yang valid.' },
+        { criteria: 'Kualitas Pelaporan & Penanganan Edge Cases', weight: 25, description: 'Tabel laporan perbandingan performa rapi serta penanganan dataset kosong dan elemen duplikat.' },
+      ],
+      starterFilename: 'tugas_16.py',
+      downloadMdUrl: 'downloads/chapter-16/tugas.md',
+      downloadPyUrl: 'downloads/chapter-16/contoh.py',
+    },
   },
   {
     id: 17,

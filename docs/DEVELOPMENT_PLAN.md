@@ -56,16 +56,20 @@ Setiap fase memiliki gerbang kualitas (*quality gates*) yang harus dipenuhi sebe
 ### FASE 2: Tingkat Menengah — Algoritma & Pemrosesan Data (Prioritas P2)
 *Target: Menguasai teknik fungsi tingkat tinggi, pemrosesan sequence efisien, algoritma klasik, dan penyimpanan data lokal.*
 
-| Chapter | Judul & Fokus Materi | Estimasi Beban | Sumber Rujukan Utama | Keluaran yang Dihasilkan |
+| Chapter | Judul & Fokus Materi | Estimasi Beban | Sumber Rujukan Utama | Status & Keluaran yang Dihasilkan |
 |:---|:---|:---:|:---|:---|
-| **Ch 13** | `13-advanced-functions` — *args, **kwargs, Lambda, Closures | 5 Jam | [DOCS] Sec 4.8, [30DAY] Day 14 | `index.md`, 18 slide, 6 contoh kode, 4 latihan, 1 tugas |
-| **Ch 14** | `14-comprehensions-iterators` — List/Dict/Set Comprehension | 5 Jam | [DOCS] Sec 5.1.3, [30DAY] Day 13 | `index.md`, 18 slide, 6 contoh kode, 4 latihan, 1 tugas |
-| **Ch 15** | `15-searching-sorting-algorithms` — Linear, Binary Search, Sort | 6 Jam | [THINK] Ch 10, [LEARN] `algorithms/` | `index.md`, 22 slide, 8 contoh kode, 4 latihan, 1 tugas |
-| **Ch 16** | `16-algorithm-analysis-problem-solving` — Kompleksitas Big-O | 5 Jam | [THINK] App B, Python TimeWiki | `index.md`, 18 slide, 5 contoh kode, 3 latihan, 1 tugas |
+| **Ch 13** | `13-advanced-functions` — *args, **kwargs, Lambda, Closures | 5 Jam | [DOCS] Sec 4.8, [30DAY] Day 14 | **SELESAI (100%)**: `index.md`, 20 slide, 7 contoh kode, 4 latihan, 1 tugas, test suite (6 tests) |
+| **Ch 14** | `14-comprehensions-iterators` — List/Dict/Set Comprehension | 5 Jam | [DOCS] Sec 5.1.3, [30DAY] Day 13 | **SELESAI (100%)**: `index.md`, 20 slide, 7 contoh kode, 4 latihan, 1 tugas, test suite (5 tests) |
+| **Ch 15** | `15-searching-sorting-algorithms` — Linear, Binary Search, Sort | 6 Jam | [THINK] Ch 10, [LEARN] `algorithms/` | **SELESAI (100%)**: `index.md`, 20 slide, 7 contoh kode, 4 latihan, 1 tugas, test suite (4 tests) |
+| **Ch 16** | `16-algorithm-analysis-problem-solving` — Kompleksitas Big-O | 5 Jam | [THINK] App B, Python TimeWiki | **SELESAI (100%)**: `index.md`, 20 slide, 7 contoh kode, 4 latihan, 1 tugas, test suite (3 tests) |
 | **Ch 17** | `17-file-handling-serialization` — Context Manager, CSV, JSON | 5 Jam | [DOCS] Sec 7.2, [CS50P] Wk 6 | `index.md`, 20 slide, 6 contoh kode, 4 latihan, 1 tugas |
 | **Ch 18** | `18-exception-handling-debugging` — Custom Exception, pdb | 5 Jam | [DOCS] Sec 8, [CS50P] Wk 3 | `index.md`, 18 slide, 5 contoh kode, 3 latihan, 1 tugas |
 
-*Milestone Fase 2:* Kemampuan algoritmik dan pemrosesan berkas data terapan telah terbangun secara komprehensif.
+*Status Kemajuan Fase 2:*
+- **Batch 1 (Chapter 13 s.d. 16):** **100% Selesai & Terverifikasi** (CPython 3, Slide Deck, Unittest suites, Typecheck, Build, Routes).
+- **Batch 2 (Chapter 17 s.d. 18):** Dalam rencana pengerjaan berikutnya.
+
+*Milestone Fase 2 (Batch 1):* **TERCAPAI 100%**. Fondasi fungsi tingkat lanjut, pemrosesan sequence ekspresif, algoritma pencarian & pengurutan, serta analisis kompleksitas Big-O telah selesai dan terintegrasi penuh.
 
 ---
 
