@@ -1,0 +1,35 @@
+{
+  "id": 20,
+  "number": "20",
+  "slug": "20-oop-advanced",
+  "levelId": 2,
+  "levelCategory": "intermediate",
+  "title": "Object-Oriented Programming II",
+  "subtitle": "Inheritance, Polymorphism, super(), dan Dunder Magic Methods",
+  "description": "Pewarisan sifat antar class, method overriding, pemanggilan super(), polimorfisme, dan special methods (__str__, __repr__, __len__, __eq__).",
+  "competencyFocus": "PCAP 3.2: Inheritance, polymorphism & magic methods",
+  "estimatedHours": 5,
+  "difficulty": "Intermediate",
+  "available": false,
+  "prerequisites": [
+    "Chapter 19"
+  ],
+  "learningObjectives": [
+    "Membangun class turunan dan memanfaatkan pewarisan kode",
+    "Mengoverride metode induk dan memanggil fungsionalitas aslinya dengan super()",
+    "Mengimplementasikan magic methods dunder untuk representasi dan perbandingan kustom"
+  ],
+  "tags": [
+    "Inheritance",
+    "Polymorphism",
+    "Dunder Methods",
+    "super()"
+  ],
+  "resources": {
+    "hasSlides": false,
+    "slidesDeck": null,
+    "starterCode": null,
+    "assignmentGuide": null,
+    "pptxDownload": "downloads/Materi_Pengkom_Pertemuan_9_10_Python.pptx"
+  }
+}

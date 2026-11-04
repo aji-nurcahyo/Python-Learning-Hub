@@ -1,0 +1,35 @@
+{
+  "id": 19,
+  "number": "19",
+  "slug": "19-oop-fundamentals",
+  "levelId": 2,
+  "levelCategory": "intermediate",
+  "title": "Object-Oriented Programming I",
+  "subtitle": "Class, Object, Instance Attributes, self & Metode",
+  "description": "Paradigma berorientasi objek: merancang blueprint class, konstruktor __init__, parameter self, atribut instance vs atribut class, dan encapsulation dasar.",
+  "competencyFocus": "PCAP 3.1: Konsep dasar OOP, class & instance",
+  "estimatedHours": 5,
+  "difficulty": "Intermediate",
+  "available": false,
+  "prerequisites": [
+    "Chapter 10"
+  ],
+  "learningObjectives": [
+    "Mendefinisikan class dan menginstansiasi object nyata",
+    "Membedakan instance attributes dan class-level attributes",
+    "Mengimplementasikan encapsulation melalui konvensi private variable (_var, __var)"
+  ],
+  "tags": [
+    "OOP",
+    "Class",
+    "Object",
+    "Encapsulation"
+  ],
+  "resources": {
+    "hasSlides": false,
+    "slidesDeck": null,
+    "starterCode": null,
+    "assignmentGuide": null,
+    "pptxDownload": "downloads/Materi_Pengkom_Pertemuan_9_10_Python.pptx"
+  }
+}

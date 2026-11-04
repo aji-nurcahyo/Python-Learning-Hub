@@ -1,0 +1,35 @@
+{
+  "id": 21,
+  "number": "21",
+  "slug": "21-packages-environments-testing",
+  "levelId": 2,
+  "levelCategory": "intermediate",
+  "title": "Packages, Environments & Testing",
+  "subtitle": "PyPI, virtualenv, pip, pyproject.toml & pytest",
+  "description": "Tata kelola proyek modern: isolasi dependency dengan venv/pip, struktur paket Python (__init__.py), dan penulisan unit test otomatis dengan pytest/unittest.",
+  "competencyFocus": "PCAP 4.1: Package ecosystem & automated testing",
+  "estimatedHours": 4,
+  "difficulty": "Intermediate",
+  "available": false,
+  "prerequisites": [
+    "Chapter 20"
+  ],
+  "learningObjectives": [
+    "Membuat dan mengaktifkan virtual environment terisolasi",
+    "Mengatur dependensi proyek dengan requirements.txt atau pyproject.toml",
+    "Menulis unit test assertif menggunakan framework unittest dan pytest"
+  ],
+  "tags": [
+    "venv",
+    "pip",
+    "pytest",
+    "Packaging"
+  ],
+  "resources": {
+    "hasSlides": false,
+    "slidesDeck": null,
+    "starterCode": null,
+    "assignmentGuide": null,
+    "pptxDownload": "downloads/Materi_Pengkom_Pertemuan_9_10_Python.pptx"
+  }
+}

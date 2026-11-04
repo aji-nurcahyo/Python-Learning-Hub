@@ -84,15 +84,16 @@ Kurikulum Python Learning Hub disusun berjenjang dan mencakup:
 - **Halaman Silabus Spesialisasi (`#/track/:id`)**:
   - Target profesi, 5 modul materi berurutan, dan prasyarat chapter dasar.
 - **Halaman Modul Pembelajaran (`#/chapter/:id`)**:
+  - Tampilan tab modern terintegrasi: **Materi & Kode**, **Presentasi Slide**, **Latihan Terarah**, dan **Tugas Mandiri**.
   - Metadata modul (level, kesulitan, estimasi jam, fokus kompetensi).
   - Tautan langsung ke presentasi interaktif Reveal.js 6 dan mode baca dokumen linier.
   - Penampil kode sumber dengan syntax highlighting Shiki dan tombol salin satu-klik.
   - Output terminal hasil eksekusi CPython 3 nyata.
   - Latihan terarah (*Guided Exercise*) dengan langkah instruksi dan tips pengujian.
-  - Kuis konsep (*Conceptual Quiz*) dengan pengungkapan pembahasan.
+  - Kuis konsep (*Conceptual Quiz*) dengan pilihan ganda dan pengungkapan pembahasan.
   - Tugas praktik mandiri (*Assignment Card*) dengan spesifikasi, starter code, tautan unduh panduan, dan rubrik penilaian berbobot 100%.
   - Navigasi antar-chapter (Sebelumnya / Selanjutnya).
-  - Tampilan *Coming Soon* ramah pengguna untuk chapter yang masih dalam penulisan silabus.
+  - Tampilan *Coming Soon* ramah pengguna untuk chapter yang masih dalam penyusunan silabus.
 - **Sistem Presentasi Reveal.js 6**:
   - Navigasi keyboard penuh (`Panah`, `Space`, `ESC`).
   - Slide Overview (`ESC` / `O`).
@@ -108,23 +109,62 @@ Kurikulum Python Learning Hub disusun berjenjang dan mencakup:
 
 ---
 
-## 5. Manajemen Sumber Daya Materi Pembelajaran
+## 5. Manajemen Konten Modular (`content/`)
 
-Untuk mendukung skalabilitas materi pembelajaran pada chapter-chapter berikutnya, struktur penyimpanan berkas diatur sebagai berikut:
+Seluruh materi pembelajaran diorganisasikan dalam folder modular `content/`:
+
+```text
+content/
+├── foundations/                     # Level 1 (Chapter 01 – 12)
+│   ├── chapter-08/                 # List & Tuple
+│   ├── chapter-09/                 # Dictionaries & Sets
+│   ├── chapter-10/                 # Functions & Scope
+│   ├── chapter-11/                 # Modules & Packages
+│   └── ... (chapter-01 s.d. 12)
+├── intermediate/                    # Level 2 (Chapter 13 – 22)
+│   └── ... (chapter-13 s.d. 22)
+├── professional/                    # Level 3 (Chapter 23 – 30)
+│   └── ... (chapter-23 s.d. 30)
+└── specializations/                 # 5 Jalur Spesialisasi Industri
+    ├── track-data-science/
+    ├── track-ai-ml/
+    ├── track-web-api/
+    ├── track-automation/
+    └── track-iot-telecom/
+```
+
+Setiap chapter memiliki struktur mandiri:
+- `metadata.json`: Sumber data tunggal untuk ID, judul, tujuan pembelajaran, prasyarat, latihan, kuis, dan tugas.
+- `index.md`: Ringkasan modul atau bacaan linier.
+- `slides/deck.json`: Slide presentasi Reveal.js 6.
+- `code/contoh.py`: Skrip program Python terverifikasi.
+- `exercises/`: Soal latihan dan kunci pembahasan kuis.
+- `assignments/tugas.md`: Panduan tugas mandiri dan kriteria penilaian.
+- `assets/`: Diagram atau ilustrasi pendukung.
+
+> 📖 **Panduan Penambahan Modul:** Untuk tata cara menambahkan chapter baru atau memperbarui modul yang sudah ada, baca [docs/ADDING_CHAPTER.md](docs/ADDING_CHAPTER.md).
+
+---
+
+## 6. Berkas Unduhan Publik (`public/downloads/`)
+
+Berkas yang dapat diunduh langsung oleh pembaca disimpan di `public/downloads/`:
 
 ```text
 public/downloads/
-├── examples/               # Skrip Python (.py) mandiri untuk diunduh pembaca
-│   ├── p09-01.py
-│   ├── ...
-│   └── p09-module/
-│       └── statistik.py
-├── pertemuan-09/           # Paket unduhan materi per chapter
-│   ├── contoh.py           # Starter code contoh Python
-│   └── tugas.md            # Panduan tugas mandiri dalam format Markdown
-├── pertemuan-10/
+├── chapter-08/             # Paket starter Python & tugas Chapter 08
 │   ├── contoh.py
 │   └── tugas.md
+├── chapter-09/             # Paket starter Python & tugas Chapter 09
+│   ├── contoh.py
+│   └── tugas.md
+├── chapter-10/             # Paket starter Python & tugas Chapter 10
+│   ├── contoh.py
+│   └── tugas.md
+├── chapter-11/             # Paket starter Python & tugas Chapter 11
+│   ├── contoh.py
+│   └── tugas.md
+├── examples/               # Skrip Python mandiri terpisah (p09-01.py s.d. p10-09.py)
 ├── datasets/               # Dataset latihan (CSV, JSON) untuk data science & IoT
 ├── docs/                   # Dokumen PDF / cheatsheet pendukung
 ├── .nojekyll               # Penanda non-Jekyll untuk GitHub Pages
@@ -132,11 +172,9 @@ public/downloads/
 └── Materi_Pengkom_Pertemuan_9_10_Python.pptx  # Slide sumber PPTX
 ```
 
-Setiap chapter baru dapat menambahkan berkas pendukung pada direktori `public/downloads/chapter-XX/` atau `pertemuan-XX/`, dan berkas tersebut akan langsung dapat diunduh tanpa konfigurasi server tambahan.
-
 ---
 
-## 6. Menjalankan di Lingkungan Lokal
+## 7. Menjalankan di Lingkungan Lokal
 
 ### Prasyarat Perangkat Lunak
 - **Node.js**: Versi 20+ (direkomendasikan v22 LTS / v24+)
@@ -161,7 +199,7 @@ Buka peramban pada URL yang ditampilkan di terminal (default: `http://localhost:
 # 1. Memeriksa konsistensi seluruh 24 contoh kode Python terhadap keluaran CPython
 npm run check:outputs
 
-# 2. Memeriksa ketersediaan konten dan slide materi
+# 2. Memeriksa ketersediaan konten 30 chapter dan 5 tracks
 npm run check:content
 
 # 3. Typecheck TypeScript (tsc --noEmit)
@@ -170,7 +208,7 @@ npm run typecheck
 # 4. Linting ESLint (standar kode bebas error)
 npm run lint
 
-# 5. Build produksi dan verifikasi seluruh 20 rute statis
+# 5. Build produksi dan verifikasi rute statis di dist/
 npm run build
 
 # 6. Menjalankan server preview hasil build produksi
@@ -179,9 +217,9 @@ npm run preview
 
 ---
 
-## 7. Publikasi & Hosting Statis Gratis (GitHub Pages)
+## 8. Publikasi & Hosting Statis Gratis (GitHub Pages)
 
-Proyek ini telah dikonfigurasi secara lengkap untuk dapat dipublikasikan secara gratis di **GitHub Pages** menggunakan arsitektur multi-page static site builder Vite dan GitHub Actions.
+Proyek ini telah dikonfigurasi secara lengkap untuk dapat dipublikasikan secara gratis di **GitHub Pages** menggunakan bundler Vite SPA dan GitHub Actions.
 
 ### Format URL Publik yang Diharapkan
 ```text
@@ -190,8 +228,8 @@ https://USERNAME.github.io/python-learning-hub/
 *(Ganti `USERNAME` dengan username akun GitHub Anda)*
 
 ### Kompatibilitas Subpath & SPA Routing
-- **Base Path Adaptif:** Konfigurasi `vite.config.ts` menggunakan `base: process.env.VITE_BASE_PATH || './'`, menghasilkan jalur aset relatif (`./assets/...` dan `../assets/...`) yang dapat berjalan lancar di subpath repositori GitHub Pages, root domain kustom, maupun Cloudflare Pages.
-- **Dukungan Refresh Peramban (`404.html` SPA Handler):** File `404.html` dilengkapi skrip pengalih otomatis yang mempertahankan path dan parameter URL yang diminta, lalu memuatnya kembali melalui hash route sehingga refresh pada URL nested (`/chapter/10`, `/level/2`, `/about`) tidak menghasilkan halaman kosong atau 404.
+- **Base Path Adaptif:** Konfigurasi `vite.config.ts` menggunakan `base: process.env.VITE_BASE_PATH || './'`, menghasilkan jalur aset relatif (`./assets/...`) yang dapat berjalan lancar di subpath repositori GitHub Pages, root domain kustom, maupun Cloudflare Pages.
+- **Dukungan Refresh Peramban (`404.html` SPA Handler):** File `404.html` dilengkapi skrip pengalih otomatis yang mempertahankan path dan parameter URL yang diminta, lalu memuatnya kembali melalui hash route sehingga refresh pada URL nested (`/chapter/10`, `/level/2`, `/about`) tidak menghasilkan halaman kosong atau 404. Selain itu, tautan lama seperti `/pertemuan-09/` secara cerdas dialihkan ke chapter baru `#/chapter/10`.
 - **Bebas Jekyll (`.nojekyll`):** File `public/.nojekyll` otomatis disertakan ke folder `dist/` untuk mencegah pemrosesan Jekyll pada GitHub Pages.
 
 ### Alur Kerja GitHub Actions (`.github/workflows/deploy.yml`)
@@ -202,12 +240,10 @@ Workflow otomatis telah disiapkan di `.github/workflows/deploy.yml`:
 4. Mengunggah folder `dist/` dan mempublikasikannya ke GitHub Pages dengan izin token minimum (`contents: read`, `pages: write`, `id-token: write`).
 
 ### Langkah-Langkah Publikasi oleh Pemilik Repositori
-Berikut adalah langkah yang perlu dilakukan pada akun GitHub Anda:
-
 1. **Buat Repositori Baru di GitHub:**
    - Masuk ke akun GitHub Anda dan buat repositori baru bernama: `python-learning-hub`.
    - Pilih visibilitas **Public**.
-   - Jangan centang "Add a README file" atau .gitignore (karena proyek lokal sudah memilikinya).
+   - Jangan centang "Add a README file" atau .gitignore.
 
 2. **Inisialisasi & Push Kode Lokal ke GitHub:**
    ```powershell
@@ -239,16 +275,9 @@ Berikut adalah langkah yang perlu dilakukan pada akun GitHub Anda:
    - Setelah workflow selesai (status hijau), situs web Anda akan aktif di:  
      `https://USERNAME.github.io/python-learning-hub/`
 
-### Kompatibilitas Cloudflare Pages (Alternatif Masa Depan)
-Aplikasi ini juga 100% kompatibel dengan Cloudflare Pages untuk domain kustom atau root-domain hosting gratis:
-- **Framework preset:** `Vite`
-- **Build command:** `npm run build`
-- **Build output directory:** `dist`
-- **Root directory:** `/`
-
 ---
 
-## 8. Struktur Rute Aplikasi
+## 9. Struktur Rute Aplikasi
 
 | Rute URL | Tampilan / Fungsi |
 |---|---|
@@ -256,39 +285,53 @@ Aplikasi ini juga 100% kompatibel dengan Cloudflare Pages untuk domain kustom at
 | `#/about` | Halaman Tentang Platform, Profil Pengembang & Filosofi Belajar |
 | `#/level/1`, `#/level/2`, `#/level/3` | Halaman detail Level 1, 2, atau 3 (Silabus, target kompetensi, capstone) |
 | `#/track/:id` | Halaman silabus jalur spesialisasi (misal `#/track/data-science`, `#/track/iot-telecom`) |
-| `#/chapter/:id` | Halaman modul pembelajaran chapter 1 s.d. 30 (Slide, kode, output, latihan, kuis, tugas) |
-| `/pertemuan-09/index.html` | Slide presentasi interaktif Reveal.js untuk Materi Chapter 09 (Fungsi, Scope, Modul) |
-| `/pertemuan-10/index.html` | Slide presentasi interaktif Reveal.js untuk Materi Chapter 10 (Struktur Data Python) |
-| `/pertemuan-09/tugas.html` & `10` | Dokumen panduan tugas praktik mandiri dan tabel rubrik penilaian |
-| `/pertemuan-09/index.html?view=read` | Mode baca dokumen linier untuk perangkat ponsel / tablet |
-| `/pertemuan-01/`–`08/`, `/pertemuan-11/`–`16/` | Rute placeholder (Segera Hadir) yang mengarahkan kembali ke kurikulum Hub |
-| `/404.html` | Halaman penanganan URL tidak ditemukan & router fallback |
+| `#/chapter/:id` | Halaman modul pembelajaran (Tab Materi, Slide, Latihan, Tugas) |
+| `#/chapter/:id/slides` | Slide presentasi interaktif Reveal.js layar penuh |
+| `#/chapter/:id/read` | Mode baca dokumen linier untuk perangkat ponsel / tablet |
+| `#/chapter/:id/task` | Tampilan fokus tugas praktik mandiri dan rubrik penilaian |
+| `/404.html` | SPA redirect fallback (mengarahkan URL langsung & bookmark lama ke hash route) |
 
 ---
 
-## 9. Struktur Direktori Proyek
+## 10. Struktur Direktori Proyek
 
 ```text
 Alpro-python/
 ├── .github/
 │   └── workflows/
 │       └── deploy.yml         # GitHub Actions CI/CD deployment ke GitHub Pages
+├── content/                   # Modular Chapter Curriculum (Single Source of Truth)
+│   ├── foundations/           # Chapter 01 – 12
+│   │   ├── chapter-08/        # Lists & Tuples (metadata, code, slides, exercises, tugas)
+│   │   ├── chapter-09/        # Dictionaries & Sets
+│   │   ├── chapter-10/        # Functions & Scope
+│   │   ├── chapter-11/        # Modules & Docstrings
+│   │   └── ... (chapter-01 s.d. 12)
+│   ├── intermediate/          # Chapter 13 – 22
+│   ├── professional/          # Chapter 23 – 30
+│   └── specializations/       # 5 Specialization Tracks
 ├── src/
 │   ├── code/                  # Skrip Python sumber, outputs.json, verifikator eksekusi CPython
 │   ├── components/            # Komponen modular edukasi:
-│   │   ├── AssignmentCard.tsx # Kartu tugas dengan spesifikasi, unduh, dan tabel rubrik penilaian
-│   │   ├── ChapterNavigation.tsx # Tombol navigasi chapter sebelumnya / berikutnya
+│   │   ├── AssignmentCard.tsx    # Kartu tugas dengan spesifikasi & starter code
+│   │   ├── AssignmentSection.tsx # Section tugas mandiri dan tabel rubrik penilaian berbobot
+│   │   ├── ChapterHeader.tsx     # Header chapter dengan breadcrumb, badge, & tombol aksi
+│   │   ├── ChapterLayout.tsx     # Shell tata letak tab materi, slide, latihan, dan tugas
+│   │   ├── ChapterNavigation.tsx # Navigasi chapter sebelumnya / berikutnya
 │   │   ├── CodeBlock.tsx         # Tokenizer Shiki dengan penomoran baris & tombol salin
 │   │   ├── CodeOutput.tsx        # Terminal card keluaran nyata CPython
 │   │   ├── DifficultyBadge.tsx   # Badge Beginner / Intermediate / Advanced
-│   │   ├── ExerciseCard.tsx      # Latihan terarah dengan langkah dan tips pengujian
-│   │   ├── LearningObjectives.tsx# Kartu daftar capaian tujuan pembelajaran
+│   │   ├── ExerciseCard.tsx      # Latihan terarah dengan langkah & tips pengujian
+│   │   ├── ExerciseSection.tsx   # Section latihan terarah dan kuis konsep
+│   │   ├── LearningObjectives.tsx# Kartu capaian tujuan pembelajaran
 │   │   ├── PrerequisiteList.tsx  # Daftar prasyarat materi
-│   │   └── QuizCard.tsx          # Kuis konsep interaktif dengan pembukaan pembahasan
+│   │   ├── QuizCard.tsx          # Kuis konsep interaktif dengan pembukaan pembahasan
+│   │   ├── ResourceDownloads.tsx # Tombol unduh materi (.py, .md, .pptx)
+│   │   └── SlideViewer.tsx       # Embed presentasi Reveal.js di dalam tab chapter
 │   ├── curriculum/
-│   │   └── index.ts           # Definisi terpusat 3 Level, 30 Chapter, 5 Tracks, dan Disclaimer
+│   │   └── index.ts           # Definisi kurikulum 3 Level, 30 Chapter, 5 Tracks, dan Disclaimer
 │   ├── deck-shell/            # Toolbar presentasi Reveal.js, preferensi tema, rasio layar
-│   ├── decks/                 # Data slide JSON pertemuan 9 & 10, registri slide, markdown tugas
+│   ├── decks/                 # Data slide JSON, registri slide, markdown tugas
 │   ├── layouts/
 │   │   └── SlideContent.tsx   # Komponen tata letak konten slide Reveal.js
 │   ├── pages/
@@ -296,31 +339,37 @@ Alpro-python/
 │   │   ├── AboutPage.tsx      # Halaman Tentang Platform, Profil Pengembang & Filosofi Belajar
 │   │   ├── LevelPage.tsx      # Halaman rincian level kompetensi
 │   │   ├── TrackPage.tsx      # Halaman silabus jalur spesialisasi
-│   │   └── ChapterPage.tsx    # Halaman modul pembelajaran chapter aktif & upcoming
+│   │   └── ChapterPage.tsx    # Halaman modul pembelajaran terintegrasi
 │   ├── theme/
 │   │   └── styles.css         # Desain sistem Material 3, Dark/Light mode overrides, responsive
 │   ├── ui/                    # Komponen utilitas (Icon, Code, Highlight, Math)
 │   └── main.tsx               # Entry point aplikasi React & router SPA
+├── docs/
+│   ├── ADDING_CHAPTER.md      # Panduan lengkap penambahan & pemeliharaan modul chapter
+│   └── AUDIT.md               # Catatan audit historis arsitektur
 ├── scripts/
 │   ├── check_outputs.mjs      # Verifikator output CPython 3
-│   ├── check_content.mjs      # Verifikator slide materi & kelengkapan slide
-│   └── test_routes.mjs        # Verifikator integritas 20 rute produksi di dist/
+│   ├── check_content.mjs      # Verifikator integritas 30 paket chapter dan 5 tracks
+│   ├── check_content.py       # Validasi Python independen untuk metadata chapter
+│   ├── run_examples.py        # Runner eksekusi CPython 3
+│   └── test_routes.mjs        # Verifikator integritas bundle dist/
 ├── public/                    # Aset statis yang disalin langsung ke dist/
 │   ├── .nojekyll              # Penonaktif pemroses Jekyll GitHub Pages
 │   └── downloads/             # Berkas materi sumber (.pptx, .md, .py) untuk diunduh pengguna
+├── legacy/                    # Arsip baca-saja materi awal perkuliahan
 ├── dist/                      # Direktori keluaran build produksi Vite
 ├── index.html                 # Entry point HTML utama
 ├── 404.html                   # Halaman fallback 404 & SPA redirect handler
 ├── package.json               # Konfigurasi dependensi dan skrip npm
 ├── tsconfig.json              # Konfigurasi TypeScript
-├── vite.config.ts             # Konfigurasi bundler Vite multi-page
+├── vite.config.ts             # Konfigurasi bundler Vite
 ├── .gitignore                 # Konfigurasi pengabaian Git (node_modules, build, secrets, temp)
 └── README.md                  # Dokumentasi resmi proyek
 ```
 
 ---
 
-## 10. Atribusi & Lisensi Sumber Terbuka
+## 11. Atribusi & Lisensi Sumber Terbuka
 
 - **Pengembang & Penulis Kurikulum Python Learning Hub:**  
   Aji Pamungkas Tri Nurcahyo (Program Studi Teknik Telekomunikasi, FTI, Institut Teknologi Sumatera).

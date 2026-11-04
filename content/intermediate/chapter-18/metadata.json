@@ -1,0 +1,35 @@
+{
+  "id": 18,
+  "number": "18",
+  "slug": "18-exception-handling-debugging",
+  "levelId": 2,
+  "levelCategory": "intermediate",
+  "title": "Exception Handling & Debugging",
+  "subtitle": "Hierarki Exception, Custom Exception & pdb Debugger",
+  "description": "Membuat program andal: hierarki exception Python, blok try/except/else/finally, raise custom exception kustom, dan teknik debugging dengan pdb/breakpoint.",
+  "competencyFocus": "PCAP 2.2: Exception hierarchy dan teknik debugging",
+  "estimatedHours": 4,
+  "difficulty": "Intermediate",
+  "available": false,
+  "prerequisites": [
+    "Chapter 11"
+  ],
+  "learningObjectives": [
+    "Menangkap beberapa exception spesifik secara hierarkis tanpa bare except:",
+    "Mendefinisikan class exception kustom turunan dari Exception bawaan",
+    "Menggunakan breakpoint() dan pdb untuk inspeksi call stack saat runtime"
+  ],
+  "tags": [
+    "Exceptions",
+    "Debugging",
+    "pdb",
+    "Robustness"
+  ],
+  "resources": {
+    "hasSlides": false,
+    "slidesDeck": null,
+    "starterCode": null,
+    "assignmentGuide": null,
+    "pptxDownload": "downloads/Materi_Pengkom_Pertemuan_9_10_Python.pptx"
+  }
+}

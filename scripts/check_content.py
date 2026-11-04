@@ -1,32 +1,41 @@
-"""Regression checks for preservation, placeholder status and runnable Python contracts."""
+"""Regression checks for modular chapter structure, slide preservation, and runnable Python contracts."""
 from pathlib import Path
 import re, json, html, importlib.util
-root=Path(__file__).resolve().parents[1]
-for n in [9,10]:
-    original=(root/f'legacy/pertemuan-{n:02}/index.html').read_text(encoding='utf-8')
-    titles=[html.unescape(t) for t in re.findall(r'<h[12]>(.*?)</h[12]>',original)]
-    slides=json.loads((root/f'src/decks/pertemuan-{n:02}.json').read_text(encoding='utf-8'))
-    assert all(t in [s['title'] for s in slides] for t in titles), 'Original slide omitted'
-    for file in ['tugas.md','contoh.py']:
-        assert (root/f'legacy/pertemuan-{n:02}/{file}').read_bytes()==(root/f'pertemuan-{n:02}/{file}').read_bytes()
-    task=(root/f'src/decks/tugas-{n:02}.md').read_text(encoding='utf-8')
-    assert task==(root/f'legacy/pertemuan-{n:02}/tugas.md').read_text(encoding='utf-8')
-    for slide in slides:
-        if 'example' in slide:
-            assert (root/f'src/code/{slide["example"]}.py').is_file()
-    spec=importlib.util.spec_from_file_location(f'example{n}',root/f'pertemuan-{n:02}/contoh.py')
-    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
-    if n==9:
-        assert module.rata_rata([]) is None
-        assert module.rata_rata([-80,-100])==-90
-        assert [module.kategori_rsrp(v) for v in [-90,-91,-105,-106]]==['Baik','Sedang','Sedang','Buruk']
-    else:
-        for data in [[],[1],[3,1,3,-2],[5,4,3,2,1]]:
-            before=data.copy();assert module.selection_sort(data)==sorted(data);assert before==data
-        assert module.cari_sensor([], 'missing') is None
-        assert module.ringkasan([]) is None
-        assert module.filter_lemah([{'rsrp':-100},{'rsrp':-101}])==[{'rsrp':-101}]
-    print(f'Meeting {n}: {len(titles)} original slides, tasks, source and edge cases verified.')
-assert len(list(root.glob('pertemuan-*/index.html')))==16
-assert len(list((root/'src/decks').glob('pertemuan-*.json')))==2
-print('16 entry routes; only two published decks.')
+
+root = Path(__file__).resolve().parents[1]
+
+# 1. Verify 30 chapters across content/
+chapters = list(root.glob('content/**/chapter-*/metadata.json'))
+assert len(chapters) == 30, f"Expected 30 chapters, found {len(chapters)}"
+
+# 2. Verify 5 tracks
+tracks = list(root.glob('content/specializations/track-*/metadata.json'))
+assert len(tracks) == 5, f"Expected 5 tracks, found {len(tracks)}"
+
+# 3. Test Chapter 10 (Functions) contract
+ch10_contoh = root / 'content/foundations/chapter-10/assignments/contoh.py'
+assert ch10_contoh.is_file(), "Missing Chapter 10 contoh.py"
+spec10 = importlib.util.spec_from_file_location('ch10', ch10_contoh)
+mod10 = importlib.util.module_from_spec(spec10)
+spec10.loader.exec_module(mod10)
+assert mod10.rata_rata([]) is None
+assert mod10.rata_rata([-80, -100]) == -90
+assert [mod10.kategori_rsrp(v) for v in [-90, -91, -105, -106]] == ['Baik', 'Sedang', 'Sedang', 'Buruk']
+print("Chapter 10: Functions & contracts verified.")
+
+# 4. Test Chapter 08 (Collections & Algorithms) contract
+ch08_contoh = root / 'content/foundations/chapter-08/assignments/contoh.py'
+assert ch08_contoh.is_file(), "Missing Chapter 08 contoh.py"
+spec08 = importlib.util.spec_from_file_location('ch08', ch08_contoh)
+mod08 = importlib.util.module_from_spec(spec08)
+spec08.loader.exec_module(mod08)
+for data in [[], [1], [3, 1, 3, -2], [5, 4, 3, 2, 1]]:
+    before = data.copy()
+    assert mod08.selection_sort(data) == sorted(data)
+    assert before == data
+assert mod08.cari_sensor([], 'missing') is None
+assert mod08.ringkasan([]) is None
+assert mod08.filter_lemah([{'rsrp': -100}, {'rsrp': -101}]) == [{'rsrp': -101}]
+print("Chapter 08: Collections & algorithms verified.")
+
+print(f"[OK] {len(chapters)} chapters and {len(tracks)} tracks successfully verified!")

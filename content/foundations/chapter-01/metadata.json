@@ -1,0 +1,32 @@
+{
+  "id": 1,
+  "number": "01",
+  "slug": "01-introduction",
+  "levelId": 1,
+  "levelCategory": "foundations",
+  "title": "Introduction to Python",
+  "subtitle": "Filosofi, Ekosistem & Eksekusi Program Pertama",
+  "description": "Mengenal sejarah Python, Zen of Python, instalasi CPython, Colab/IDE, serta cara kerja interpreter.",
+  "competencyFocus": "PCEP 1.1: Dasar eksekusi & lingkungan Python",
+  "estimatedHours": 2,
+  "difficulty": "Beginner",
+  "available": false,
+  "prerequisites": [],
+  "learningObjectives": [
+    "Memahami perbedaan interpreted language dan compiled language",
+    "Menjalankan program Python pertama melalui CLI dan script file",
+    "Mengenal kaidah penulisan komentar dan indentation"
+  ],
+  "tags": [
+    "Interpreter",
+    "Syntax",
+    "Setup"
+  ],
+  "resources": {
+    "hasSlides": false,
+    "slidesDeck": null,
+    "starterCode": null,
+    "assignmentGuide": null,
+    "pptxDownload": "downloads/Materi_Pengkom_Pertemuan_9_10_Python.pptx"
+  }
+}

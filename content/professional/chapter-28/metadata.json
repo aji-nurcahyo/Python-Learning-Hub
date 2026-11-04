@@ -1,0 +1,35 @@
+{
+  "id": 28,
+  "number": "28",
+  "slug": "28-networking-api-integration",
+  "levelId": 3,
+  "levelCategory": "professional",
+  "title": "Networking & API Integration",
+  "subtitle": "HTTP Clients (httpx/requests), REST, WebSockets & Serialization",
+  "description": "Komunikasi antar sistem: konsumsi REST API eksternal, async HTTP client dengan httpx, koneksi real-time WebSockets, penanganan rate limit, dan retry strategies.",
+  "competencyFocus": "Senior Engineering: Distributed systems & API integration",
+  "estimatedHours": 5,
+  "difficulty": "Advanced",
+  "available": false,
+  "prerequisites": [
+    "Chapter 27"
+  ],
+  "learningObjectives": [
+    "Membangun client HTTP robust dengan headers autentikasi, timeouts, dan exponential backoff retry",
+    "Mengintegrasikan streaming WebSockets untuk pembaruan data real-time",
+    "Menata lapisan service layer yang mengisolasi komunikasi jaringan dari logika domain bisnis"
+  ],
+  "tags": [
+    "Networking",
+    "REST API",
+    "httpx",
+    "WebSockets"
+  ],
+  "resources": {
+    "hasSlides": false,
+    "slidesDeck": null,
+    "starterCode": null,
+    "assignmentGuide": null,
+    "pptxDownload": "downloads/Materi_Pengkom_Pertemuan_9_10_Python.pptx"
+  }
+}

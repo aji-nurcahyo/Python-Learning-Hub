@@ -1,0 +1,35 @@
+{
+  "id": 24,
+  "number": "24",
+  "slug": "24-decorators-generators-context-managers",
+  "levelId": 3,
+  "levelCategory": "professional",
+  "title": "Decorators, Generators & Context Managers",
+  "subtitle": "Metaprogramming, functools.wraps, yield & contextlib",
+  "description": "Mekanisme metaprogramming Python: membuat decorator dengan argumen, preserving metadata dengan wraps, pipeline generator bertingkat, dan context manager kustom.",
+  "competencyFocus": "Senior Engineering: Metaprogramming & memory efficiency",
+  "estimatedHours": 5,
+  "difficulty": "Advanced",
+  "available": false,
+  "prerequisites": [
+    "Chapter 23"
+  ],
+  "learningObjectives": [
+    "Membuat decorator serbaguna untuk logging, caching, dan timing eksekusi",
+    "Membangun pipeline streaming data efisien memori berbasis yield generator",
+    "Menulis class dan generator-based context manager dengan @contextmanager"
+  ],
+  "tags": [
+    "Decorators",
+    "Generators",
+    "Context Managers",
+    "Metaprogramming"
+  ],
+  "resources": {
+    "hasSlides": false,
+    "slidesDeck": null,
+    "starterCode": null,
+    "assignmentGuide": null,
+    "pptxDownload": "downloads/Materi_Pengkom_Pertemuan_9_10_Python.pptx"
+  }
+}

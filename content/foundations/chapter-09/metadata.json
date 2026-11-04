@@ -1,0 +1,91 @@
+{
+  "id": 9,
+  "number": "09",
+  "slug": "09-dictionaries-sets",
+  "levelId": 1,
+  "levelCategory": "foundations",
+  "title": "Dictionaries & Sets",
+  "subtitle": "Struktur Data Berbasis Hash: Key-Value & Himpunan Unik",
+  "description": "Menyimpan data asosiatif dengan key-value pairs pada dictionary, pencarian O(1), penghapusan duplikasi dan operasi himpunan matematika pada set.",
+  "competencyFocus": "PCEP 4.2: Mapping types dan Set operations",
+  "estimatedHours": 4,
+  "difficulty": "Beginner",
+  "available": true,
+  "prerequisites": [
+    "Chapter 08"
+  ],
+  "learningObjectives": [
+    "Membuat dan memanipulasi dictionary dengan method get(), items(), keys(), dan values()",
+    "Menggunakan set untuk deduplikasi data seketika dan operasi union, intersection, difference",
+    "Memilih struktur data yang tepat untuk kebutuhan query data tabular dan sensor"
+  ],
+  "tags": [
+    "Dictionary",
+    "Sets",
+    "Hash Maps",
+    "Key-Value"
+  ],
+  "resources": {
+    "hasSlides": true,
+    "slidesDeck": "slides/deck.json",
+    "starterCode": "assignments/tugas_09.py",
+    "assignmentGuide": "assignments/tugas.md",
+    "pptxDownload": "downloads/Materi_Pengkom_Pertemuan_9_10_Python.pptx"
+  },
+  "codeExample": {
+    "title": "Struktur Data Dictionary & Hash Key-Value",
+    "code": "# Struktur Data Dictionary & Hash Key-Value\nsensor = {\"id\": \"S01\", \"lokasi\": \"Gedung A\", \"rsrp\": -80}\nprint(sensor[\"id\"])\nprint(sensor.get(\"status\", \"tidak tersedia\"))\nprint(sensor.items())",
+    "outputKey": "p10-05",
+    "explanation": "Dictionary menyimpan data berpasangan key-value dengan kompleksitas pencarian O(1). Metode get() mencegah timbulnya KeyError saat kunci tidak ditemukan."
+  },
+  "exercise": {
+    "title": "Latihan Terarah: Pemetaan Himpunan Lokasi Sinyal (Set & Dict)",
+    "instructions": [
+      "Diberikan daftar dictionary record sensor yang memuat kunci \"lokasi\".",
+      "Gunakan tipe data set untuk mengekstrak daftar nama gedung/lokasi unik tanpa duplikasi.",
+      "Cetak himpunan lokasi unik dan hitung total titik pemancar."
+    ],
+    "tips": "Set secara otomatis membuang duplikasi ketika Anda menambahkan elemen menggunakan method add() atau set comprehension.",
+    "time": "20 menit"
+  },
+  "quiz": {
+    "question": "Apa keunggulan utama menggunakan dictionary.get(key, default) dibandingkan akses langsung dictionary[key]?",
+    "options": [
+      "Metode get() tidak memicu KeyError jika kunci tidak ditemukan di dalam dictionary",
+      "Metode get() membuat dictionary berjalan dua kali lebih cepat",
+      "Metode get() otomatis menambahkan kunci baru ke dalam dictionary",
+      "Akses langsung dictionary[key] sudah tidak didukung di Python 3"
+    ],
+    "correctIndex": 0,
+    "explanation": "Metode get(key, default) memberikan nilai fallback yang aman tanpa memicu crash program akibat KeyError jika kunci yang diminta belum ada.",
+    "hint": "Pikirkan penanganan error ketika suatu kunci mungkin absen."
+  },
+  "assignment": {
+    "title": "Tugas Praktik 09: Registri Sensor & Pemetaan Sinyal",
+    "description": "Rancang modul pengelolaan registri sensor jaringan menggunakan dictionary dan set.",
+    "instructions": [
+      "Buat fungsi tambah_sensor() untuk menyimpan record ke dalam dictionary database.",
+      "Gunakan set untuk mencatat lokasi-lokasi aktif yang telah terpasang sensor.",
+      "Implementasikan pencarian sensor berdasarkan ID dengan penanganan kasus kunci tidak ditemukan."
+    ],
+    "rubric": [
+      {
+        "criteria": "Struktur Data Dictionary & Set",
+        "weight": 40,
+        "description": "Pengorganisasian data yang tepat dan pemanfaatan himpunan set untuk data unik."
+      },
+      {
+        "criteria": "Ketahanan Program (Error Handling)",
+        "weight": 30,
+        "description": "Pemanfaatan get() dan verifikasi kunci sebelum akses."
+      },
+      {
+        "criteria": "Format Output & Dokumentasi",
+        "weight": 30,
+        "description": "Docstring fungsi lengkap dan pesan log yang informatif."
+      }
+    ],
+    "starterCode": "# Template Starter Code - Chapter 09\ndef tambah_sensor(registry: dict, id_sensor: str, lokasi: str, rsrp: float) -> bool:\n    \"\"\"Mendaftarkan sensor baru ke registry.\"\"\"\n    pass",
+    "starterFilename": "tugas_09.py"
+  }
+}

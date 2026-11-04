@@ -1,0 +1,36 @@
+{
+  "id": 15,
+  "number": "15",
+  "slug": "15-searching-sorting-algorithms",
+  "levelId": 2,
+  "levelCategory": "intermediate",
+  "title": "Searching & Sorting Algorithms",
+  "subtitle": "Linear Search, Binary Search, Selection Sort & Timsort (sorted)",
+  "description": "Studi algoritma klasik: linear search O(n), binary search O(log n), selection sort O(n²), pemanfaatan sorted() dengan custom key lambda, dan reverse.",
+  "competencyFocus": "PCAP 1.3: Algoritma pencarian dan pengurutan terapan",
+  "estimatedHours": 5,
+  "difficulty": "Intermediate",
+  "available": true,
+  "prerequisites": [
+    "Chapter 08",
+    "Chapter 14"
+  ],
+  "learningObjectives": [
+    "Mengimplementasikan linear search pada data tidak terurut dengan penanganan kasus None",
+    "Mengimplementasikan selection sort secara manual untuk memahami mekanisme swap data",
+    "Mengurutkan data dictionary kompleks menggunakan sorted(data, key=lambda x: ...)"
+  ],
+  "tags": [
+    "Algorithms",
+    "Linear Search",
+    "Selection Sort",
+    "Sorting"
+  ],
+  "resources": {
+    "hasSlides": false,
+    "slidesDeck": null,
+    "starterCode": null,
+    "assignmentGuide": null,
+    "pptxDownload": "downloads/Materi_Pengkom_Pertemuan_9_10_Python.pptx"
+  }
+}

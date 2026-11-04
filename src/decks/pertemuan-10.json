@@ -136,7 +136,7 @@
   },
   {
     "title": "Penutup dan diskusi",
-    "body": "<div class=\"callout\">Kapan memilih dictionary daripada list? Mengapa sorting sering dibutuhkan sebelum analisis data?</div><p>Buka contoh kode melalui link di halaman awal atau folder <code>pertemuan-10/contoh.py</code>.</p>",
+    "body": "<div class=\"callout\">Kapan memilih dictionary daripada list? Mengapa sorting sering dibutuhkan sebelum analisis data?</div><p>Buka contoh kode melalui link di halaman awal atau folder <code>code/contoh.py</code>.</p>",
     "kind": "content",
     "notes": "Bahas penutup dan diskusi. Diskusikan dan analisis menjelaskan alasan jawabannya sebelum melanjutkan."
   }

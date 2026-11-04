@@ -1,0 +1,34 @@
+{
+  "id": 4,
+  "number": "04",
+  "slug": "04-input-output",
+  "levelId": 1,
+  "levelCategory": "foundations",
+  "title": "Input & Output",
+  "subtitle": "Interaksi Pengguna & Pemformatan Teks Modern",
+  "description": "Menerima masukan pengguna dengan input(), validasi dasar, serta memformat output dengan f-strings dan string format.",
+  "competencyFocus": "PCEP 2.3: I/O standar dan string formatting",
+  "estimatedHours": 2,
+  "difficulty": "Beginner",
+  "available": false,
+  "prerequisites": [
+    "Chapter 03"
+  ],
+  "learningObjectives": [
+    "Mengambil input dinamis dan mengonversi tipe data masukan",
+    "Menggunakan f-strings untuk interpolasi ekspresi variabel",
+    "Memformat angka desimal, persentase, dan perataan kolom tabel"
+  ],
+  "tags": [
+    "I/O",
+    "f-strings",
+    "Formatting"
+  ],
+  "resources": {
+    "hasSlides": false,
+    "slidesDeck": null,
+    "starterCode": null,
+    "assignmentGuide": null,
+    "pptxDownload": "downloads/Materi_Pengkom_Pertemuan_9_10_Python.pptx"
+  }
+}

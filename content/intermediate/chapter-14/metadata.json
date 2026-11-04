@@ -1,0 +1,36 @@
+{
+  "id": 14,
+  "number": "14",
+  "slug": "14-comprehensions-iterators",
+  "levelId": 2,
+  "levelCategory": "intermediate",
+  "title": "Comprehensions & Iterators",
+  "subtitle": "List, Dict, Set Comprehensions & Generator Expressions",
+  "description": "Menulis transformasi data yang elegan dan ekspresif dengan list comprehension, dict/set comprehension, serta menghemat memori dengan generator expression.",
+  "competencyFocus": "PCAP 1.2: Comprehensions dan protokol iterasi",
+  "estimatedHours": 4,
+  "difficulty": "Intermediate",
+  "available": true,
+  "prerequisites": [
+    "Chapter 08",
+    "Chapter 09"
+  ],
+  "learningObjectives": [
+    "Menulis list comprehension dengan klausa filter kondisi if secara idiomatis",
+    "Membangun dictionary comprehension dan set comprehension untuk transformasi data tabular",
+    "Memahami protokol iterator dan perbandingan memori list vs generator expression"
+  ],
+  "tags": [
+    "Comprehension",
+    "Generators",
+    "Iterators",
+    "Filtering"
+  ],
+  "resources": {
+    "hasSlides": false,
+    "slidesDeck": null,
+    "starterCode": null,
+    "assignmentGuide": null,
+    "pptxDownload": "downloads/Materi_Pengkom_Pertemuan_9_10_Python.pptx"
+  }
+}

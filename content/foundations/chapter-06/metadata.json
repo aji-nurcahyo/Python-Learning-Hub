@@ -1,0 +1,34 @@
+{
+  "id": 6,
+  "number": "06",
+  "slug": "06-loops-iteration",
+  "levelId": 1,
+  "levelCategory": "foundations",
+  "title": "Loops & Iteration",
+  "subtitle": "Pengulangan for, while, break, continue & else",
+  "description": "Mengulang tugas komputasi dengan for dan while, pemanfaatan range(), kontrol loop break dan continue, serta klausa else pada loop.",
+  "competencyFocus": "PCEP 3.2: Pengulangan dan kontrol iterasi",
+  "estimatedHours": 4,
+  "difficulty": "Beginner",
+  "available": false,
+  "prerequisites": [
+    "Chapter 05"
+  ],
+  "learningObjectives": [
+    "Memilih antara for loop (definite iteration) dan while loop (indefinite iteration)",
+    "Memanfaatkan fungsi range(start, stop, step) secara optimal",
+    "Mengendalikan siklus loop dengan break, continue, dan else block"
+  ],
+  "tags": [
+    "For Loop",
+    "While Loop",
+    "Range"
+  ],
+  "resources": {
+    "hasSlides": false,
+    "slidesDeck": null,
+    "starterCode": null,
+    "assignmentGuide": null,
+    "pptxDownload": "downloads/Materi_Pengkom_Pertemuan_9_10_Python.pptx"
+  }
+}

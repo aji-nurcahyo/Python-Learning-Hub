@@ -1,0 +1,34 @@
+{
+  "id": 16,
+  "number": "16",
+  "slug": "16-algorithm-analysis-problem-solving",
+  "levelId": 2,
+  "levelCategory": "intermediate",
+  "title": "Algorithm Analysis & Problem Solving",
+  "subtitle": "Notasi Big-O, Space-Time Tradeoffs & Strategi Algoritmik",
+  "description": "Menganalisis efisiensi algoritma secara formal: notasi O(1), O(log n), O(n), O(n²), memory footprint, dan teknik pemecahan masalah komputasi.",
+  "competencyFocus": "PCAP 1.4: Kompleksitas komputasi & optimasi",
+  "estimatedHours": 4,
+  "difficulty": "Intermediate",
+  "available": false,
+  "prerequisites": [
+    "Chapter 15"
+  ],
+  "learningObjectives": [
+    "Menentukan kompleksitas waktu kasus terbaik, rata-rata, dan terburuk",
+    "Membandingkan efisiensi struktur data (list lookup vs set/dict lookup)",
+    "Mengoptimalkan algoritma dari kuadratik O(n²) ke linier O(n)"
+  ],
+  "tags": [
+    "Big-O",
+    "Complexity",
+    "Optimization"
+  ],
+  "resources": {
+    "hasSlides": false,
+    "slidesDeck": null,
+    "starterCode": null,
+    "assignmentGuide": null,
+    "pptxDownload": "downloads/Materi_Pengkom_Pertemuan_9_10_Python.pptx"
+  }
+}

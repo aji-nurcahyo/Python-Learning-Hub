@@ -1,0 +1,96 @@
+{
+  "id": 8,
+  "number": "08",
+  "slug": "08-lists-tuples",
+  "levelId": 1,
+  "levelCategory": "foundations",
+  "title": "Lists & Tuples",
+  "subtitle": "Koleksi Data Terurut: Mutable vs Immutable Sequences",
+  "description": "Mengolah banyak data berurutan: operasi list (append, insert, pop, sort), konsep mutabilitas, tuple untuk integritas data, dan teknik unpacking.",
+  "competencyFocus": "PCEP 4.1: List dan Tuple sequences",
+  "estimatedHours": 4,
+  "difficulty": "Beginner",
+  "available": true,
+  "prerequisites": [
+    "Chapter 07"
+  ],
+  "learningObjectives": [
+    "Membedakan kapan harus menggunakan list (mutable) dan tuple (immutable)",
+    "Melakukan manipulasi elemen list menggunakan indexing, slicing, dan metode bawaan",
+    "Menerapkan tuple unpacking untuk pertukaran nilai dan pemrosesan koordinat data"
+  ],
+  "tags": [
+    "Lists",
+    "Tuples",
+    "Mutability",
+    "Sequences"
+  ],
+  "resources": {
+    "hasSlides": true,
+    "slidesDeck": "slides/deck.json",
+    "starterCode": "assignments/tugas_08.py",
+    "assignmentGuide": "assignments/tugas.md",
+    "pptxDownload": "downloads/Materi_Pengkom_Pertemuan_9_10_Python.pptx"
+  },
+  "codeExample": {
+    "title": "Operasi List & Indexing Sequence",
+    "code": "# Operasi List & Pengindeksan Koleksi Data\nrsrp_list = [-82, -107, -95, -89]\nprint(rsrp_list[0])  # Mengakses elemen pertama",
+    "outputKey": "p10-02",
+    "explanation": "List merupakan tipe data sequence mutable. Elemen diakses dengan indeks nol (zero-based index) dan dapat dimodifikasi secara dinamis."
+  },
+  "exercise": {
+    "title": "Latihan Terarah: Analisis Nilai Sinyal Telekomunikasi",
+    "instructions": [
+      "Buat sebuah list berisi 5 data pengukuran RSRP (dBm): [-75, -88, -104, -92, -80].",
+      "Gunakan loop for untuk menghitung jumlah sinyal yang berada di bawah ambang batas -90 dBm.",
+      "Tampilkan hasil penghitungan ke konsol dengan format yang jelas."
+    ],
+    "tips": "Gunakan operator pembanding < -90 dan pertahankan variabel penghitung (counter) yang dimulai dari 0.",
+    "time": "15 menit"
+  },
+  "quiz": {
+    "question": "Manakah karakteristik fundamental yang membedakan List dan Tuple dalam Python?",
+    "options": [
+      "List bersifat mutable (bisa diubah), sedangkan Tuple bersifat immutable (tidak bisa diubah)",
+      "List hanya bisa menyimpan angka, sedangkan Tuple bisa menyimpan teks",
+      "Tuple mendukung operasi append(), sedangkan List tidak mendukung",
+      "List diapit tanda kurung biasa (), sedangkan Tuple diapit kurung siku []"
+    ],
+    "correctIndex": 0,
+    "explanation": "List didefinisikan dengan kurung siku [] dan bersifat mutable sehingga nilainya dapat diubah/ditambah. Sebaliknya, Tuple didefinisikan dengan () dan bersifat immutable untuk menjaga integritas data.",
+    "hint": "Ingat sifat modifikasi elemen setelah objek dibuat dalam memori."
+  },
+  "assignment": {
+    "title": "Tugas Praktik 08: Pengolahan Sinyal & Statistik Koleksi",
+    "description": "Implementasikan skrip pengolahan data pengukuran sinyal telekomunikasi berbasis List dan Tuple.",
+    "instructions": [
+      "Definisikan list data pengukuran dari stasiun pemancar.",
+      "Hitung nilai rata-rata, nilai minimum, dan nilai maksimum tanpa fungsi library eksternal.",
+      "Kembalikan hasil ringkasan dalam bentuk Tuple immutable (min, max, mean)."
+    ],
+    "rubric": [
+      {
+        "criteria": "Kebenaran Logika Perhitungan",
+        "weight": 40,
+        "description": "Perhitungan min, max, rata-rata akurat dan menangani list kosong dengan baik."
+      },
+      {
+        "criteria": "Penerapan Konsep List & Tuple",
+        "weight": 30,
+        "description": "Menggunakan list untuk akumulasi data dan tuple untuk output ringkasan immutable."
+      },
+      {
+        "criteria": "Kerapian Kode & PEP 8",
+        "weight": 20,
+        "description": "Penamaan variabel snake_case dan format kode bersih."
+      },
+      {
+        "criteria": "Pengujian Kasus Uji",
+        "weight": 10,
+        "description": "Menyertakan minimal 3 variasi dataset pengujian."
+      }
+    ],
+    "starterCode": "# Template Starter Code - Chapter 08\ndef ringkas_sinyal(data_sinyal: list[float]) -> tuple[float, float, float]:\n    \"\"\"Menghitung nilai minimum, maksimum, dan rata-rata dari list sinyal.\"\"\"\n    if not data_sinyal:\n        return (0.0, 0.0, 0.0)\n    # Tuliskan logika Anda di sini\n    pass",
+    "starterFilename": "tugas_08.py"
+  }
+}

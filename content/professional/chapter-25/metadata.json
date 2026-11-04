@@ -1,0 +1,35 @@
+{
+  "id": 25,
+  "number": "25",
+  "slug": "25-type-hints-code-quality",
+  "levelId": 3,
+  "levelCategory": "professional",
+  "title": "Type Hints & Code Quality",
+  "subtitle": "Mypy Static Typing, Generic Types, Pydantic & Linters (Ruff)",
+  "description": "Meningkatkan keandalan codebase besar: type hints mendalam (Generic, Union, Optional, Protocol), static type checking dengan mypy, validasi data Pydantic, dan linter Ruff.",
+  "competencyFocus": "Senior Engineering: Type safety & static analysis",
+  "estimatedHours": 5,
+  "difficulty": "Advanced",
+  "available": false,
+  "prerequisites": [
+    "Chapter 24"
+  ],
+  "learningObjectives": [
+    "Menerapkan static typing lengkap pada fungsi dan class method",
+    "Menggunakan Pydantic untuk data validation dan parsing payload terstruktur",
+    "Mengintegrasikan linter dan formatter otomatis untuk menjaga konsistensi tim"
+  ],
+  "tags": [
+    "Type Hints",
+    "mypy",
+    "Pydantic",
+    "Code Quality"
+  ],
+  "resources": {
+    "hasSlides": false,
+    "slidesDeck": null,
+    "starterCode": null,
+    "assignmentGuide": null,
+    "pptxDownload": "downloads/Materi_Pengkom_Pertemuan_9_10_Python.pptx"
+  }
+}

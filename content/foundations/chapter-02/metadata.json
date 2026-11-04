@@ -1,0 +1,34 @@
+{
+  "id": 2,
+  "number": "02",
+  "slug": "02-variables-data-types",
+  "levelId": 1,
+  "levelCategory": "foundations",
+  "title": "Variables & Data Types",
+  "subtitle": "Variabel Dinamis, Tipe Data Skalar & Konversi",
+  "description": "Menyimpan nilai dalam memori, tipe int, float, str, bool, type hinting dasar, dan konversi tipe data eksplisit.",
+  "competencyFocus": "PCEP 2.1: Literal, variabel, dan konversi tipe",
+  "estimatedHours": 3,
+  "difficulty": "Beginner",
+  "available": false,
+  "prerequisites": [
+    "Chapter 01"
+  ],
+  "learningObjectives": [
+    "Mendeklarasikan variabel dengan penamaan snake_case sesuai PEP 8",
+    "Membedakan tipe data integer, floating-point, boolean, dan string",
+    "Melakukan type casting dengan int(), float(), str(), dan bool()"
+  ],
+  "tags": [
+    "Variables",
+    "Types",
+    "Casting"
+  ],
+  "resources": {
+    "hasSlides": false,
+    "slidesDeck": null,
+    "starterCode": null,
+    "assignmentGuide": null,
+    "pptxDownload": "downloads/Materi_Pengkom_Pertemuan_9_10_Python.pptx"
+  }
+}

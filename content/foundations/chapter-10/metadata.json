@@ -1,0 +1,93 @@
+{
+  "id": 10,
+  "number": "10",
+  "slug": "10-functions-scope",
+  "levelId": 1,
+  "levelCategory": "foundations",
+  "title": "Functions & Scope",
+  "subtitle": "Modularitas Kode, Parameter, Return & Ruang Lingkup",
+  "description": "Merancang fungsi reusable dengan def, argumen posisi & default, perbedaan fundamental print vs return, serta isolasi variabel lokal vs global (LEGB rule).",
+  "competencyFocus": "PCEP 4.3: Deklarasi fungsi, parameter, return, scope",
+  "estimatedHours": 5,
+  "difficulty": "Beginner",
+  "available": true,
+  "prerequisites": [
+    "Chapter 08",
+    "Chapter 09"
+  ],
+  "learningObjectives": [
+    "Mendeklarasikan fungsi dengan parameter wajib dan argumen nilai default",
+    "Membedakan secara tegas mekanisme cetak layar (print) dan nilai balik pemrosesan (return)",
+    "Menganalisis siklus hidup variabel lokal dan menghindari efek samping manipulasi variabel global"
+  ],
+  "tags": [
+    "Functions",
+    "Parameters",
+    "Return",
+    "Scope"
+  ],
+  "resources": {
+    "hasSlides": true,
+    "slidesDeck": "slides/deck.json",
+    "starterCode": "assignments/tugas_10.py",
+    "assignmentGuide": "assignments/tugas.md",
+    "pptxDownload": "downloads/Materi_Pengkom_Pertemuan_9_10_Python.pptx"
+  },
+  "codeExample": {
+    "title": "Anatomi Fungsi & Return Value",
+    "code": "# Perbedaan Nilai Balik (Return) dan Cetak Layar (Print)\ndef hitung_persegi(sisi):\n    return sisi * sisi\n\nhasil = hitung_persegi(4)\nprint(hasil + 8)  # Nilai return dapat diproses lebih lanjut!",
+    "outputKey": "p09-14",
+    "explanation": "Return mengembalikan data ke pemanggil fungsi agar dapat disimpan dalam variabel atau digunakan dalam ekspresi matematika lain. Print hanya mencetak teks ke layar dan mengembalikan None."
+  },
+  "exercise": {
+    "title": "Latihan Terarah: Perancangan Fungsi Klasifikasi Sinyal",
+    "instructions": [
+      "Buat fungsi klasifikasi_rsrp(rsrp_dbm) yang menerima satu parameter bertipe float.",
+      "Jika rsrp >= -85, kembalikan string \"Sangat Baik\".",
+      "Jika -95 <= rsrp < -85, kembalikan \"Cukup\". Jika < -95, kembalikan \"Buruk\".",
+      "Uji fungsi dengan nilai -78, -90, dan -105 lalu cetak hasil kembaliannya."
+    ],
+    "tips": "Pastikan fungsi mengembalikan nilai (return) dan BUKAN langsung mencetaknya (print).",
+    "time": "15 menit"
+  },
+  "quiz": {
+    "question": "Apa nilai yang dikembalikan oleh fungsi Python jika fungsi tersebut tidak memiliki pernyataan return?",
+    "options": [
+      "None",
+      "0",
+      "False",
+      "String kosong \"\""
+    ],
+    "correctIndex": 0,
+    "explanation": "Secara implisit, fungsi Python tanpa pernyataan return selalu mengembalikan nilai NoneType yaitu None.",
+    "hint": "Lihat apa yang dihasilkan jika Anda mencetak hasil pemanggilan fungsi yang hanya berisi perintah print()."
+  },
+  "assignment": {
+    "title": "Tugas Praktik 10: Perancangan Pustaka Fungsi Analitik",
+    "description": "Rancang modul fungsi yang menerapkan aturan scope LEGB, parameter nilai default, dan return teruji.",
+    "instructions": [
+      "Rancang fungsi konversi suhu Celsius ke Fahrenheit dan sebaliknya.",
+      "Rancang fungsi evaluasi kualitas sinyal telekomunikasi dengan batas ambang default.",
+      "Pastikan variabel di dalam fungsi tidak mencemari ruang lingkup global."
+    ],
+    "rubric": [
+      {
+        "criteria": "Perancangan Parameter & Return Value",
+        "weight": 40,
+        "description": "Fungsi bersifat murni (pure function) dan mengembalikan tipe data yang tepat."
+      },
+      {
+        "criteria": "Isolasi Scope Variabel",
+        "weight": 30,
+        "description": "Tidak terjadi mutasi variabel global di luar kebutuhan modul."
+      },
+      {
+        "criteria": "Kualitas Docstring & Type Hints",
+        "weight": 30,
+        "description": "Menyertakan type hints dan docstring sesuai standar PEP 257."
+      }
+    ],
+    "starterCode": "# Template Starter Code - Chapter 10\ndef konversi_suhu(celsius: float) -> float:\n    \"\"\"Mengonversi nilai suhu dari Celsius ke Fahrenheit.\n    \n    Args:\n        celsius (float): Derajat suhu dalam Celsius.\n    Returns:\n        float: Derajat suhu dalam Fahrenheit.\n    \"\"\"\n    return (celsius * 9 / 5) + 32",
+    "starterFilename": "tugas_10.py"
+  }
+}

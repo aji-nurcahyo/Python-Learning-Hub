@@ -1,0 +1,45 @@
+{
+  "id": "automation",
+  "title": "Automation & Scripting",
+  "subtitle": "Sistem Administrasi, Web Scraping, Pemrosesan File & Otomasi Alur Kerja",
+  "icon": "smart_toy",
+  "tagline": "Otomatisasikan rutinitas berulang dalam hitungan detik",
+  "description": "Jalur spesialisasi rekayasa otomasi: ekstraksi data web (BeautifulSoup & Playwright), manipulasi dokumen otomatis (Excel, PDF), automasi task CLI, dan integrasi webhook.",
+  "targetAudience": "DevOps Engineer, Sysadmin, QA Automation, Profesional Operasional",
+  "recommendedChapters": [
+    6,
+    7,
+    8,
+    10,
+    11,
+    17,
+    24
+  ],
+  "modules": [
+    {
+      "title": "System Administration & File Automation (pathlib/shutil)",
+      "description": "Organisasi file massal, manipulasi direktori, dan otomasi backup terjadwal.",
+      "status": "Specialization"
+    },
+    {
+      "title": "Web Scraping & Browser Automation",
+      "description": "Ekstraksi data HTML dengan BeautifulSoup dan scraping dinamis dengan Playwright.",
+      "status": "Specialization"
+    },
+    {
+      "title": "Spreadsheet & Document Automation (openpyxl / PyPDF)",
+      "description": "Generate laporan Excel berformula secara otomatis dan merge dokumen PDF.",
+      "status": "Specialization"
+    },
+    {
+      "title": "API Webhooks & Alerting Systems",
+      "description": "Kirim notifikasi otomatis ke Telegram, Slack, atau email saat mendeteksi kegagalan sistem.",
+      "status": "Specialization"
+    },
+    {
+      "title": "Capstone: Autonomous Data Ingestion & Reporting Bot",
+      "description": "Bot otomasi yang mengunduh data web berkala, mengolahnya ke Excel, dan mengirim email ringkasan.",
+      "status": "Advanced Project"
+    }
+  ]
+}

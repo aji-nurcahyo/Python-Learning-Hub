@@ -2,6 +2,7 @@ export interface Chapter {
   id: number;
   slug: string;
   levelId: 1 | 2 | 3;
+  levelCategory?: 'foundations' | 'intermediate' | 'professional';
   number: string; // '01', '02', etc.
   title: string;
   subtitle: string;
@@ -15,6 +16,42 @@ export interface Chapter {
   tags: string[];
   deckPath?: string;
   tugasPath?: string;
+  resources?: {
+    hasSlides?: boolean;
+    slidesDeck?: string | null;
+    starterCode?: string | null;
+    assignmentGuide?: string | null;
+    pptxDownload?: string;
+  };
+  codeExample?: {
+    title?: string;
+    code: string;
+    outputKey: string;
+    explanation: string;
+  };
+  exercise?: {
+    title: string;
+    instructions: string[];
+    tips: string;
+    time: string;
+  };
+  quiz?: {
+    question: string;
+    options: string[];
+    correctIndex: number;
+    explanation: string;
+    hint?: string;
+  };
+  assignment?: {
+    title: string;
+    description: string;
+    instructions: string[];
+    rubric: { criteria: string; weight: number; description: string }[];
+    starterCode?: string;
+    starterFilename?: string;
+    downloadMdUrl?: string;
+    downloadPyUrl?: string;
+  };
 }
 
 export interface Level {
@@ -291,8 +328,55 @@ export const CHAPTERS: Chapter[] = [
       'Menerapkan tuple unpacking untuk pertukaran nilai dan pemrosesan koordinat data',
     ],
     tags: ['Lists', 'Tuples', 'Mutability', 'Sequences'],
-    deckPath: 'pertemuan-10/index.html',
-    tugasPath: 'pertemuan-10/tugas.html',
+    deckPath: '#chapter/08/slides',
+    tugasPath: '#chapter/08/task',
+    codeExample: {
+      title: 'Operasi List & Indexing Sequence',
+      code: `# Operasi List & Pengindeksan Koleksi Data\nrsrp_list = [-82, -107, -95, -89]\nprint(rsrp_list[0])  # Mengakses elemen pertama`,
+      outputKey: 'p10-02',
+      explanation: 'List merupakan tipe data sequence mutable. Elemen diakses dengan indeks nol (zero-based index) dan dapat dimodifikasi secara dinamis.',
+    },
+    exercise: {
+      title: 'Latihan Terarah: Analisis Nilai Sinyal Telekomunikasi',
+      instructions: [
+        'Buat sebuah list berisi 5 data pengukuran RSRP (dBm): [-75, -88, -104, -92, -80].',
+        'Gunakan loop for untuk menghitung jumlah sinyal yang berada di bawah ambang batas -90 dBm.',
+        'Tampilkan hasil penghitungan ke konsol dengan format yang jelas.',
+      ],
+      tips: 'Gunakan operator pembanding < -90 dan pertahankan variabel penghitung (counter) yang dimulai dari 0.',
+      time: '15 menit',
+    },
+    quiz: {
+      question: 'Manakah karakteristik fundamental yang membedakan List dan Tuple dalam Python?',
+      options: [
+        'List bersifat mutable (bisa diubah), sedangkan Tuple bersifat immutable (tidak bisa diubah)',
+        'List hanya bisa menyimpan angka, sedangkan Tuple bisa menyimpan teks',
+        'Tuple mendukung operasi append(), sedangkan List tidak mendukung',
+        'List diapit tanda kurung biasa (), sedangkan Tuple diapit kurung siku []',
+      ],
+      correctIndex: 0,
+      explanation: 'List didefinisikan dengan kurung siku [] dan bersifat mutable sehingga nilainya dapat diubah/ditambah. Sebaliknya, Tuple didefinisikan dengan () dan bersifat immutable untuk menjaga integritas data.',
+      hint: 'Ingat sifat modifikasi elemen setelah objek dibuat dalam memori.',
+    },
+    assignment: {
+      title: 'Tugas Praktik 08: Pengolahan Sinyal & Statistik Koleksi',
+      description: 'Implementasikan skrip pengolahan data pengukuran sinyal telekomunikasi berbasis List dan Tuple.',
+      instructions: [
+        'Definisikan list data pengukuran dari stasiun pemancar.',
+        'Hitung nilai rata-rata, nilai minimum, dan nilai maksimum tanpa fungsi library eksternal.',
+        'Kembalikan hasil ringkasan dalam bentuk Tuple immutable (min, max, mean).',
+      ],
+      rubric: [
+        { criteria: 'Kebenaran Logika Perhitungan', weight: 40, description: 'Perhitungan min, max, rata-rata akurat dan menangani list kosong dengan baik.' },
+        { criteria: 'Penerapan Konsep List & Tuple', weight: 30, description: 'Menggunakan list untuk akumulasi data dan tuple untuk output ringkasan immutable.' },
+        { criteria: 'Kerapian Kode & PEP 8', weight: 20, description: 'Penamaan variabel snake_case dan format kode bersih.' },
+        { criteria: 'Pengujian Kasus Uji', weight: 10, description: 'Menyertakan minimal 3 variasi dataset pengujian.' },
+      ],
+      starterCode: `# Template Starter Code - Chapter 08\ndef ringkas_sinyal(data_sinyal: list[float]) -> tuple[float, float, float]:\n    """Menghitung nilai minimum, maksimum, dan rata-rata dari list sinyal."""\n    if not data_sinyal:\n        return (0.0, 0.0, 0.0)\n    # Tuliskan logika Anda di sini\n    pass`,
+      starterFilename: 'tugas_08.py',
+      downloadMdUrl: 'downloads/pertemuan-10/tugas.md',
+      downloadPyUrl: 'downloads/pertemuan-10/contoh.py',
+    },
   },
   {
     id: 9,
@@ -314,8 +398,54 @@ export const CHAPTERS: Chapter[] = [
       'Memilih struktur data yang tepat untuk kebutuhan query data tabular dan sensor',
     ],
     tags: ['Dictionary', 'Sets', 'Hash Maps', 'Key-Value'],
-    deckPath: 'pertemuan-10/index.html',
-    tugasPath: 'pertemuan-10/tugas.html',
+    deckPath: '#chapter/08/slides',
+    tugasPath: '#chapter/08/task',
+    codeExample: {
+      title: 'Struktur Data Dictionary & Hash Key-Value',
+      code: `# Struktur Data Dictionary & Hash Key-Value\nsensor = {"id": "S01", "lokasi": "Gedung A", "rsrp": -80}\nprint(sensor["id"])\nprint(sensor.get("status", "tidak tersedia"))\nprint(sensor.items())`,
+      outputKey: 'p10-05',
+      explanation: 'Dictionary menyimpan data berpasangan key-value dengan kompleksitas pencarian O(1). Metode get() mencegah timbulnya KeyError saat kunci tidak ditemukan.',
+    },
+    exercise: {
+      title: 'Latihan Terarah: Pemetaan Himpunan Lokasi Sinyal (Set & Dict)',
+      instructions: [
+        'Diberikan daftar dictionary record sensor yang memuat kunci "lokasi".',
+        'Gunakan tipe data set untuk mengekstrak daftar nama gedung/lokasi unik tanpa duplikasi.',
+        'Cetak himpunan lokasi unik dan hitung total titik pemancar.',
+      ],
+      tips: 'Set secara otomatis membuang duplikasi ketika Anda menambahkan elemen menggunakan method add() atau set comprehension.',
+      time: '20 menit',
+    },
+    quiz: {
+      question: 'Apa keunggulan utama menggunakan dictionary.get(key, default) dibandingkan akses langsung dictionary[key]?',
+      options: [
+        'Metode get() tidak memicu KeyError jika kunci tidak ditemukan di dalam dictionary',
+        'Metode get() membuat dictionary berjalan dua kali lebih cepat',
+        'Metode get() otomatis menambahkan kunci baru ke dalam dictionary',
+        'Akses langsung dictionary[key] sudah tidak didukung di Python 3',
+      ],
+      correctIndex: 0,
+      explanation: 'Metode get(key, default) memberikan nilai fallback yang aman tanpa memicu crash program akibat KeyError jika kunci yang diminta belum ada.',
+      hint: 'Pikirkan penanganan error ketika suatu kunci mungkin absen.',
+    },
+    assignment: {
+      title: 'Tugas Praktik 09: Registri Sensor & Pemetaan Sinyal',
+      description: 'Rancang modul pengelolaan registri sensor jaringan menggunakan dictionary dan set.',
+      instructions: [
+        'Buat fungsi tambah_sensor() untuk menyimpan record ke dalam dictionary database.',
+        'Gunakan set untuk mencatat lokasi-lokasi aktif yang telah terpasang sensor.',
+        'Implementasikan pencarian sensor berdasarkan ID dengan penanganan kasus kunci tidak ditemukan.',
+      ],
+      rubric: [
+        { criteria: 'Struktur Data Dictionary & Set', weight: 40, description: 'Pengorganisasian data yang tepat dan pemanfaatan himpunan set untuk data unik.' },
+        { criteria: 'Ketahanan Program (Error Handling)', weight: 30, description: 'Pemanfaatan get() dan verifikasi kunci sebelum akses.' },
+        { criteria: 'Format Output & Dokumentasi', weight: 30, description: 'Docstring fungsi lengkap dan pesan log yang informatif.' },
+      ],
+      starterCode: `# Template Starter Code - Chapter 09\ndef tambah_sensor(registry: dict, id_sensor: str, lokasi: str, rsrp: float) -> bool:\n    """Mendaftarkan sensor baru ke registry."""\n    pass`,
+      starterFilename: 'tugas_09.py',
+      downloadMdUrl: 'downloads/pertemuan-10/tugas.md',
+      downloadPyUrl: 'downloads/pertemuan-10/contoh.py',
+    },
   },
   {
     id: 10,
@@ -337,8 +467,55 @@ export const CHAPTERS: Chapter[] = [
       'Menganalisis siklus hidup variabel lokal dan menghindari efek samping manipulasi variabel global',
     ],
     tags: ['Functions', 'Parameters', 'Return', 'Scope'],
-    deckPath: 'pertemuan-09/index.html',
-    tugasPath: 'pertemuan-09/tugas.html',
+    deckPath: '#chapter/10/slides',
+    tugasPath: '#chapter/10/task',
+    codeExample: {
+      title: 'Anatomi Fungsi & Return Value',
+      code: `# Perbedaan Nilai Balik (Return) dan Cetak Layar (Print)\ndef hitung_persegi(sisi):\n    return sisi * sisi\n\nhasil = hitung_persegi(4)\nprint(hasil + 8)  # Nilai return dapat diproses lebih lanjut!`,
+      outputKey: 'p09-14',
+      explanation: 'Return mengembalikan data ke pemanggil fungsi agar dapat disimpan dalam variabel atau digunakan dalam ekspresi matematika lain. Print hanya mencetak teks ke layar dan mengembalikan None.',
+    },
+    exercise: {
+      title: 'Latihan Terarah: Perancangan Fungsi Klasifikasi Sinyal',
+      instructions: [
+        'Buat fungsi klasifikasi_rsrp(rsrp_dbm) yang menerima satu parameter bertipe float.',
+        'Jika rsrp >= -85, kembalikan string "Sangat Baik".',
+        'Jika -95 <= rsrp < -85, kembalikan "Cukup". Jika < -95, kembalikan "Buruk".',
+        'Uji fungsi dengan nilai -78, -90, dan -105 lalu cetak hasil kembaliannya.',
+      ],
+      tips: 'Pastikan fungsi mengembalikan nilai (return) dan BUKAN langsung mencetaknya (print).',
+      time: '15 menit',
+    },
+    quiz: {
+      question: 'Apa nilai yang dikembalikan oleh fungsi Python jika fungsi tersebut tidak memiliki pernyataan return?',
+      options: [
+        'None',
+        '0',
+        'False',
+        'String kosong ""',
+      ],
+      correctIndex: 0,
+      explanation: 'Secara implisit, fungsi Python tanpa pernyataan return selalu mengembalikan nilai NoneType yaitu None.',
+      hint: 'Lihat apa yang dihasilkan jika Anda mencetak hasil pemanggilan fungsi yang hanya berisi perintah print().',
+    },
+    assignment: {
+      title: 'Tugas Praktik 10: Perancangan Pustaka Fungsi Analitik',
+      description: 'Rancang modul fungsi yang menerapkan aturan scope LEGB, parameter nilai default, dan return teruji.',
+      instructions: [
+        'Rancang fungsi konversi suhu Celsius ke Fahrenheit dan sebaliknya.',
+        'Rancang fungsi evaluasi kualitas sinyal telekomunikasi dengan batas ambang default.',
+        'Pastikan variabel di dalam fungsi tidak mencemari ruang lingkup global.',
+      ],
+      rubric: [
+        { criteria: 'Perancangan Parameter & Return Value', weight: 40, description: 'Fungsi bersifat murni (pure function) dan mengembalikan tipe data yang tepat.' },
+        { criteria: 'Isolasi Scope Variabel', weight: 30, description: 'Tidak terjadi mutasi variabel global di luar kebutuhan modul.' },
+        { criteria: 'Kualitas Docstring & Type Hints', weight: 30, description: 'Menyertakan type hints dan docstring sesuai standar PEP 257.' },
+      ],
+      starterCode: `# Template Starter Code - Chapter 10\ndef konversi_suhu(celsius: float) -> float:\n    """Mengonversi nilai suhu dari Celsius ke Fahrenheit.\n    \n    Args:\n        celsius (float): Derajat suhu dalam Celsius.\n    Returns:\n        float: Derajat suhu dalam Fahrenheit.\n    """\n    return (celsius * 9 / 5) + 32`,
+      starterFilename: 'tugas_10.py',
+      downloadMdUrl: 'downloads/pertemuan-09/tugas.md',
+      downloadPyUrl: 'downloads/pertemuan-09/contoh.py',
+    },
   },
   {
     id: 11,
@@ -361,8 +538,54 @@ export const CHAPTERS: Chapter[] = [
       'Menangani ValueError dan ZeroDivisionError menggunakan blok try-except dasar',
     ],
     tags: ['Modules', 'Docstrings', 'Import', 'Exception Basics'],
-    deckPath: 'pertemuan-09/index.html',
-    tugasPath: 'pertemuan-09/tugas.html',
+    deckPath: '#chapter/10/slides',
+    tugasPath: '#chapter/10/task',
+    codeExample: {
+      title: 'Ekstraksi Docstring Standar PEP 257',
+      code: `# Ekstraksi Docstring Standar PEP 257\ndef konversi_c_ke_f(celsius):\n    """Konversi suhu dari Celsius ke Fahrenheit.\n\n    Args:\n        celsius (float): Suhu dalam Celsius.\n    Returns:\n        float: Suhu dalam Fahrenheit.\n    """\n    return celsius * 9 / 5 + 32\n\nprint(konversi_c_ke_f.__doc__)`,
+      outputKey: 'p09-13',
+      explanation: 'Docstring ditulis tepat di bawah header fungsi menggunakan triple quotes ("""). Atribut __doc__ atau fungsi help() dapat membacanya secara otomatis untuk dokumentasi interaktif.',
+    },
+    exercise: {
+      title: 'Latihan Terarah: Pembuatan Modul Mandiri & Proteksi Main',
+      instructions: [
+        'Buat berkas modul matematika sederhana dengan nama math_util.py.',
+        'Definisikan fungsi hitung_rata_rata(data) lengkap dengan docstring.',
+        'Gunakan blok if __name__ == "__main__": untuk menjalankan kasus uji mandiri.',
+      ],
+      tips: 'Blok __name__ == "__main__" memastikan kode pengujian hanya dijalankan saat berkas dieksekusi langsung, bukan saat diimpor oleh modul lain.',
+      time: '20 menit',
+    },
+    quiz: {
+      question: 'Kapan blok kondisi if __name__ == "__main__": akan bernilai True?',
+      options: [
+        'Hanya ketika skrip dieksekusi secara langsung melalui terminal/command line',
+        'Ketika skrip diimpor ke dalam berkas Python lain menggunakan kata kunci import',
+        'Setiap kali fungsi di dalam berkas dipanggil oleh pengguna',
+        'Hanya jika nama berkas berakhiran dengan _main.py',
+      ],
+      correctIndex: 0,
+      explanation: 'Saat Python menjalankan berkas secara langsung, variabel khusus __name__ secara otomatis disetel ke string "__main__". Jika berkas diimpor sebagai modul, __name__ akan berisi nama berkas modul tersebut.',
+      hint: 'Pikirkan mekanisme Python dalam membedakan skrip runnable dengan modul pustaka.',
+    },
+    assignment: {
+      title: 'Tugas Praktik 11: Paket Modul Reusable Telekomunikasi',
+      description: 'Bangun struktur modul Python modular yang memisahkan logika komputasi dengan antarmuka CLI pengguna.',
+      instructions: [
+        'Buat modul terpisah pengolah sinyal (signal_proc.py).',
+        'Buat skrip utama (main.py) yang mengimpor fungsi dari modul pengolah sinyal.',
+        'Tangani kemungkinan ValueError jika input data bukan numerik.',
+      ],
+      rubric: [
+        { criteria: 'Modularitas & Pemisahan Tanggung Jawab', weight: 40, description: 'Pemisahan kode modul dan runnable runner yang terorganisir rapi.' },
+        { criteria: 'Penerapan Docstring & Guard __name__', weight: 30, description: 'Docstring lengkap dan perlindungan impor modul yang tepat.' },
+        { criteria: 'Penanganan Exception Dasar (try/except)', weight: 30, description: 'Menangani input tidak valid tanpa menyebabkan sistem crash.' },
+      ],
+      starterCode: `# Template Starter Code - Chapter 11\n# signal_proc.py\ndef filter_sinyal(samples: list[float], threshold: float) -> list[float]:\n    """Menyaring sampel sinyal di atas nilai ambang batas."""\n    pass`,
+      starterFilename: 'tugas_11.py',
+      downloadMdUrl: 'downloads/pertemuan-09/tugas.md',
+      downloadPyUrl: 'downloads/pertemuan-09/contoh.py',
+    },
   },
   {
     id: 12,
@@ -428,8 +651,8 @@ export const CHAPTERS: Chapter[] = [
       'Memahami protokol iterator dan perbandingan memori list vs generator expression',
     ],
     tags: ['Comprehension', 'Generators', 'Iterators', 'Filtering'],
-    deckPath: 'pertemuan-10/index.html',
-    tugasPath: 'pertemuan-10/tugas.html',
+    deckPath: '#chapter/08/slides',
+    tugasPath: '#chapter/08/task',
   },
   {
     id: 15,
@@ -451,8 +674,8 @@ export const CHAPTERS: Chapter[] = [
       'Mengurutkan data dictionary kompleks menggunakan sorted(data, key=lambda x: ...)',
     ],
     tags: ['Algorithms', 'Linear Search', 'Selection Sort', 'Sorting'],
-    deckPath: 'pertemuan-10/index.html',
-    tugasPath: 'pertemuan-10/tugas.html',
+    deckPath: '#chapter/08/slides',
+    tugasPath: '#chapter/08/task',
   },
   {
     id: 16,
@@ -869,3 +1092,16 @@ export const SPECIALIZATION_TRACKS: SpecializationTrack[] = [
 export const CURRICULUM_DISCLAIMER =
   'Kurikulum Python Learning Hub dikembangkan secara independen oleh tim pengembang sebagai sumber belajar mandiri. Topik pembelajaran dirancang untuk menyelaraskan secara luas dengan area kompetensi sertifikasi global (seperti Python Institute PCEP & PCAP), namun situs ini bersifat independen dan tidak terafiliasi resmi maupun disertifikasi secara komersial oleh Python Institute.';
 
+
+// Helper query functions
+export function getChapterById(id: number): Chapter | undefined {
+  return CHAPTERS.find((c) => c.id === id);
+}
+
+export function getChapterBySlug(slug: string): Chapter | undefined {
+  return CHAPTERS.find((c) => c.slug === slug);
+}
+
+export function getChaptersByLevel(levelId: number): Chapter[] {
+  return CHAPTERS.filter((c) => c.levelId === levelId);
+}

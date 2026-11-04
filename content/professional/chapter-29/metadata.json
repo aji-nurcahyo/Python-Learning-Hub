@@ -1,0 +1,35 @@
+{
+  "id": 29,
+  "number": "29",
+  "slug": "29-software-architecture-deployment",
+  "levelId": 3,
+  "levelCategory": "professional",
+  "title": "Software Architecture & Deployment",
+  "subtitle": "Clean Architecture, Twelve-Factor App, Docker & CI/CD Pipelines",
+  "description": "Membawa aplikasi ke produksi: prinsip Twelve-Factor, Layered / Clean Architecture, containerization dengan multi-stage Dockerfile, dan pipeline otomatisasi GitHub Actions.",
+  "competencyFocus": "Senior Engineering: Production deployment & architecture",
+  "estimatedHours": 6,
+  "difficulty": "Advanced",
+  "available": false,
+  "prerequisites": [
+    "Chapter 28"
+  ],
+  "learningObjectives": [
+    "Menyusun struktur proyek Python sesuai prinsip Clean Architecture dan Twelve-Factor App",
+    "Membuat multi-stage Docker build yang ringkas dan aman untuk container produksi",
+    "Menulis workflow CI/CD terotomasi untuk linting, typechecking, dan running tests"
+  ],
+  "tags": [
+    "Docker",
+    "Clean Architecture",
+    "CI/CD",
+    "Twelve-Factor"
+  ],
+  "resources": {
+    "hasSlides": false,
+    "slidesDeck": null,
+    "starterCode": null,
+    "assignmentGuide": null,
+    "pptxDownload": "downloads/Materi_Pengkom_Pertemuan_9_10_Python.pptx"
+  }
+}

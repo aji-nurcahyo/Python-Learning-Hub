@@ -1,0 +1,45 @@
+{
+  "id": "ai-ml",
+  "title": "Artificial Intelligence & Machine Learning",
+  "subtitle": "Pemodelan Prediktif, Supervised/Unsupervised Learning & Evaluasi",
+  "icon": "psychology",
+  "tagline": "Membangun algoritma cerdas yang belajar dari data",
+  "description": "Jalur spesialisasi machine learning praktis: rekayasa fitur (feature engineering), pelatihan model regresi dan klasifikasi dengan Scikit-Learn, hingga evaluasi metrik akurasi.",
+  "targetAudience": "ML Engineer, AI Researcher, Praktisi Pemodelan Prediktif",
+  "recommendedChapters": [
+    8,
+    9,
+    14,
+    15,
+    16,
+    20,
+    25
+  ],
+  "modules": [
+    {
+      "title": "Mathematical Essentials for ML",
+      "description": "Aljabar linier, kalkulus diferensial, dan probabilitas terapan dalam Python.",
+      "status": "Specialization"
+    },
+    {
+      "title": "Supervised Learning (Regression & Classification)",
+      "description": "Linear models, Decision Trees, Random Forests, dan Support Vector Machines.",
+      "status": "Specialization"
+    },
+    {
+      "title": "Unsupervised Learning & Dimensionality Reduction",
+      "description": "Clustering K-Means, DBSCAN, dan reduksi dimensi Principal Component Analysis (PCA).",
+      "status": "Specialization"
+    },
+    {
+      "title": "Model Evaluation, Validation & Hyperparameter Tuning",
+      "description": "Cross-validation, ROC-AUC, confusion matrix, dan Grid/Random Search.",
+      "status": "Specialization"
+    },
+    {
+      "title": "Capstone: Model Prediksi Sinyal & Anomali Jaringan",
+      "description": "Melatih dan menguji model machine learning prediktif dengan dataset sensor jaringan telekomunikasi.",
+      "status": "Advanced Project"
+    }
+  ]
+}

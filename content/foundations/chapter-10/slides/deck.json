@@ -1,0 +1,144 @@
+[
+  {
+    "title": "Function Design, Module & Docstring",
+    "body": "<p class=\"lead\">Review Python, merancang fungsi, menata kode modular, dan mendokumentasikan program.</p><p class=\"note\">Contoh kasus: pengolahan data pengukuran sinyal</p>",
+    "kind": "cover",
+    "notes": "Bahas function design, module & docstring. Diskusikan dan analisis menjelaskan alasan jawabannya sebelum melanjutkan."
+  },
+  {
+    "title": "Capaian pembelajaran",
+    "body": "<ul><li>Mengingat kembali variabel, percabangan, perulangan, dan fungsi bawaan.</li><li>Merancang fungsi dengan parameter, return value, dan validasi sederhana.</li><li>Memahami scope lokal dan global.</li><li>Membuat modul sendiri dan menulis docstring yang informatif.</li></ul>",
+    "kind": "content",
+    "notes": "Bahas capaian pembelajaran. Diskusikan dan analisis menjelaskan alasan jawabannya sebelum melanjutkan."
+  },
+  {
+    "title": "Review Python: yang sudah dipelajari",
+    "body": "<p>Diskusikan: bagaimana menghindari penulisan logika yang sama berkali-kali?</p>",
+    "kind": "code",
+    "notes": "Diskusikan dan analisis menelusuri setiap nilai. Tanyakan mengapa -87 memenuhi kondisi >= -90, lalu hubungkan pengulangan logika ke fungsi.",
+    "example": "p09-02"
+  },
+  {
+    "title": "Mengapa fungsi?",
+    "body": "<ul><li><strong>Reusable</strong>: dipakai ulang tanpa menyalin kode.</li><li><strong>Testable</strong>: mudah diuji untuk input berbeda.</li><li><strong>Readable</strong>: nama fungsi menjelaskan tujuan.</li><li><strong>Maintainable</strong>: perubahan cukup dilakukan di satu tempat.</li></ul>",
+    "kind": "content",
+    "notes": "Bahas mengapa fungsi?. Diskusikan dan analisis menjelaskan alasan jawabannya sebelum melanjutkan."
+  },
+  {
+    "title": "Anatomi fungsi Python",
+    "body": "<p>Nama, parameter, docstring, badan fungsi, return, dan pemanggilan.</p>",
+    "kind": "code",
+    "notes": "Bahas anatomi fungsi python. Diskusikan dan analisis menjelaskan alasan jawabannya sebelum melanjutkan.",
+    "example": "p09-04"
+  },
+  {
+    "title": "Parameter, argumen, default",
+    "body": "<p>Parameter berada di definisi; argumen diberikan saat pemanggilan.</p>",
+    "kind": "code",
+    "notes": "Bahas parameter, argumen, default. Diskusikan dan analisis menjelaskan alasan jawabannya sebelum melanjutkan.",
+    "example": "p09-05"
+  },
+  {
+    "title": "Print vs return",
+    "body": "<p><code>return</code> memungkinkan hasil digunakan oleh proses lain.</p>",
+    "kind": "code",
+    "notes": "Minta prediksi tiga baris output sebelum menunjukkannya. Tekankan bahwa versi_print mengembalikan None secara implisit.",
+    "example": "p09-06"
+  },
+  {
+    "title": "Function design: input – proses – output",
+    "body": "<ul><li>1. Rumuskan apa yang harus dikerjakan.</li><li>2. Tentukan input dan tipe datanya.</li><li>3. Tentukan output, termasuk kondisi khusus.</li><li>4. Pilih nama fungsi yang menggambarkan kegunaan.</li><li>5. Uji fungsi dengan kasus normal dan batas.</li></ul><div class=\"callout\">Contoh kontrak: rata_rata(data) → float atau None saat data kosong.</div>",
+    "kind": "content",
+    "notes": "Bahas function design: input – proses – output. Diskusikan dan analisis menjelaskan alasan jawabannya sebelum melanjutkan."
+  },
+  {
+    "title": "Studi kasus: rata-rata RSRP",
+    "body": "<p>Jalankan contoh Python 3, lalu bandingkan hasilnya dengan output di samping.</p>",
+    "kind": "code",
+    "notes": "Tinjau kontrak data kosong sebelum pembagian. Hubungkan sum(data)/len(data) dengan rumus rata-rata.",
+    "example": "p09-08"
+  },
+  {
+    "title": "Studi kasus: klasifikasi sinyal",
+    "body": "<p class=\"note\">Ambang ini untuk pembelajaran, bukan standar universal jaringan.</p>",
+    "kind": "code",
+    "notes": "Bahas studi kasus: klasifikasi sinyal. Diskusikan dan analisis menjelaskan alasan jawabannya sebelum melanjutkan.",
+    "example": "p09-09"
+  },
+  {
+    "title": "Scope: variabel lokal dan global",
+    "body": "<p>Utamakan parameter dan return daripada mengubah variabel global.</p>",
+    "kind": "code",
+    "notes": "Bahas scope: variabel lokal dan global. Diskusikan dan analisis menjelaskan alasan jawabannya sebelum melanjutkan.",
+    "example": "p09-10"
+  },
+  {
+    "title": "Apa itu module?",
+    "body": "<ul><li>Module adalah berkas <code>.py</code> berisi fungsi, variabel, atau kelas.</li><li>Kode dapat dipisah menurut tanggung jawab.</li><li>Module dipanggil dari file lain menggunakan <code>import</code>.</li><li>Gunakan <code>if __name__ == \"__main__\":</code> untuk kode demo yang tidak berjalan saat import.</li></ul>",
+    "kind": "content",
+    "notes": "Bahas apa itu module?. Diskusikan dan analisis menjelaskan alasan jawabannya sebelum melanjutkan."
+  },
+  {
+    "title": "Membuat modul sendiri",
+    "body": "<p>Jalankan contoh Python 3, lalu bandingkan hasilnya dengan output di samping.</p>",
+    "kind": "code",
+    "notes": "Demonstrasikan dua file dalam direktori yang sama. Jalankan main.py; jelaskan lokasi pencarian import dan hindari nama file yang menimpa standard library.",
+    "files": [
+      {
+        "name": "statistik.py",
+        "code": "# file: statistik.py\ndef rata_rata(data):\n    \"\"\"Hitung rata-rata data numerik.\"\"\"\n    return sum(data) / len(data) if data else None"
+      },
+      {
+        "name": "main.py",
+        "code": "from statistik import rata_rata\nprint(rata_rata([1, 2, 3]))  # 2.0"
+      }
+    ],
+    "example": "p09-module/main"
+  },
+  {
+    "title": "Docstring yang baik",
+    "body": "<p>Docstring berbeda dari komentar biasa: dapat diakses melalui <code>help()</code>.</p>",
+    "kind": "code",
+    "notes": "Bahas docstring yang baik. Diskusikan dan analisis menjelaskan alasan jawabannya sebelum melanjutkan.",
+    "example": "p09-13"
+  },
+  {
+    "title": "Menghindari efek samping saat import",
+    "body": "<p>Bagian demo hanya dijalankan ketika file dibuka sebagai program utama.</p>",
+    "kind": "code",
+    "notes": "Bahas menghindari efek samping saat import. Diskusikan dan analisis menjelaskan alasan jawabannya sebelum melanjutkan.",
+    "example": "p09-14"
+  },
+  {
+    "title": "Latihan kelas (15 menit)",
+    "body": "<ul><li>Buat fungsi <code>nilai_tertinggi(data)</code>.</li><li>Kembalikan <code>None</code> untuk data kosong.</li><li>Buat fungsi <code>kategori_rsrp(rsrp)</code>.</li><li>Uji input: -89, -100, -110 dBm.</li><li>Tambahkan docstring dan dua pernyataan <code>assert</code>.</li></ul>",
+    "kind": "exercise",
+    "notes": "3 menit menyusun kontrak, 8 menit coding berpasangan, 4 menit menguji kasus kosong dan batas kategori. Bahas alasan setiap assert."
+  },
+  {
+    "title": "Tugas Mandiri: Function Design & Module",
+    "body": "<ul><li>Buat modul <code>olah_sinyal.py</code> dengan minimal 4 fungsi.</li><li>Fungsi wajib: rata-rata, maksimum, minimum, klasifikasi RSRP.</li><li>Gunakan parameter dan <code>return</code>; semua fungsi wajib memiliki docstring.</li><li>Buat <code>main.py</code> yang mengimpor modul dan memproses minimal 8 angka RSRP.</li><li>Sertakan minimal 5 pengujian <code>assert</code>.</li></ul><p class=\"note\">Kumpulkan folder kode, tangkapan layar output, dan penjelasan singkat penggunaan.</p>",
+    "kind": "exercise",
+    "notes": "Bahas tugas pertemuan 9. Diskusikan dan analisis menjelaskan alasan jawabannya sebelum melanjutkan."
+  },
+  {
+    "title": "Rubrik Tugas: Function Design & Module",
+    "body": "<ul><li>Ketepatan output dan penanganan data kosong — 40%.</li><li>Perancangan fungsi, modularitas, dan penamaan — 25%.</li><li>Docstring dan keterbacaan kode — 15%.</li><li>Pengujian (assert) — 15%.</li><li>Kelengkapan pengumpulan — 5%.</li></ul>",
+    "kind": "content",
+    "notes": "Bahas rubrik tugas pertemuan 9. Diskusikan dan analisis menjelaskan alasan jawabannya sebelum melanjutkan."
+  },
+  {
+    "title": "Cek pemahaman",
+    "body": "<p>Prediksi dahulu, kemudian buka pembahasan.</p>",
+    "kind": "question",
+    "question": "Mengapa return lebih sesuai untuk fungsi pengolahan data?",
+    "answer": "return mengembalikan nilai untuk dipakai, dikombinasikan, dan diuji. print hanya menampilkan teks.",
+    "notes": "Beri waktu satu menit untuk berpikir dan diskusi berpasangan."
+  },
+  {
+    "title": "Refleksi & Persiapan Chapter Berikutnya",
+    "body": "<div class=\"callout\">Bagaimana jika data sinyal tidak hanya berupa angka, tetapi juga ID perangkat dan lokasi pengukuran?</div><p>Chapter berikutnya: list, tuple, dictionary, set, comprehension, pencarian, dan sorting.</p>",
+    "kind": "content",
+    "notes": "Bahas refleksi & persiapan pertemuan 10. Diskusikan dan analisis menjelaskan alasan jawabannya sebelum melanjutkan."
+  }
+]

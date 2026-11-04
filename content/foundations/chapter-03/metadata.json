@@ -1,0 +1,34 @@
+{
+  "id": 3,
+  "number": "03",
+  "slug": "03-operators-expressions",
+  "levelId": 1,
+  "levelCategory": "foundations",
+  "title": "Operators & Expressions",
+  "subtitle": "Aritmatika, Perbandingan, Logika & Presedensi",
+  "description": "Operasi matematika, operator modulo, pembagian bulat, perbandingan nilai, logika boolean, dan aturan presedensi operator.",
+  "competencyFocus": "PCEP 2.2: Operator numerik dan boolean",
+  "estimatedHours": 3,
+  "difficulty": "Beginner",
+  "available": false,
+  "prerequisites": [
+    "Chapter 02"
+  ],
+  "learningObjectives": [
+    "Menggunakan operator aritmatika (+, -, *, /, //, %, **)",
+    "Menerapkan operator perbandingan (==, !=, >, <, >=, <=)",
+    "Memahami evaluasi ekspresi logika dengan presedensi operator yang benar"
+  ],
+  "tags": [
+    "Arithmetic",
+    "Logic",
+    "Precedence"
+  ],
+  "resources": {
+    "hasSlides": false,
+    "slidesDeck": null,
+    "starterCode": null,
+    "assignmentGuide": null,
+    "pptxDownload": "downloads/Materi_Pengkom_Pertemuan_9_10_Python.pptx"
+  }
+}

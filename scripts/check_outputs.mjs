@@ -86,16 +86,20 @@ if (pythonCmd) {
   }
 }
 
-// Check original examples
-for (const n of [9, 10]) {
+// Check migrated chapter examples
+const chapterExamples = [
+  { n: 9, file: resolve(root, 'content/foundations/chapter-10/assignments/contoh.py') },
+  { n: 10, file: resolve(root, 'content/foundations/chapter-08/assignments/contoh.py') },
+];
+
+for (const { n, file } of chapterExamples) {
   const origKey = `original-${n}`;
   if (!(origKey in outputs)) {
     console.error(`Missing output for ${origKey}`);
     process.exit(1);
   }
-  const origPy = resolve(root, `pertemuan-${String(n).padStart(2, '0')}/contoh.py`);
-  if (!existsSync(origPy)) {
-    console.error(`Missing original file: ${origPy}`);
+  if (!existsSync(file)) {
+    console.error(`Missing chapter assignment example file: ${file}`);
     process.exit(1);
   }
   verifiedCount++;

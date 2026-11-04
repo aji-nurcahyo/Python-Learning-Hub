@@ -1,0 +1,35 @@
+{
+  "id": 5,
+  "number": "05",
+  "slug": "05-conditional-statements",
+  "levelId": 1,
+  "levelCategory": "foundations",
+  "title": "Conditional Statements",
+  "subtitle": "Pengambilan Keputusan: if, elif, else & Guard Clauses",
+  "description": "Merancang alur logika percabangan, kondisi bertingkat, operator ternary, dan pola guard clauses untuk kode yang bersih.",
+  "competencyFocus": "PCEP 3.1: Percabangan dan logika alur",
+  "estimatedHours": 3,
+  "difficulty": "Beginner",
+  "available": false,
+  "prerequisites": [
+    "Chapter 03",
+    "Chapter 04"
+  ],
+  "learningObjectives": [
+    "Menulis struktur percabangan if, elif, dan else secara tepat",
+    "Menggabungkan kondisi majemuk menggunakan and, or, dan not",
+    "Menghindari nested if yang terlalu dalam dengan teknik guard clauses"
+  ],
+  "tags": [
+    "Branching",
+    "if-else",
+    "Decision Logic"
+  ],
+  "resources": {
+    "hasSlides": false,
+    "slidesDeck": null,
+    "starterCode": null,
+    "assignmentGuide": null,
+    "pptxDownload": "downloads/Materi_Pengkom_Pertemuan_9_10_Python.pptx"
+  }
+}

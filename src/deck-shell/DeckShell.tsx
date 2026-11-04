@@ -11,10 +11,16 @@ export function DeckShell({
   slides,
   meeting,
   base,
+  onNavigateChapter,
+  onNavigateReading,
+  onNavigateTask,
 }: {
   slides: SlideData[];
   meeting: number;
   base: string;
+  onNavigateChapter?: () => void;
+  onNavigateReading?: () => void;
+  onNavigateTask?: () => void;
 }) {
   const host = useRef<HTMLDivElement>(null);
   const deck = useRef<RevealApi | null>(null);
@@ -131,17 +137,45 @@ export function DeckShell({
   return (
     <div className={`deck-page ${printing ? 'print-mode' : ''}`}>
       <header className="deck-toolbar">
-        <a className="brand compact" href={`${base}index.html`} aria-label="Kembali ke Beranda Hub">
-          <Icon name="arrow_back" size={18} /> <span>Hub</span>
+        <a
+          className="brand compact"
+          href={`${base}index.html#chapter/${meeting}`}
+          onClick={(e) => {
+            if (onNavigateChapter) {
+              e.preventDefault();
+              onNavigateChapter();
+            }
+          }}
+          aria-label={`Kembali ke Chapter ${meeting}`}
+        >
+          <Icon name="arrow_back" size={18} /> <span>Chapter {meeting}</span>
         </a>
         <span className="toolbar-meeting">
           <Icon name="slideshow" size={16} /> Chapter {meeting}
         </span>
         <div className="toolbar-actions">
-          <a href="?view=read" title="Mode Dokumen Baca Responsif">
+          <a
+            href={`${base}index.html#chapter/${meeting}/read`}
+            onClick={(e) => {
+              if (onNavigateReading) {
+                e.preventDefault();
+                onNavigateReading();
+              }
+            }}
+            title="Mode Dokumen Baca Responsif"
+          >
             <Icon name="menu_book" size={16} /> <span>Baca</span>
           </a>
-          <a href="tugas.html" title="Lihat Instruksi Tugas">
+          <a
+            href={`${base}index.html#chapter/${meeting}/task`}
+            onClick={(e) => {
+              if (onNavigateTask) {
+                e.preventDefault();
+                onNavigateTask();
+              }
+            }}
+            title="Lihat Instruksi Tugas"
+          >
             <Icon name="assignment" size={16} /> <span>Tugas</span>
           </a>
           <ThemeSelect theme={theme} onChange={setTheme} />

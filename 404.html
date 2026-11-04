@@ -29,12 +29,30 @@
         var routeSegments = hasRepoPrefix ? segments.slice(1) : segments;
         var route = routeSegments.join('/');
 
+        // Backward compatibility mapping for old pertemuan-XX URLs
         if (route.startsWith('pertemuan-')) {
-          var targetMeeting = base + route + (route.includes('.html') ? '' : '/index.html') + l.search + l.hash;
-          l.replace(targetMeeting);
-          return;
+          var isReading = l.search.indexOf('view=read') !== -1;
+          var isTask = route.indexOf('tugas.html') !== -1;
+          
+          if (route.indexOf('pertemuan-09') !== -1) {
+            var targetView = isReading ? '/read' : (isTask ? '/task' : '/slides');
+            l.replace(base + '#chapter/10' + targetView);
+            return;
+          }
+          if (route.indexOf('pertemuan-10') !== -1) {
+            var targetView10 = isReading ? '/read' : (isTask ? '/task' : '/slides');
+            l.replace(base + '#chapter/08' + targetView10);
+            return;
+          }
+          var matchNum = /pertemuan-(\d+)/.exec(route);
+          if (matchNum) {
+            var n = parseInt(matchNum[1], 10);
+            l.replace(base + '#chapter/' + n);
+            return;
+          }
         }
 
+        // Generic SPA redirect to hash route
         if (route) {
           var target = base + '#' + route + (l.search ? (route.includes('?') ? '&' : '?') + l.search.slice(1) : '') + l.hash;
           l.replace(target);

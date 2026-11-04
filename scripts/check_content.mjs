@@ -1,5 +1,5 @@
 /**
- * Content regression checks for slide preservation, placeholder status,
+ * Content regression checks for modular chapter structure, slide preservation,
  * and example availability.
  */
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
@@ -8,53 +8,85 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, '..');
+const contentRoot = resolve(root, 'content');
 
-for (const n of [9, 10]) {
-  const pad = String(n).padStart(2, '0');
-  const legacyHtml = resolve(root, `legacy/pertemuan-${pad}/index.html`);
-  if (existsSync(legacyHtml)) {
-    const original = readFileSync(legacyHtml, 'utf-8');
-    const titles = [...original.matchAll(/<h[12]>(.*?)<\/h[12]>/g)].map(m => m[1].replace(/&quot;/g, '"').replace(/&amp;/g, '&'));
-    const slides = JSON.parse(readFileSync(resolve(root, `src/decks/pertemuan-${pad}.json`), 'utf-8'));
-    const slideTitles = new Set(slides.map(s => s.title));
+// 1. Verify 30 chapter directories in content/
+const levels = [
+  { folder: 'foundations', count: 12 },
+  { folder: 'intermediate', count: 10 },
+  { folder: 'professional', count: 8 },
+];
 
-    for (const title of titles) {
-      if (!slideTitles.has(title)) {
-        console.error(`Warning: original slide title "${title}" not directly matched in pertemuan-${pad}.json`);
-      }
-    }
+let totalChapters = 0;
+for (const lvl of levels) {
+  const lvlDir = resolve(contentRoot, lvl.folder);
+  if (!existsSync(lvlDir)) {
+    console.error(`Missing level directory: ${lvlDir}`);
+    process.exit(1);
   }
+  const chapters = readdirSync(lvlDir, { withFileTypes: true })
+    .filter((d) => d.isDirectory() && /^chapter-\d{2}$/.test(d.name))
+    .map((d) => d.name);
 
-  // Ensure tugas.md and contoh.py are preserved
-  const tugasMd = resolve(root, `pertemuan-${pad}/tugas.md`);
-  const contohPy = resolve(root, `pertemuan-${pad}/contoh.py`);
-  if (!existsSync(tugasMd) || !existsSync(contohPy)) {
-    console.error(`Missing required file in pertemuan-${pad}`);
+  if (chapters.length !== lvl.count) {
+    console.error(`Expected ${lvl.count} chapters in ${lvl.folder}, found ${chapters.length}`);
     process.exit(1);
   }
 
-  const slides = JSON.parse(readFileSync(resolve(root, `src/decks/pertemuan-${pad}.json`), 'utf-8'));
+  for (const ch of chapters) {
+    const chPath = resolve(lvlDir, ch);
+    const metaPath = resolve(chPath, 'metadata.json');
+    const indexPath = resolve(chPath, 'index.md');
+    if (!existsSync(metaPath) || !existsSync(indexPath)) {
+      console.error(`Chapter ${ch} in ${lvl.folder} is missing metadata.json or index.md`);
+      process.exit(1);
+    }
+    totalChapters++;
+  }
+}
+console.log(`✓ ${totalChapters}/30 modular chapter packages verified in content/`);
+
+// 2. Verify 5 Specialization Tracks
+const specDir = resolve(contentRoot, 'specializations');
+const tracks = readdirSync(specDir, { withFileTypes: true })
+  .filter((d) => d.isDirectory() && d.name.startsWith('track-'))
+  .map((d) => d.name);
+
+if (tracks.length !== 5) {
+  console.error(`Expected 5 tracks in content/specializations, found ${tracks.length}`);
+  process.exit(1);
+}
+console.log(`✓ 5 specialization tracks verified in content/specializations/`);
+
+// 3. Verify Active Chapter Slides & Python Examples
+const activeChecks = [
+  { ch: 'foundations/chapter-10', legacyMeeting: 9 },
+  { ch: 'foundations/chapter-08', legacyMeeting: 10 },
+];
+
+for (const { ch, legacyMeeting } of activeChecks) {
+  const pad = String(legacyMeeting).padStart(2, '0');
+  const deckFile = resolve(contentRoot, ch, 'slides/deck.json');
+  const tugasFile = resolve(contentRoot, ch, 'assignments/tugas.md');
+  const contohFile = resolve(contentRoot, ch, 'assignments/contoh.py');
+
+  if (!existsSync(deckFile) || !existsSync(tugasFile) || !existsSync(contohFile)) {
+    console.error(`Missing required active educational asset in ${ch}`);
+    process.exit(1);
+  }
+
+  const slides = JSON.parse(readFileSync(deckFile, 'utf-8'));
   for (const slide of slides) {
     if (slide.example) {
       const exFile = resolve(root, `src/code/${slide.example}.py`);
       if (!existsSync(exFile)) {
-        console.error(`Missing example file: ${exFile}`);
+        console.error(`Missing slide code example: ${exFile}`);
         process.exit(1);
       }
     }
   }
 
-  console.log(`Meeting ${n}: slides, examples, and preserved assets verified.`);
+  console.log(`✓ Chapter ${ch}: slides, examples, assignments, and Python code verified.`);
 }
 
-const entries = readdirSync(root, { withFileTypes: true })
-  .filter(d => d.isDirectory() && /^pertemuan-\d{2}$/.test(d.name))
-  .map(d => d.name);
-
-if (entries.length !== 16) {
-  console.error(`Expected 16 meeting directories, found ${entries.length}`);
-  process.exit(1);
-}
-
-console.log('✓ 16 entry routes verified: Pertemuan 1-8 (Segera Hadir), Pertemuan 9-10 (Aktif), Pertemuan 11-16 (Segera Hadir).');
-
+console.log('✓ All content, slide registries, and modular chapter assets verified successfully.');

@@ -1,0 +1,34 @@
+{
+  "id": 22,
+  "number": "22",
+  "slug": "22-intermediate-capstone",
+  "levelId": 2,
+  "levelCategory": "intermediate",
+  "title": "Intermediate Capstone Project",
+  "subtitle": "Arsitektur OOP Penuh: Engine Analisis Data & File I/O Teruji",
+  "description": "Proyek akhir Level 2: merancang sistem analitik OOP modular dengan hierarki class, parsing dataset otomatis, exception handling kustom, dan unit test suite.",
+  "competencyFocus": "Integrasi Kompetensi PCAP",
+  "estimatedHours": 8,
+  "difficulty": "Intermediate",
+  "available": false,
+  "prerequisites": [
+    "Chapter 13 – 21"
+  ],
+  "learningObjectives": [
+    "Mendesain arsitektur class terintegrasi (domain models, service layer, parser)",
+    "Memproses dataset disk secara asinkron/stream dengan penanganan kegagalan parsing",
+    "Mencapai test coverage yang terukur menggunakan unit testing terotomasi"
+  ],
+  "tags": [
+    "Capstone",
+    "OOP Architecture",
+    "Test-Driven"
+  ],
+  "resources": {
+    "hasSlides": false,
+    "slidesDeck": null,
+    "starterCode": null,
+    "assignmentGuide": null,
+    "pptxDownload": "downloads/Materi_Pengkom_Pertemuan_9_10_Python.pptx"
+  }
+}

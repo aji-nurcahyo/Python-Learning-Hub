@@ -1,0 +1,34 @@
+{
+  "id": 30,
+  "number": "30",
+  "slug": "30-professional-capstone",
+  "levelId": 3,
+  "levelCategory": "professional",
+  "title": "Professional Capstone Project",
+  "subtitle": "Sistem Terdistribusi Skala Produksi: Async API & Pipeline Tercontainerisasi",
+  "description": "Proyek puncak Level 3: membangun sistem backend asinkron berkinerja tinggi, dilengkapi static typing menyeluruh, test suite lengkap, arsitektur SOLID, dan siap deploy via Docker.",
+  "competencyFocus": "Senior Engineering Capstone",
+  "estimatedHours": 10,
+  "difficulty": "Advanced",
+  "available": false,
+  "prerequisites": [
+    "Chapter 23 – 29"
+  ],
+  "learningObjectives": [
+    "Mengintegrasikan asynchronous framework, design patterns, dan type hints dalam sistem nyata",
+    "Menghasilkan codebase berstandar industri dengan dokumentasi API dan instruksi deployment lengkap",
+    "Mencapai keandalan sistem dengan zero unhandled exceptions dan automated health monitoring"
+  ],
+  "tags": [
+    "Senior Capstone",
+    "Async Engine",
+    "Production Grade"
+  ],
+  "resources": {
+    "hasSlides": false,
+    "slidesDeck": null,
+    "starterCode": null,
+    "assignmentGuide": null,
+    "pptxDownload": "downloads/Materi_Pengkom_Pertemuan_9_10_Python.pptx"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "id": 17,
+  "number": "17",
+  "slug": "17-file-handling-serialization",
+  "levelId": 2,
+  "levelCategory": "intermediate",
+  "title": "File Handling & Data Serialization",
+  "subtitle": "Context Manager (with), CSV, JSON & Text Processing",
+  "description": "Membaca dan menulis file lokal dengan aman menggunakan context manager (with open), parsing format CSV terstruktur, serialisasi JSON, dan manajemen path (pathlib).",
+  "competencyFocus": "PCAP 2.1: File I/O stream dan format data",
+  "estimatedHours": 4,
+  "difficulty": "Intermediate",
+  "available": false,
+  "prerequisites": [
+    "Chapter 11"
+  ],
+  "learningObjectives": [
+    "Mengelola file descriptor secara aman tanpa resource leak menggunakan with statement",
+    "Membaca dan menulis data tabel menggunakan modul bawaan csv.DictReader dan csv.DictWriter",
+    "Melakukan serialisasi dan deserialisasi data menggunakan json.loads() dan json.dumps()"
+  ],
+  "tags": [
+    "Files",
+    "CSV",
+    "JSON",
+    "pathlib"
+  ],
+  "resources": {
+    "hasSlides": false,
+    "slidesDeck": null,
+    "starterCode": null,
+    "assignmentGuide": null,
+    "pptxDownload": "downloads/Materi_Pengkom_Pertemuan_9_10_Python.pptx"
+  }
+}

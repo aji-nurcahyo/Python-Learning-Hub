@@ -1,0 +1,34 @@
+{
+  "id": 7,
+  "number": "07",
+  "slug": "07-strings-text-processing",
+  "levelId": 1,
+  "levelCategory": "foundations",
+  "title": "Strings & Text Processing",
+  "subtitle": "Indexing, Slicing, Immutability & Metode String",
+  "description": "Eksplorasi mendalam string sebagai sequence immutable: pemotongan slice [start:stop:step], metode bawaan, dan pembersihan teks.",
+  "competencyFocus": "PCEP 3.3: Manipulasi sequence teks",
+  "estimatedHours": 3,
+  "difficulty": "Beginner",
+  "available": false,
+  "prerequisites": [
+    "Chapter 06"
+  ],
+  "learningObjectives": [
+    "Menerapkan indexing positif dan negatif serta slicing sequence",
+    "Memanfaatkan metode string penting (strip, split, join, replace, find)",
+    "Memahami sifat immutability string dalam memori Python"
+  ],
+  "tags": [
+    "Strings",
+    "Slicing",
+    "Text Processing"
+  ],
+  "resources": {
+    "hasSlides": false,
+    "slidesDeck": null,
+    "starterCode": null,
+    "assignmentGuide": null,
+    "pptxDownload": "downloads/Materi_Pengkom_Pertemuan_9_10_Python.pptx"
+  }
+}

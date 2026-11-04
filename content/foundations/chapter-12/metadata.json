@@ -1,0 +1,34 @@
+{
+  "id": 12,
+  "number": "12",
+  "slug": "12-foundations-capstone",
+  "levelId": 1,
+  "levelCategory": "foundations",
+  "title": "Foundations Capstone Project",
+  "subtitle": "Integrasi Komprehensif: Sistem Pengolahan Data Multi-Module",
+  "description": "Proyek akhir Level 1: membangun aplikasi CLI terstruktur yang mengolah dataset dinamis, menerapkan validasi masukan, modul kustom, dan pengujian assert.",
+  "competencyFocus": "Integrasi Kompetensi PCEP",
+  "estimatedHours": 6,
+  "difficulty": "Beginner",
+  "available": false,
+  "prerequisites": [
+    "Chapter 01 – 11"
+  ],
+  "learningObjectives": [
+    "Mengintegrasikan dictionary, list, set, dan tuple dalam arsitektur data realistis",
+    "Menata kode menjadi minimal dua file modul dengan docstring lengkap",
+    "Menyusun minimal 10 pengujian assert otomatis untuk menjamin kebenaran logika"
+  ],
+  "tags": [
+    "Capstone",
+    "Integration",
+    "CLI Project"
+  ],
+  "resources": {
+    "hasSlides": false,
+    "slidesDeck": null,
+    "starterCode": null,
+    "assignmentGuide": null,
+    "pptxDownload": "downloads/Materi_Pengkom_Pertemuan_9_10_Python.pptx"
+  }
+}

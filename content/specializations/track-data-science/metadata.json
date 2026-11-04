@@ -1,0 +1,45 @@
+{
+  "id": "data-science",
+  "title": "Data Science & Visualization",
+  "subtitle": "Eksplorasi, Manipulasi Tabular & Visualisasi Analitik",
+  "icon": "bar_chart",
+  "tagline": "Dari data mentah menjadi wawasan analitik yang berdampak",
+  "description": "Jalur spesialisasi untuk mengolah, membersihkan, dan menganalisis dataset berdimensi besar menggunakan pustaka standar industri seperti NumPy, Pandas, Matplotlib, dan Seaborn.",
+  "targetAudience": "Data Analyst, Data Scientist, Riset Kuantitatif, Analis Bisnis",
+  "recommendedChapters": [
+    8,
+    9,
+    14,
+    15,
+    17,
+    21,
+    24
+  ],
+  "modules": [
+    {
+      "title": "Foundations of Data Arrays (NumPy)",
+      "description": "Operasi matriks berkinerja tinggi, vektorisasi, dan broadcasting matematis.",
+      "status": "Specialization"
+    },
+    {
+      "title": "Data Wrangling & Cleaning (Pandas)",
+      "description": "Transformasi DataFrame, penanganan missing values, pengelompokan groupby, dan pivot tables.",
+      "status": "Specialization"
+    },
+    {
+      "title": "Exploratory Data Analysis (EDA)",
+      "description": "Identifikasi pola statistik, outlier detection, dan korelasi antar variabel.",
+      "status": "Specialization"
+    },
+    {
+      "title": "Publication-Ready Visualizations (Matplotlib & Seaborn)",
+      "description": "Merancang grafik statistik profesional, multi-panel charts, dan visualisasi distribusi.",
+      "status": "Specialization"
+    },
+    {
+      "title": "Capstone: End-to-End Analytics Report",
+      "description": "Pipeline pengolahan dataset telekomunikasi dan ekonomi publik dari ingestion hingga dashboard laporan.",
+      "status": "Advanced Project"
+    }
+  ]
+}

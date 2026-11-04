@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import type { SlideData } from './decks/registry';
+import { getSlideDeckForChapter } from './decks/registry';
 import { ThemeSelect, usePreferences } from './deck-shell/preferences';
 import { DeckShell } from './deck-shell/DeckShell';
 import { SlideContent } from './layouts/SlideContent';
 import { Icon } from './ui/Icon';
-import p09 from './decks/pertemuan-09.json';
-import p10 from './decks/pertemuan-10.json';
 import task09 from './decks/tugas-09.md?raw';
 import task10 from './decks/tugas-10.md?raw';
 
@@ -23,9 +22,7 @@ import 'katex/dist/katex.min.css';
 import './theme/styles.css';
 
 const path = location.pathname;
-const match = /\/pertemuan-(\d+)\/(?:index\.html|tugas\.html)?$/.exec(path);
-const number = match ? Number(match[1]) : 0;
-const base = match ? '../' : './';
+const base = './';
 
 // Common Hub Header
 function Header({
@@ -137,6 +134,9 @@ type HubRoute =
   | { type: 'level'; id: number }
   | { type: 'track'; id: string }
   | { type: 'chapter'; id: number }
+  | { type: 'slides'; chapterId: number }
+  | { type: 'reading'; chapterId: number }
+  | { type: 'task'; chapterId: number }
   | { type: 'about' };
 
 function parseHashRoute(): HubRoute {
@@ -147,6 +147,26 @@ function parseHashRoute(): HubRoute {
   if (searchParams.get('page') === 'about' || hash === 'about' || hash.startsWith('about')) {
     return { type: 'about' };
   }
+
+  // Chapter sub-routes (slides, read, task)
+  const slidesMatch = /^chapter\/(\d+)\/slides/.exec(hash) || /^slides\/(\d+)/.exec(hash);
+  if (slidesMatch || (searchParams.get('chapter') && searchParams.get('view') === 'slides')) {
+    const cId = Number(slidesMatch ? slidesMatch[1] : searchParams.get('chapter'));
+    if (cId >= 1 && cId <= 30) return { type: 'slides', chapterId: cId };
+  }
+
+  const readMatch = /^chapter\/(\d+)\/read/.exec(hash) || /^read\/(\d+)/.exec(hash);
+  if (readMatch || (searchParams.get('chapter') && searchParams.get('view') === 'read')) {
+    const cId = Number(readMatch ? readMatch[1] : searchParams.get('chapter'));
+    if (cId >= 1 && cId <= 30) return { type: 'reading', chapterId: cId };
+  }
+
+  const taskMatch = /^chapter\/(\d+)\/task/.exec(hash) || /^task\/(\d+)/.exec(hash);
+  if (taskMatch || (searchParams.get('chapter') && searchParams.get('view') === 'task')) {
+    const cId = Number(taskMatch ? taskMatch[1] : searchParams.get('chapter'));
+    if (cId >= 1 && cId <= 30) return { type: 'task', chapterId: cId };
+  }
+
   if (searchParams.get('level')) {
     const lId = Number(searchParams.get('level'));
     if (lId >= 1 && lId <= 3) return { type: 'level', id: lId };
@@ -227,6 +247,88 @@ function HubApp() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const navigateSlides = (chapterId: number) => {
+    location.hash = `chapter/${chapterId}/slides`;
+    setRoute({ type: 'slides', chapterId });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const navigateReading = (chapterId: number) => {
+    location.hash = `chapter/${chapterId}/read`;
+    setRoute({ type: 'reading', chapterId });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const navigateTask = (chapterId: number) => {
+    location.hash = `chapter/${chapterId}/task`;
+    setRoute({ type: 'task', chapterId });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // If in interactive slide presentation mode, render DeckShell directly
+  if (route.type === 'slides') {
+    const slides = getSlideDeckForChapter(route.chapterId);
+    if (!slides) {
+      return (
+        <div className="hub-page-wrapper">
+          <Header activeNav={undefined} onNavigateHome={navigateHome} onNavigateLevel={navigateLevel} onNavigateAbout={navigateAbout} />
+          <main className="document placeholder">
+            <div className="eyebrow">CHAPTER {String(route.chapterId).padStart(2, '0')}</div>
+            <h1>Slide Belum Tersedia</h1>
+            <p>Slide presentasi interaktif untuk chapter ini sedang disiapkan.</p>
+            <button type="button" className="button primary" onClick={() => navigateChapter(route.chapterId)}>
+              <Icon name="arrow_back" size={16} /> <span>Kembali ke Chapter {route.chapterId}</span>
+            </button>
+          </main>
+          <Footer />
+        </div>
+      );
+    }
+    return (
+      <DeckShell
+        slides={slides}
+        meeting={route.chapterId}
+        base={base}
+        onNavigateChapter={() => navigateChapter(route.chapterId)}
+        onNavigateReading={() => navigateReading(route.chapterId)}
+        onNavigateTask={() => navigateTask(route.chapterId)}
+      />
+    );
+  }
+
+  // If in linear reading document view
+  if (route.type === 'reading') {
+    const slides = getSlideDeckForChapter(route.chapterId) || [];
+    return (
+      <div className="hub-page-wrapper">
+        <Header activeNav={undefined} onNavigateHome={navigateHome} onNavigateLevel={navigateLevel} onNavigateAbout={navigateAbout} />
+        <Reading
+          meeting={route.chapterId}
+          slides={slides}
+          onNavigateChapter={() => navigateChapter(route.chapterId)}
+          onNavigateSlides={() => navigateSlides(route.chapterId)}
+          onNavigateTask={() => navigateTask(route.chapterId)}
+        />
+        <Footer />
+      </div>
+    );
+  }
+
+  // If in dedicated task view
+  if (route.type === 'task') {
+    return (
+      <div className="hub-page-wrapper">
+        <Header activeNav={undefined} onNavigateHome={navigateHome} onNavigateLevel={navigateLevel} onNavigateAbout={navigateAbout} />
+        <Task
+          meeting={route.chapterId}
+          onNavigateChapter={() => navigateChapter(route.chapterId)}
+          onNavigateSlides={() => navigateSlides(route.chapterId)}
+        />
+        <Footer />
+      </div>
+    );
+  }
+
   const activeNav =
     route.type === 'home'
       ? 'home'
@@ -283,6 +385,9 @@ function HubApp() {
             onNavigateHome={navigateHome}
             onNavigateLevel={navigateLevel}
             onNavigateChapter={navigateChapter}
+            onNavigateSlides={navigateSlides}
+            onNavigateReading={navigateReading}
+            onNavigateTask={navigateTask}
           />
         )}
       </main>
@@ -291,120 +396,136 @@ function HubApp() {
   );
 }
 
-// Legacy Presentation & Task Views (Preserved for compatibility and slides access)
-function Task({ meeting }: { meeting: number }) {
-  const markdown = meeting === 9 ? task09 : task10;
+// Modular Document Reading View
+function Reading({
+  meeting,
+  slides,
+  onNavigateChapter,
+  onNavigateSlides,
+  onNavigateTask,
+}: {
+  meeting: number;
+  slides: SlideData[];
+  onNavigateChapter?: () => void;
+  onNavigateSlides?: () => void;
+  onNavigateTask?: () => void;
+}) {
   return (
-    <>
-      <Header />
-      <main className="document">
-        <a className="text-link" href="index.html">
-          <Icon name="arrow_back" size={16} /> Kembali ke presentasi slide
-        </a>
-        <div className="eyebrow">PRAKTIK MANDIRI · CHAPTER {String(meeting).padStart(2, '0')}</div>
-        {markdown.split('\n').map((line, i) =>
-          line.startsWith('# ') ? (
-            <h1 key={i}>{line.slice(2)}</h1>
-          ) : line.startsWith('## ') ? (
-            <h2 key={i}>{line.slice(3)}</h2>
-          ) : line ? (
-            <p className={/^\d|^-/.test(line) ? 'task-item' : ''} key={i}>
-              {line.replace(/`|\*\*/g, '')}
-            </p>
-          ) : null,
-        )}
-        <div className="hero-actions">
-          <a
-            className="button primary"
-            href={`../downloads/pertemuan-${String(meeting).padStart(2, '0')}/tugas.md`}
-            download
+    <main className="reading">
+      <div className="reading-heading">
+        <div>
+          <button
+            type="button"
+            className="breadcrumb-back-btn"
+            style={{ marginBottom: '12px' }}
+            onClick={() => (onNavigateChapter ? onNavigateChapter() : (location.hash = `chapter/${meeting}`))}
           >
-            <Icon name="download" size={16} /> <span>Unduh Panduan Tugas (.md)</span>
-          </a>
-          <a
-            className="button subtle"
-            href={`../downloads/pertemuan-${String(meeting).padStart(2, '0')}/contoh.py`}
-            download
-          >
-            <Icon name="download" size={16} /> <span>Unduh Contoh Python (.py)</span>
-          </a>
+            <Icon name="arrow_back" size={16} /> <span>Kembali ke Chapter {meeting}</span>
+          </button>
+          <div className="eyebrow">MODE BACA DOKUMEN · CHAPTER {String(meeting).padStart(2, '0')}</div>
+          <h1>Pelajari dengan ritme mandiri.</h1>
+          <p>
+            Tampilan linear yang responsif untuk membaca seluruh materi secara berurutan di layar desktop maupun perangkat seluler.
+          </p>
         </div>
-      </main>
-      <Footer />
-    </>
+        <div className="hero-actions">
+          <button
+            type="button"
+            className="button primary"
+            onClick={() => (onNavigateSlides ? onNavigateSlides() : (location.hash = `chapter/${meeting}/slides`))}
+          >
+            <Icon name="slideshow" size={16} /> <span>Buka Mode Presentasi</span>
+          </button>
+          <button
+            type="button"
+            className="button subtle"
+            onClick={() => (onNavigateTask ? onNavigateTask() : (location.hash = `chapter/${meeting}/task`))}
+          >
+            <Icon name="assignment" size={16} /> <span>Lihat Tugas Mandiri</span>
+          </button>
+        </div>
+      </div>
+      {slides.map((slide, i) => (
+        <article className={`reading-slide ${slide.kind}`} key={i}>
+          <SlideContent slide={slide} meeting={meeting} base="./" />
+        </article>
+      ))}
+    </main>
   );
 }
 
-function Placeholder() {
+// Modular Task View
+function Task({
+  meeting,
+  onNavigateChapter,
+  onNavigateSlides,
+}: {
+  meeting: number;
+  onNavigateChapter?: () => void;
+  onNavigateSlides?: () => void;
+}) {
+  const markdown = meeting === 10 || meeting === 9 ? task09 : task10;
   return (
-    <>
+    <main className="document">
+      <button
+        type="button"
+        className="breadcrumb-back-btn"
+        style={{ marginBottom: '16px' }}
+        onClick={() => (onNavigateChapter ? onNavigateChapter() : (location.hash = `chapter/${meeting}`))}
+      >
+        <Icon name="arrow_back" size={16} /> <span>Kembali ke Chapter {meeting}</span>
+      </button>
+      <div className="eyebrow">PRAKTIK MANDIRI · CHAPTER {String(meeting).padStart(2, '0')}</div>
+      {markdown.split('\n').map((line, i) =>
+        line.startsWith('# ') ? (
+          <h1 key={i}>{line.slice(2)}</h1>
+        ) : line.startsWith('## ') ? (
+          <h2 key={i}>{line.slice(3)}</h2>
+        ) : line ? (
+          <p className={/^\d|^-/.test(line) ? 'task-item' : ''} key={i}>
+            {line.replace(/`|\*\*/g, '')}
+          </p>
+        ) : null,
+      )}
+      <div className="hero-actions">
+        <button
+          type="button"
+          className="button primary"
+          onClick={() => (onNavigateSlides ? onNavigateSlides() : (location.hash = `chapter/${meeting}/slides`))}
+        >
+          <Icon name="slideshow" size={16} /> <span>Buka Mode Presentasi</span>
+        </button>
+        <a
+          className="button subtle"
+          href={`${base}downloads/pertemuan-${meeting >= 10 ? '09' : '10'}/contoh.py`}
+          download
+        >
+          <Icon name="download" size={16} /> <span>Unduh Contoh Python (.py)</span>
+        </a>
+      </div>
+    </main>
+  );
+}
+
+function FallbackNotFound() {
+  return (
+    <div className="hub-page-wrapper">
       <Header />
       <main className="document placeholder">
-        <div className="eyebrow">
-          {number >= 1 && number <= 16 ? `CHAPTER ${String(number).padStart(2, '0')}` : 'HALAMAN TIDAK DITEMUKAN'}
-        </div>
-        <h1>{number >= 1 && number <= 16 ? 'Segera Hadir' : 'Halaman Tidak Tersedia'}</h1>
-        <p>
-          {number >= 1 && number <= 16
-            ? 'Materi chapter ini sedang disiapkan. Silakan kembali ke Hub untuk mengakses silabus 30 Chapter yang telah tersedia.'
-            : 'Alamat yang Anda buka tidak sesuai dengan daftar halaman kurikulum.'}
-        </p>
+        <div className="eyebrow">HALAMAN TIDAK DITEMUKAN</div>
+        <h1>Halaman Tidak Tersedia</h1>
+        <p>Alamat yang Anda buka tidak sesuai dengan daftar halaman kurikulum.</p>
         <a className="button primary" href={`${base}index.html`}>
           <Icon name="arrow_back" size={16} /> <span>Kembali ke Hub Utama</span>
         </a>
       </main>
       <Footer />
-    </>
+    </div>
   );
 }
 
-function Reading({ meeting, slides }: { meeting: number; slides: SlideData[] }) {
-  return (
-    <>
-      <Header />
-      <main className="reading">
-        <div className="reading-heading">
-          <div>
-            <div className="eyebrow">MODE BACA DOKUMEN · CHAPTER {String(meeting).padStart(2, '0')}</div>
-            <h1>Pelajari dengan ritme mandiri.</h1>
-            <p>
-              Tampilan linear yang responsif untuk membaca seluruh materi secara berurutan di layar desktop maupun perangkat seluler.
-            </p>
-          </div>
-          <div className="hero-actions">
-            <a className="button primary" href="index.html">
-              <Icon name="slideshow" size={16} /> <span>Buka Mode Presentasi</span>
-            </a>
-            <a className="button subtle" href="tugas.html">
-              <Icon name="assignment" size={16} /> <span>Lihat Tugas Mandiri</span>
-            </a>
-          </div>
-        </div>
-        {slides.map((slide, i) => (
-          <article className={`reading-slide ${slide.kind}`} key={i}>
-            <SlideContent slide={slide} meeting={meeting} base="../" />
-          </article>
-        ))}
-      </main>
-      <Footer />
-    </>
-  );
-}
-
-const isDashboard = !match && !path.endsWith('/404.html') && !path.endsWith('/404');
+const isDirect404 = path.endsWith('/404.html') || path.endsWith('/404');
 
 createRoot(document.getElementById('root')!).render(
-  number === 9 || number === 10 ? (
-    path.endsWith('tugas.html') ? (
-      <Task meeting={number} />
-    ) : new URLSearchParams(location.search).get('view') === 'read' ? (
-      <Reading meeting={number} slides={(number === 9 ? p09 : p10) as SlideData[]} />
-    ) : (
-      <DeckShell slides={(number === 9 ? p09 : p10) as SlideData[]} meeting={number} base={base} />
-    )
-  ) : isDashboard ? (
-    <HubApp />
-  ) : (
-    <Placeholder />
-  ),
+  isDirect404 ? <FallbackNotFound /> : <HubApp />
 );

@@ -1,0 +1,35 @@
+{
+  "id": 23,
+  "number": "23",
+  "slug": "23-advanced-oop-design-patterns",
+  "levelId": 3,
+  "levelCategory": "professional",
+  "title": "Advanced OOP & Design Patterns",
+  "subtitle": "Abstract Base Classes, Composition, Factory, Singleton & Strategy",
+  "description": "Prinsip desain rekayasa perangkat lunak: Abstract Base Classes (abc), Composition over Inheritance, Factory Pattern, Singleton, Observer, dan Strategy.",
+  "competencyFocus": "Senior Engineering: Clean architecture & patterns",
+  "estimatedHours": 6,
+  "difficulty": "Advanced",
+  "available": false,
+  "prerequisites": [
+    "Level 2"
+  ],
+  "learningObjectives": [
+    "Mendefinisikan kontrak interface yang ketat menggunakan @abstractmethod",
+    "Menerapkan komposisi komponen untuk loose coupling daripada deep inheritance",
+    "Mengimplementasikan pola creational dan behavioral patterns standar industri"
+  ],
+  "tags": [
+    "Design Patterns",
+    "ABC",
+    "Architecture",
+    "SOLID"
+  ],
+  "resources": {
+    "hasSlides": false,
+    "slidesDeck": null,
+    "starterCode": null,
+    "assignmentGuide": null,
+    "pptxDownload": "downloads/Materi_Pengkom_Pertemuan_9_10_Python.pptx"
+  }
+}

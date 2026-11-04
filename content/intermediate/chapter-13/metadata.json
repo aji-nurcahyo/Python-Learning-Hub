@@ -1,0 +1,35 @@
+{
+  "id": 13,
+  "number": "13",
+  "slug": "13-advanced-functions",
+  "levelId": 2,
+  "levelCategory": "intermediate",
+  "title": "Advanced Functions",
+  "subtitle": "*args, **kwargs, Lambda, First-Class Citizens & Closures",
+  "description": "Menerapkan fungsi fleksibel dengan arbitrary arguments (*args, **kwargs), fungsi anonim lambda, fungsi sebagai argumen (higher-order), dan closures.",
+  "competencyFocus": "PCAP 1.1: Pemrograman fungsional & argument unpacking",
+  "estimatedHours": 4,
+  "difficulty": "Intermediate",
+  "available": false,
+  "prerequisites": [
+    "Level 1"
+  ],
+  "learningObjectives": [
+    "Menerima jumlah argumen variabel dengan *args dan keyword arguments dengan **kwargs",
+    "Menulis ekspresi lambda untuk operasi transformasi singkat",
+    "Memahami mekanisme closure memori pada nested functions"
+  ],
+  "tags": [
+    "*args",
+    "**kwargs",
+    "Lambda",
+    "Closures"
+  ],
+  "resources": {
+    "hasSlides": false,
+    "slidesDeck": null,
+    "starterCode": null,
+    "assignmentGuide": null,
+    "pptxDownload": "downloads/Materi_Pengkom_Pertemuan_9_10_Python.pptx"
+  }
+}

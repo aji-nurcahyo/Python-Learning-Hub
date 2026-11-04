@@ -1,0 +1,46 @@
+{
+  "id": "iot-telecom",
+  "title": "IoT, Signal Processing & Telecommunications",
+  "subtitle": "Analisis Sinyal Digital, Pengukuran RSRP, Sensor Data & IoT Protocols",
+  "icon": "cell_tower",
+  "tagline": "Pengolahan sinyal, data telekomunikasi nirkabel, dan perangkat terhubung",
+  "description": "Jalur spesialisasi telekomunikasi & IoT: pengolahan sinyal diskrit (SciPy signal), analisis data propagasi sinyal seluler (RSRP, RSRQ, SINR), protokol MQTT, dan visualisasi pemetaan sensor.",
+  "targetAudience": "Teknik Telekomunikasi, IoT Engineer, RF Engineer, Peneliti Sinyal",
+  "recommendedChapters": [
+    8,
+    9,
+    10,
+    11,
+    14,
+    15,
+    17,
+    27
+  ],
+  "modules": [
+    {
+      "title": "Telemetry Data Structures & Sensor Records",
+      "description": "Pemanfaatan dictionary dan tuple untuk data geolokasi (lat, lon) dan log pengukuran sensor.",
+      "status": "Core Prerequisite"
+    },
+    {
+      "title": "Cellular Signal Processing (RSRP/RSRQ Analysis)",
+      "description": "Klasifikasi kualitas sinyal radio 4G/5G, moving average filtering, dan deteksi zona blindspot.",
+      "status": "Core Prerequisite"
+    },
+    {
+      "title": "Digital Signal Processing Fundamentals (SciPy)",
+      "description": "Transformasi Fourier (FFT), spectral analysis, dan perancangan filter digital.",
+      "status": "Specialization"
+    },
+    {
+      "title": "IoT Protocols & Telemetry Streaming (MQTT)",
+      "description": "Publish-subscribe messaging untuk telemetri sensor edge perangkat nirkabel.",
+      "status": "Specialization"
+    },
+    {
+      "title": "Capstone: Sistem Monitoring Kualitas Jaringan Telekomunikasi",
+      "description": "Dashboard analitik pemrosesan log pengukuran sinyal stasiun pemancar dengan metrik statistik komprehensif.",
+      "status": "Advanced Project"
+    }
+  ]
+}

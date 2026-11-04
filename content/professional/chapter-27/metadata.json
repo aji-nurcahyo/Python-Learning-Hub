@@ -1,0 +1,35 @@
+{
+  "id": 27,
+  "number": "27",
+  "slug": "27-concurrent-async-programming",
+  "levelId": 3,
+  "levelCategory": "professional",
+  "title": "Concurrent & Asynchronous Programming",
+  "subtitle": "Threading, Multiprocessing, Global Interpreter Lock (GIL) & asyncio",
+  "description": "Menguasai eksekusi paralel dan konkuren: perbandingan I/O-bound vs CPU-bound, pemahaman GIL, multiprocessing pools, dan pemrograman asynchronous modern dengan async/await.",
+  "competencyFocus": "Senior Engineering: High-performance concurrency",
+  "estimatedHours": 6,
+  "difficulty": "Advanced",
+  "available": false,
+  "prerequisites": [
+    "Chapter 26"
+  ],
+  "learningObjectives": [
+    "Membedakan model eksekusi threading, multiprocessing, dan event loop asyncio",
+    "Mengatasi batasan GIL dengan ProcessPoolExecutor untuk komputasi paralel",
+    "Menulis arsitektur non-blocking async/await menggunakan asyncio.gather() dan async context managers"
+  ],
+  "tags": [
+    "AsyncIO",
+    "Multiprocessing",
+    "Threading",
+    "Concurrency"
+  ],
+  "resources": {
+    "hasSlides": false,
+    "slidesDeck": null,
+    "starterCode": null,
+    "assignmentGuide": null,
+    "pptxDownload": "downloads/Materi_Pengkom_Pertemuan_9_10_Python.pptx"
+  }
+}

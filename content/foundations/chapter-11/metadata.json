@@ -1,0 +1,92 @@
+{
+  "id": 11,
+  "number": "11",
+  "slug": "11-modules-basic-exceptions",
+  "levelId": 1,
+  "levelCategory": "foundations",
+  "title": "Modules & Basic Exceptions",
+  "subtitle": "Organisasi Berkas, Standard Library, Docstring & try/except",
+  "description": "Membuat modul mandiri (.py), impor fungsi, proteksi __name__ == \"__main__\", dokumentasi standar PEP 257 (docstrings), dan penanganan error dasar.",
+  "competencyFocus": "PCEP 4.4: Modul, namespaces, docstring, exception dasar",
+  "estimatedHours": 4,
+  "difficulty": "Beginner",
+  "available": true,
+  "prerequisites": [
+    "Chapter 10"
+  ],
+  "learningObjectives": [
+    "Membuat modul buatan sendiri dan mengimpor fungsi spesifik tanpa polusi namespace",
+    "Menulis docstring yang rapi dan informatif yang terbaca melalui fungsi help()",
+    "Menggunakan pola if __name__ == \"__main__\": untuk pemisahan runnable demo dan modul impor",
+    "Menangani ValueError dan ZeroDivisionError menggunakan blok try-except dasar"
+  ],
+  "tags": [
+    "Modules",
+    "Docstrings",
+    "Import",
+    "Exception Basics"
+  ],
+  "resources": {
+    "hasSlides": true,
+    "slidesDeck": "slides/deck.json",
+    "starterCode": "assignments/tugas_11.py",
+    "assignmentGuide": "assignments/tugas.md",
+    "pptxDownload": "downloads/Materi_Pengkom_Pertemuan_9_10_Python.pptx"
+  },
+  "codeExample": {
+    "title": "Ekstraksi Docstring Standar PEP 257",
+    "code": "# Ekstraksi Docstring Standar PEP 257\ndef konversi_c_ke_f(celsius):\n    \"\"\"Konversi suhu dari Celsius ke Fahrenheit.\n\n    Args:\n        celsius (float): Suhu dalam Celsius.\n    Returns:\n        float: Suhu dalam Fahrenheit.\n    \"\"\"\n    return celsius * 9 / 5 + 32\n\nprint(konversi_c_ke_f.__doc__)",
+    "outputKey": "p09-13",
+    "explanation": "Docstring ditulis tepat di bawah header fungsi menggunakan triple quotes (\"\"\"). Atribut __doc__ atau fungsi help() dapat membacanya secara otomatis untuk dokumentasi interaktif."
+  },
+  "exercise": {
+    "title": "Latihan Terarah: Pembuatan Modul Mandiri & Proteksi Main",
+    "instructions": [
+      "Buat berkas modul matematika sederhana dengan nama math_util.py.",
+      "Definisikan fungsi hitung_rata_rata(data) lengkap dengan docstring.",
+      "Gunakan blok if __name__ == \"__main__\": untuk menjalankan kasus uji mandiri."
+    ],
+    "tips": "Blok __name__ == \"__main__\" memastikan kode pengujian hanya dijalankan saat berkas dieksekusi langsung, bukan saat diimpor oleh modul lain.",
+    "time": "20 menit"
+  },
+  "quiz": {
+    "question": "Kapan blok kondisi if __name__ == \"__main__\": akan bernilai True?",
+    "options": [
+      "Hanya ketika skrip dieksekusi secara langsung melalui terminal/command line",
+      "Ketika skrip diimpor ke dalam berkas Python lain menggunakan kata kunci import",
+      "Setiap kali fungsi di dalam berkas dipanggil oleh pengguna",
+      "Hanya jika nama berkas berakhiran dengan _main.py"
+    ],
+    "correctIndex": 0,
+    "explanation": "Saat Python menjalankan berkas secara langsung, variabel khusus __name__ secara otomatis disetel ke string \"__main__\". Jika berkas diimpor sebagai modul, __name__ akan berisi nama berkas modul tersebut.",
+    "hint": "Pikirkan mekanisme Python dalam membedakan skrip runnable dengan modul pustaka."
+  },
+  "assignment": {
+    "title": "Tugas Praktik 11: Paket Modul Reusable Telekomunikasi",
+    "description": "Bangun struktur modul Python modular yang memisahkan logika komputasi dengan antarmuka CLI pengguna.",
+    "instructions": [
+      "Buat modul terpisah pengolah sinyal (signal_proc.py).",
+      "Buat skrip utama (main.py) yang mengimpor fungsi dari modul pengolah sinyal.",
+      "Tangani kemungkinan ValueError jika input data bukan numerik."
+    ],
+    "rubric": [
+      {
+        "criteria": "Modularitas & Pemisahan Tanggung Jawab",
+        "weight": 40,
+        "description": "Pemisahan kode modul dan runnable runner yang terorganisir rapi."
+      },
+      {
+        "criteria": "Penerapan Docstring & Guard __name__",
+        "weight": 30,
+        "description": "Docstring lengkap dan perlindungan impor modul yang tepat."
+      },
+      {
+        "criteria": "Penanganan Exception Dasar (try/except)",
+        "weight": 30,
+        "description": "Menangani input tidak valid tanpa menyebabkan sistem crash."
+      }
+    ],
+    "starterCode": "# Template Starter Code - Chapter 11\n# signal_proc.py\ndef filter_sinyal(samples: list[float], threshold: float) -> list[float]:\n    \"\"\"Menyaring sampel sinyal di atas nilai ambang batas.\"\"\"\n    pass",
+    "starterFilename": "tugas_11.py"
+  }
+}

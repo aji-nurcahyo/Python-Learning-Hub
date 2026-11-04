@@ -1,0 +1,35 @@
+{
+  "id": 26,
+  "number": "26",
+  "slug": "26-advanced-testing-logging",
+  "levelId": 3,
+  "levelCategory": "professional",
+  "title": "Advanced Testing & Logging",
+  "subtitle": "Mocks, Fixtures, Parametrize, Coverage & Structured Logging",
+  "description": "Testing skala produksi: mocking external I/O dengan unittest.mock, pytest fixtures, parameterized test, benchmarking, serta logging terstruktur JSON.",
+  "competencyFocus": "Senior Engineering: Production telemetry & testing",
+  "estimatedHours": 5,
+  "difficulty": "Advanced",
+  "available": false,
+  "prerequisites": [
+    "Chapter 25"
+  ],
+  "learningObjectives": [
+    "Melakukan isolasi dependensi eksternal (API/Database) menggunakan mock dan patch",
+    "Menulis reusable fixtures dan parameterized tests pada pytest",
+    "Mengonfigurasi logging terstruktur yang siap diintegrasikan ke log aggregator (ELK/CloudWatch)"
+  ],
+  "tags": [
+    "Mocking",
+    "pytest",
+    "Fixtures",
+    "Logging"
+  ],
+  "resources": {
+    "hasSlides": false,
+    "slidesDeck": null,
+    "starterCode": null,
+    "assignmentGuide": null,
+    "pptxDownload": "downloads/Materi_Pengkom_Pertemuan_9_10_Python.pptx"
+  }
+}

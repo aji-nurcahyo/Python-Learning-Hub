@@ -1,0 +1,46 @@
+{
+  "id": "web-api",
+  "title": "Web Development & APIs",
+  "subtitle": "Backend Services, REST Architecture & Asynchronous Microservices",
+  "icon": "api",
+  "tagline": "Membangun layanan backend dan antarmuka pemrograman yang skalabel",
+  "description": "Jalur spesialisasi backend engineering: merancang RESTful API performa tinggi dengan FastAPI, ORM database dengan SQLAlchemy, autentikasi JWT, dan OpenAPI docs.",
+  "targetAudience": "Backend Developer, Full-Stack Engineer, Web Service Architect",
+  "recommendedChapters": [
+    10,
+    11,
+    18,
+    19,
+    20,
+    27,
+    28,
+    29
+  ],
+  "modules": [
+    {
+      "title": "Modern API Architecture with FastAPI",
+      "description": "Dependency injection, skema Pydantic, route modular, dan OpenAPI docs otomatis.",
+      "status": "Specialization"
+    },
+    {
+      "title": "Database Integration & ORM (SQLAlchemy / SQLModel)",
+      "description": "Model relasional, migrasi skema database dengan Alembic, dan optimasi query.",
+      "status": "Specialization"
+    },
+    {
+      "title": "Authentication & Security Best Practices",
+      "description": "Hashing password dengan bcrypt, OAuth2 dengan JWT tokens, dan CORS protection.",
+      "status": "Specialization"
+    },
+    {
+      "title": "Asynchronous Task Processing with Celery & Redis",
+      "description": "Pekerjaan background (worker tasks), scheduled jobs, dan distributed caching.",
+      "status": "Specialization"
+    },
+    {
+      "title": "Capstone: Production-Ready Microservice API",
+      "description": "Layanan API tercontainerisasi lengkap dengan database, unit testing, dan CI/CD.",
+      "status": "Advanced Project"
+    }
+  ]
+}
