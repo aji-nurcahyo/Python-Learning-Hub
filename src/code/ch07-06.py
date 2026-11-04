@@ -22,3 +22,4 @@ for k, v in data_terurai.items():
 laporan_baru = f"Perangkat {data_terurai['ID']} aktif pada {data_terurai['FREQ']} MHz dengan daya {data_terurai['PWR']} W."
 print("\nRekonstruksi Laporan:")
 print(laporan_baru)
+

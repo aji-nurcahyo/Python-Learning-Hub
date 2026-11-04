@@ -41,3 +41,4 @@ Kerjakan latihan berikut untuk menguji pemahaman Anda mengenai for loop, while l
    ```
 2. Gunakan dua tingkat perulangan `for` (bukan perkalian string `* n`).
 3. Modifikasi agar menampilkan nomor level pada setiap barisnya.
+

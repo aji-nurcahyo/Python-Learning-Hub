@@ -17,3 +17,4 @@ print(f"Teks Asli   : '{teks_kotor}'")
 print(f"Tanpa Simbol: '{teks_buang_simbol.strip()}'")
 print(f"Spasi Rapi  : '{teks_rapi}'")
 print(f"Terkalibrasi: '{teks_normal}'")
+

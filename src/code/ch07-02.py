@@ -20,3 +20,4 @@ print(f"Mengandung 'SUCCESS' : {apakah_sukses}")
 print(f"Posisi teks 'UE-8821': Indeks ke-{posisi_ue}")
 print(f"Diawali '[ERROR'     : {awalan_log}")
 print(f"Diakhiri 'UE-8821'   : {akhiran_log}")
+

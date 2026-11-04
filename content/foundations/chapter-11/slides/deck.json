@@ -1,6 +1,6 @@
 [
   {
-    "title": "Modules, Packages & Docstrings",
+    "title": "Modules & Basic Exceptions",
     "body": "<p class=\"lead\">Organisasi kode multi-berkas, Standard Library, penulisan docstring PEP 257, dan penanganan error dasar.</p><p class=\"note\">Level 1 · Python Foundations — Chapter 11</p>",
     "kind": "cover",
     "notes": "Selamat datang di Chapter 11: Modules & Basic Exceptions. Pada sesi ini kita belajar membuat modul buatan sendiri dan proteksi __name__ == \"__main__\"."
@@ -119,13 +119,13 @@
     "title": "Tugas Mandiri: Function Design & Module",
     "body": "<ul><li>Buat modul <code>olah_sinyal.py</code> dengan minimal 4 fungsi.</li><li>Fungsi wajib: rata-rata, maksimum, minimum, klasifikasi RSRP.</li><li>Gunakan parameter dan <code>return</code>; semua fungsi wajib memiliki docstring.</li><li>Buat <code>main.py</code> yang mengimpor modul dan memproses minimal 8 angka RSRP.</li><li>Sertakan minimal 5 pengujian <code>assert</code>.</li></ul><p class=\"note\">Kumpulkan folder kode, tangkapan layar output, dan penjelasan singkat penggunaan.</p>",
     "kind": "exercise",
-    "notes": "Bahas tugas pertemuan 9. Diskusikan dan analisis menjelaskan alasan jawabannya sebelum melanjutkan."
+    "notes": "Bahas tugas Chapter 11: Pembuatan Modul & Penanganan Galat. Diskusikan dan analisis menjelaskan alasan jawabannya sebelum melanjutkan."
   },
   {
     "title": "Rubrik Tugas: Function Design & Module",
     "body": "<ul><li>Ketepatan output dan penanganan data kosong — 40%.</li><li>Perancangan fungsi, modularitas, dan penamaan — 25%.</li><li>Docstring dan keterbacaan kode — 15%.</li><li>Pengujian (assert) — 15%.</li><li>Kelengkapan pengumpulan — 5%.</li></ul>",
     "kind": "content",
-    "notes": "Bahas rubrik tugas pertemuan 9. Diskusikan dan analisis menjelaskan alasan jawabannya sebelum melanjutkan."
+    "notes": "Bahas rubrik tugas Chapter 11: Pembuatan Modul & Penanganan Galat. Diskusikan dan analisis menjelaskan alasan jawabannya sebelum melanjutkan."
   },
   {
     "title": "Cek pemahaman",
@@ -139,6 +139,6 @@
     "title": "Refleksi & Persiapan Chapter Berikutnya",
     "body": "<div class=\"callout\">Bagaimana jika data sinyal tidak hanya berupa angka, tetapi juga ID perangkat dan lokasi pengukuran?</div><p>Chapter berikutnya: list, tuple, dictionary, set, comprehension, pencarian, dan sorting.</p>",
     "kind": "content",
-    "notes": "Bahas refleksi & persiapan pertemuan 10. Diskusikan dan analisis menjelaskan alasan jawabannya sebelum melanjutkan."
+    "notes": "Bahas refleksi modul ini dan persiapan menuju Foundations Capstone Project. Diskusikan dan analisis menjelaskan alasan jawabannya sebelum melanjutkan."
   }
 ]

@@ -92,3 +92,4 @@ def tampilkan_laporan_lengkap(payload_mentah: str) -> None:
 if __name__ == "__main__":
     sampel_payload = "  RAW_MSG:ID=NODE-LPG-0123;TEMP=36.4C;BATT=94%;RSRP=-82.5dBm;STAT=ok  "
     tampilkan_laporan_lengkap(sampel_payload)
+

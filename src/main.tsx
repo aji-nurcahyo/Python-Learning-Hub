@@ -6,8 +6,12 @@ import { ThemeSelect, usePreferences } from './deck-shell/preferences';
 import { DeckShell } from './deck-shell/DeckShell';
 import { SlideContent } from './layouts/SlideContent';
 import { Icon } from './ui/Icon';
-import task09 from './decks/tugas-09.md?raw';
-import task10 from './decks/tugas-10.md?raw';
+
+const taskGuides = import.meta.glob('../content/**/assignments/tugas.md', {
+  query: '?raw',
+  import: 'default',
+  eager: true,
+}) as Record<string, string>;
 
 import { HomePage } from './pages/HomePage';
 import { LevelPage } from './pages/LevelPage';
@@ -114,7 +118,7 @@ function Footer() {
         <strong>Python Learning Hub</strong> · Interactive Python Learning Modules · <em>Learn Python, One Chapter at a Time</em>
       </div>
       <div>
-        Dikembangkan oleh <strong>Aji Pamungkas Tri Nurcahyo</strong> · Teknik Telekomunikasi | Institut Teknologi Sumatera
+        Dikembangkan oleh <strong>Aji Pamungkas Tri Nurcahyo</strong> · Institut Teknologi Sumatera
       </div>
       <div>
         Fondasi:{' '}
@@ -464,7 +468,8 @@ function Task({
   onNavigateChapter?: () => void;
   onNavigateSlides?: () => void;
 }) {
-  const markdown = meeting === 10 || meeting === 9 ? task09 : task10;
+  const pad = String(meeting).padStart(2, '0');
+  const markdown = taskGuides[`../content/foundations/chapter-${pad}/assignments/tugas.md`] || '# Petunjuk Tugas\n\nPanduan tugas untuk chapter ini sedang disiapkan.';
   return (
     <main className="document">
       <button

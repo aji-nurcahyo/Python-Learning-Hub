@@ -19,3 +19,4 @@ print(f"Setelah strip()  : '{nama_bersih}'")
 print(f"Format Judul     : '{nama_kapital}'")
 print(f"Nama Depan       : {nama_depan}")
 print(f"Nama Belakang    : {nama_belakang}")
+

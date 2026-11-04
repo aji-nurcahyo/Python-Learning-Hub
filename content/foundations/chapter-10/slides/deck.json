@@ -119,13 +119,13 @@
     "title": "Tugas Mandiri: Function Design & Module",
     "body": "<ul><li>Buat modul <code>olah_sinyal.py</code> dengan minimal 4 fungsi.</li><li>Fungsi wajib: rata-rata, maksimum, minimum, klasifikasi RSRP.</li><li>Gunakan parameter dan <code>return</code>; semua fungsi wajib memiliki docstring.</li><li>Buat <code>main.py</code> yang mengimpor modul dan memproses minimal 8 angka RSRP.</li><li>Sertakan minimal 5 pengujian <code>assert</code>.</li></ul><p class=\"note\">Kumpulkan folder kode, tangkapan layar output, dan penjelasan singkat penggunaan.</p>",
     "kind": "exercise",
-    "notes": "Bahas tugas pertemuan 9. Diskusikan dan analisis menjelaskan alasan jawabannya sebelum melanjutkan."
+    "notes": "Bahas tugas Chapter 10: Perancangan Fungsi Modular. Diskusikan dan analisis menjelaskan alasan jawabannya sebelum melanjutkan."
   },
   {
     "title": "Rubrik Tugas: Function Design & Module",
     "body": "<ul><li>Ketepatan output dan penanganan data kosong — 40%.</li><li>Perancangan fungsi, modularitas, dan penamaan — 25%.</li><li>Docstring dan keterbacaan kode — 15%.</li><li>Pengujian (assert) — 15%.</li><li>Kelengkapan pengumpulan — 5%.</li></ul>",
     "kind": "content",
-    "notes": "Bahas rubrik tugas pertemuan 9. Diskusikan dan analisis menjelaskan alasan jawabannya sebelum melanjutkan."
+    "notes": "Bahas rubrik tugas Chapter 10: Perancangan Fungsi Modular. Diskusikan dan analisis menjelaskan alasan jawabannya sebelum melanjutkan."
   },
   {
     "title": "Cek pemahaman",
@@ -139,6 +139,6 @@
     "title": "Refleksi & Persiapan Chapter Berikutnya",
     "body": "<div class=\"callout\">Bagaimana jika data sinyal tidak hanya berupa angka, tetapi juga ID perangkat dan lokasi pengukuran?</div><p>Chapter berikutnya: list, tuple, dictionary, set, comprehension, pencarian, dan sorting.</p>",
     "kind": "content",
-    "notes": "Bahas refleksi & persiapan pertemuan 10. Diskusikan dan analisis menjelaskan alasan jawabannya sebelum melanjutkan."
+    "notes": "Bahas refleksi fungsi dan persiapan menuju Modules & Basic Exceptions. Diskusikan dan analisis menjelaskan alasan jawabannya sebelum melanjutkan."
   }
 ]

@@ -84,3 +84,4 @@ if __name__ == "__main__":
     sampel_data = [26.5, 28.0, 31.2, -999.0, 35.4, 38.0, 42.5, 85.0, 27.0]
     hasil = jalankan_simulator_sensor(sampel_data)
     cetak_ringkasan_statistik(hasil)
+

@@ -21,3 +21,4 @@ data_pengukuran = [-74.0, -84.5, -96.0, -112.0]
 for sinyal in data_pengukuran:
     kategori = klasifikasi_sinyal_rsrp(sinyal)
     print(f"RSRP Terukur: {sinyal:6.1f} dBm -> Kategori: {kategori}")
+

@@ -61,3 +61,4 @@ Pesan Status Ringkas : "Node NODE-LPG-0123 [LPG] beroperasi NORMAL dengan batera
 | **Parsing Delimiter & Pasangan Nilai** | 35% | Mengurai string sensor berbasis delimiter `;` dan `=` secara akurat menjadi dictionary/struktur data. |
 | **Normalisasi & Pembersihan Teks** | 20% | Menghapus whitespace liar, membersihkan tag prefiks mentah, dan menstandarisasi huruf besar/kecil. |
 | **Kepatuhan Gaya PEP 8 & Struktur** | 15% | Penamaan snake_case, modularitas fungsi terpisah, dan blok `if __name__ == '__main__':`. |
+

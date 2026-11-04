@@ -41,3 +41,4 @@ Kerjakan latihan-latihan berikut untuk memperkuat pemahaman logika percabangan, 
    - "Segitiga Sama Kaki" jika tepat dua sisinya sama panjang.
    - "Segitiga Sembarang" jika ketiga sisinya berbeda.
 4. Jika tidak valid, cetak `"Bukan Segitiga Sah"`.
+

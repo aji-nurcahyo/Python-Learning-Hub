@@ -16,3 +16,4 @@ print(f"Data Daya Transmisi : {daftar_daya_mw}")
 print(f"Jumlah Sampel       : {jumlah_data}")
 print(f"Total Akumulasi     : {total_daya:.1f} mW")
 print(f"Nilai Rata-Rata     : {rata_rata:.2f} mW")
+

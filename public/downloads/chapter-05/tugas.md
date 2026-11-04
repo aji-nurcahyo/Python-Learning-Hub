@@ -47,3 +47,4 @@ Input RSRP : -150.0 dBm -> DITOLAK: Nilai di luar rentang pembacaan fisik (-140 
 | **Kebenaran Logika Percabangan** | 40% | Mengimplementasikan struktur `if-elif-else` yang runtut, tanpa dead code, dengan hasil klasifikasi akurat. |
 | **Penjelasan Diagnostik Lengkap** | 15% | Memberikan pesan diagnostik kontekstual yang informatif untuk setiap kategori hasil klasifikasi. |
 | **Kepatuhan Gaya PEP 8 & Struktur** | 15% | Penamaan fungsi/variabel snake_case, modularitas fungsi, dan blok `if __name__ == '__main__':`. |
+

@@ -14,3 +14,4 @@ daftar_kata = ["Radar", "Level", "Transmisi", "Kasur ini rusak", "Python"]
 for item in daftar_kata:
     hasil = cek_palindrom(item)
     print(f"'{item:<16}' -> Palindrom: {hasil}")
+

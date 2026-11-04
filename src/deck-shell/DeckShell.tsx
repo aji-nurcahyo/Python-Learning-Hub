@@ -52,6 +52,7 @@ export function DeckShell({
       pdfSeparateFragments: false,
     });
     deck.current = api;
+    (window as unknown as { Reveal?: RevealApi }).Reveal = api;
     void api
       .initialize()
       .then(() => {
@@ -61,6 +62,7 @@ export function DeckShell({
 
     return () => {
       deck.current = null;
+      delete (window as unknown as { Reveal?: RevealApi }).Reveal;
       void api.destroy();
     };
   }, []);

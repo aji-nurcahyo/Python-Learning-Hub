@@ -16,3 +16,4 @@ for s in sampel_rsrp[1:]:
 print(f"Data Pengukuran RSRP (dBm) : {sampel_rsrp}")
 print(f"Nilai Terendah (Sinyal Terlemah)  : {nilai_min} dBm")
 print(f"Nilai Tertinggi (Sinyal Terkuat)  : {nilai_max} dBm")
+

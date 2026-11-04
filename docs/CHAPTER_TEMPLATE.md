@@ -193,13 +193,33 @@ Delay Transmisi: 80.00 ms
 
 ## 4. Templat Slide Presentasi Reveal.js: `slides/deck.json`
 
+### Standar Identitas Resmi Slide (*Official Presentation Identity*)
+Setiap slide presentasi wajib mengikuti kaidah identitas resmi platform:
+- **Nama Platform:** Python Learning Hub
+- **Tagline:** Learn Python, One Chapter at a Time
+- **Pengembang / Creator:** Aji Pamungkas Tri Nurcahyo
+- **Institusi Resmi:** Institut Teknologi Sumatera
+- **Aturan Afiliasi Ketat:** **JANGAN** menampilkan nama Program Studi (Teknik Telekomunikasi) atau Fakultas (Teknologi Industri) sebagai afiliasi creator pada slide cover, footer, metadata, maupun speaker notes. Gunakan HANYA **Aji Pamungkas Tri Nurcahyo** dan **Institut Teknologi Sumatera**.
+- **Standar Rasio Slide:** 16:9 (lebar 1280px × tinggi 720px) dengan layout fleksibel dan penskalaan responsif bebas *overflow* atau *footer collision*.
+
+### Struktur Cover Slide Standar:
+Komponen cover slide dirender secara terpusat oleh `SlideContent.tsx`:
+```text
+PYTHON LEARNING HUB / CHAPTER XX
+[Judul Chapter Resmi]
+[Deskripsi / Lead Singkat]
+Aji Pamungkas Tri Nurcahyo
+Institut Teknologi Sumatera
+```
+
+### Format Berkas JSON:
 Setiap slide deck memuat antara 15 s.d. 25 objek slide dengan format terstruktur:
 
 ```json
 [
   {
     "title": "Introduction to Python",
-    "body": "<p class=\"lead\">Filosofi, Ekosistem & Eksekusi Program Pertama</p><p class=\"note\">Level 1 · Python Foundations — Chapter 01</p>",
+    "body": "<p class=\"lead\">Filosofi, Ekosistem & Eksekusi Program Pertama</p>",
     "kind": "cover",
     "notes": "Selamat datang di Chapter 01. Fokus sesi ini adalah memahami filosofi Python dan alur kerja interpreter."
   },
@@ -252,18 +272,21 @@ python scripts/run_examples.py
 npm run check:outputs
 
 # 3. Validasi keberadaan fisik seluruh slide deck, file python, dan tugas
-node scripts/check_resources.mjs
+npm run check:resources
 
 # 4. Validasi integritas struktur 30 modul dan metadata
-node scripts/check_content.mjs
+npm run check:content
 
-# 5. Typecheck TypeScript (0 error)
+# 5. Audit otomatis kualitas presentasi, branding, dan layout geometri DOM (Chrome/Edge headless)
+npm run check:presentations
+
+# 6. Typecheck TypeScript (0 error)
 npm run typecheck
 
-# 6. Linting ESLint (0 warning/error)
+# 7. Linting ESLint (0 warning/error)
 npm run lint
 
-# 7. Build bundle produksi dan uji rute statis
+# 8. Build bundle produksi dan uji rute statis
 npm run build
 ```
 

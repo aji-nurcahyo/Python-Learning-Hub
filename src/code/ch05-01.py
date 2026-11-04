@@ -16,3 +16,4 @@ daftar_uji = [15.5, -42.0, 0.0]
 for bil in daftar_uji:
     kategori = cek_tanda_bilangan(bil)
     print(f"Bilangan {bil:>5} -> {kategori}")
+

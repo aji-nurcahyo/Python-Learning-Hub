@@ -38,3 +38,4 @@ Kerjakan latihan berikut untuk menguji kemampuan Anda dalam memanfaatkan metode-
    - Apakah setiap segmen memiliki panjang tepat 2 karakter.
    - Apakah setiap segmen merupakan karakter alfanumerik.
 3. Uji dengan `"00:1A:2B:3C:4D:5E"`, `"00:1A:2B:3C:4D"`, dan `"00:1A:2B:3C:4D:ZZZ"`.
+

@@ -61,3 +61,4 @@ Status Akhir Operasi    : TERHENTI OLEH INTERUPSI ALARM KRITIS
 | **Kalkulasi Akumulator & Statistik** | 30% | Menghitung total, rata-rata, min, max, dan counter ambang batas hanya dari data valid secara presisi. |
 | **Penanganan Terminasi & Pelaporan** | 20% | Format laporan konsol rapi dengan f-strings dan menyajikan status terminasi yang benar. |
 | **Kepatuhan Gaya PEP 8 & Pythonic** | 10% | Penamaan snake_case, modularitas fungsi, dan penyusunan blok `if __name__ == '__main__':`. |
+

@@ -19,3 +19,4 @@ daftar_skor = [85.5, 72.0, 64.0, 53.0, 41.5]
 for s in daftar_skor:
     huruf = konversi_skor_ke_huruf(s)
     print(f"Skor: {s:5.1f} -> Huruf Mutu: {huruf}")
+

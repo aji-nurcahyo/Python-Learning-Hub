@@ -76,14 +76,6 @@ export function AboutPage({ onNavigateHome, onNavigateLevel }: AboutPageProps) {
               <p className="creator-role">Creator & Developer · Python Learning Hub</p>
               <div className="creator-affiliation">
                 <div className="affiliation-item">
-                  <Icon name="apartment" size={16} />
-                  <span>Program Studi Teknik Telekomunikasi</span>
-                </div>
-                <div className="affiliation-item">
-                  <Icon name="domain" size={16} />
-                  <span>Fakultas Teknologi Industri</span>
-                </div>
-                <div className="affiliation-item">
                   <Icon name="account_balance" size={16} />
                   <span>Institut Teknologi Sumatera (ITERA)</span>
                 </div>

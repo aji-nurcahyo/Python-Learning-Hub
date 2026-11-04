@@ -118,7 +118,7 @@
     "title": "Tugas Mandiri: Struktur Data & Algoritma",
     "body": "<ul><li>Gunakan minimal 10 record pengukuran (ID, lokasi, RSRP).</li><li>Buat fungsi mencari data berdasarkan ID dan menangani ID tidak ditemukan.</li><li>Tampilkan lokasi unik, data lemah, serta urutan kualitas sinyal.</li><li>Tampilkan jumlah, nilai minimum, maksimum, dan rata-rata.</li><li>Gunakan sedikitnya satu list, tuple, dict, set, dan dua comprehension.</li><li>Gunakan fungsi modular melalui import modul.</li></ul>",
     "kind": "exercise",
-    "notes": "Bahas tugas pertemuan 10: mini proyek. Diskusikan dan analisis menjelaskan alasan jawabannya sebelum melanjutkan."
+    "notes": "Bahas tugas Chapter 08: Struktur Data & Algoritma. Diskusikan dan analisis menjelaskan alasan jawabannya sebelum melanjutkan."
   },
   {
     "title": "Output Tugas & Rubrik Penilaian",
