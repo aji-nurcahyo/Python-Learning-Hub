@@ -29,3 +29,4 @@ for nilai in daftar_uji:
         print(f"  - Daya {nilai:>6.1f} dBm -> Status: {status}")
     except SignalRangeError as err:
         print(f"  - Daya {nilai:>6.1f} dBm -> TERTANGKAP: {err}")
+

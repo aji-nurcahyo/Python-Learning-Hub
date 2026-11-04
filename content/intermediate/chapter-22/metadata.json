@@ -5,30 +5,37 @@
   "levelId": 2,
   "levelCategory": "intermediate",
   "title": "Intermediate Capstone Project",
-  "subtitle": "Arsitektur OOP Penuh: Engine Analisis Data & File I/O Teruji",
-  "description": "Proyek akhir Level 2: merancang sistem analitik OOP modular dengan hierarki class, parsing dataset otomatis, exception handling kustom, dan unit test suite.",
-  "competencyFocus": "Integrasi Kompetensi PCAP",
+  "subtitle": "Inventory Management System — Aplikasi Terminal Terintegrasi",
+  "description": "Proyek akhir Level 2: merancang sistem inventaris aset perangkat modular terpadu dengan hierarki class OOP, persistensi berkas JSON (atomic write), validasi defensif, penanganan exception, dan automated test suite.",
+  "competencyFocus": "Integrasi Menyeluruh Kompetensi PCAP (OOP, Storage, Validation, Testing)",
   "estimatedHours": 8,
   "difficulty": "Intermediate",
-  "available": false,
+  "available": true,
   "prerequisites": [
     "Chapter 13 – 21"
   ],
   "learningObjectives": [
-    "Mendesain arsitektur class terintegrasi (domain models, service layer, parser)",
-    "Memproses dataset disk secara asinkron/stream dengan penanganan kegagalan parsing",
-    "Mencapai test coverage yang terukur menggunakan unit testing terotomasi"
+    "Mendesain arsitektur perangkat lunak modular memisahkan domain models, storage layer, service layer, dan CLI",
+    "Mengimplementasikan model domain OOP hierarkis (Device, NetworkDevice, ServerDevice, SensorDevice) lengkap dengan special methods",
+    "Membangun mekanisme persistensi berkas JSON permanen dengan teknik atomic file write",
+    "Mengembangkan operasi CRUD, pencarian fleksibel, dan pengurutan multi-kriteria",
+    "Menyusun suite pengujian otomatis komprehensif menggunakan unittest / pytest untuk memverifikasi keandalan sistem"
   ],
   "tags": [
     "Capstone",
     "OOP Architecture",
-    "Test-Driven"
+    "CRUD",
+    "JSON Persistence",
+    "Atomic Write",
+    "Custom Exceptions",
+    "Validation",
+    "Automated Testing"
   ],
   "resources": {
-    "hasSlides": false,
-    "slidesDeck": null,
-    "starterCode": null,
-    "assignmentGuide": null,
+    "hasSlides": true,
+    "slidesDeck": "slides/deck.json",
+    "starterCode": "code/contoh.py",
+    "assignmentGuide": "assignments/tugas.md",
     "pptxDownload": null
   }
 }

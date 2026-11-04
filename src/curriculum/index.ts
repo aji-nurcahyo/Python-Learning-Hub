@@ -1503,20 +1503,88 @@ def calculate_statistics(students: list[dict[str, Any]]) -> dict[str, Any]:
     levelId: 2,
     number: '19',
     title: 'Object-Oriented Programming I',
-    subtitle: 'Class, Object, Instance Attributes, self & Metode',
+    subtitle: 'Class, Object, Constructor __init__, Parameter self & Enkapsulasi',
     description:
-      'Paradigma berorientasi objek: merancang blueprint class, konstruktor __init__, parameter self, atribut instance vs atribut class, dan encapsulation dasar.',
-    competencyFocus: 'PCAP 3.1: Konsep dasar OOP, class & instance',
+      'Paradigma berorientasi objek: merancang blueprint class, konstruktor __init__, parameter self, atribut instance vs atribut class, dan enkapsulasi dasar menggunakan @property.',
+    competencyFocus: 'PCAP 3.1: Konsep dasar OOP, class, instance, dan enkapsulasi',
     estimatedHours: 5,
     difficulty: 'Intermediate',
-    available: false,
+    available: true,
+    deckPath: '#chapter/19/slides',
+    tugasPath: '#chapter/19/task',
     prerequisites: ['Chapter 10'],
     learningObjectives: [
-      'Mendefinisikan class dan menginstansiasi object nyata',
-      'Membedakan instance attributes dan class-level attributes',
-      'Mengimplementasikan encapsulation melalui konvensi private variable (_var, __var)',
+      'Menjelaskan konsep dasar OOP dan perbandingannya dengan pendekatan prosedural',
+      'Mendefinisikan class, membuat instance object, dan mengelola constructor __init__',
+      'Membedakan fungsi dan penggunaan parameter self pada instance method',
+      'Membedakan ruang lingkup atribut instance dan atribut class',
+      'Menerapkan enkapsulasi dan validasi atribut menggunakan decorator @property dan @setter',
     ],
-    tags: ['OOP', 'Class', 'Object', 'Encapsulation'],
+    tags: ['OOP', 'Class', 'Object', 'Constructor', 'self', 'Encapsulation', 'Property'],
+    codeExample: {
+      title: 'Perbandingan Paradigma: Prosedural vs Object-Oriented',
+      code: `class Student:
+    def __init__(self, nim: str, name: str, ipk: float):
+        self.nim = nim
+        self.name = name
+        self.ipk = ipk
+
+    def hitung_predikat(self) -> str:
+        return "Cumlaude" if self.ipk >= 3.5 else "Sangat Memuaskan"
+
+    def ringkasan(self) -> str:
+        return f"Student(NIM='{self.nim}', Name='{self.name}', IPK={self.ipk:.2f}, Predikat='{self.hitung_predikat()}')"
+
+mhs_obj = Student("121140001", "Budi Santoso", 3.75)
+print(mhs_obj.ringkasan())`,
+      outputKey: 'ch19-01',
+      explanation:
+        'Class Student membungkus data atribut (nim, name, ipk) dan perilaku fungsi hitung_predikat() ke dalam satu kesatuan modular (enkapsulasi).',
+    },
+    exercise: {
+      title: 'Latihan Terarah: Perancangan Class & Enkapsulasi Properti',
+      instructions: [
+        'Rancang class Mahasiswa dengan validasi rentang IPK 0.0 s/d 4.0 pada constructor.',
+        'Implementasikan class attribute total_server_aktif yang menghitung jumlah node yang berjalan.',
+        'Gunakan decorator @property dan @setter untuk memvalidasi frekuensi transmisi antena telekomunikasi.',
+        'Bangun class RackCabinet yang mengelola koleksi objek perangkat dan menghitung total konsumsi daya.',
+      ],
+      tips: 'Gunakan self._nama_atribut untuk menyimpan nilai privat di balik decorator @property.',
+      time: '45 menit',
+    },
+    quiz: {
+      question: 'Apa fungsi utama dari parameter self pada definisi instance method di Python?',
+      options: [
+        'Sebagai referensi eksplisit ke instance objek spesifik yang sedang dieksekusi di memori',
+        'Sebagai penanda bahwa method tersebut bersifat private dan tidak bisa diakses dari luar',
+        'Untuk mendeklarasikan tipe data kembalian method secara statis',
+        'Untuk memanggil otomatis garbage collector sistem operasi',
+      ],
+      correctIndex: 0,
+      explanation:
+        'Sesuai filosofi Zen of Python ("Explicit is better than implicit"), parameter self meneruskan referensi eksplisit ke instance objek yang sedang memanggil method tersebut sehingga atribut internalnya dapat diakses atau dimutasi.',
+      hint: 'Ingat bahwa Python tidak menyembunyikan pointer objek seperti keyword this pada Java atau C++.',
+    },
+    assignment: {
+      title: 'Tugas Praktik 19: Telecommunications Station Inventory Manager',
+      description:
+        'Rancang dan bangun sistem inventaris perangkat keras stasiun pemancar telekomunikasi menggunakan paradigma single class, constructor __init__, dan validasi properti @property.',
+      instructions: [
+        'Definisikan class StationDevice dengan enkapsulasi properti untuk frekuensi (700-6000 MHz) dan daya (0-2000 W).',
+        'Rancang class StationInventory yang mengelola koleksi perangkat dalam struktur dictionary terproteksi.',
+        'Terapkan pencegahan ID serial duplikat dengan melempar KeyError yang informatif.',
+        'Sediakan fitur pencarian perangkat berdasarkan vendor dan kalkulasi agregasi daya stasiun.',
+      ],
+      rubric: [
+        { criteria: 'Desain Class & Constructor', weight: 25, description: 'Class StationDevice terdefinisi rapi, parameter self tepat, atribut instance vs class terpisah jelas.' },
+        { criteria: 'Enkapsulasi & Validasi @property', weight: 25, description: 'Getter dan setter @property untuk frekuensi dan daya terimplementasi dengan validasi rentang.' },
+        { criteria: 'Operasi Manajemen Inventaris', weight: 25, description: 'Class StationInventory berhasil melakukan penambahan (proteksi duplikasi), pencarian vendor, dan agregasi daya.' },
+        { criteria: 'Dokumentasi, Type Hint & PEP 8', weight: 25, description: 'Type hint lengkap, docstring jelas, konvensi penamaan rapi, dan uji demonstrasi berjalan tanpa error.' },
+      ],
+      starterFilename: 'tugas_19.py',
+      downloadMdUrl: 'downloads/chapter-19/tugas.md',
+      downloadPyUrl: 'downloads/chapter-19/contoh.py',
+    },
   },
   {
     id: 20,
@@ -1524,20 +1592,92 @@ def calculate_statistics(students: list[dict[str, Any]]) -> dict[str, Any]:
     levelId: 2,
     number: '20',
     title: 'Object-Oriented Programming II',
-    subtitle: 'Inheritance, Polymorphism, super(), dan Dunder Magic Methods',
+    subtitle: 'Inheritance, Polymorphism, super(), dan Special Dunder Methods',
     description:
-      'Pewarisan sifat antar class, method overriding, pemanggilan super(), polimorfisme, dan special methods (__str__, __repr__, __len__, __eq__).',
-    competencyFocus: 'PCAP 3.2: Inheritance, polymorphism & magic methods',
+      'Pewarisan sifat antar class, method overriding, pemanggilan super(), polimorfisme, komposisi vs pewarisan, dan special methods (__str__, __repr__, __eq__, __hash__).',
+    competencyFocus: 'PCAP 3.2: Inheritance, polymorphism, composition & special methods',
     estimatedHours: 5,
     difficulty: 'Intermediate',
-    available: false,
+    available: true,
+    deckPath: '#chapter/20/slides',
+    tugasPath: '#chapter/20/task',
     prerequisites: ['Chapter 19'],
     learningObjectives: [
-      'Membangun class turunan dan memanfaatkan pewarisan kode',
-      'Mengoverride metode induk dan memanggil fungsionalitas aslinya dengan super()',
-      'Mengimplementasikan magic methods dunder untuk representasi dan perbandingan kustom',
+      'Membangun class turunan dan memanfaatkan pewarisan kode melalui relasi is-a',
+      'Mengoverride method induk dan memanggil fungsionalitas aslinya dengan super()',
+      'Menerapkan polimorfisme dan duck typing untuk memproses koleksi objek heterogen',
+      'Membedakan kapan harus menggunakan pewarisan vs komposisi (has-a)',
+      'Mengimplementasikan special methods (__str__, __repr__, __eq__, __hash__) dan memahami implikasi kesetaraan nilai serta hashability',
     ],
-    tags: ['Inheritance', 'Polymorphism', 'Dunder Methods', 'super()'],
+    tags: ['Inheritance', 'Polymorphism', 'super()', 'Duck Typing', 'Composition', 'Special Methods', '__eq__', 'Hashability'],
+    codeExample: {
+      title: 'Pewarisan Class (Inheritance) & Pemanggilan super()',
+      code: `class BaseDevice:
+    def __init__(self, serial_number: str, hostname: str, lokasi: str):
+        self.serial_number = serial_number
+        self.hostname = hostname
+        self.lokasi = lokasi
+        self.is_active: bool = True
+
+    def deskripsi_dasar(self) -> str:
+        status = "AKTIF" if self.is_active else "NON-AKTIF"
+        return f"[{self.serial_number}] {self.hostname} ({self.lokasi}) - {status}"
+
+class NetworkRouter(BaseDevice):
+    def __init__(self, serial_number: str, hostname: str, lokasi: str, throughput_gbps: float):
+        super().__init__(serial_number, hostname, lokasi)
+        self.throughput_gbps = float(throughput_gbps)
+
+router = NetworkRouter("RT-9901", "Core-Router-Lampung", "Ruang NOC Lt.2", 40.0)
+print("Method warisan :", router.deskripsi_dasar())`,
+      outputKey: 'ch20-01',
+      explanation:
+        'NetworkRouter mewarisi atribut dan method dari BaseDevice melalui pewarisan tunggal (single inheritance) serta memanggil super().__init__() untuk inisialisasi aman.',
+    },
+    exercise: {
+      title: 'Latihan Terarah: Pewarisan, Polimorfisme & Special Methods',
+      instructions: [
+        'Bangun class WirelessInterface yang mewarisi NetworkInterface dan memanggil super().',
+        'Terapkan pipeline pemrosesan sinyal polimorfik dengan AmplifierProcessor dan NoiseFilterProcessor.',
+        'Modelkan perangkat Transceiver menggunakan komposisi pemancar (Transmitter) dan penerima (Receiver).',
+        'Implementasikan special methods __eq__ dan __hash__ pada class konfigurasi VLAN.',
+      ],
+      tips: 'Ingat bahwa mendefinisikan __eq__ otomatis menyetel __hash__ = None kecuali __hash__ juga diimplementasikan.',
+      time: '45 menit',
+    },
+    quiz: {
+      question: 'Apa implikasi kritis pada sebuah class Python jika Anda mengoverride method __eq__ tanpa mengimplementasikan method __hash__?',
+      options: [
+        'Instance class tersebut otomatis menjadi unhashable sehingga tidak bisa dimasukkan ke dalam set atau dijadikan key dictionary',
+        'Interpreter Python akan langsung melempar SyntaxError pada baris deklarasi class',
+        'Seluruh atribut instance akan otomatis diubah menjadi read-only',
+        'Fungsi print() tidak lagi dapat menampilkan teks output',
+      ],
+      correctIndex: 0,
+      explanation:
+        'Sesuai spesifikasi model data Python, ketika __eq__ di-override, CPython secara otomatis menyetel __hash__ = None. Objek tersebut kehilangan sifat hashable bawaan memori dan akan melempar TypeError: unhashable type jika dimasukkan ke dalam set atau key dictionary.',
+      hint: 'Pikirkan struktur data Python apa yang membutuhkan nilai hash integer untuk pencarian cepat O(1).',
+    },
+    assignment: {
+      title: 'Tugas Praktik 20: Hierarchical Telecom Infrastructure Management',
+      description:
+        'Bangun sistem manajemen simpul transmisi telekomunikasi bertingkat yang mengimplementasikan hierarki pewarisan (CellularAntenna, MicrowaveLink, FiberOpticNode), diagnostik polimorfik, dan special methods.',
+      instructions: [
+        'Rancang class dasar TransceiverNode lengkap dengan special methods __str__, __repr__, __eq__, dan __hash__.',
+        'Bangun subclass antena seluler, microwave link, dan fiber optic node dengan method overriding run_diagnostics().',
+        'Buat class manajer yang mengeksekusi diagnostik secara polimorfik dalam satu iterasi koleksi heterogen.',
+        'Buktikan fungsi deduplikasi simpul jaringan dalam struktur data set.',
+      ],
+      rubric: [
+        { criteria: 'Pewarisan & Pemanggilan super()', weight: 25, description: 'Hierarki inheritance bersih, super() digunakan dengan benar pada tiap constructor turunan.' },
+        { criteria: 'Method Overriding & Polimorfisme', weight: 25, description: 'Diagnostik di-override dengan rapi pada setiap subclass dan dieksekusi polimorfik seragam.' },
+        { criteria: 'Implementasi Special Methods', weight: 25, description: '__str__, __repr__, __eq__, dan __hash__ berfungsi sempurna dan lulus uji deduplikasi set.' },
+        { criteria: 'Kualitas Kode, Type Hint & PEP 8', weight: 25, description: 'Type hint lengkap, docstring komprehensif, arsitektur manajer modular, dan pengujian bebas error.' },
+      ],
+      starterFilename: 'tugas_20.py',
+      downloadMdUrl: 'downloads/chapter-20/tugas.md',
+      downloadPyUrl: 'downloads/chapter-20/contoh.py',
+    },
   },
   {
     id: 21,
@@ -1545,20 +1685,88 @@ def calculate_statistics(students: list[dict[str, Any]]) -> dict[str, Any]:
     levelId: 2,
     number: '21',
     title: 'Packages, Environments & Testing',
-    subtitle: 'PyPI, virtualenv, pip, pyproject.toml & pytest',
+    subtitle: 'PyPI, venv, pip, pyproject.toml & Automated Testing',
     description:
-      'Tata kelola proyek modern: isolasi dependency dengan venv/pip, struktur paket Python (__init__.py), dan penulisan unit test otomatis dengan pytest/unittest.',
-    competencyFocus: 'PCAP 4.1: Package ecosystem & automated testing',
-    estimatedHours: 4,
+      'Tata kelola proyek modern: isolasi dependency dengan venv/pip, struktur paket Python (__init__.py), konfigurasi pyproject.toml PEP 621, dan penulisan test suite otomatis menggunakan fixture dan parameterisasi.',
+    competencyFocus: 'PCAP 4.1: Package ecosystem, environments & automated testing',
+    estimatedHours: 5,
     difficulty: 'Intermediate',
-    available: false,
+    available: true,
+    deckPath: '#chapter/21/slides',
+    tugasPath: '#chapter/21/task',
     prerequisites: ['Chapter 20'],
     learningObjectives: [
-      'Membuat dan mengaktifkan virtual environment terisolasi',
-      'Mengatur dependensi proyek dengan requirements.txt atau pyproject.toml',
-      'Menulis unit test assertif menggunakan framework unittest dan pytest',
+      'Menjelaskan perbedaan modul dan struktur package Python menggunakan __init__.py',
+      'Membuat dan mengaktifkan virtual environment terisolasi pada berbagai sistem operasi',
+      'Mengonfigurasi metadata proyek modern menggunakan format pyproject.toml standar PEP 621',
+      'Menjelaskan alur instalasi mode editable menggunakan pip install -e .',
+      'Menulis test suite otomatis yang menerapkan pola fixture, parameterized testing, dan exception testing',
     ],
-    tags: ['venv', 'pip', 'pytest', 'Packaging'],
+    tags: ['Package', 'venv', 'pip', 'pyproject.toml', 'Automated Testing', 'Assertions', 'Fixtures', 'Parameterization'],
+    codeExample: {
+      title: 'Struktur Package Python & Penggunaan __all__',
+      code: `package_manifest = {
+    "package_name": "telecom_core",
+    "structure": [
+        "telecom_core/__init__.py",
+        "telecom_core/models.py",
+        "telecom_core/calculators.py",
+        "telecom_core/utils/formatters.py"
+    ],
+    "exposed_symbols": ["SignalCalculator", "BaseStation", "format_dbm"]
+}
+
+print(f"Struktur Package Standar PEP 420/517: '{package_manifest['package_name']}'")
+for file_path in package_manifest["structure"]:
+    print(f"  └── {file_path}")`,
+      outputKey: 'ch21-01',
+      explanation:
+        'Package Python diorganisasikan dalam direktori yang memuat berkas __init__.py. Daftar __all__ mengontrol simbol publik yang diekspos kepada pengguna.',
+    },
+    exercise: {
+      title: 'Latihan Terarah: Struktur Paket, Fixture & Parameterisasi',
+      instructions: [
+        'Rancang struktur paket metrik jaringan dan batasi ekspor simbol via __all__ di __init__.py.',
+        'Buat fungsi validasi nomor port jaringan dan uji dengan serangkaian pernyataan assert.',
+        'Terapkan parameterized testing untuk memvalidasi klasifikasi kualitas sinyal seluler (RSRP).',
+        'Tulis pengujian exception untuk memastikan pelemparan BufferOverflowError saat antrean paket penuh.',
+      ],
+      tips: 'Gunakan virtual environment terisolasi agar dependensi proyek tidak mengotori lingkungan komputasi global.',
+      time: '45 menit',
+    },
+    quiz: {
+      question: 'Mengapa pengembang Python sangat disarankan mengisolasi pustaka proyek menggunakan virtual environment (.venv)?',
+      options: [
+        'Mencegah konflik versi dependensi antar-proyek dan menjaga stabilitas lingkungan Python sistem operasi',
+        'Karena Python tidak bisa mengeksekusi perintah perkalian matematika tanpa virtual environment',
+        'Agar script Python otomatis terkompilasi menjadi file binary .exe secara permanen',
+        'Untuk membatasi konsumsi memori RAM maksimal sebesar 100 MB',
+      ],
+      correctIndex: 0,
+      explanation:
+        'Virtual environment menciptakan direktori mandiri dengan interpreter dan pustaka pihak ketiga yang terisolasi. Hal ini mencegah konflik versi antar proyek berbeda (dependency hell) dan melindungi paket sistem operasi dari risiko kerusakan.',
+      hint: 'Pikirkan apa yang terjadi jika Proyek A membutuhkan versi pustaka yang berbeda dengan Proyek B.',
+    },
+    assignment: {
+      title: 'Tugas Praktik 21: Telecom Quality Metric Toolkit (Tested Package)',
+      description:
+        'Bangun sebuah paket pustaka Python terstandar (telecom_metrics) lengkap dengan pyproject.toml PEP 621 dan suite pengujian otomatis yang menerapkan pola fixture, parameterisasi, dan exception testing.',
+      instructions: [
+        'Implementasikan modul analyzer.py dengan formula SNR (dB), kapasitas kanal Shannon-Hartley, dan evaluasi BER.',
+        'Konfigurasikan berkas pyproject.toml standar PEP 621 mencakup metadata dan dependensi dev.',
+        'Susun test suite otomatis test_analyzer.py dengan pola fixture untuk inisialisasi kanal uji.',
+        'Terapkan pengujian berparameter untuk minimal 4 kombinasi input dan exception testing untuk input negatif.',
+      ],
+      rubric: [
+        { criteria: 'Arsitektur Package & __init__.py', weight: 25, description: 'Struktur paket rapi, ekspor simbol terdefinisi via __all__, dan impor modul berjalan mulus.' },
+        { criteria: 'Fungsionalitas Matematis & Validasi', weight: 25, description: 'Kalkulasi matematis SNR, Shannon, dan BER presisi serta memvalidasi data ilegal.' },
+        { criteria: 'Pola Automated Testing (Fixture & Param)', weight: 25, description: 'Test suite menerapkan pola fixture data uji dan tabel kasus parameterisasi komprehensif.' },
+        { criteria: 'Exception Testing & pyproject.toml', weight: 25, description: 'Pengujian exception memvalidasi kondisi error dan berkas pyproject.toml terkonfigurasi PEP 621.' },
+      ],
+      starterFilename: 'tugas_21.py',
+      downloadMdUrl: 'downloads/chapter-21/tugas.md',
+      downloadPyUrl: 'downloads/chapter-21/contoh.py',
+    },
   },
   {
     id: 22,
@@ -1566,20 +1774,95 @@ def calculate_statistics(students: list[dict[str, Any]]) -> dict[str, Any]:
     levelId: 2,
     number: '22',
     title: 'Intermediate Capstone Project',
-    subtitle: 'Arsitektur OOP Penuh: Engine Analisis Data & File I/O Teruji',
+    subtitle: 'Inventory Management System — Aplikasi Terminal Terintegrasi',
     description:
-      'Proyek akhir Level 2: merancang sistem analitik OOP modular dengan hierarki class, parsing dataset otomatis, exception handling kustom, dan unit test suite.',
-    competencyFocus: 'Integrasi Kompetensi PCAP',
+      'Proyek akhir Level 2: merancang sistem inventaris aset perangkat modular terpadu dengan hierarki class OOP, persistensi berkas JSON (atomic write), validasi defensif, penanganan exception, dan automated test suite.',
+    competencyFocus: 'Integrasi Menyeluruh Kompetensi PCAP (OOP, Storage, Validation, Testing)',
     estimatedHours: 8,
     difficulty: 'Intermediate',
-    available: false,
+    available: true,
+    deckPath: '#chapter/22/slides',
+    tugasPath: '#chapter/22/task',
     prerequisites: ['Chapter 13 – 21'],
     learningObjectives: [
-      'Mendesain arsitektur class terintegrasi (domain models, service layer, parser)',
-      'Memproses dataset disk secara asinkron/stream dengan penanganan kegagalan parsing',
-      'Mencapai test coverage yang terukur menggunakan unit testing terotomasi',
+      'Mendesain arsitektur perangkat lunak modular memisahkan domain models, storage layer, service layer, dan CLI',
+      'Mengimplementasikan model domain OOP hierarkis (Device, NetworkDevice, ServerDevice, SensorDevice) lengkap dengan special methods',
+      'Membangun mekanisme persistensi berkas JSON permanen dengan teknik atomic file write',
+      'Mengembangkan operasi CRUD, pencarian fleksibel, dan pengurutan multi-kriteria',
+      'Menyusun suite pengujian otomatis komprehensif menggunakan unittest / pytest untuk memverifikasi keandalan sistem',
     ],
-    tags: ['Capstone', 'OOP Architecture', 'Test-Driven'],
+    tags: ['Capstone', 'OOP Architecture', 'CRUD', 'JSON Persistence', 'Atomic Write', 'Custom Exceptions', 'Validation', 'Automated Testing'],
+    codeExample: {
+      title: 'Model Domain OOP Capstone (Hierarki Class Perangkat)',
+      code: `class Device:
+    def __init__(self, device_id: str, name: str, category: str, price: float):
+        self.device_id = device_id
+        self.name = name
+        self.category = category
+        self.price = float(price)
+        self.status = "ACTIVE"
+
+    def to_dict(self) -> dict:
+        return {
+            "device_id": self.device_id, "name": self.name,
+            "category": self.category, "price": self.price, "status": self.status
+        }
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, Device): return NotImplemented
+        return self.device_id == other.device_id
+
+dev1 = Device("DEV-001", "Unmanaged Switch 8P", "Hardware", 450000.0)
+print("Device Model:", dev1.to_dict())`,
+      outputKey: 'ch22-01',
+      explanation:
+        'Hierarki class model domain capstone menyediakan struktur data berorientasi objek yang dapat diserialisasi ke dictionary/JSON dan dibandingkan kesetaraannya.',
+    },
+    exercise: {
+      title: 'Latihan Terarah: Pemanasan Integrasi Arsitektur Capstone',
+      instructions: [
+        'Rancang fungsi factory yang menginstansiasi subclass Device secara dinamis dari payload dictionary.',
+        'Definisikan custom exceptions NegativePriceError dan InvalidHostnameError untuk proteksi data.',
+        'Implementasikan pengurutan inventaris multi-kriteria berdasarkan abjad kategori lalu harga termahal.',
+        'Buat fungsi penyimpanan berkas JSON atomik menggunakan berkas temporer .tmp dan operasi replace.',
+      ],
+      tips: 'Terapkan pemisahan tanggung jawab (Separation of Concerns) secara ketat antar-modul.',
+      time: '60 menit',
+    },
+    quiz: {
+      question: 'Mengapa teknik Atomic File Write (menulis ke file temporer .tmp lalu menimpa file utama dengan replace) sangat dianjurkan untuk persistensi data?',
+      options: [
+        'Mencegah kerusakan dan hilangnya seluruh isi basis data jika terjadi crash atau listrik padam saat penulisan file sedang berlangsung',
+        'Karena file berekstensi .tmp otomatis memiliki enkripsi militer tingkat tinggi',
+        'Agar file dapat dibuka oleh aplikasi Microsoft Word secara langsung',
+        'Untuk melipatgandakan kecepatan transfer data internet hingga dua kali lipat',
+      ],
+      correctIndex: 0,
+      explanation:
+        'Jika program mengalami crash di tengah penulisan file langsung, file lama sudah terhapus dan file baru belum selesai ditulis, mengakibatkan korupsi data permanen. Dengan atomic write, file baru diselesaikan 100% pada file temporer terlebih dahulu sebelum dilakukan operasi rename instan di level sistem operasi.',
+      hint: 'Pikirkan risiko integritas data ketika sistem mengalami pemadaman listrik di tengah operasi I/O.',
+    },
+    assignment: {
+      title: 'Proyek Akhir Capstone: Inventory Management System',
+      description:
+        'Rancang dan bangun sistem manajemen inventaris aset perangkat teknologi informasi dan infrastruktur telekomunikasi berbasis CLI modular dengan persistensi JSON, hierarki OOP, validasi ketat, dan unit test suite komprehensif.',
+      instructions: [
+        'Implementasikan hierarki model domain Device, NetworkDevice, ServerDevice, dan SensorDevice.',
+        'Bangun persistensi berkas JSON dengan teknik atomic write dan pemulihan objek polimorfik.',
+        'Terapkan operasi CRUD lengkap, pencarian substring keyword, dan pengurutan harga/nama.',
+        'Sertakan custom exception domain dan suite pengujian otomatis komprehensif (minimal 6 unit tests).',
+      ],
+      rubric: [
+        { criteria: 'Fungsionalitas Inti & Operasi CRUD', weight: 25, description: 'Operasi Create, Read, Update, Delete, Search, dan Sort berfungsi 100% tanpa crash.' },
+        { criteria: 'Desain OOP & Arsitektur Class', weight: 20, description: 'Pewarisan bersih, super() tepat, enkapsulasi data, dan special methods dunder terimplementasi.' },
+        { criteria: 'Persistensi & Validasi Data', weight: 20, description: 'Penyimpanan JSON atomic write handal, validasi input menolak data ilegal, dan exception tertangani.' },
+        { criteria: 'Automated Testing & Reliability', weight: 20, description: 'Suite unit tests menguji skenario sukses, boundary, error handling, dan pemulihan data disk.' },
+        { criteria: 'Dokumentasi, CLI & Standar PEP 8', weight: 15, description: 'Struktur modular, type hints lengkap, docstring jelas, antarmuka CLI ramah pengguna.' },
+      ],
+      starterFilename: 'tugas_22.py',
+      downloadMdUrl: 'downloads/chapter-22/tugas.md',
+      downloadPyUrl: 'downloads/chapter-22/contoh.py',
+    },
   },
 
   // LEVEL 3 (23 - 30)

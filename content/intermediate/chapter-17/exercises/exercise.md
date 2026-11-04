@@ -55,3 +55,4 @@ Selamat datang di lembar latihan terarah **Chapter 17**. Kerjakan 4 latihan ters
 
 > [!TIP]
 > Selalu pastikan menggunakan `encoding="utf-8"` pada saat membuka file teks di sistem operasi Windows guna menghindari galat translasi karakter lokal (`cp1252`).
+

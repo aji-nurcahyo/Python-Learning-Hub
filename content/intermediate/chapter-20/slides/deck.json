@@ -1,0 +1,125 @@
+[
+  {
+    "title": "Object-Oriented Programming II",
+    "subtitle": "Inheritance, Polymorphism, super(), dan Special Dunder Methods",
+    "kind": "cover",
+    "body": "<p>Memperluas arsitektur OOP: Memanfaatkan pewarisan kode, method overriding, super(), dynamic dispatch polimorfik, komposisi vs pewarisan, serta implementasi special methods (__str__, __repr__, __eq__, __hash__).</p>",
+    "notes": "Selamat datang di Chapter 20! Kita akan melangkah lebih jauh ke teknik OOP tingkat lanjut di Python."
+  },
+  {
+    "title": "Konsep Pewarisan (Inheritance)",
+    "kind": "content",
+    "body": "<ul><li><strong>Relasi \"is-a\":</strong> Menggambarkan hubungan taksonomi alami, misalnya: <em>Router adalah sebuah Perangkat Jaringan</em>.</li><li><strong>Class Induk (Parent/Base):</strong> Menyediakan atribut dan fungsionalitas umum yang dapat dipakai ulang.</li><li><strong>Class Turunan (Child/Derived):</strong> Mewarisi seluruh atribut induk dan dapat menambahkan fitur spesifik atau memodifikasi fungsionalitas.</li></ul>",
+    "notes": "Pewarisan meminimalkan duplikasi kode dan memusatkan logika inti sistem."
+  },
+  {
+    "title": "Single Inheritance dalam Python",
+    "kind": "code",
+    "example": "ch20-01",
+    "body": "<p>Sintaks pewarisan <code>class NetworkRouter(BaseDevice):</code> dan validasi relasi objek dengan <code>isinstance()</code> dan <code>issubclass()</code>.</p>",
+    "notes": "Perhatikan bagaimana router langsung dapat memanggil method deskripsi_dasar() milik class induk."
+  },
+  {
+    "title": "Method Overriding & super()",
+    "kind": "content",
+    "body": "<ul><li><strong>Method Overriding:</strong> Mendefinisikan ulang method pada class turunan dengan nama yang sama persis seperti di class induk.</li><li><strong>Fungsi <code>super()</code>:</strong> Mengakses dan mengeksekusi fungsionalitas class induk tanpa menyebut nama class induk secara hardcode.</li><li>Memastikan inisialisasi atribut dasar tetap berjalan aman sebelum logika spesifik dijalankan.</li></ul>",
+    "notes": "Selalu panggil super().__init__() di dalam constructor subclass untuk menjaga konsistensi state."
+  },
+  {
+    "title": "Override Sensor Telemetri",
+    "kind": "code",
+    "example": "ch20-02",
+    "body": "<p>Mengoverride method baca_telemetri() pada TemperatureSensor dan OpticalPowerSensor dengan mempertahankan struktur dasar.</p>",
+    "notes": "Masing-masing sensor mengevaluasi status bahaya secara independen sesuai karakteristik fisiknya."
+  },
+  {
+    "title": "Polimorfisme: Dynamic Dispatch",
+    "kind": "content",
+    "body": "<ul><li><strong>Prinsip:</strong> Kemampuan memanggil method dengan nama antarmuka yang sama pada berbagai objek yang berbeda kelas.</li><li>Memungkinkan sistem memproses koleksi heterogen (daftar objek berbeda jenis) dalam satu perulangan seragam.</li><li>Menghilangkan kebutuhan rantai percabangan <code>if-elif</code> untuk memeriksa tipe objek satu per satu.</li></ul>",
+    "notes": "Polimorfisme membuat kode terbuka terhadap ekstensi baru tanpa perlu merombak fungsi pemanggil."
+  },
+  {
+    "title": "Eksekusi Polimorfik Diagnostik",
+    "kind": "code",
+    "example": "ch20-03",
+    "body": "<p>Iterasi daftar koleksi heterogen yang berisi BTS, Microwave Link, dan Fiber Switch dengan memanggil <code>node.jalankan_diagnostik()</code> seragam.</p>",
+    "notes": "Setiap objek secara otomatis merespons sesuai implementasi class-nya masing-masing."
+  },
+  {
+    "title": "Filosofi Duck Typing Python",
+    "kind": "content",
+    "body": "<ul><li>Pepatah terkenal: <em>\"If it walks like a duck and quacks like a duck, it's a duck.\"</em></li><li>Dalam Python, kesesuaian objek ditentukan oleh method yang dimilikinya, bukan hierarki pewarisan formalnya.</li><li>Objek tidak harus mewarisi class induk yang sama agar dapat diproses bersama dalam satu antarmuka polimorfik.</li></ul>",
+    "notes": "Duck typing memberikan fleksibilitas luar biasa dalam pembuatan modul loosely coupled."
+  },
+  {
+    "title": "Transceiver Duck Typing",
+    "kind": "code",
+    "example": "ch20-04",
+    "body": "<p>Fungsi broadcast_transceiver() memproses objek AudioStreamer, TelemetryStreamer, dan VideoStreamer tanpa perlu class induk bersama.</p>",
+    "notes": "Selama objek memiliki method stream_payload(), fungsi dapat memprosesnya dengan mulus."
+  },
+  {
+    "title": "Komposisi vs Pewarisan (\"has-a\" vs \"is-a\")",
+    "kind": "content",
+    "body": "<ul><li><strong>Pewarisan (\"is-a\"):</strong> Digunakan jika entitas baru memang merupakan spesialisasi murni (contoh: Router adalah Device).</li><li><strong>Komposisi (\"has-a\"):</strong> Menggabungkan beberapa objek independen sebagai atribut internal (contoh: Router memiliki PowerSupply dan Port).</li><li>Prinsip Desain Gang of Four: <em>\"Favor object composition over class inheritance.\"</em></li></ul>",
+    "notes": "Komposisi menghasilkan arsitektur yang jauh lebih fleksibel terhadap perubahan konfigurasi."
+  },
+  {
+    "title": "Modular Router & Komposisi Port",
+    "kind": "code",
+    "example": "ch20-05",
+    "body": "<p>Class ModularRouter mengomposisikan objek PowerSupply dan koleksi objek NetworkPort ke dalam satu kesatuan sistem.</p>",
+    "notes": "Perhatikan bahwa router tidak mewarisi PowerSupply, melainkan mengelolanya sebagai bagian internal."
+  },
+  {
+    "title": "Pengenalan Special Methods (Dunder)",
+    "kind": "content",
+    "body": "<ul><li>Metode khusus dengan prefiks dan sufiks garis bawah ganda (<em>Double Underscore</em> atau disingkat <em>Dunder</em>).</li><li>Dipanggil secara implisit oleh Python saat operator atau fungsi bawaan tertentu dieksekusi terhadap objek.</li><li>Contoh: <code>__str__</code> dipanggil oleh <code>print()</code>, <code>__len__</code> dipanggil oleh <code>len()</code>, <code>__eq__</code> dipanggil oleh operator <code>==</code>.</li></ul>",
+    "notes": "Dunder methods memungkinkan objek kustom kita berperilaku layaknya tipe data bawaan Python."
+  },
+  {
+    "title": "Representasi Objek: __str__ vs __repr__",
+    "kind": "content",
+    "body": "<ul><li><strong><code>__str__</code>:</strong> Menghasilkan teks yang mudah dipahami oleh pengguna umum (*user-friendly*). Digunakan saat <code>print(obj)</code> atau <code>str(obj)</code>.</li><li><strong><code>__repr__</code>:</strong> Menghasilkan string formal dan spesifik untuk developer atau debugging (*unambiguous*). Format idealnya dapat di-eval kembali.</li><li>Aturan praktis: Jika hanya mengimplementasikan satu, utamakan <code>__repr__</code> karena <code>__str__</code> akan fallback ke <code>__repr__</code>.</li></ul>",
+    "notes": "Ketika objek berada di dalam list, Python selalu memanggil __repr__, bukan __str__."
+  },
+  {
+    "title": "Implementasi __str__ dan __repr__",
+    "kind": "code",
+    "example": "ch20-06",
+    "body": "<p>Penerapan method <code>__str__</code> untuk tampilan ringkas spesifikasi dan <code>__repr__</code> untuk inspeksi struktur teknis objek.</p>",
+    "notes": "Amati perbedaan output str(spec) dan repr(spec) pada terminal."
+  },
+  {
+    "title": "Kesetaraan Nilai (__eq__) vs Identitas (is)",
+    "kind": "content",
+    "body": "<ul><li>Operator <code>is</code> memeriksa <strong>identitas objek</strong> (apakah keduanya menempati alamat memori fisik yang sama).</li><li>Operator <code>==</code> memeriksa <strong>kesetaraan nilai</strong> yang didelegasikan ke method <code>__eq__</code>.</li><li><strong>Implikasi Kritis:</strong> Mengoverride <code>__eq__</code> membuat class menjadi <em>unhashable</em> secara default oleh CPython, kecuali Anda juga mendefinisikan method <code>__hash__</code>.</li></ul>",
+    "notes": "Jika sebuah objek tidak memiliki __hash__, objek tersebut tidak dapat dimasukkan ke set atau dijadikan key dictionary!"
+  },
+  {
+    "title": "Kesetaraan Data & Hashability",
+    "kind": "code",
+    "example": "ch20-07",
+    "body": "<p>Implementasi <code>__eq__</code> berdasarkan MAC address dan implementasi <code>__hash__</code> untuk mendukung deduplikasi dalam set.</p>",
+    "notes": "Lihat bagaimana h1 == h2 bernilai True meskipun h1 is h2 bernilai False."
+  },
+  {
+    "title": "Kesalahan Umum dalam Inheritance",
+    "kind": "content",
+    "body": "<ul><li><strong>Hierarki Terlalu Dalam:</strong> Pewarisan lebih dari 3 tingkat membuat kode rapuh dan sulit dilacak (*fragile base class*).</li><li><strong>Lupa Memanggil <code>super()</code>:</strong> Mengabaikan <code>super().__init__()</code> menyebabkan atribut class induk tidak terinisialisasi.</li><li><strong>Memaksakan Pewarisan:</strong> Menggunakan inheritance padahal relasi antar kelas hanyalah kebutuhan berbagi fungsi bantu (gunakan komposisi).</li></ul>",
+    "notes": "Jaga hierarki class tetap dangkal dan fokus pada antarmuka yang kohesif."
+  },
+  {
+    "title": "Latihan Terarah & Tugas Mandiri",
+    "kind": "content",
+    "body": "<ul><li><strong>Latihan:</strong> Membangun antarmuka nirkabel bertingkat, pipeline pengolahan sinyal polimorfik, dan special methods.</li><li><strong>Tugas Mandiri:</strong> Hierarchical Telecom Infrastructure Management (Antena Seluler, Microwave Link, Fiber Node, diagnostik polimorfik, rubrik 100 poin).</li><li>Menerapkan deduplikasi objek dalam set menggunakan kesetaraan serial node.</li></ul>",
+    "notes": "Pastikan seluruh mahasiswa memverifikasi fungsionalitas __hash__ pada tugas mandiri."
+  },
+  {
+    "title": "Refleksi & Persiapan Chapter 21",
+    "kind": "content",
+    "body": "<p>Anda kini telah menguasai pilar utama Object-Oriented Programming: Inheritance, Method Overriding, Polimorfisme, dan Dunder Methods.</p><p>Pada <strong>Chapter 21 (Packages, Environments & Testing)</strong>, kita akan belajar bagaimana mengemas modul-modul ini ke dalam paket terstandar, mengelola virtual environment, dan menulis automated test suite dengan pytest.</p>",
+    "notes": "Tutup sesi dan ingatkan pengumpulan tugas mandiri Chapter 20."
+  }
+]
+

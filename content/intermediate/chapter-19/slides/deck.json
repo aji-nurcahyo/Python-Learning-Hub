@@ -1,0 +1,130 @@
+[
+  {
+    "title": "Object-Oriented Programming I",
+    "subtitle": "Class, Object, Constructor __init__, Parameter self & Enkapsulasi",
+    "kind": "cover",
+    "body": "<p>Paradigma Pemrograman Berorientasi Objek: Membangun blueprint class, mengelola state instance, membedakan atribut class, serta menerapkan proteksi atribut menggunakan @property.</p>",
+    "notes": "Selamat datang di Chapter 19! Mulai chapter ini kita mendalami fondasi Object-Oriented Programming."
+  },
+  {
+    "title": "Mengapa Object-Oriented Programming?",
+    "kind": "content",
+    "body": "<ul><li><strong>Modularitas Tinggi:</strong> Menyatukan data (state) dan fungsi pengolahnya (behavior) ke dalam satu entitas kohesif.</li><li><strong>Abstraksi Nyata:</strong> Memodelkan perangkat jaringan, sensor, dan antena sebagaimana entitas fisik di lapangan.</li><li><strong>Kemudahan Pemeliharaan:</strong> Perubahan internal suatu class tidak merusak kode konsumen di luar class (prinsip enkapsulasi).</li></ul>",
+    "notes": "OOP bukan pengganti penuh prosedural, melainkan paradigma komplementer untuk sistem skala menengah hingga besar."
+  },
+  {
+    "title": "Prosedural vs Object-Oriented",
+    "kind": "code",
+    "example": "ch19-01",
+    "body": "<p>Pada pendekatan prosedural, fungsi dan dictionary terpisah. Dalam OOP, class membungkus data dan perilaku dalam satu unit.</p>",
+    "notes": "Perhatikan bagaimana method hitung_predikat() mengakses self.ipk secara langsung tanpa passing parameter berulang."
+  },
+  {
+    "title": "Anatomi Class dan Object",
+    "kind": "content",
+    "body": "<ul><li><strong>Class (Blueprint):</strong> Cetak biru logis yang mendefinisikan atribut dan method apa saja yang akan dimiliki objek.</li><li><strong>Object (Instance):</strong> Realisasi fisik di memori yang dibuat berdasarkan class.</li><li><strong>Instansiasi:</strong> Proses pembuatan instance object dengan memanggil nama class layaknya fungsi: <code>obj = ClassName()</code>.</li></ul>",
+    "notes": "Analogi: Class adalah denah rumah arsitek, sedangkan Object adalah rumah nyata yang dibangun di atas tanah."
+  },
+  {
+    "title": "Constructor __init__ dan Parameter self",
+    "kind": "content",
+    "body": "<ul><li><strong>Constructor <code>__init__</code>:</strong> Method khusus yang otomatis dieksekusi CPython saat objek baru diinstansiasi.</li><li><strong>Parameter <code>self</code>:</strong> Referensi eksplisit ke instance objek yang sedang diproses di memori.</li><li>Wajib ditulis sebagai parameter pertama setiap instance method, meskipun saat pemanggilan dari luar parameter ini dilewatkan secara otomatis.</li></ul>",
+    "notes": "Penulisan parameter self eksplisit adalah salah satu ciri khas Zen of Python: Explicit is better than implicit."
+  },
+  {
+    "title": "Definisi Class & Method Geometri",
+    "kind": "code",
+    "example": "ch19-02",
+    "body": "<p>Implementasi class Rectangle dengan constructor <code>__init__</code> serta method kalkulasi luas dan keliling.</p>",
+    "notes": "Perhatikan bagaimana dua instance r1 dan r2 memiliki nilai atribut independen di memori."
+  },
+  {
+    "title": "Instance Methods dan State Mutability",
+    "kind": "content",
+    "body": "<ul><li><strong>Instance Method:</strong> Fungsi yang terikat pada instance objek dan beroperasi langsung terhadap nilai atribut objek tersebut.</li><li>Instance method dapat membaca, mengubah (mutasi), atau memvalidasi status objek kapan saja selama siklus hidup program.</li><li>Menjaga konsistensi data internal menjadi tanggung jawab method di dalam class.</li></ul>",
+    "notes": "Setiap perubahan state pada objek A tidak akan memengaruhi data pada objek B."
+  },
+  {
+    "title": "Sensor Telemetri Telekomunikasi",
+    "kind": "code",
+    "example": "ch19-03",
+    "body": "<p>Penerapan class Sensor untuk memantau suhu rak server dan daya pemancar BTS beserta evaluasi status ambang batas.</p>",
+    "notes": "Method update_pembacaan memutasi status internal menjadi ALERT jika nilai melewati batas aman."
+  },
+  {
+    "title": "Instance Attributes vs Class Attributes",
+    "kind": "content",
+    "body": "<ul><li><strong>Instance Attributes:</strong> Didefinisikan di dalam constructor menggunakan <code>self.attr</code>. Bersifat unik untuk setiap objek.</li><li><strong>Class Attributes:</strong> Didefinisikan di luar constructor tepat di bawah baris class. Dibagi bersama (shared) oleh seluruh instance.</li><li>Cocok untuk mendefinisikan konstanta bersama atau melacak penghitung global (counter) jumlah objek.</li></ul>",
+    "notes": "Hati-hati: Mengubah class attribute lewat self.attr justru akan menciptakan instance attribute baru dengan nama yang sama!"
+  },
+  {
+    "title": "Pelacakan Jumlah Perangkat Jaringan",
+    "kind": "code",
+    "example": "ch19-04",
+    "body": "<p>Penggunaan class attribute <code>total_devices</code> untuk mencatat jumlah perangkat yang berhasil diinstansiasi.</p>",
+    "notes": "Perhatikan bahwa class attribute diakses dan dimutasi menggunakan nama class: NetworkDevice.total_devices."
+  },
+  {
+    "title": "Filosofi Enkapsulasi dalam Python",
+    "kind": "content",
+    "body": "<ul><li>Python <strong>tidak memaksakan</strong> access modifier keras (seperti <code>private</code> atau <code>protected</code> di Java/C++).</li><li>Filosofi komunitas Python: <em>\"We are all consenting adults here\"</em>.</li><li>Proteksi dicapai melalui konvensi penamaan (underscore) dan antarmuka properti cerdas (<code>@property</code>).</li></ul>",
+    "notes": "Enkapsulasi di Python lebih mengutamakan panduan dan kontrak kode yang bersih daripada restriksi kaku compiler."
+  },
+  {
+    "title": "Proteksi Properti dengan @property",
+    "kind": "content",
+    "body": "<ul><li><strong>Getter (<code>@property</code>):</strong> Membaca atribut privat melalui sintaks pemanggilan atribut biasa tanpa tanda kurung.</li><li><strong>Setter (<code>@&lt;nama&gt;.setter</code>):</strong> Menyematkan logika validasi setiap kali nilai atribut hendak diubah dari luar.</li><li>Mencegah nilai invalid (seperti daya negatif atau frekuensi berbahaya) masuk ke dalam sistem.</li></ul>",
+    "notes": "Decorator @property memungkinkan kita mengubah atribut publik menjadi properti tervalidasi tanpa merusak kode konsumen."
+  },
+  {
+    "title": "Validasi Daya Pemancar Sinyal",
+    "kind": "code",
+    "example": "ch19-05",
+    "body": "<p>Implementasi setter tervalidasi untuk memastikan daya transmisi berada pada rentang operasional aman [-30 s/d 50 dBm].</p>",
+    "notes": "Uji batas eksekusi membuktikan bahwa manipulasi daya ilegal langsung memicu ValueError."
+  },
+  {
+    "title": "Konvensi Naming & Name Mangling",
+    "kind": "content",
+    "body": "<ul><li><code>name</code> (Public): Bebas diakses dan dimodifikasi langsung.</li><li><code>_name</code> (Protected): Konvensi internal, disarankan tidak diakses dari luar lingkup modul/class.</li><li><code>__name</code> (Private): Memicu <strong>Name Mangling</strong> oleh interpreter menjadi <code>_ClassName__name</code> untuk mencegah tabrakan nama.</li></ul>",
+    "notes": "Name mangling bukan enkripsi keamanan, melainkan mekanisme pencegahan override tak sengaja pada inheritance."
+  },
+  {
+    "title": "Pembuktian Name Mangling",
+    "kind": "code",
+    "example": "ch19-06",
+    "body": "<p>Demonstrasi akses atribut <code>__secret_token</code> yang memicu AttributeError dan cara Python merubah namanya di runtime.</p>",
+    "notes": "Lihat bagaimana atribut private sebenarnya masih dapat diakses melalui _ServerConfig__secret_token."
+  },
+  {
+    "title": "Interaksi Antar Objek dalam Sistem",
+    "kind": "content",
+    "body": "<ul><li>Kekuatan OOP tercapai saat berbagai objek saling berkolaborasi menyelesaikan persoalan nyata.</li><li>Objek pengelola (seperti <code>DeviceInventory</code>) dapat menyimpan daftar objek <code>Device</code> dan memanggil method mereka secara agregat.</li><li>Membagi tanggung jawab: Device bertanggung jawab atas datanya sendiri, Inventory mengelola koleksinya.</li></ul>",
+    "notes": "Pemisahan tanggung jawab ini mempermudah perluasan sistem di masa depan."
+  },
+  {
+    "title": "Inventaris Perangkat Site Ruang Server",
+    "kind": "code",
+    "example": "ch19-07",
+    "body": "<p>Kolaborasi class Device dan DeviceInventory dalam melakukan kalkulasi total konsumsi daya dan filtering tipe perangkat.</p>",
+    "notes": "Perhatikan bagaimana pemanggilan sum(d.konsumsi_daya) mengagregasi data dari seluruh instance."
+  },
+  {
+    "title": "Kesalahan Umum dalam OOP Python",
+    "kind": "content",
+    "body": "<ul><li><strong>Lupa Parameter <code>self</code>:</strong> Mendefinisikan method tanpa <code>self</code> menghasilkan <code>TypeError: takes 0 positional arguments but 1 was given</code>.</li><li><strong>Memutasi Class Attribute Lewat Instance:</strong> Menulis <code>self.total = 10</code> membuat instance attribute lokal, bukan memutasi atribut class bersama.</li><li><strong>Over-engineering:</strong> Mengubah fungsi sederhana yang stateless menjadi class kompleks tanpa kebutuhan state yang jelas.</li></ul>",
+    "notes": "Gunakan OOP saat ada data dan perilaku yang memang harus terikat bersama dalam satu siklus hidup."
+  },
+  {
+    "title": "Latihan Terarah & Tugas Mandiri",
+    "kind": "content",
+    "body": "<ul><li><strong>Latihan:</strong> Membangun class mahasiswa berpredikat kelulusan dan memproteksi properti frekuensi antena.</li><li><strong>Tugas Mandiri:</strong> Telecommunications Station Inventory Manager lengkap dengan validasi setter <code>@property</code> dan laporan stasiun.</li><li>Rubrik penilaian 100 poin menekankan validasi data, kerapian class, dan kepatuhan PEP 8.</li></ul>",
+    "notes": "Ingat: Pada tugas ini jangan gunakan inheritance dahulu, fokuskan pada single class dan enkapsulasi properti."
+  },
+  {
+    "title": "Refleksi & Persiapan Chapter 20",
+    "kind": "content",
+    "body": "<p>Anda telah menguasai dasar perancangan class, atribut instance vs class, serta enkapsulasi menggunakan @property.</p><p>Pada <strong>Chapter 20 (Object-Oriented Programming II)</strong>, kita akan memperluas kemampuan ini dengan mempelajari Pewarisan (Inheritance), Polimorfisme, Komposisi, dan Special Dunder Methods.</p>",
+    "notes": "Pastikan seluruh mahasiswa menyelesaikan tugas mandiri sebelum melangkah ke inheritance."
+  }
+]

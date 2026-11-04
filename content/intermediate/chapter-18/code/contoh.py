@@ -49,3 +49,4 @@ for d in sampel_data:
         print(f"  [GAGAL] Data ditolak: {e}")
 
 print(f"\nSelesai: {len(valid)} valid, {len(invalid)} ditolak.")
+

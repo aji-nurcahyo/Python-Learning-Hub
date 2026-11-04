@@ -113,3 +113,4 @@ class TelecomRecordValidator:
             "total_invalid": len(self.invalid_records),
             "valid_ratio_pct": round((len(self.valid_records) / total * 100), 1) if total > 0 else 0.0
         }
+

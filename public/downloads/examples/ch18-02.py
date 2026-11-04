@@ -21,3 +21,4 @@ for teks in daftar_masukan:
     hasil = parsing_frekuensi(teks)
     if hasil is not None:
         print(f"  -> Frekuensi valid terdeteksi: {hasil:.1f} MHz")
+

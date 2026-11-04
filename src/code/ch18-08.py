@@ -23,3 +23,4 @@ def pantau_koneksi_gateway(ip_gateway: str, status_ping: bool) -> None:
 print("Audit Log Sistem Gateway:")
 pantau_koneksi_gateway("192.168.1.1", status_ping=True)
 pantau_koneksi_gateway("192.168.1.254", status_ping=False)
+

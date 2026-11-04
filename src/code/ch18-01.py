@@ -17,3 +17,4 @@ print("Uji Operasi Pembagian Aman:")
 for a, b in kasus_uji:
     res = pembagian_aman(a, b)
     print(f"  - {a:>5.1f} / {b:>4.1f} = {res}")
+

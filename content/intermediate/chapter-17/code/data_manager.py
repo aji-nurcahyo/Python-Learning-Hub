@@ -115,3 +115,4 @@ class TelemetryDataManager:
             "avg_power_dbm": round(sum_daya / total, 2),
             "active_count": active
         }
+

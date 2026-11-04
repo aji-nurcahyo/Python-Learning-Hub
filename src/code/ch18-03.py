@@ -29,3 +29,4 @@ print("1. Sukses       :", ambil_metrik_sinyal(database_node, 0, "rsrp"))
 print("2. Indeks Salah :", ambil_metrik_sinyal(database_node, 5, "rsrp"))
 print("3. Kunci Hilang :", ambil_metrik_sinyal(database_node, 0, "suhu"))
 print("4. Nilai Cacat  :", ambil_metrik_sinyal(database_node, 1, "rsrp"))
+

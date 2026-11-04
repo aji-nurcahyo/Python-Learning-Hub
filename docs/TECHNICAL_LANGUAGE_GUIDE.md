@@ -145,3 +145,4 @@ Komentar di dalam berkas Python (`# komentar`) dan docstring (`"""docstring"""`)
    - Author: **Aji Pamungkas Tri Nurcahyo**
    - Institusi: **Institut Teknologi Sumatera**
    - Bebas dari istilah legacy (*pertemuan*, *pengkom*, *alpro*, *prodi*, *fakultas*).
+

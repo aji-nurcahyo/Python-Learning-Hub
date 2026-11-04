@@ -5,31 +5,37 @@
   "levelId": 2,
   "levelCategory": "intermediate",
   "title": "Object-Oriented Programming II",
-  "subtitle": "Inheritance, Polymorphism, super(), dan Dunder Magic Methods",
-  "description": "Pewarisan sifat antar class, method overriding, pemanggilan super(), polimorfisme, dan special methods (__str__, __repr__, __len__, __eq__).",
-  "competencyFocus": "PCAP 3.2: Inheritance, polymorphism & magic methods",
+  "subtitle": "Inheritance, Polymorphism, super(), dan Special Dunder Methods",
+  "description": "Pewarisan sifat antar class, method overriding, pemanggilan super(), polimorfisme, komposisi vs pewarisan, dan special methods (__str__, __repr__, __eq__, __hash__).",
+  "competencyFocus": "PCAP 3.2: Inheritance, polymorphism, composition & special methods",
   "estimatedHours": 5,
   "difficulty": "Intermediate",
-  "available": false,
+  "available": true,
   "prerequisites": [
     "Chapter 19"
   ],
   "learningObjectives": [
-    "Membangun class turunan dan memanfaatkan pewarisan kode",
-    "Mengoverride metode induk dan memanggil fungsionalitas aslinya dengan super()",
-    "Mengimplementasikan magic methods dunder untuk representasi dan perbandingan kustom"
+    "Membangun class turunan dan memanfaatkan pewarisan kode melalui relasi is-a",
+    "Mengoverride method induk dan memanggil fungsionalitas aslinya dengan super()",
+    "Menerapkan polimorfisme dan duck typing untuk memproses koleksi objek heterogen",
+    "Membedakan kapan harus menggunakan pewarisan vs komposisi (has-a)",
+    "Mengimplementasikan special methods (__str__, __repr__, __eq__, __hash__) dan memahami implikasi kesetaraan nilai serta hashability"
   ],
   "tags": [
     "Inheritance",
     "Polymorphism",
-    "Dunder Methods",
-    "super()"
+    "super()",
+    "Duck Typing",
+    "Composition",
+    "Special Methods",
+    "__eq__",
+    "Hashability"
   ],
   "resources": {
-    "hasSlides": false,
-    "slidesDeck": null,
-    "starterCode": null,
-    "assignmentGuide": null,
+    "hasSlides": true,
+    "slidesDeck": "slides/deck.json",
+    "starterCode": "code/contoh.py",
+    "assignmentGuide": "assignments/tugas.md",
     "pptxDownload": null
   }
 }

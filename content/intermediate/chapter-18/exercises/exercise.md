@@ -44,3 +44,4 @@ Selamat datang di lembar latihan terarah **Chapter 18**. Selesaikan 4 latihan be
    - `logging.info(...)` saat pengiriman dimulai.
    - `logging.warning(...)` jika ukuran paket melebihi ambang batas (misal > 1024 KB).
    - `logging.error(...)` jika ID tujuan berupa string kosong.
+

@@ -46,3 +46,4 @@ finally:
         csv_path.unlink()
     if json_path.exists():
         json_path.unlink()
+

@@ -57,3 +57,4 @@ if csv_file.exists():
     csv_file.unlink()
 if json_file.exists():
     json_file.unlink()
+

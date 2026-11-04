@@ -33,3 +33,4 @@ try:
 finally:
     if os.path.exists(nama_file):
         os.remove(nama_file)
+

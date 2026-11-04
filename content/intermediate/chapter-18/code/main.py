@@ -43,3 +43,4 @@ def demonstrasi_validasi() -> None:
 
 if __name__ == "__main__":
     demonstrasi_validasi()
+

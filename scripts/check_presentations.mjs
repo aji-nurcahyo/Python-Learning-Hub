@@ -27,7 +27,11 @@ const CANONICAL_TITLES = {
   15: 'Searching & Sorting Algorithms',
   16: 'Algorithm Analysis & Problem Solving',
   17: 'File Handling & Data Serialization',
-  18: 'Exception Handling & Debugging'
+  18: 'Exception Handling & Debugging',
+  19: 'Object-Oriented Programming I',
+  20: 'Object-Oriented Programming II',
+  21: 'Packages, Environments & Testing',
+  22: 'Intermediate Capstone Project'
 };
 
 const FORBIDDEN_BRANDING_TERMS = [
@@ -54,7 +58,7 @@ console.log('▶ [1/2] Auditing Slide Decks & Branding Metadata...');
 const outputsPath = path.join(ROOT, 'src/code/outputs.json');
 const outputs = fs.existsSync(outputsPath) ? JSON.parse(fs.readFileSync(outputsPath, 'utf8')) : {};
 
-for (let ch = 1; ch <= 18; ch++) {
+for (let ch = 1; ch <= 22; ch++) {
   const chStr = String(ch).padStart(2, '0');
   const levelFolder = ch <= 12 ? 'foundations' : 'intermediate';
   const deckPath = path.join(ROOT, `content/${levelFolder}/chapter-${chStr}/slides/deck.json`);
@@ -235,7 +239,7 @@ for (const res of testResolutions) {
     mobile: false
   });
 
-  for (let ch = 1; ch <= 18; ch++) {
+  for (let ch = 1; ch <= 22; ch++) {
     await send('Page.navigate', { url: `http://127.0.0.1:8932/index.html#chapter/${ch}/slides` });
     await new Promise(r => setTimeout(r, 400));
 

@@ -1,0 +1,141 @@
+[
+  {
+    "title": "Intermediate Capstone Project",
+    "subtitle": "Inventory Management System — Aplikasi Terminal Terintegrasi",
+    "kind": "cover",
+    "body": "<p>Proyek Pamungkas Level 2: Membangun sistem inventaris aset perangkat teknologi informasi dan infrastruktur telekomunikasi terpadu yang memadukan OOP hierarkis, persistensi JSON, penanganan exception, dan automated testing.</p>",
+    "notes": "Selamat datang di puncak Level 2 Intermediate Python! Saatnya mengintegrasikan seluruh keahlian Anda."
+  },
+  {
+    "title": "Visi & Tujuan Capstone Project",
+    "kind": "content",
+    "body": "<ul><li><strong>Integrasi Penuh:</strong> Menyatukan konsep-konsep dari Chapter 13 hingga 21 ke dalam satu arsitektur perangkat lunak yang utuh.</li><li><strong>Produksi Nyata:</strong> Menghasilkan aplikasi terminal siap pakai (*production-grade*) dengan persistensi data permanen dan penanganan error yang tangguh.</li><li><strong>Kemandirian Rekayasa:</strong> Mahasiswa merancang, mengimplementasikan, dan menguji solusi komputasi secara end-to-end.</li></ul>",
+    "notes": "Capstone menguji tidak hanya pengetahuan sintaks, tetapi kedewasaan arsitektur perangkat lunak."
+  },
+  {
+    "title": "Sintesis Kurikulum Intermediate",
+    "kind": "content",
+    "body": "<ul><li><strong>Ch 13 & 14:</strong> Higher-order functions, lambda sorting, dan list/dict comprehensions untuk transformasi data.</li><li><strong>Ch 15 & 16:</strong> Algoritma pencarian substring dan pengurutan multi-kriteria berbasis kompleksitas efisien.</li><li><strong>Ch 17 & 18:</strong> Persistensi file JSON dengan encoding UTF-8 dan hierarki custom exception terstruktur.</li><li><strong>Ch 19 & 20:</strong> Model domain OOP, enkapsulasi @property, inheritance, dan special methods dunder.</li><li><strong>Ch 21:</strong> Tata kelola package modular dan automated unit test suite.</li></ul>",
+    "notes": "Setiap komponen dalam capstone memiliki pijakan konseptual dari chapter-chapter sebelumnya."
+  },
+  {
+    "title": "Diagram Arsitektur Sistem Modular",
+    "kind": "content",
+    "body": "<ul><li><strong>Layer Presentasi (CLI):</strong> <code>main.py</code> mengelola interaksi terminal dengan pengguna.</li><li><strong>Layer Servis (Inventory Manager):</strong> <code>inventory_manager.py</code> mengatur alur logika bisnis dan operasi CRUD.</li><li><strong>Layer Model Domain:</strong> <code>domain_models.py</code> memodelkan hierarki entitas perangkat.</li><li><strong>Layer Persistensi:</strong> <code>storage.py</code> membaca dan menulis serialisasi JSON ke disk.</li><li><strong>Layer Validasi:</strong> <code>validators.py</code> & <code>exceptions.py</code> menjaga integritas data.</li></ul>",
+    "notes": "Prinsip pemisahan tanggung jawab (Separation of Concerns) menjaga kode tetap mudah dipelihara."
+  },
+  {
+    "title": "Hierarki Model Domain OOP",
+    "kind": "content",
+    "body": "<ul><li><strong>Class Dasar <code>Device</code>:</strong> Menyimpan atribut umum: serial ID, nama, kategori, harga, konsumsi daya, dan status aktif.</li><li><strong>Subclass <code>NetworkDevice</code>:</strong> Menambahkan spesifikasi jumlah port fisik dan protokol perutean (BGP/OSPF).</li><li><strong>Subclass <code>ServerDevice</code>:</strong> Menambahkan kapasitas CPU cores dan kapasitas memori RAM.</li><li><strong>Subclass <code>SensorDevice</code>:</strong> Menambahkan tipe metrik telemetri dan satuan bacaan.</li></ul>",
+    "notes": "Setiap subclass mengimplementasikan to_dict() dan from_dict() untuk mendukung serialisasi data."
+  },
+  {
+    "title": "Model Domain Capstone",
+    "kind": "code",
+    "example": "ch22-01",
+    "body": "<p>Implementasi hierarki class Device dan RouterDevice dengan method serialisasi to_dict() serta perbandingan kesetaraan __eq__.</p>",
+    "notes": "Perhatikan bagaimana subclass memanggil super().to_dict() untuk memperluas payload data dasar."
+  },
+  {
+    "title": "Sistem Validasi Defensif",
+    "kind": "content",
+    "body": "<ul><li><strong>Integritas Input:</strong> Mencegah data rusak atau tidak realistis masuk ke sistem sejak gerbang awal.</li><li><strong>Validasi Numerik:</strong> Memastikan nilai harga dan daya selalu berupa angka positif lebih besar dari nol.</li><li><strong>Validasi Format Serial:</strong> Memeriksa nomor seri mematuhi format baku melalui regular expressions (misal: <code>RTR-01</code>).</li><li><strong>Validasi Kategori:</strong> Memastikan kategori terdaftar dalam set kategori legal.</li></ul>",
+    "notes": "Validasi defensif menjamin basis data tidak akan terkontaminasi oleh data korup."
+  },
+  {
+    "title": "Validasi & Custom Exceptions",
+    "kind": "code",
+    "example": "ch22-02",
+    "body": "<p>Hierarki exception turunan InventoryException dan mekanisme validasi yang melempar ValidationError secara presisi.</p>",
+    "notes": "Custom exceptions mempermudah pemetaan error spesifik tanpa menyamarkan masalah sistem."
+  },
+  {
+    "title": "Mesin Penyimpanan Berkas JSON",
+    "kind": "content",
+    "body": "<ul><li><strong>Persistensi Teruji:</strong> Data inventaris tersimpan di disk dalam format standar JSON dengan encoding <code>utf-8</code>.</li><li><strong>Teknik Atomic Write:</strong> Data ditulis ke berkas temporer <code>.tmp</code> terlebih dahulu sebelum di-rename menimpa berkas target.</li><li>Mencegah hilangnya seluruh data jika terjadi crash atau listrik padam di tengah proses penulisan.</li><li><strong>Rekonstruksi Objek:</strong> Memulihkan instance class turunan yang tepat saat data dibaca kembali.</li></ul>",
+    "notes": "Atomic write adalah pola standar industri untuk sistem penyimpanan berbasis file."
+  },
+  {
+    "title": "Serialisasi JSON Persistent",
+    "kind": "code",
+    "example": "ch22-03",
+    "body": "<p>Simulasi engine penyimpanan yang memformat data inventaris menjadi JSON terindentasi dan memuatnya kembali secara identik.</p>",
+    "notes": "Fungsi assert memverifikasi bahwa seluruh entitas berhasil dipulihkan tanpa kehilangan data."
+  },
+  {
+    "title": "Siklus Hidup Operasi CRUD",
+    "kind": "content",
+    "body": "<ul><li><strong>Create:</strong> Menambahkan perangkat baru; memvalidasi serial unik dan melempar <code>DuplicateDeviceError</code> jika kembar.</li><li><strong>Read:</strong> Mengambil objek perangkat berdasarkan serial ID; melempar <code>DeviceNotFoundError</code> jika tidak ada.</li><li><strong>Update:</strong> Memperbarui nilai harga atau mengubah status aktif/non-aktif perangkat.</li><li><strong>Delete:</strong> Menghapus entitas dari repositori dan memperbarui berkas JSON secara instan.</li></ul>",
+    "notes": "Setiap operasi mutasi secara otomatis menyinkronkan perubahan ke media penyimpanan."
+  },
+  {
+    "title": "Operasi CRUD, Cari & Urut",
+    "kind": "code",
+    "example": "ch22-04",
+    "body": "<p>Penggunaan class repositori untuk operasi CRUD, pencarian berdasarkan nama, serta pengurutan berdasarkan harga.</p>",
+    "notes": "Metode sort_by_price memanfaatkan fungsi lambda untuk ekstraksi kunci perbandingan."
+  },
+  {
+    "title": "Pencarian & Filtering Multi-Kriteria",
+    "kind": "content",
+    "body": "<ul><li><strong>Pencarian Fleksibel:</strong> Pencarian substring tidak peka huruf besar/kecil (<em>case-insensitive</em>) pada nama dan serial perangkat.</li><li><strong>Filtering Kategori:</strong> Mengelompokkan perangkat berdasarkan bidang operasional (Network, Server, Sensor, dsb).</li><li><strong>Pengurutan Multi-Kriteria:</strong> Mendukung pengurutan dua arah (ascending dan descending) berdasarkan harga, nama, atau daya.</li></ul>",
+    "notes": "Memanfaatkan list comprehensions menghasilkan kode pencarian yang ringkas dan ekspresif."
+  },
+  {
+    "title": "Analitik Portofolio & Pelaporan",
+    "kind": "content",
+    "body": "<ul><li>Aplikasi menyajikan ringkasan manajerial yang mencakup:</li><li>Total jumlah unit aset perangkat terdaftar.</li><li>Total nilai valuasi finansial portofolio inventaris (Rupiah).</li><li>Total beban konsumsi daya operasional dari perangkat yang berstatus aktif (Watt).</li><li>Distribusi jumlah perangkat per kategori operasional.</li></ul>",
+    "notes": "Fitur analitik memberikan nilai tambah nyata bagi pengambil keputusan infrastruktur."
+  },
+  {
+    "title": "Pipeline Laporan Diagnostik",
+    "kind": "code",
+    "example": "ch22-05",
+    "body": "<p>Pipeline analitik otomatis yang merangkum total unit, nilai finansial portofolio, dan distribusi kategori dalam bentuk laporan terstruktur.</p>",
+    "notes": "Format laporan dicetak dengan pemisah ribuan rapi untuk kemudahan pembacaan angka besar."
+  },
+  {
+    "title": "Antarmuka Command-Line (CLI)",
+    "kind": "content",
+    "body": "<ul><li>Dirancang berbasis menu terminal interaktif yang bersih dan mudah digunakan.</li><li>Setiap aksi pengguna dilengkapi umpan balik yang jelas (pesan sukses atau pesan kesalahan yang deskriptif).</li><li>Loop menu utama menangani pengecualian secara global sehingga program tidak akan langsung crash saat terjadi salah ketik input.</li></ul>",
+    "notes": "Pengalaman pengguna di terminal tetap harus profesional dan memandu."
+  },
+  {
+    "title": "Arsitektur Automated Test Suite",
+    "kind": "content",
+    "body": "<ul><li>Setiap komponen krusial divalidasi oleh unit test otomatis:</li><li>Uji inisialisasi model dan pewarisan subclass.</li><li>Uji pencegahan input negatif dan kategori ilegal.</li><li>Uji kelengkapan siklus hidup CRUD dan proteksi duplikasi ID.</li><li>Uji persistensi berkas JSON menggunakan direktori temporer terisolasi.</li></ul>",
+    "notes": "Test suite menjamin integritas kode sebelum aplikasi dipublikasikan."
+  },
+  {
+    "title": "Strategi Penanganan Kegagalan File",
+    "kind": "content",
+    "body": "<ul><li>Penulisan file dibungkus dalam blok <code>try-except</code> yang menangani <code>IOError</code> dan <code>PermissionError</code>.</li><li>Kesalahan I/O sistem dibungkus rapi ke dalam <code>StorageError</code> domain.</li><li>Jika berkas JSON korup atau tidak valid, sistem memberikan peringatan informatif tanpa menutup program secara paksa.</li></ul>",
+    "notes": "Ketahanan terhadap kegagalan adalah pembeda utama antara kode amatir dan kode profesional."
+  },
+  {
+    "title": "Milestones Pengembangan Capstone",
+    "kind": "content",
+    "body": "<ul><li><strong>Milestone 1:</strong> Rancang modul <code>exceptions.py</code>, <code>validators.py</code>, dan model <code>domain_models.py</code>.</li><li><strong>Milestone 2:</strong> Implementasikan persistensi berkas JSON pada <code>storage.py</code>.</li><li><strong>Milestone 3:</strong> Bangun repositori dan logika bisnis pada <code>inventory_manager.py</code>.</li><li><strong>Milestone 4:</strong> Tulis suite pengujian otomatis menyeluruh pada <code>tests/test_capstone.py</code>.</li><li><strong>Milestone 5:</strong> Buat menu antarmuka terminal interaktif pada <code>main.py</code>.</li></ul>",
+    "notes": "Kembangkan aplikasi secara bertahap dan jalankan unit test pada tiap milestone."
+  },
+  {
+    "title": "Rubrik Penilaian Capstone (100 Poin)",
+    "kind": "content",
+    "body": "<ul><li><strong>Fungsionalitas Inti CRUD (25 Poin):</strong> Operasi Create, Read, Update, Delete, Search, dan Sort berjalan sempurna.</li><li><strong>Desain OOP & Arsitektur (20 Poin):</strong> Pewarisan, method overriding, enkapsulasi, dan special methods dunder.</li><li><strong>Persistensi & Validasi (20 Poin):</strong> Atomic write JSON, validasi data defensif, custom exceptions.</li><li><strong>Automated Testing (20 Poin):</strong> Test suite komprehensif dengan test discovery bersih.</li><li><strong>Dokumentasi & PEP 8 (15 Poin):</strong> Type hint lengkap, docstring, dan panduan penggunaan.</li></ul>",
+    "notes": "Pastikan seluruh kriteria pada rubrik dipenuhi untuk memperoleh nilai maksimal."
+  },
+  {
+    "title": "Kiat Sukses Menyelesaikan Capstone",
+    "kind": "content",
+    "body": "<ul><li>Mulailah dari unit terkecil: Buat class model terlebih dahulu dan uji dengan unit test sebelum menyentuh CLI.</li><li>Gunakan modul <code>Pathlib</code> untuk penanganan jalur berkas lintas sistem operasi yang aman.</li><li>Gunakan type hint pada seluruh parameter fungsi dan return value untuk meminimalkan bug tipe data.</li><li>Jalankan linter dan formatter secara berkala untuk menjaga kerapian kode.</li></ul>",
+    "notes": "Fokus pada keandalan sistem terlebih dahulu sebelum menambah fitur estetika tambahan."
+  },
+  {
+    "title": "Refleksi Level 2: Menuju Level 3",
+    "kind": "content",
+    "body": "<p>Selamat! Menyelesaikan Chapter 22 membuktikan Anda telah menguasai kompetensi pemrograman Python tingkat menengah (*Intermediate*).</p><p>Pada <strong>Level 3: Professional Python</strong> (Chapter 23–30), kita akan melangkah ke topik rekayasa tingkat lanjut: Desain Pola OOP Lanjutan, Generator & Decorator Tingkat Tinggi, Pemrograman Asinkron (<code>asyncio</code>), REST API & Jaringan, serta Arsitektur Produksi.</p>",
+    "notes": "Selamat atas pencapaian luar biasa ini. Teruslah berkarya dan menulis kode berkualitas!"
+  }
+]
+

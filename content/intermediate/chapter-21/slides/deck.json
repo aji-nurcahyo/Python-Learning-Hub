@@ -1,0 +1,125 @@
+[
+  {
+    "title": "Packages, Environments & Testing",
+    "subtitle": "PyPI, venv, pip, pyproject.toml & Automated Testing",
+    "kind": "cover",
+    "body": "<p>Tata kelola proyek perangkat lunak modern: Mengorganisasi struktur package terstandar, mengisolasi dependensi dengan virtual environment, mendefinisikan build metadata pyproject.toml, dan merancang test suite otomatis dengan fixture dan parameterisasi.</p>",
+    "notes": "Selamat datang di Chapter 21! Bab ini adalah jembatan menuju standar industri rekayasa software Python."
+  },
+  {
+    "title": "Dari Skrip Tunggal ke Package Terstruktur",
+    "kind": "content",
+    "body": "<ul><li><strong>Modul:</strong> Berkas tunggal berekstensi <code>.py</code> yang berisi definisi fungsi, class, atau variabel.</li><li><strong>Package:</strong> Direktori khusus yang memuat satu atau lebih modul beserta berkas <code>__init__.py</code> untuk mendefinisikan namespace unik.</li><li>Mencegah tabrakan nama (*name collision*) dan mempermudah distribusi pustaka antar tim pengembang.</li></ul>",
+    "notes": "Sebuah aplikasi berskala menengah tidak mungkin disimpan dalam satu file besar."
+  },
+  {
+    "title": "Struktur Package & __init__.py",
+    "kind": "code",
+    "example": "ch21-01",
+    "body": "<p>Inspeksi struktur direktori package standar dan penggunaan daftar <code>__all__</code> untuk mengontrol simbol yang diekspos ke publik.</p>",
+    "notes": "Berkas __init__.py dijalankan saat package diimpor dan menjadi pintu gerbang API publik."
+  },
+  {
+    "title": "Impor Absolut vs Impor Relatif",
+    "kind": "content",
+    "body": "<ul><li><strong>Absolute Import:</strong> Mengimpor dari root proyek (misal: <code>from telecom.models import BaseStation</code>). Lebih eksplisit dan direkomendasikan PEP 8.</li><li><strong>Relative Import:</strong> Menggunakan tanda titik <code>.</code> untuk mengimpor modul bertetangga di dalam package yang sama (misal: <code>from .models import BaseStation</code>).</li><li>Gunakan relative import hanya di dalam kode internal package untuk menjaga portabilitas saat nama root package berubah.</li></ul>",
+    "notes": "Relative import tidak dapat dijalankan langsung sebagai script standalone tanpa flag -m."
+  },
+  {
+    "title": "Mengapa Virtual Environment Wajib?",
+    "kind": "content",
+    "body": "<ul><li><strong>Bahaya Instalasi Global:</strong> Proyek A membutuhkan pustaka versi 1.0, sedangkan Proyek B membutuhkan versi 2.0. Memasang global akan merusak salah satu proyek!</li><li><strong>Virtual Environment (.venv):</strong> Pohon direktori mandiri yang memiliki interpreter Python dan pustaka pihak ketiga sendiri secara terisolasi.</li><li>Menjaga sistem operasi tetap bersih dan mencegah modifikasi dependensi sistem yang berbahaya.</li></ul>",
+    "notes": "Kaidah emas Python modern: Setiap proyek wajib memiliki virtual environment tersendiri."
+  },
+  {
+    "title": "Tata Kelola Virtual Environment Multi-Platform",
+    "kind": "code",
+    "example": "ch21-02",
+    "body": "<p>Panduan pembuatan dan aktivasi virtual environment di lingkungan Windows (PowerShell & CMD) serta Linux / macOS.</p>",
+    "notes": "Ingat bahwa script aktivasi di Windows berada di folder Scripts, sedangkan di Unix berada di folder bin."
+  },
+  {
+    "title": "Manajemen Dependensi: pip & requirements",
+    "kind": "content",
+    "body": "<ul><li><strong><code>pip install &lt;paket&gt;</code>:</strong> Mengunduh dan menginstal pustaka resmi dari Python Package Index (PyPI).</li><li><strong><code>pip freeze &gt; requirements.txt</code>:</strong> Mengunci versi eksak seluruh dependensi yang terpasang untuk reproducibility tim.</li><li><strong><code>pip install -r requirements.txt</code>:</strong> Memasang kembali dependensi identik di lingkungan komputasi lain (misal server produksi).</li></ul>",
+    "notes": "Selalu pastikan virtual environment sudah aktif sebelum menjalankan perintah pip install."
+  },
+  {
+    "title": "Konfigurasi Modern: pyproject.toml",
+    "kind": "content",
+    "body": "<ul><li>Standar modern Python (PEP 517, PEP 518, PEP 621) yang menggantikan <code>setup.py</code> dan <code>setup.cfg</code> lama.</li><li>Sumber data tunggal (*single source of truth*) yang mendefinisikan metadata paket, versi Python minimum, dependensi utama, dan perkakas dev (linter, pytest).</li><li>Memungkinkan instalasi mode *editable* menggunakan <code>pip install -e .</code>.</li></ul>",
+    "notes": "Format TOML jauh lebih mudah dibaca dan divalidasi oleh berbagai build backend modern."
+  },
+  {
+    "title": "Anatomi Berkas pyproject.toml",
+    "kind": "code",
+    "example": "ch21-03",
+    "body": "<p>Struktur berkas pyproject.toml standar PEP 621 lengkap dengan metadata pengembang, dependensi proyek, dan konfigurasi test dev.</p>",
+    "notes": "Mode editable (pip install -e .) membuat perubahan kode sumber langsung aktif tanpa install ulang."
+  },
+  {
+    "title": "Mengapa Automated Testing Krusial?",
+    "kind": "content",
+    "body": "<ul><li><strong>Beban Pengujian Manual:</strong> Menguji manual lewat terminal berulang kali memakan waktu dan rentan kelalaian manusia (*human error*).</li><li><strong>Pencegahan Regresi:</strong> Fitur baru yang ditambahkan tidak sengaja merusak kode lama yang sebelumnya sudah berjalan stabil.</li><li><strong>Dokumentasi Hidup:</strong> Test suite menjadi spesifikasi nyata tentang bagaimana suatu fungsi atau class seharusnya berperilaku.</li></ul>",
+    "notes": "Sistem software yang andal selalu didukung oleh fondasi automated testing yang kuat."
+  },
+  {
+    "title": "Pola Dasar Test Assertion",
+    "kind": "code",
+    "example": "ch21-04",
+    "body": "<p>Menulis pengujian matematis terotomasi menggunakan pernyataan <code>assert</code> untuk memvalidasi konversi daya dBm ke milliwatt.</p>",
+    "notes": "Jika kondisi assert bernilai False, Python langsung melempar AssertionError dan menghentikan alur."
+  },
+  {
+    "title": "Siklus Hidup Test Fixture",
+    "kind": "content",
+    "body": "<ul><li><strong>Definisi:</strong> Mekanisme untuk menyiapkan kondisi awal (*preconditions*) atau data uji yang bersih dan terprediksi sebelum tiap pengujian.</li><li><strong>Setup Phase:</strong> Menginstansiasi objek, koneksi file, atau database simulasi.</li><li><strong>Teardown Phase:</strong> Membersihkan file temporer atau memori setelah pengujian selesai agar tidak mengotori test lain.</li></ul>",
+    "notes": "Dalam pytest, pola ini diimplementasikan secara elegan dengan decorator @pytest.fixture."
+  },
+  {
+    "title": "Implementasi Pola Test Fixture",
+    "kind": "code",
+    "example": "ch21-05",
+    "body": "<p>Simulasi siklus hidup fixture: menginisialisasi registry baru sebelum test dan membersihkannya saat tahap teardown selesai.</p>",
+    "notes": "Fixture menjamin setiap kasus pengujian berjalan secara independen dan terisolasi."
+  },
+  {
+    "title": "Parameterized Testing: Skalabilitas Uji",
+    "kind": "content",
+    "body": "<ul><li>Daripada menulis 10 fungsi pengujian terpisah untuk rumus yang sama, gunakan <strong>pengujian berparameter</strong>.</li><li>Menyediakan tabel pasangan data uji: <code>(input, expected_output)</code>.</li><li>Test runner akan menjalankan fungsi pengujian secara berulang untuk setiap baris data dalam tabel parameter secara otomatis.</li></ul>",
+    "notes": "Dalam pytest digunakan decorator @pytest.mark.parametrize, sedangkan di unittest menggunakan subTest."
+  },
+  {
+    "title": "Eksekusi Test Matrix Parameterisasi",
+    "kind": "code",
+    "example": "ch21-06",
+    "body": "<p>Validasi format alamat IPv4 dengan tabel kasus uji komprehensif mencakup kasus valid, leading zero, dan oktet di luar rentang.</p>",
+    "notes": "Satu fungsi uji mampu memvalidasi puluhan kombinasi skenario ekstrem secara cepat."
+  },
+  {
+    "title": "Pengujian Exception (Testing Errors)",
+    "kind": "code",
+    "example": "ch21-07",
+    "body": "<p>Memastikan sistem menolak input ilegal (seperti frekuensi di luar spektrum) dengan memverifikasi bahwa exception yang benar terlempar.</p>",
+    "notes": "Menguji kegagalan yang diharapkan (expected failure) sama pentingnya dengan menguji jalur sukses (happy path)."
+  },
+  {
+    "title": "Organisasi Direktori Proyek Standar",
+    "kind": "content",
+    "body": "<ul><li>Pisahkan kode sumber aplikasi ke folder <code>src/&lt;package&gt;/</code> atau <code>&lt;package&gt;/</code> dari folder <code>tests/</code>.</li><li>Penamaan file pengujian wajib diawali atau diakhiri dengan test: <code>test_*.py</code> atau <code>*_test.py</code> agar terdeteksi oleh <em>test discovery</em> runner.</li><li>Pastikan test suite dapat dijalankan melalui satu perintah CLI terpadu: <code>pytest</code> atau <code>python -m unittest</code>.</li></ul>",
+    "notes": "Struktur rapi memudahkan integrasi ke sistem Continuous Integration (CI/CD)."
+  },
+  {
+    "title": "Latihan Terarah & Tugas Mandiri",
+    "kind": "content",
+    "body": "<ul><li><strong>Latihan:</strong> Merancang package metrik jaringan, assertion mandiri, parameterisasi RSRP, dan uji exception buffer.</li><li><strong>Tugas Mandiri:</strong> Telecom Quality Metric Toolkit (kalkulasi SNR, kapasitas Shannon, kelayakan BER, pyproject.toml, dan test suite lengkap).</li><li>Rubrik 100 poin menekankan validasi matematis presisi dan pengujian fixture & parameterisasi.</li></ul>",
+    "notes": "Pastikan mahasiswa mengeksekusi test suite dengan sukses sebelum mengumpulkan tugas."
+  },
+  {
+    "title": "Refleksi & Persiapan Chapter 22",
+    "kind": "content",
+    "body": "<p>Anda kini menguasai tata kelola paket terstandar, isolasi virtual environment, dan teknik automated testing modern.</p><p>Pada <strong>Chapter 22 (Intermediate Capstone Project)</strong>, Anda akan mengintegrasikan seluruh materi Level 2: OOP hierarkis, serialisasi berkas JSON/CSV, penanganan exception kustom, dan automated testing ke dalam satu aplikasi sistem nyata.</p>",
+    "notes": "Tutup sesi dan beri motivasi untuk menghadapi proyek Capstone pada pertemuan berikutnya."
+  }
+]
+

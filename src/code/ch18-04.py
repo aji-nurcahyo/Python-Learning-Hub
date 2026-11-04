@@ -22,3 +22,4 @@ proses_transmisi_paket(1024, 128)
 
 # Skenario 2: Terjadi error division by zero (else dilewati, except & finally jalan)
 proses_transmisi_paket(1024, 0)
+

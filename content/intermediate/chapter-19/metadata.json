@@ -5,31 +5,36 @@
   "levelId": 2,
   "levelCategory": "intermediate",
   "title": "Object-Oriented Programming I",
-  "subtitle": "Class, Object, Instance Attributes, self & Metode",
-  "description": "Paradigma berorientasi objek: merancang blueprint class, konstruktor __init__, parameter self, atribut instance vs atribut class, dan encapsulation dasar.",
-  "competencyFocus": "PCAP 3.1: Konsep dasar OOP, class & instance",
+  "subtitle": "Class, Object, Constructor __init__, Parameter self & Enkapsulasi",
+  "description": "Paradigma berorientasi objek: merancang blueprint class, konstruktor __init__, parameter self, atribut instance vs atribut class, dan enkapsulasi dasar menggunakan @property.",
+  "competencyFocus": "PCAP 3.1: Konsep dasar OOP, class, instance, dan enkapsulasi",
   "estimatedHours": 5,
   "difficulty": "Intermediate",
-  "available": false,
+  "available": true,
   "prerequisites": [
     "Chapter 10"
   ],
   "learningObjectives": [
-    "Mendefinisikan class dan menginstansiasi object nyata",
-    "Membedakan instance attributes dan class-level attributes",
-    "Mengimplementasikan encapsulation melalui konvensi private variable (_var, __var)"
+    "Menjelaskan konsep dasar OOP dan perbandingannya dengan pendekatan prosedural",
+    "Mendefinisikan class, membuat instance object, dan mengelola constructor __init__",
+    "Membedakan fungsi dan penggunaan parameter self pada instance method",
+    "Membedakan ruang lingkup atribut instance dan atribut class",
+    "Menerapkan enkapsulasi dan validasi atribut menggunakan decorator @property dan @setter"
   ],
   "tags": [
     "OOP",
     "Class",
     "Object",
-    "Encapsulation"
+    "Constructor",
+    "self",
+    "Encapsulation",
+    "Property"
   ],
   "resources": {
-    "hasSlides": false,
-    "slidesDeck": null,
-    "starterCode": null,
-    "assignmentGuide": null,
+    "hasSlides": true,
+    "slidesDeck": "slides/deck.json",
+    "starterCode": "code/contoh.py",
+    "assignmentGuide": "assignments/tugas.md",
     "pptxDownload": null
   }
 }

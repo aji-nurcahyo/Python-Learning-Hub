@@ -39,3 +39,4 @@ try:
 finally:
     if os.path.exists(nama_file_temp):
         os.remove(nama_file_temp)
+

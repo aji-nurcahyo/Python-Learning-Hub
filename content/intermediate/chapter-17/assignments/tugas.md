@@ -45,3 +45,4 @@ Dalam industri telekomunikasi modern, gateway transmisi menerima aliran data dar
 ### Berkas Pengumpulan
 
 - `tugas_17.py`: Skrip mandiri implementasi solusi yang mematuhi standar PEP 8, memiliki type hints, dan docstring lengkap.
+

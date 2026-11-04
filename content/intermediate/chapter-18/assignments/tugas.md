@@ -41,3 +41,4 @@ Dalam pemrosesan data telekomunikasi berkecepatan tinggi, kegagalan satu baris s
 ### Berkas Pengumpulan
 
 - `tugas_18.py`: Skrip mandiri implementasi solusi yang mematuhi standar PEP 8, memiliki type hints, dan docstring lengkap.
+

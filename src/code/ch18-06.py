@@ -24,3 +24,4 @@ try:
 except GatewayConfigurationError as err:
     print(f"Exception Utama Tertangkap : {err}")
     print(f"Penyebab Asli (Chained)    : {type(err.__cause__).__name__} -> {err.__cause__}")
+

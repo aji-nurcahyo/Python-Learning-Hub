@@ -78,12 +78,16 @@ Setiap fase memiliki gerbang kualitas (*quality gates*) yang harus dipenuhi sebe
 
 | Chapter | Judul & Fokus Materi | Estimasi Beban | Sumber Rujukan Utama | Keluaran yang Dihasilkan |
 |:---|:---|:---:|:---|:---|
-| **Ch 19** | `19-oop-fundamentals` — Class, Instance, Constructor, self | 5 Jam | [DOCS] Sec 9, [THINK] Ch 15 | `index.md`, 20 slide, 6 contoh kode, 4 latihan, 1 tugas |
-| **Ch 20** | `20-oop-advanced` — Inheritance, Super, Dunder, Property | 6 Jam | [DOCS] Sec 9.5, [CS50P] Wk 8 | `index.md`, 22 slide, 7 contoh kode, 4 latihan, 1 tugas |
-| **Ch 21** | `21-packaging-environments-testing` — venv, pip, pytest | 5 Jam | [PYPA], [PYTEST], [CS50P] Wk 5 | `index.md`, 20 slide, 6 contoh kode, 4 latihan, 1 tugas |
-| **Ch 22** | `22-intermediate-capstone` — Intermediate Capstone Project | 7 Jam | [CS50P] Final Projects | Panduan proyek paket OOP ber-unit-test `pytest` |
+| **Ch 19** | `19-oop-fundamentals` — Class, Instance, Constructor, self | 5 Jam | [DOCS] Sec 9, [THINK] Ch 15 | **SELESAI (100%)**: `index.md`, 20 slide, 7 contoh kode, 4 latihan, 1 tugas, test suite (5 tests) |
+| **Ch 20** | `20-oop-advanced` — Inheritance, Super, Dunder, Property | 6 Jam | [DOCS] Sec 9.5, [CS50P] Wk 8 | **SELESAI (100%)**: `index.md`, 19 slide, 7 contoh kode, 4 latihan, 1 tugas, test suite (4 tests) |
+| **Ch 21** | `21-packaging-environments-testing` — venv, pip, pytest | 5 Jam | [PYPA], [PYTEST], [CS50P] Wk 5 | **SELESAI (100%)**: `index.md`, 19 slide, 7 contoh kode, 4 latihan, 1 tugas, test suite (4 tests) |
+| **Ch 22** | `22-intermediate-capstone` — Intermediate Capstone Project | 7 Jam | [CS50P] Final Projects | **SELESAI (100%)**: `index.md`, 22 slide, 5 contoh kode, 4 latihan, 1 tugas, test suite (7 tests) |
 
-*Milestone Fase 3:* Level 2 Intermediate Development **100% Lengkap**. Pembaca memiliki kapabilitas setara sertifikasi PCAP industri.
+*Status Kemajuan:*
+- **Level 1: Python Foundations (Chapter 01 s.d. 12):** **100% Selesai & Terverifikasi**
+- **Level 2: Intermediate Python (Chapter 13 s.d. 22):** **100% Selesai & Terverifikasi** (CPython 3, Slide Decks, Unittest suites, Typecheck, Build, Routes).
+
+*Milestone Level 2 Intermediate:* **TERCAPAI 100%**. Seluruh modul Intermediate (Functions, Comprehensions, Search/Sort, Big-O Analysis, File I/O & Serialization, Exception Handling & Debugging, OOP I, OOP II, Packaging & Environments, serta Intermediate Capstone Project) telah selesai, teruji, dan terintegrasi penuh ke dalam sistem! Pembaca memiliki kapabilitas komprehensif setara sertifikasi PCAP industri.
 
 ---
 

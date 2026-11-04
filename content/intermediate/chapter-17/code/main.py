@@ -71,3 +71,4 @@ def jalankan_demo() -> None:
 
 if __name__ == "__main__":
     jalankan_demo()
+

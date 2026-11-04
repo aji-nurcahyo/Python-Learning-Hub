@@ -32,3 +32,4 @@ finally:
         folder_arsip.rmdir()
     if folder_kerja.exists():
         folder_kerja.rmdir()
+

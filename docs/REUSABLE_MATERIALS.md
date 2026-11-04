@@ -112,6 +112,9 @@ Untuk memberikan identitas keilmuan yang khas bagi mahasiswa Teknik Telekomunika
 | Benchmarking umum loop timer | Profiling empiris deduplikasi sinyal dan perbandingan Big-O time.perf_counter() | **Chapter 16** |
 | Membaca file daftar belanjaan / data teks umum | Pipeline pembacaan, penulisan, dan serialisasi data CSV/JSON metrik stasiun transmisi telekomunikasi | **Chapter 17** |
 | Pembagian nol sederhana / crash runtime tanpa penanganan | Penanganan exception bertingkat, custom exception hierarchy (`TelecomException`, `SignalRangeError`), dan logging audit telemetri | **Chapter 18** |
-| Class Hewan (Dog, Cat inheritance) | Class Perangkat Jaringan (NetworkDevice -> Router, Switch, BTS Tower) | **Chapter 19 & 20** |
+| Class Hewan (Dog, Cat) & BankAccount | Modeling perangkat keras (`Device`), validasi state enkapsulasi (`@property`, `@setter`), daya transmisi, dan Device Inventory Manager | **Chapter 19** |
+| Hierarki Hewan (Animal -> Mammal/Bird) & Polimorfisme | Hierarki perangkat telekomunikasi (`TransceiverNode`, `CellularAntenna`, `MicrowaveLink`, `FiberOpticNode`), duck typing audit diagnostik, dunder method (`__str__`, `__repr__`, `__eq__`, `__hash__`), dan deduplikasi set BTS | **Chapter 20** |
+| Setup kalkulator dasar tanpa struktur modul | Paket modular rekayasa telekomunikasi (`telecom_toolkit`), modern `pyproject.toml`, link budget calculator, parameterized testing SNR/Shannon, exception testing | **Chapter 21** |
+| Aplikasi inventaris toko retail generik | **Inventory Management System (Telecom Infrastructure)**: OOP terpadu, persistence atomic write JSON, schema validation, domain exceptions, audit logging, CLI, dan 7 unit tests | **Chapter 22** |
 | Menghitung waktu unduh file internet | Simulasi latensi transmisi paket data dan kalkulasi jitter | **Chapter 27** |
 

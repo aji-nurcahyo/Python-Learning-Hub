@@ -21,3 +21,4 @@ try:
     loss_anomali = hitung_redaman_kabel(10.0, 25.0)
 except AssertionError as bug:
     print(f"  - Bug Terdeteksi: {bug}")
+
