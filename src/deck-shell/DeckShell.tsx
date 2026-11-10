@@ -134,7 +134,9 @@ export function DeckShell({
   function print() {
     const url = new URL(location.href);
     url.searchParams.set('print-pdf', '');
-    url.hash = '';
+    url.searchParams.set('chapter', String(meeting));
+    url.searchParams.set('view', 'slides');
+    url.hash = `chapter/${meeting}/slides`;
     location.href = url.href;
   }
 
@@ -241,7 +243,7 @@ export function DeckShell({
 
       {printing && (
         <div className="print-banner">
-          <a href={location.pathname}>
+          <a href={`${base}index.html#chapter/${meeting}/slides`}>
             <Icon name="arrow_back" size={16} /> Kembali ke slide interaktif
           </a>
           <button onClick={() => window.print()}>

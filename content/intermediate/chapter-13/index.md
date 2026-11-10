@@ -303,7 +303,7 @@ Pada modul ini, Anda merancang sistem pemroses dataset numerik bernama **Flexibl
 # Jalankan demonstrasi deterministik
 python content/intermediate/chapter-13/code/contoh.py
 
-# Jalankan pengujian unit otomatis
+# Jalankan Unit Testing otomatis
 python -m unittest content/intermediate/chapter-13/tests/test_advanced_functions.py
 ```
 

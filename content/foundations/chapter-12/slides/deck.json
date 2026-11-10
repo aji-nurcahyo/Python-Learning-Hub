@@ -84,7 +84,7 @@
     "notes": "Tekankan bahwa program profesional tidak boleh berhenti dengan traceback merah saat pengguna memasukkan data yang keliru."
   },
   {
-    "title": "Pengujian Unit Otomatis (Unittest)",
+    "title": "Unit Testing Otomatis (Unittest)",
     "body": "<ul><li>Pemisahan logika bisnis murni memungkinkan pengujian otomatis tanpa simulasi terminal.</li><li>Uji kasus positif: penambahan data valid, pencarian yang cocok, dan pembaruan sukses.</li><li>Uji kasus negatif: penolakan duplikasi NIM, masukan nama kosong, dan nilai di luar rentang.</li><li>Uji kasus batas: nilai tepat 0.0, 100.0, dan penanganan dataset kosong.</li></ul>",
     "kind": "content",
     "notes": "Diskusikan manfaat automated testing. Mahasiswa dapat memverifikasi seluruh fungsi dalam hitungan detik."

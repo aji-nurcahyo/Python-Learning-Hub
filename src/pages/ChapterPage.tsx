@@ -79,7 +79,7 @@ export function ChapterPage({
                 <div className="eyebrow">EKSEKUSI PYTHON 3 ASLI</div>
                 <h3>Kode Sumber & Hasil Keluaran Terminal</h3>
               </div>
-              <p>Kode berikut dijalankan langsung di mesin penerjemah Python tanpa simulasi.</p>
+              <p>Kode berikut dijalankan langsung di mesin Python Interpreter tanpa simulasi.</p>
             </div>
 
             <div className="code-output-side-by-side">

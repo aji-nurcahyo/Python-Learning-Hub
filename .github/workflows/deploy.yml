@@ -43,14 +43,15 @@ jobs:
         run: npm run lint
 
       - name: Setup GitHub Pages configuration
+        id: pages
         uses: actions/configure-pages@v5
 
-      - name: Build static website
+      - name: Build static website for GitHub Pages
         run: npm run build
         env:
-          # Base path defaults to './' in vite.config.ts for maximum portability,
-          # but can also be explicitly provided:
-          VITE_BASE_PATH: './'
+          # Subpath deployment for https://<username>.github.io/python-learning-hub/
+          # Override with '${{ steps.pages.outputs.base_path }}' if using a custom domain.
+          VITE_BASE_PATH: '/python-learning-hub/'
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
@@ -68,4 +69,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-

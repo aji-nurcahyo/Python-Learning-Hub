@@ -195,7 +195,7 @@ Modul `search_sort.py` mengintegrasikan implementasi murni algoritma pencarian d
 # Jalankan demonstrasi deterministik
 python content/intermediate/chapter-15/code/contoh.py
 
-# Jalankan pengujian unit otomatis
+# Jalankan Unit Testing otomatis
 python -m unittest content/intermediate/chapter-15/tests/test_search_sort.py
 ```
 

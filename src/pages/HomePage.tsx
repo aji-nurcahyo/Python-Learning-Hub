@@ -15,12 +15,14 @@ interface HomePageProps {
   onNavigateLevel: (levelId: number) => void;
   onNavigateTrack: (trackId: string) => void;
   onNavigateChapter: (chapterId: number) => void;
+  onNavigateGettingStarted?: (tutorialId?: string) => void;
 }
 
 export function HomePage({
   onNavigateLevel,
   onNavigateTrack,
   onNavigateChapter,
+  onNavigateGettingStarted,
 }: HomePageProps) {
   const [levelFilter, setLevelFilter] = useState<'all' | '1' | '2' | '3'>('all');
   const [availabilityFilter, setAvailabilityFilter] = useState<'all' | 'available'>('all');
@@ -103,6 +105,33 @@ export function HomePage({
               <span className="stat-number">{availableCount}</span>
               <span className="stat-label">Chapter Siap Belajar</span>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Baru Belajar Python? (Getting Started Callout) */}
+      <section className="hub-getting-started-banner-section" id="getting-started-banner">
+        <div className="getting-started-callout-card">
+          <div className="getting-started-callout-content">
+            <div className="getting-started-pill">
+              <Icon name="handyman" size={14} />
+              <span>Panduan Persiapan Awal</span>
+            </div>
+            <h2 className="getting-started-callout-title">Baru Belajar Python?</h2>
+            <p className="getting-started-callout-desc">
+              Mulai dengan menyiapkan Python Development Environment sebelum mempelajari modul pemrograman.
+              Panduan instalasi resmi CPython, konfigurasi VS Code, JupyterLab, isolasi Virtual Environment, hingga verifikasi sistem bebas kendala.
+            </p>
+          </div>
+          <div className="getting-started-callout-action">
+            <button
+              type="button"
+              className="button primary button-lg"
+              onClick={() => (onNavigateGettingStarted ? onNavigateGettingStarted() : (location.hash = 'getting-started'))}
+            >
+              <Icon name="play_lesson" size={20} />
+              <span>Buka Getting Started</span>
+            </button>
           </div>
         </div>
       </section>

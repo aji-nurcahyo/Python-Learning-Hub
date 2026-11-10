@@ -4,8 +4,10 @@
 Dokumen ini adalah cetak biru (*blueprint*) dan templat standar pengembangan konten untuk seluruh 30 chapter di **Python Learning Hub**.
 
 > [!IMPORTANT]
-> **Kebijakan Bahasa & Terminologi Teknis:**  
-> Seluruh narasi materi, instruksi latihan, dan panduan tugas wajib mengikuti pedoman [TECHNICAL_LANGUAGE_GUIDE.md](file:///d:/Workstation/Repo%20My%20Corses/Alpro-python/docs/TECHNICAL_LANGUAGE_GUIDE.md). Gunakan Bahasa Indonesia akademis sebagai bahasa pengantar, namun pertahankan istilah teknis baku Python dalam bahasa aslinya (misalnya `list`, `tuple`, `dictionary`, `set`, `comprehension`, `exception`, `debugging`, `file handling`, `type hint`, `generator`) tanpa terjemahan harfiah yang rancu seperti "kamus", "pengecualian", atau "pengirisan".
+> **Kebijakan Bahasa & Terminologi Teknis Permanen:**  
+> Seluruh narasi materi, instruksi latihan, dan panduan tugas wajib mematuhi pedoman baku [TECHNICAL_LANGUAGE_GUIDE.md](file:///d:/Workstation/Repo%20My%20Corses/Alpro-python/docs/TECHNICAL_LANGUAGE_GUIDE.md) dan aturan workspace `.agent/rules/technical-terminology.md`.  
+> **Prinsip Dasar:** *"Indonesian for explanations, English for established technical terminology."*  
+> Tulis penjelasan dalam Bahasa Indonesia yang natural dan baku, namun pertahankan istilah teknis mapan dalam Bahasa Inggris (misalnya `Development Environment`, `Python Interpreter`, `Code Editor`, `Virtual Environment`, `Python List`, `Python Dictionary`, `Inheritance`, `Encapsulation`, `Polymorphism`, `Exception Handling`, `Error Handling`, `Unit Testing`, `Dependency Management`, dll.) tanpa terjemahan harfiah kaku. Istilah umum seperti *algoritma*, *variabel*, *parameter*, *perulangan*, *percabangan*, dan *pengujian* tetap digunakan secara wajar.
 
 ---
 

@@ -13,6 +13,13 @@ build/
 .env
 .env.*
 !.env.example
+*.pem
+*.key
+
+# Local databases
+*.db
+*.sqlite
+*.sqlite3
 
 # Logs
 logs/

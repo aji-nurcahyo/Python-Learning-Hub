@@ -4,7 +4,7 @@
   "subtitle": "Pemodelan Prediktif, Supervised/Unsupervised Learning & Evaluasi",
   "icon": "psychology",
   "tagline": "Membangun algoritma cerdas yang belajar dari data",
-  "description": "Jalur spesialisasi machine learning praktis: rekayasa fitur (feature engineering), pelatihan model regresi dan klasifikasi dengan Scikit-Learn, hingga evaluasi metrik akurasi.",
+  "description": "Jalur spesialisasi machine learning praktis: rekayasa fitur (feature engineering), Model Training regresi dan klasifikasi dengan Scikit-Learn, hingga evaluasi metrik akurasi.",
   "targetAudience": "ML Engineer, AI Researcher, Praktisi Pemodelan Prediktif",
   "recommendedChapters": [
     8,

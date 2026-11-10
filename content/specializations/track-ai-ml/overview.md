@@ -6,7 +6,7 @@
 ML Engineer, AI Researcher, Praktisi Pemodelan Prediktif
 
 ## Deskripsi
-Jalur spesialisasi machine learning praktis: rekayasa fitur (feature engineering), pelatihan model regresi dan klasifikasi dengan Scikit-Learn, hingga evaluasi metrik akurasi.
+Jalur spesialisasi machine learning praktis: rekayasa fitur (feature engineering), Model Training regresi dan klasifikasi dengan Scikit-Learn, hingga evaluasi metrik akurasi.
 
 ## Chapter Fondasi yang Direkomendasikan
 - Chapter 08

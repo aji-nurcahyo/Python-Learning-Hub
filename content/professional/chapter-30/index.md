@@ -195,7 +195,7 @@ BTS-KALIANDA-02,1700000040,-115.0,14.20,95.0,88.0,CRITICAL
 
 ## 12. Pengujian Otomatis (*Automated Tests*)
 
-Suite pengujian unit test telah diimplementasikan pada [`tests/test_capstone.py`](file:///d:/Workstation/Repo%20My%20Corses/Alpro-python/content/professional/chapter-30/tests/test_capstone.py), mencakup 9 test case terisolasi:
+Suite Unit Testing terisolasi telah diimplementasikan pada [`tests/test_capstone.py`](file:///d:/Workstation/Repo%20My%20Corses/Alpro-python/content/professional/chapter-30/tests/test_capstone.py), mencakup 9 test case terisolasi:
 1. `test_telemetry_record_health_evaluation`: Evaluasi logika bisnis kriteria kesehatan.
 2. `test_platform_config_loading_and_defaults`: Parsing konfigurasi Twelve-Factor.
 3. `test_local_csv_source_parsing`: Verifikasi parsing stream CSV lokal.
@@ -214,7 +214,7 @@ Suite pengujian unit test telah diimplementasikan pada [`tests/test_capstone.py`
    ```bash
    cd Alpro-python
    ```
-2. **Buat & Aktifkan Lingkungan Virtual Python:**
+2. **Buat & Aktifkan Virtual Environment Python:**
    ```bash
    python -m venv venv
    # Di Windows:

@@ -70,7 +70,7 @@ Modul wajib diimplementasikan di dalam file `tugas.py` dengan komponen berikut:
 | **Separation of Concerns & Layering** | 25 Poin | Pemisahan yang tegas antara domain model, port repository, service layer, dan CLI presenter. |
 | **Penerapan Dependency Injection** | 25 Poin | Service bergantung pada abstraksi repository, memungkinkan mock testing tanpa dependensi fisik. |
 | **Twelve-Factor Configuration** | 20 Poin | Pembacaan konfigurasi dari environment variables dengan fallback default yang aman dan tipe terkonversi. |
-| **CLI Dispatcher & Error Handling** | 15 Poin | Penanganan subcommands (`status`, `deploy`) dengan argparse dan penanganan kesalahan klaster tidak valid. |
+| **CLI Dispatcher & Error Handling** | 15 Poin | Penanganan subcommands (`status`, `deploy`) dengan argparse dan Error Handling klaster tidak valid. |
 | **Kerapian Kode & Type Hints** | 15 Poin | Mengikuti standar PEP 8, type hints lengkap pada seluruh method, dan docstrings Bahasa Indonesia yang jelas. |
 
 ---

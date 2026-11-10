@@ -65,7 +65,7 @@
   },
   "assignment": {
     "title": "Proyek Akhir: Student Data Management System",
-    "description": "Rancang dan bangun aplikasi CLI modular Sistem Manajemen Data Mahasiswa dengan 10 fitur lengkap mencakup CRUD, pencarian, validasi masukan, analisis statistik, dan pengujian unit.",
+    "description": "Rancang dan bangun aplikasi CLI modular Sistem Manajemen Data Mahasiswa dengan 10 fitur lengkap mencakup CRUD, pencarian, validasi masukan, analisis statistik, dan Unit Testing.",
     "instructions": [
       "Pisahkan arsitektur kode menjadi 3 modul utama: validators.py, student_manager.py, dan main.py.",
       "Terapkan validasi ketat untuk keunikan NIM, format nama, serta rentang nilai 0.0 - 100.0.",

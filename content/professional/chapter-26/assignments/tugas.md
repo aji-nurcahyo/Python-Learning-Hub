@@ -3,7 +3,7 @@
 ## Deskripsi Tugas
 Dalam tugas tingkat profesional ini, Anda diminta mengembangkan **Automated Test Suite & Production Telemetry System** untuk memvalidasi keandalan layanan manajemen infrastruktur telekomunikasi (`TelecomInfrastructureManager`) secara menyeluruh.
 
-Pengujian harus mencakup pengujian unit murni, isolasi panggilan soket/API eksternal dengan *mocking*, penanganan kegagalan (*error scenarios*), pengukuran cakupan cabang (*branch coverage*), dan verifikasi keluaran log audit terstruktur.
+Pengujian harus mencakup Unit Testing murni, isolasi panggilan soket/API eksternal dengan *mocking*, penanganan kegagalan (*error scenarios*), pengukuran Test Coverage cabang (*branch coverage*), dan verifikasi keluaran log audit terstruktur.
 
 ---
 

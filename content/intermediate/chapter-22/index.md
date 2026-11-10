@@ -137,7 +137,7 @@ Selamat atas keberhasilan Anda menuntaskan seluruh kurikulum **Level 2: Intermed
 Dengan menyelesaikan Chapter 22, Anda telah membuktikan penguasaan komprehensif atas:
 - Pemrograman fungsional dan manipulasi koleksi data mutakhir.
 - Analisis algoritma pencarian dan pengurutan efisien.
-- Persistensi file dan penanganan pengecualian defensif.
+- Persistensi file dan Exception Handling defensif.
 - Pemrograman berorientasi objek hierarkis dan *special dunder methods*.
 - Pengemasan paket terstandar dan *automated unit testing*.
 

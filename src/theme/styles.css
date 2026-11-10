@@ -4118,3 +4118,813 @@ select option {
   color: var(--muted);
 }
 
+/* ==========================================================================
+   GETTING STARTED WITH PYTHON — SETUP SECTION & TUTORIALS
+   ========================================================================== */
+
+.hub-getting-started-page {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 32px 24px 80px;
+}
+
+.getting-started-header-banner {
+  background: linear-gradient(135deg, rgba(56, 114, 224, 0.08), rgba(24, 160, 251, 0.04));
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 40px 36px;
+  margin-bottom: 36px;
+  position: relative;
+  overflow: hidden;
+}
+
+.header-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--brand);
+  background: rgba(56, 114, 224, 0.12);
+  padding: 6px 14px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+}
+
+.header-title {
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 0 0 8px 0;
+}
+
+.header-subtitle {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--brand);
+  margin: 0 0 16px 0;
+}
+
+.header-description {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--muted);
+  max-width: 860px;
+  margin: 0 0 24px 0;
+}
+
+.quick-stats-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.quick-stat-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 8px 16px;
+  border-radius: 10px;
+  color: var(--ink);
+}
+
+.getting-started-content-grid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+@media (max-width: 960px) {
+  .getting-started-content-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Sidebar Navigator */
+.tutorial-sidebar {
+  width: 100%;
+}
+
+.sidebar-sticky-wrapper {
+  position: sticky;
+  top: 84px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sidebar-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 12px 0;
+}
+
+.tutorial-nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tutorial-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  background: var(--surface);
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.tutorial-nav-item:hover {
+  background: var(--surface2);
+  border-color: var(--line);
+}
+
+.tutorial-nav-item.active {
+  background: rgba(56, 114, 224, 0.12);
+  border-color: var(--brand);
+  color: var(--brand);
+  box-shadow: 0 2px 8px rgba(56, 114, 224, 0.15);
+}
+
+.nav-item-number {
+  font-family: var(--font-mono, monospace);
+  font-size: 12px;
+  font-weight: 700;
+  background: var(--surface2);
+  padding: 4px 8px;
+  border-radius: 6px;
+  color: var(--muted);
+}
+
+.tutorial-nav-item.active .nav-item-number {
+  background: var(--brand);
+  color: #ffffff;
+}
+
+.nav-item-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.nav-item-title {
+  display: block;
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nav-item-time {
+  display: block;
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.tutorial-nav-item.active .nav-item-time {
+  color: var(--brand);
+  opacity: 0.85;
+}
+
+.nav-active-arrow {
+  color: var(--brand);
+}
+
+.sidebar-callout {
+  background: var(--surface2);
+  border: 1px dashed var(--line);
+  border-radius: 14px;
+  padding: 16px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sidebar-callout p {
+  margin: 0;
+}
+
+/* Main Tutorial Card */
+.tutorial-main-body {
+  min-width: 0;
+}
+
+.tutorial-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 36px;
+  box-shadow: var(--shadow);
+}
+
+.tutorial-header-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.tutorial-number-pill {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  background: var(--brand);
+  color: #ffffff;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.tutorial-time-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  background: var(--surface2);
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.tutorial-title {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin: 0 0 6px 0;
+}
+
+.tutorial-subtitle {
+  font-size: 16px;
+  color: var(--muted);
+  margin: 0 0 24px 0;
+  font-weight: 500;
+}
+
+/* Platform Selector */
+.platform-selector-bar {
+  background: var(--surface2);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px 18px;
+  margin-bottom: 28px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+}
+
+.platform-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.platform-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.platform-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.platform-tab:hover {
+  background: var(--surface-hover, var(--surface2));
+  border-color: var(--brand);
+}
+
+.platform-tab.active {
+  background: var(--brand);
+  color: #ffffff;
+  border-color: var(--brand);
+}
+
+/* Objectives Box */
+.tutorial-objectives-box {
+  background: rgba(56, 114, 224, 0.05);
+  border: 1px solid rgba(56, 114, 224, 0.2);
+  border-radius: 14px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+}
+
+.objectives-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--brand);
+  margin-bottom: 12px;
+}
+
+.objectives-title h3 {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--ink);
+}
+
+.objectives-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.objectives-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.objective-icon {
+  color: var(--brand);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.tutorial-prerequisites {
+  font-size: 13.5px;
+  color: var(--muted);
+  margin-bottom: 32px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.tutorial-prerequisites strong {
+  color: var(--ink);
+}
+
+/* Tutorial Step Sections */
+.tutorial-sections-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  margin-bottom: 40px;
+}
+
+.tutorial-step-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.section-heading {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+}
+
+.section-number-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--brand);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.section-text-content {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--ink);
+}
+
+.section-text-content p {
+  margin: 0 0 14px 0;
+}
+
+.section-text-content p:last-child {
+  margin-bottom: 0;
+}
+
+/* Command Pre & Box */
+.platform-command-box {
+  background: #181c24;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.command-box-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.terminal-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono, monospace);
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.copy-command-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  padding: 4px 10px;
+  color: #cbd5e1;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.copy-command-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.command-pre {
+  margin: 0;
+  padding: 16px;
+  font-family: var(--font-mono, monospace);
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: #38bdf8;
+  overflow-x: auto;
+}
+
+/* Callout Cards */
+.tutorial-callout-card {
+  display: flex;
+  gap: 16px;
+  padding: 18px 22px;
+  border-radius: 14px;
+  border: 1px solid;
+}
+
+.tutorial-callout-card.callout-warning {
+  background: rgba(245, 158, 11, 0.08);
+  border-color: rgba(245, 158, 11, 0.3);
+  color: var(--ink);
+}
+
+.tutorial-callout-card.callout-warning .callout-icon-col {
+  color: #d97706;
+}
+
+.tutorial-callout-card.callout-tip {
+  background: rgba(16, 185, 129, 0.08);
+  border-color: rgba(16, 185, 129, 0.3);
+  color: var(--ink);
+}
+
+.tutorial-callout-card.callout-tip .callout-icon-col {
+  color: #059669;
+}
+
+.tutorial-callout-card.callout-info {
+  background: rgba(56, 114, 224, 0.08);
+  border-color: rgba(56, 114, 224, 0.3);
+  color: var(--ink);
+}
+
+.tutorial-callout-card.callout-info .callout-icon-col {
+  color: var(--brand);
+}
+
+.callout-body {
+  flex: 1;
+}
+
+.callout-title {
+  margin: 0 0 6px 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.callout-text {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* Verification Checklist Card */
+.tutorial-checklist-card {
+  background: var(--surface2);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.checklist-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  color: var(--brand);
+}
+
+.checklist-header h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--ink);
+}
+
+.checklist-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.checklist-items li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.checklist-items input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--brand);
+  cursor: pointer;
+}
+
+/* Troubleshooting Card */
+.tutorial-troubleshooting-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.troubleshooting-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  color: #dc2626;
+}
+
+.troubleshooting-header h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--ink);
+}
+
+.troubleshooting-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.troubleshoot-item {
+  background: var(--surface2);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.troubleshoot-issue {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #dc2626;
+  margin-bottom: 8px;
+}
+
+.troubleshoot-cause,
+.troubleshoot-solution {
+  font-size: 13.5px;
+  line-height: 1.55;
+  margin: 4px 0;
+  color: var(--ink);
+}
+
+.troubleshoot-cause .label {
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.troubleshoot-solution .label {
+  font-weight: 700;
+  color: #059669;
+}
+
+/* Official References Card */
+.tutorial-references-card {
+  background: var(--surface2);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 20px 24px;
+  margin-bottom: 32px;
+}
+
+.references-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  color: var(--brand);
+}
+
+.references-header h4 {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--ink);
+}
+
+.references-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.references-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13.5px;
+  color: var(--brand);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.references-links a:hover {
+  text-decoration: underline;
+}
+
+/* Pagination Nav */
+.tutorial-pagination-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+
+.pagination-prev,
+.pagination-next {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  border-radius: 12px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-text-col {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.pagination-next .btn-text-col {
+  text-align: right;
+}
+
+.btn-sub {
+  font-size: 11px;
+  font-weight: 600;
+  opacity: 0.8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.btn-main {
+  font-size: 13.5px;
+  font-weight: 700;
+}
+
+/* Homepage "Baru Belajar Python?" Section */
+.hub-getting-started-banner-section {
+  max-width: 1280px;
+  margin: 0 auto 48px;
+  padding: 0 24px;
+}
+
+.getting-started-callout-card {
+  background: linear-gradient(135deg, rgba(56, 114, 224, 0.08), rgba(24, 160, 251, 0.03));
+  border: 1px solid rgba(56, 114, 224, 0.25);
+  border-radius: 20px;
+  padding: 32px 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  box-shadow: 0 4px 20px rgba(56, 114, 224, 0.08);
+}
+
+@media (max-width: 860px) {
+  .getting-started-callout-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.getting-started-callout-content {
+  flex: 1;
+}
+
+.getting-started-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--brand);
+  background: rgba(56, 114, 224, 0.12);
+  padding: 4px 12px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+
+.getting-started-callout-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--ink);
+  margin: 0 0 8px 0;
+}
+
+.getting-started-callout-desc {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--muted);
+  margin: 0;
+  max-width: 680px;
+}
+
+.getting-started-callout-action {
+  flex-shrink: 0;
+}
+
+

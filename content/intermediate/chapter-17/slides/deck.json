@@ -123,7 +123,7 @@
   },
   {
     "title": "Rangkuman & Langkah Selanjutnya",
-    "body": "<ul><li><strong>Rangkuman:</strong> Context manager <code>with</code> menjamin keamanan resource I/O. CSV ideal untuk data tabular datar, sementara JSON unggul untuk konfigurasi bersarang dan pertukaran payload web.</li><li><strong>Jembatan Chapter 18:</strong> Penanganan kesalahan operasi berkas (I/O Errors) membawa kita ke pembahasan formal <strong>Chapter 18: Exception Handling & Debugging</strong>.</li><li><strong>Refleksi:</strong> Mengapa penyimpanan konfigurasi sistem di industri hampir selalu menggunakan JSON atau YAML alih-alih berkas teks mentah?</li></ul>",
+    "body": "<ul><li><strong>Rangkuman:</strong> Context manager <code>with</code> menjamin keamanan resource I/O. CSV ideal untuk data tabular datar, sementara JSON unggul untuk konfigurasi bersarang dan pertukaran payload web.</li><li><strong>Jembatan Chapter 18:</strong> Strategi Error Handling pada operasi berkas (I/O Errors) membawa kita ke pembahasan formal <strong>Chapter 18: Exception Handling & Debugging</strong>.</li><li><strong>Refleksi:</strong> Mengapa penyimpanan konfigurasi sistem di industri hampir selalu menggunakan JSON atau YAML alih-alih berkas teks mentah?</li></ul>",
     "kind": "reflection",
     "notes": "Beri apresiasi atas penyelesaian Chapter 17 dan persiapkan peserta memasuki topik penanganan exception dan debugging sistematis."
   }

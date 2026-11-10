@@ -45,7 +45,7 @@ Menginstal pustaka pihak ketiga secara global menggunakan `pip install` langsung
 2. **Korupsi Paket Sistem**: Pada sistem Linux/macOS, Python bawaan OS dapat mengalami malfungsi jika pustaka sistem tertimpa oleh versi pip yang berbeda.
 
 ### Perintah Pembuatan dan Aktivasi Multi-Platform
-Python menyediakan modul bawaan `venv` untuk membuat lingkungan virtual terisolasi:
+Python menyediakan modul bawaan `venv` untuk membuat Virtual Environment terisolasi:
 
 ```powershell
 # 1. Membuat virtual environment baru di dalam folder .venv
@@ -66,7 +66,7 @@ python -m venv .venv
   source .venv/bin/activate
   ```
 
-Setelah aktif, prompt terminal akan menampilkan prefiks `(.venv)`. Untuk keluar dari lingkungan virtual, cukup jalankan perintah `deactivate`.
+Setelah aktif, prompt terminal akan menampilkan prefiks `(.venv)`. Untuk keluar dari Virtual Environment, cukup jalankan perintah `deactivate`.
 
 ---
 

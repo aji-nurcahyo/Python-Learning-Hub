@@ -291,7 +291,7 @@ def print_table(students: list[dict[str, Any]], title: str = "DAFTAR DATA MAHASI
 
 ---
 
-## 9. Pengujian Unit Otomatis (*Automated Unit Testing*)
+## 9. Unit Testing Otomatis (*Automated Unit Testing*)
 
 Keandalan perangkat lunak dijamin melalui *automated testing* menggunakan modul bawaan Python `unittest`. Dengan memisahkan logika dari `input()`, seluruh skenario dapat diuji secara otomatis dalam fraksi detik:
 
@@ -299,7 +299,7 @@ Keandalan perangkat lunak dijamin melalui *automated testing* menggunakan modul 
 python -m unittest content/foundations/chapter-12/tests/test_student_manager.py
 ```
 
-### Matriks Cakupan Pengujian
+### Matriks Test Coverage & Pengujian
 
 | Komponen Uji | Kasus Uji Normal | Kasus Uji Batas (*Boundary*) | Kasus Uji Negatif |
 |:---|:---|:---|:---|

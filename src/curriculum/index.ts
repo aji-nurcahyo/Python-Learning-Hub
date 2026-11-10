@@ -1008,7 +1008,7 @@ for mhs in mahasiswa:
     assignment: {
       title: 'Proyek Akhir: Student Data Management System',
       description:
-        'Rancang dan bangun aplikasi CLI modular Sistem Manajemen Data Mahasiswa dengan 10 fitur lengkap mencakup CRUD, pencarian, validasi masukan, analisis statistik, dan pengujian unit.',
+        'Rancang dan bangun aplikasi CLI modular Sistem Manajemen Data Mahasiswa dengan 10 fitur lengkap mencakup CRUD, pencarian, validasi masukan, analisis statistik, dan Unit Testing.',
       instructions: [
         'Pisahkan arsitektur kode menjadi 3 modul utama: validators.py, student_manager.py, dan main.py.',
         'Terapkan validasi ketat untuk keunikan NIM, format nama, serta rentang nilai 0.0 - 100.0.',
@@ -1594,7 +1594,7 @@ print(mhs_obj.ringkasan())`,
     title: 'Object-Oriented Programming II',
     subtitle: 'Inheritance, Polymorphism, super(), dan Special Dunder Methods',
     description:
-      'Pewarisan sifat antar class, method overriding, pemanggilan super(), polimorfisme, komposisi vs pewarisan, dan special methods (__str__, __repr__, __eq__, __hash__).',
+      'Prinsip Inheritance antar class, method overriding, pemanggilan super(), Polymorphism, Komposisi vs Inheritance, dan special methods (__str__, __repr__, __eq__, __hash__).',
     competencyFocus: 'PCAP 3.2: Inheritance, polymorphism, composition & special methods',
     estimatedHours: 5,
     difficulty: 'Intermediate',
@@ -1603,15 +1603,15 @@ print(mhs_obj.ringkasan())`,
     tugasPath: '#chapter/20/task',
     prerequisites: ['Chapter 19'],
     learningObjectives: [
-      'Membangun class turunan dan memanfaatkan pewarisan kode melalui relasi is-a',
+      'Membangun class turunan dan memanfaatkan Inheritance melalui relasi is-a',
       'Mengoverride method induk dan memanggil fungsionalitas aslinya dengan super()',
-      'Menerapkan polimorfisme dan duck typing untuk memproses koleksi objek heterogen',
-      'Membedakan kapan harus menggunakan pewarisan vs komposisi (has-a)',
+      'Menerapkan Polymorphism dan duck typing untuk memproses koleksi objek heterogen',
+      'Membedakan kapan harus menggunakan Inheritance vs Komposisi (has-a)',
       'Mengimplementasikan special methods (__str__, __repr__, __eq__, __hash__) dan memahami implikasi kesetaraan nilai serta hashability',
     ],
     tags: ['Inheritance', 'Polymorphism', 'super()', 'Duck Typing', 'Composition', 'Special Methods', '__eq__', 'Hashability'],
     codeExample: {
-      title: 'Pewarisan Class (Inheritance) & Pemanggilan super()',
+      title: 'Implementasi Inheritance & Pemanggilan super()',
       code: `class BaseDevice:
     def __init__(self, serial_number: str, hostname: str, lokasi: str):
         self.serial_number = serial_number
@@ -1632,10 +1632,10 @@ router = NetworkRouter("RT-9901", "Core-Router-Lampung", "Ruang NOC Lt.2", 40.0)
 print("Method warisan :", router.deskripsi_dasar())`,
       outputKey: 'ch20-01',
       explanation:
-        'NetworkRouter mewarisi atribut dan method dari BaseDevice melalui pewarisan tunggal (single inheritance) serta memanggil super().__init__() untuk inisialisasi aman.',
+        'NetworkRouter mewarisi atribut dan method dari BaseDevice melalui mekanisme Inheritance (single inheritance) serta memanggil super().__init__() untuk inisialisasi aman.',
     },
     exercise: {
-      title: 'Latihan Terarah: Pewarisan, Polimorfisme & Special Methods',
+      title: 'Latihan Terarah: Inheritance, Polymorphism & Special Methods',
       instructions: [
         'Bangun class WirelessInterface yang mewarisi NetworkInterface dan memanggil super().',
         'Terapkan pipeline pemrosesan sinyal polimorfik dengan AmplifierProcessor dan NoiseFilterProcessor.',
@@ -2530,7 +2530,7 @@ if __name__ == "__main__":
       correctIndex: 0,
       explanation:
         'Menyimpan konfigurasi di environment variables memisahkan kode dari konfigurasi, menjaga keamanan rahasia (secrets), dan memungkinkan codebase yang sama berjalan di berbagai lingkungan deployment.',
-      hint: 'Pikirkan tentang prinsip portabilitas antar lingkungan pengembangan dan produksi.',
+      hint: 'Pikirkan tentang prinsip portabilitas konfigurasi antar Development Environment dan produksi.',
     },
     assignment: {
       title: 'Tugas Praktik 29: Production-Ready Python Application',
@@ -2546,7 +2546,7 @@ if __name__ == "__main__":
         { criteria: 'Separation of Concerns & Layering', weight: 25, description: 'Pemisahan tegas antara domain model, port repository, service layer, dan CLI presenter.' },
         { criteria: 'Penerapan Dependency Injection', weight: 25, description: 'Service bergantung pada abstraksi repository, memungkinkan mock testing tanpa dependensi fisik.' },
         { criteria: 'Twelve-Factor Configuration', weight: 20, description: 'Pembacaan konfigurasi dari environment variables dengan fallback default yang aman.' },
-        { criteria: 'CLI Dispatcher & Error Handling', weight: 15, description: 'Penanganan subcommands dengan argparse dan penanganan kesalahan klaster tidak valid.' },
+        { criteria: 'CLI Dispatcher & Error Handling', weight: 15, description: 'Penanganan subcommands dengan argparse dan Error Handling klaster tidak valid.' },
         { criteria: 'Kerapian Kode & Type Hints', weight: 15, description: 'Mengikuti standar PEP 8, type hints lengkap pada seluruh method, dan docstrings jelas.' },
       ],
       starterFilename: 'tugas_29.py',
@@ -2573,7 +2573,7 @@ if __name__ == "__main__":
     learningObjectives: [
       'Mengintegrasikan Clean Architecture, Protocol subtyping, dan type hints dalam sistem produksi nyata',
       'Membangun pipeline penyerapan multi-sumber (CSV dan REST API) yang aman secara konkuren',
-      'Menghasilkan dokumen laporan SLA otomatis dan suite pengujian unit terisolasi yang andal',
+      'Menghasilkan dokumen laporan SLA otomatis dan suite Unit Testing terisolasi yang andal',
     ],
     tags: ['Senior Capstone', 'Clean Architecture', 'Production Grade', 'Data Platform', 'Telemetry'],
     codeExample: {
@@ -2691,7 +2691,7 @@ export const SPECIALIZATION_TRACKS: SpecializationTrack[] = [
     icon: 'psychology',
     tagline: 'Membangun algoritma cerdas yang belajar dari data',
     description:
-      'Jalur spesialisasi machine learning praktis: rekayasa fitur (feature engineering), pelatihan model regresi dan klasifikasi dengan Scikit-Learn, hingga evaluasi metrik akurasi.',
+      'Jalur spesialisasi machine learning praktis: rekayasa fitur (feature engineering), Model Training regresi dan klasifikasi dengan Scikit-Learn, hingga evaluasi metrik akurasi.',
     targetAudience: 'ML Engineer, AI Researcher, Praktisi Pemodelan Prediktif',
     recommendedChapters: [8, 9, 14, 15, 16, 20, 25],
     modules: [

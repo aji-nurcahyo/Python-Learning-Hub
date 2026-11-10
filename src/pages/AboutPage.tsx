@@ -1,4 +1,5 @@
 import { Icon } from '../ui/Icon';
+import { getAssetUrl } from '../curriculum/resources';
 
 interface AboutPageProps {
   onNavigateHome: () => void;
@@ -159,7 +160,7 @@ export function AboutPage({ onNavigateHome, onNavigateLevel }: AboutPageProps) {
               <a href="https://github.com/informatika-itera/pengkom" target="_blank" rel="noreferrer">
                 Pengkom ITERA
               </a>{' '}
-              yang berlisensi <a href="downloads/LICENSE.upstream">MIT License</a>.
+              yang berlisensi <a href={getAssetUrl('downloads/LICENSE.upstream')}>MIT License</a>.
             </li>
             <li>
               <strong>Library & Ekosistem:</strong> Dibangun dengan React 19, Reveal.js 6 (Hak Cipta Hakim El Hattab),

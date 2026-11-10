@@ -7,7 +7,7 @@
 
 Python Learning Hub is a free, open-access collection of structured Python learning modules, interactive browser presentations, verified programming examples, guided exercises, conceptual quizzes, and practical projects.
 
-Developed and maintained by **Aji Pamungkas Tri Nurcahyo** from **Program Studi Teknik Telekomunikasi, Fakultas Teknologi Industri, Institut Teknologi Sumatera (ITERA)**.
+Developed and maintained by **Aji Pamungkas Tri Nurcahyo** from **Institut Teknologi Sumatera (ITERA)**.
 
 ---
 
@@ -17,10 +17,7 @@ Developed and maintained by **Aji Pamungkas Tri Nurcahyo** from **Program Studi 
 - **Tagline:** *Learn Python, One Chapter at a Time*
 - **Subjudul:** *Interactive Python Learning Modules*
 - **Inisiator & Pengembang:** **Aji Pamungkas Tri Nurcahyo**
-- **Afiliasi Akademik:**
-  - Program Studi Teknik Telekomunikasi
-  - Fakultas Teknologi Industri
-  - Institut Teknologi Sumatera (ITERA)
+- **Institusi Resmi:** **Institut Teknologi Sumatera (ITERA)**
 - **Tujuan Platform:** Menyediakan materi edukasi pemrograman Python 3 yang independen, gratis, terstruktur secara bertahap, dan dapat diakses siapa pun tanpa batasan registrasi maupun sekat jadwal perkuliahan.
 
 ---
@@ -42,16 +39,27 @@ Platform ini dibangun berlandaskan 6 pilar edukasi komputasi modern:
 
 Kurikulum Python Learning Hub disusun berjenjang dan mencakup:
 
-### 3 Level Kompetensi Utama
+### Modul Pengantar: Getting Started with Python (Setup Environment)
+Panduan onboarding praktis penyiapan *Python Development Environment* lokal dan cloud secara mandiri:
+- **Tutorial 01:** Understanding Python Development Tools (Interpreter vs IDE vs Terminal vs Notebook)
+- **Tutorial 02:** Installing Python (Instalasi CPython resmi, PATH, Python Launcher di Windows/Linux/macOS)
+- **Tutorial 03:** Installing & Configuring VS Code (Ekstensi Python, Open Folder, Interpreter Selection, Debugging F5)
+- **Tutorial 04:** Jupyter Notebook & JupyterLab (Struktur `.ipynb`, pip install, server lokal, eksekusi sel & kernel)
+- **Tutorial 05:** Virtual Environment & Package Management (`venv`, aktivasi lintas OS, `pip`, `requirements.txt`)
+- **Tutorial 06:** Google Colab (Cloud notebook gratis, `!pip`, Google Drive mount, batasan runtime & kuota GPU)
+- **Tutorial 07:** Running Python Projects (Navigasi direktori, eksekusi `main.py`, relative imports, traceback error)
+- **Tutorial 08:** Troubleshooting & Environment Verification (Solusi aman kendala umum & verifikasi 8 langkah)
+
+### 3 Level Kompetensi Utama (30 Chapter)
 1. **Level 1 — Python Foundations (Chapter 01 – 12)**  
    *Selaras secara luas dengan area kompetensi sertifikasi Python Institute PCEP.*  
-   Mencakup: Pengenalan Python & instalasi interpreter, variabel & tipe data skalar, operator aritmatika & logika, masukan/keluaran interaktif, percabangan if/elif/else, perulangan for & while, pemrosesan sequence string, struktur data list & tuple, kamus dictionary & set, rancangan fungsi modular & scope LEGB, modul & exception handling dasar, serta Foundations Capstone Project.
+   Mencakup: Pengenalan Python & Python Interpreter, variabel & tipe data skalar, operator aritmatika & logika, masukan/keluaran interaktif, percabangan if/elif/else, perulangan for & while, pemrosesan sequence string, struktur data list & tuple, dictionary & set, rancangan fungsi modular & scope LEGB, modul & exception handling dasar, serta Foundations Capstone Project.
 2. **Level 2 — Intermediate Python Development (Chapter 13 – 22)**  
    *Selaras secara luas dengan area kompetensi sertifikasi Python Institute PCAP.*  
-   Mencakup: Advanced functions (*args, **kwargs, lambda), list/dict/set comprehension, generator expressions, algoritma pencarian (linear & binary search), algoritma pengurutan (selection, bubble, insertion sort), analisis kompleksitas Big-O, file handling (I/O, CSV, JSON), exception handling & debugging terstruktur, OOP I (class, object, attribute, method), OOP II (inheritance, polymorphism, encapsulation, dunder methods), virtual environment & packaging (pip, venv, pytest), serta Intermediate Capstone Project.
+   Mencakup: Advanced functions (*args, **kwargs, lambda), list/dict/set comprehension, generator expressions, algoritma pencarian (linear & binary search), algoritma pengurutan (selection, bubble, insertion sort), analisis kompleksitas Big-O, file handling (I/O, CSV, JSON), Exception Handling & debugging terstruktur, OOP I (class, object, attribute, method), OOP II (Inheritance, Polymorphism, Encapsulation, dunder methods), Virtual Environment & packaging (`pyproject.toml`, pytest), serta Intermediate Capstone Project.
 3. **Level 3 — Professional Python Engineering (Chapter 23 – 30)**  
    *Standar rekayasa sistem perangkat lunak industri.*  
-   Mencakup: Advanced OOP & Gang of Four Design Patterns, decorators, custom generators & context managers (`with`), static typing & type hints (`typing`, `mypy`, Pydantic), automated testing & logging (`logging`, `pytest`, mock), concurrent & asynchronous programming (`threading`, `multiprocessing`, `asyncio`), networking & REST API integration (`FastAPI`, `httpx`), software architecture & containerized deployment (Docker, CI/CD), serta Professional Capstone Project.
+   Mencakup: Advanced OOP & Gang of Four Design Patterns, decorators, custom generators & context managers (`with`), static typing & type hints (`typing`, `mypy`), automated testing & structured logging (`logging`, `unittest`, mock), concurrent & asynchronous programming (`threading`, `multiprocessing`, `asyncio`), networking & REST API integration, Clean Architecture & containerized deployment (Docker, CI/CD Actions), serta Professional Capstone Project.
 
 ### 5 Jalur Spesialisasi Industri
 - **Track A: Data Science & Visualization** (NumPy, Pandas, Matplotlib, Seaborn, exploratory data analysis).
@@ -345,8 +353,11 @@ Alpro-python/
 │   ├── ui/                    # Komponen utilitas (Icon, Code, Highlight, Math)
 │   └── main.tsx               # Entry point aplikasi React & router SPA
 ├── docs/
-│   ├── ADDING_CHAPTER.md      # Panduan lengkap penambahan & pemeliharaan modul chapter
-│   └── AUDIT.md               # Catatan audit historis arsitektur
+│   ├── ADDING_CHAPTER.md          # Panduan lengkap penambahan & pemeliharaan modul chapter
+│   ├── TECHNICAL_LANGUAGE_GUIDE.md# Kebijakan standar bahasa & terminologi teknis
+│   ├── GETTING_STARTED_GUIDE.md   # Panduan modul onboarding setup environment
+│   ├── GITHUB_PAGES_DEPLOYMENT.md # Panduan publikasi & hosting GitHub Pages
+│   └── FINAL_CURRICULUM_AUDIT.md  # Laporan audit final 30 chapter kurikulum
 ├── scripts/
 │   ├── check_outputs.mjs      # Verifikator output CPython 3
 │   ├── check_content.mjs      # Verifikator integritas 30 paket chapter dan 5 tracks
@@ -372,9 +383,9 @@ Alpro-python/
 ## 11. Atribusi & Lisensi Sumber Terbuka
 
 - **Pengembang & Penulis Kurikulum Python Learning Hub:**  
-  Aji Pamungkas Tri Nurcahyo (Program Studi Teknik Telekomunikasi, FTI, Institut Teknologi Sumatera).
+  Aji Pamungkas Tri Nurcahyo (Institut Teknologi Sumatera).
 - **Fondasi Perangkat Lunak:**  
-  Arsitektur peramban slide dan fondasi teknis situs diadaptasi dari repositori open-source [Pengkom ITERA](https://github.com/informatika-itera/pengkom) di bawah ketentuan [MIT License](downloads/LICENSE.upstream).
+  Arsitektur peramban slide dan fondasi teknis situs diadaptasi dari repositori open-source [Pengkom ITERA](https://github.com/informatika-itera/pengkom) di bawah ketentuan [MIT License](LICENSE.upstream).
 - **Pustaka Pihak Ketiga:**  
   - [React](https://react.dev/) — MIT License
   - [Reveal.js](https://revealjs.com/) — MIT License (Hak Cipta Hakim El Hattab)

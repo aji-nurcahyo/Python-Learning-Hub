@@ -39,7 +39,7 @@
     "notes": "Ingat bahwa script aktivasi di Windows berada di folder Scripts, sedangkan di Unix berada di folder bin."
   },
   {
-    "title": "Manajemen Dependensi: pip & requirements",
+    "title": "Dependency Management: pip & requirements",
     "kind": "content",
     "body": "<ul><li><strong><code>pip install &lt;paket&gt;</code>:</strong> Mengunduh dan menginstal pustaka resmi dari Python Package Index (PyPI).</li><li><strong><code>pip freeze &gt; requirements.txt</code>:</strong> Mengunci versi eksak seluruh dependensi yang terpasang untuk reproducibility tim.</li><li><strong><code>pip install -r requirements.txt</code>:</strong> Memasang kembali dependensi identik di lingkungan komputasi lain (misal server produksi).</li></ul>",
     "notes": "Selalu pastikan virtual environment sudah aktif sebelum menjalankan perintah pip install."

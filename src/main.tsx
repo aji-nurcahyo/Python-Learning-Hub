@@ -18,6 +18,7 @@ import { LevelPage } from './pages/LevelPage';
 import { TrackPage } from './pages/TrackPage';
 import { ChapterPage } from './pages/ChapterPage';
 import { AboutPage } from './pages/AboutPage';
+import { GettingStartedPage } from './pages/GettingStartedPage';
 
 import '@fontsource-variable/google-sans-flex';
 import '@fontsource-variable/google-sans-code';
@@ -26,17 +27,20 @@ import 'katex/dist/katex.min.css';
 import './theme/styles.css';
 
 const path = location.pathname;
-const base = import.meta.env.BASE_URL || './';
+const rawBase = import.meta.env.BASE_URL || './';
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
 
 // Common Hub Header
 function Header({
   activeNav,
   onNavigateHome,
+  onNavigateGettingStarted,
   onNavigateLevel,
   onNavigateAbout,
 }: {
   activeNav?: string;
   onNavigateHome?: () => void;
+  onNavigateGettingStarted?: (tutorialId?: string) => void;
   onNavigateLevel?: (id: number) => void;
   onNavigateAbout?: () => void;
 }) {
@@ -66,6 +70,17 @@ function Header({
           onClick={() => (onNavigateHome ? onNavigateHome() : (location.href = `${base}index.html`))}
         >
           Beranda
+        </button>
+        <button
+          type="button"
+          className={`hub-nav-link ${activeNav === 'getting-started' ? 'active' : ''}`}
+          onClick={() =>
+            onNavigateGettingStarted
+              ? onNavigateGettingStarted()
+              : (location.href = `${base}index.html#getting-started`)
+          }
+        >
+          Getting Started
         </button>
         <button
           type="button"
@@ -135,6 +150,7 @@ function Footer() {
 // Single-Page Application View Router
 type HubRoute =
   | { type: 'home' }
+  | { type: 'getting-started'; tutorialId?: string }
   | { type: 'level'; id: number }
   | { type: 'track'; id: string }
   | { type: 'chapter'; id: number }
@@ -143,29 +159,47 @@ type HubRoute =
   | { type: 'task'; chapterId: number }
   | { type: 'about' };
 
+function extractRouteFromPathname(pathname: string): string {
+  const cleaned = pathname.replace(/\/index\.html$/, '').replace(/^\/+/, '');
+  if (cleaned === 'python-learning-hub') return '';
+  if (cleaned.startsWith('python-learning-hub/')) {
+    return cleaned.slice('python-learning-hub/'.length);
+  }
+  return cleaned;
+}
+
 function parseHashRoute(): HubRoute {
   const hash = location.hash.replace(/^#\/?/, '');
+  const pathRoute = extractRouteFromPathname(location.pathname);
+  const routePath = hash || pathRoute;
   const searchParams = new URLSearchParams(location.search);
 
   // Check search params first
-  if (searchParams.get('page') === 'about' || hash === 'about' || hash.startsWith('about')) {
+  if (searchParams.get('page') === 'about' || routePath === 'about' || routePath.startsWith('about/')) {
     return { type: 'about' };
   }
 
+  // Check Getting Started route
+  const gettingStartedMatch = /^getting-started(?:\/([a-z0-9-]+))?/.exec(routePath);
+  if (gettingStartedMatch || searchParams.get('page') === 'getting-started') {
+    const tutId = gettingStartedMatch ? gettingStartedMatch[1] : searchParams.get('tutorial') || undefined;
+    return { type: 'getting-started', tutorialId: tutId };
+  }
+
   // Chapter sub-routes (slides, read, task)
-  const slidesMatch = /^chapter\/(\d+)\/slides/.exec(hash) || /^slides\/(\d+)/.exec(hash);
+  const slidesMatch = /^chapter\/(\d+)\/slides/.exec(routePath) || /^slides\/(\d+)/.exec(routePath);
   if (slidesMatch || (searchParams.get('chapter') && searchParams.get('view') === 'slides')) {
     const cId = Number(slidesMatch ? slidesMatch[1] : searchParams.get('chapter'));
     if (cId >= 1 && cId <= 30) return { type: 'slides', chapterId: cId };
   }
 
-  const readMatch = /^chapter\/(\d+)\/read/.exec(hash) || /^read\/(\d+)/.exec(hash);
+  const readMatch = /^chapter\/(\d+)\/read/.exec(routePath) || /^read\/(\d+)/.exec(routePath);
   if (readMatch || (searchParams.get('chapter') && searchParams.get('view') === 'read')) {
     const cId = Number(readMatch ? readMatch[1] : searchParams.get('chapter'));
     if (cId >= 1 && cId <= 30) return { type: 'reading', chapterId: cId };
   }
 
-  const taskMatch = /^chapter\/(\d+)\/task/.exec(hash) || /^task\/(\d+)/.exec(hash);
+  const taskMatch = /^chapter\/(\d+)\/task/.exec(routePath) || /^task\/(\d+)/.exec(routePath);
   if (taskMatch || (searchParams.get('chapter') && searchParams.get('view') === 'task')) {
     const cId = Number(taskMatch ? taskMatch[1] : searchParams.get('chapter'));
     if (cId >= 1 && cId <= 30) return { type: 'task', chapterId: cId };
@@ -183,19 +217,19 @@ function parseHashRoute(): HubRoute {
     if (cId >= 1 && cId <= 30) return { type: 'chapter', id: cId };
   }
 
-  // Check hash routes
-  const levelMatch = /^level\/(\d+)/.exec(hash);
+  // Check route paths
+  const levelMatch = /^level\/(\d+)/.exec(routePath);
   if (levelMatch) {
     const lId = Number(levelMatch[1]);
     if (lId >= 1 && lId <= 3) return { type: 'level', id: lId };
   }
 
-  const trackMatch = /^track\/([a-z0-9-]+)/.exec(hash);
+  const trackMatch = /^track\/([a-z0-9-]+)/.exec(routePath);
   if (trackMatch) {
     return { type: 'track', id: trackMatch[1] };
   }
 
-  const chapterMatch = /^chapter\/(\d+)/.exec(hash);
+  const chapterMatch = /^chapter\/(\d+)/.exec(routePath);
   if (chapterMatch) {
     const cId = Number(chapterMatch[1]);
     if (cId >= 1 && cId <= 30) return { type: 'chapter', id: cId };
@@ -230,6 +264,12 @@ function HubApp() {
   const navigateAbout = () => {
     location.hash = 'about';
     setRoute({ type: 'about' });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const navigateGettingStarted = (tutorialId?: string) => {
+    location.hash = tutorialId ? `getting-started/${tutorialId}` : 'getting-started';
+    setRoute({ type: 'getting-started', tutorialId });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -275,7 +315,7 @@ function HubApp() {
     if (!slides) {
       return (
         <div className="hub-page-wrapper">
-          <Header activeNav={undefined} onNavigateHome={navigateHome} onNavigateLevel={navigateLevel} onNavigateAbout={navigateAbout} />
+          <Header activeNav={undefined} onNavigateHome={navigateHome} onNavigateGettingStarted={navigateGettingStarted} onNavigateLevel={navigateLevel} onNavigateAbout={navigateAbout} />
           <main className="document placeholder">
             <div className="eyebrow">CHAPTER {String(route.chapterId).padStart(2, '0')}</div>
             <h1>Slide Belum Tersedia</h1>
@@ -305,7 +345,7 @@ function HubApp() {
     const slides = getSlideDeckForChapter(route.chapterId) || [];
     return (
       <div className="hub-page-wrapper">
-        <Header activeNav={undefined} onNavigateHome={navigateHome} onNavigateLevel={navigateLevel} onNavigateAbout={navigateAbout} />
+        <Header activeNav={undefined} onNavigateHome={navigateHome} onNavigateGettingStarted={navigateGettingStarted} onNavigateLevel={navigateLevel} onNavigateAbout={navigateAbout} />
         <Reading
           meeting={route.chapterId}
           slides={slides}
@@ -322,7 +362,7 @@ function HubApp() {
   if (route.type === 'task') {
     return (
       <div className="hub-page-wrapper">
-        <Header activeNav={undefined} onNavigateHome={navigateHome} onNavigateLevel={navigateLevel} onNavigateAbout={navigateAbout} />
+        <Header activeNav={undefined} onNavigateHome={navigateHome} onNavigateGettingStarted={navigateGettingStarted} onNavigateLevel={navigateLevel} onNavigateAbout={navigateAbout} />
         <Task
           meeting={route.chapterId}
           onNavigateChapter={() => navigateChapter(route.chapterId)}
@@ -336,6 +376,8 @@ function HubApp() {
   const activeNav =
     route.type === 'home'
       ? 'home'
+      : route.type === 'getting-started'
+      ? 'getting-started'
       : route.type === 'level'
       ? `level-${route.id}`
       : route.type === 'about'
@@ -350,6 +392,7 @@ function HubApp() {
       <Header
         activeNav={activeNav}
         onNavigateHome={navigateHome}
+        onNavigateGettingStarted={navigateGettingStarted}
         onNavigateLevel={navigateLevel}
         onNavigateAbout={navigateAbout}
       />
@@ -358,6 +401,15 @@ function HubApp() {
           <HomePage
             onNavigateLevel={navigateLevel}
             onNavigateTrack={navigateTrack}
+            onNavigateChapter={navigateChapter}
+            onNavigateGettingStarted={navigateGettingStarted}
+          />
+        )}
+        {route.type === 'getting-started' && (
+          <GettingStartedPage
+            initialTutorialId={route.tutorialId}
+            onNavigateHome={navigateHome}
+            onNavigateLevel={navigateLevel}
             onNavigateChapter={navigateChapter}
           />
         )}
@@ -451,7 +503,7 @@ function Reading({
       </div>
       {slides.map((slide, i) => (
         <article className={`reading-slide ${slide.kind}`} key={i}>
-          <SlideContent slide={slide} meeting={meeting} base="./" />
+          <SlideContent slide={slide} meeting={meeting} base={base} />
         </article>
       ))}
     </main>
@@ -469,7 +521,12 @@ function Task({
   onNavigateSlides?: () => void;
 }) {
   const pad = String(meeting).padStart(2, '0');
-  const markdown = taskGuides[`../content/foundations/chapter-${pad}/assignments/tugas.md`] || '# Petunjuk Tugas\n\nPanduan tugas untuk chapter ini sedang disiapkan.';
+  const taskEntry = Object.entries(taskGuides).find(([k]) =>
+    k.endsWith(`/chapter-${pad}/assignments/tugas.md`),
+  );
+  const markdown = taskEntry
+    ? taskEntry[1]
+    : '# Petunjuk Tugas\n\nPanduan tugas untuk chapter ini sedang disiapkan.';
   return (
     <main className="document">
       <button

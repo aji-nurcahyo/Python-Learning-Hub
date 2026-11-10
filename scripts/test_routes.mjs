@@ -49,14 +49,46 @@ if (existsSync(pptxPath)) {
   passed = -999;
 }
 
-// Check Chapter starter downloads in dist/
-const ch08Code = resolve(dist, 'downloads/chapter-08/contoh.py');
-const ch10Code = resolve(dist, 'downloads/chapter-10/contoh.py');
-if (existsSync(ch08Code) && existsSync(ch10Code)) {
-  console.log('✓ Chapter starter code packages present in dist/downloads/');
+// Check Chapter starter downloads in dist/ (all 30 chapters)
+let missingDownloads = 0;
+for (let ch = 1; ch <= 30; ch++) {
+  const pad = String(ch).padStart(2, '0');
+  const codePath = resolve(dist, `downloads/chapter-${pad}/contoh.py`);
+  const guidePath = resolve(dist, `downloads/chapter-${pad}/tugas.md`);
+  if (!existsSync(codePath) || !existsSync(guidePath)) {
+    console.error(`✗ Missing download assets for chapter-${pad} in dist/downloads/`);
+    missingDownloads++;
+  }
+}
+if (missingDownloads === 0) {
+  console.log('✓ All 30 chapter starter code and guide packages present in dist/downloads/');
 } else {
-  console.error('✗ Chapter starter code missing in dist/downloads/');
   passed = -999;
+}
+
+// Check Getting Started & Upstream License in dist/downloads/
+const gsCode = resolve(dist, 'downloads/getting-started/main.py');
+const licenseUpstream = resolve(dist, 'downloads/LICENSE.upstream');
+if (existsSync(gsCode) && existsSync(licenseUpstream)) {
+  console.log('✓ Getting Started script and LICENSE.upstream present in dist/downloads/');
+} else {
+  console.error('✗ Getting Started script or LICENSE.upstream missing in dist/downloads/');
+  passed = -999;
+}
+
+// Check base path injection if VITE_BASE_PATH is configured
+const configuredBase = process.env.VITE_BASE_PATH?.trim();
+if (configuredBase && configuredBase !== './' && configuredBase !== '.') {
+  const normalizedBase = configuredBase.endsWith('/') ? configuredBase : `${configuredBase}/`;
+  for (const r of routes) {
+    const html = readFileSync(resolve(dist, r), 'utf-8');
+    if (!html.includes(`${normalizedBase}assets/`)) {
+      console.error(`✗ Route /${r} does not reference configured base path ${normalizedBase}assets/`);
+      passed = -999;
+    } else {
+      console.log(`✓ Route /${r} correctly references ${normalizedBase}assets/`);
+    }
+  }
 }
 
 if (passed === routes.length) {

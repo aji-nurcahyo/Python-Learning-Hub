@@ -6,7 +6,7 @@
   "levelCategory": "intermediate",
   "title": "Object-Oriented Programming II",
   "subtitle": "Inheritance, Polymorphism, super(), dan Special Dunder Methods",
-  "description": "Pewarisan sifat antar class, method overriding, pemanggilan super(), polimorfisme, komposisi vs pewarisan, dan special methods (__str__, __repr__, __eq__, __hash__).",
+  "description": "Prinsip Inheritance antar class, method overriding, pemanggilan super(), Polymorphism, Komposisi vs Inheritance, dan special methods (__str__, __repr__, __eq__, __hash__).",
   "competencyFocus": "PCAP 3.2: Inheritance, polymorphism, composition & special methods",
   "estimatedHours": 5,
   "difficulty": "Intermediate",
@@ -15,10 +15,10 @@
     "Chapter 19"
   ],
   "learningObjectives": [
-    "Membangun class turunan dan memanfaatkan pewarisan kode melalui relasi is-a",
+    "Membangun class turunan dan memanfaatkan Inheritance melalui relasi is-a",
     "Mengoverride method induk dan memanggil fungsionalitas aslinya dengan super()",
-    "Menerapkan polimorfisme dan duck typing untuk memproses koleksi objek heterogen",
-    "Membedakan kapan harus menggunakan pewarisan vs komposisi (has-a)",
+    "Menerapkan Polymorphism dan duck typing untuk memproses koleksi objek heterogen",
+    "Membedakan kapan harus menggunakan Inheritance vs Komposisi (has-a)",
     "Mengimplementasikan special methods (__str__, __repr__, __eq__, __hash__) dan memahami implikasi kesetaraan nilai serta hashability"
   ],
   "tags": [

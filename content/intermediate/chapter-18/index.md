@@ -20,7 +20,7 @@ Terjadi saat sintaksis program sudah benar, namun komputer diperintahkan untuk m
 
 ### C. Kesalahan Logika (*Logical Errors / Bugs*)
 Program berjalan lancar dari awal hingga akhir tanpa memicu exception apa pun, tetapi menghasilkan keluaran yang keliru (misalnya menghitung luas segitiga dengan rumus persegi).
-- **Solusi:** Diidentifikasi melalui pengujian unit (*unit testing*), penelusuran *traceback*, dan *debugging* sistematis.
+- **Solusi:** Diidentifikasi melalui Unit Testing, penelusuran *traceback*, dan *debugging* sistematis.
 
 ---
 

@@ -119,7 +119,7 @@
   {
     "title": "Ringkasan Materi Chapter 26",
     "kind": "content",
-    "body": "<ul><li>Pengujian unit yang cepat dan terisolasi adalah jaring pengaman utama saat refactoring kode.</li><li>Mocking memungkinkan kita menguji kegagalan jaringan dan skenario ekstrem yang sulit dibuat di dunia nyata.</li><li>Structured logging memberikan visibilitas operasional yang krusial bagi teknisi di sistem produksi.</li></ul>",
+    "body": "<ul><li>Unit Testing yang cepat dan terisolasi adalah jaring pengaman utama saat refactoring kode.</li><li>Mocking memungkinkan kita menguji kegagalan jaringan dan skenario ekstrem yang sulit dibuat di dunia nyata.</li><li>Structured logging memberikan visibilitas operasional yang krusial bagi teknisi di sistem produksi.</li></ul>",
     "notes": "Selamat! Anda telah menuntaskan seluruh modul Batch 1 Level 3: Professional Python Engineering."
   },
   {

@@ -17,7 +17,7 @@
   "learningObjectives": [
     "Mengintegrasikan Clean Architecture, Protocol subtyping, dan type hints dalam sistem produksi nyata",
     "Membangun pipeline penyerapan multi-sumber (CSV dan REST API) yang aman secara konkuren",
-    "Menghasilkan dokumen laporan SLA otomatis dan suite pengujian unit terisolasi yang andal"
+    "Menghasilkan dokumen laporan SLA otomatis dan suite Unit Testing terisolasi yang andal"
   ],
   "tags": [
     "Senior Capstone",

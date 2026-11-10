@@ -107,7 +107,7 @@
   {
     "title": "Panduan Penginstalan &amp; Konfigurasi",
     "kind": "content",
-    "body": "<ul><li><strong>Langkah 1:</strong> Buat lingkungan virtual terisolasi: <code>python -m venv venv</code>.</li><li><strong>Langkah 2:</strong> Aktifkan venv dan pasang paket dalam mode editable: <code>pip install -e .</code>.</li><li><strong>Langkah 3:</strong> Atur variabel lingkungan: <code>export APP_ENV=production</code>.</li><li><strong>Langkah 4:</strong> Jalankan platform melalui CLI: <code>python main.py --run --report</code>.</li><li><strong>Langkah 5:</strong> Verifikasi seluruh pengujian mandiri: <code>python -m unittest discover tests</code>.</li></ul>",
+    "body": "<ul><li><strong>Langkah 1:</strong> Buat Virtual Environment terisolasi: <code>python -m venv venv</code>.</li><li><strong>Langkah 2:</strong> Aktifkan venv dan pasang paket dalam mode editable: <code>pip install -e .</code>.</li><li><strong>Langkah 3:</strong> Atur variabel lingkungan: <code>export APP_ENV=production</code>.</li><li><strong>Langkah 4:</strong> Jalankan platform melalui CLI: <code>python main.py --run --report</code>.</li><li><strong>Langkah 5:</strong> Verifikasi seluruh pengujian mandiri: <code>python -m unittest discover tests</code>.</li></ul>",
     "notes": "Instruksi instalasi yang jelas memastikan pengembang baru dapat menjalankan aplikasi dalam hitungan menit."
   },
   {

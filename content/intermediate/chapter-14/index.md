@@ -219,7 +219,7 @@ Pada modul ini, Anda membangun pustaka pengolah data bernama **Dataset Transform
 # Jalankan demonstrasi deterministik
 python content/intermediate/chapter-14/code/contoh.py
 
-# Jalankan pengujian unit otomatis
+# Jalankan Unit Testing otomatis
 python -m unittest content/intermediate/chapter-14/tests/test_comprehensions.py
 ```
 

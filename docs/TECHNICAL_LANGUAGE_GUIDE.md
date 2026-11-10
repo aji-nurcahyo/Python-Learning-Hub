@@ -1,148 +1,143 @@
-# Panduan Standar Bahasa Teknis (Technical Language Style Guide)
-## Python Learning Hub — Official Technical Writing & Terminology Standard
+# Panduan Standar Bahasa Teknis & Kebijakan Terminologi Global
+## Python Learning Hub — Official Technical Language Policy & Style Guide
 
-> **Versi Panduan:** 1.0.0  
+> **Prioritas:** TERTINGGI (*HIGHEST*) — Berlaku untuk seluruh konten edukasi saat ini dan masa depan.  
+> **Versi Panduan:** 2.0.0  
 > **Tanggal Efektif:** 4 November 2026  
-> **Target Audiens:** Penulis modul, kurikulum developer, instruktur, dan kontributor konten  
-> **Prinsip Utama:** Bahasa pengantar resmi adalah **Bahasa Indonesia** yang natural, lugas, dan baku, dengan mempertahankan **terminologi teknis Python standar dalam Bahasa Inggris** untuk mencegah kerancuan makna atau terjemahan harfiah (*literal translation*) yang canggung.
+> **Ruang Lingkup:** Seluruh modul Python (Chapter 01–30), materi pembelajaran AI/ML masa depan, slide presentasi interaktif Reveal.js, tutorial setup lingkungan, penjelasan kode, latihan, tugas mandiri, serta dokumentasi kurikulum.  
+> **Prinsip Fundamental:** *"Indonesian for explanations, English for established technical terminology."* (Bahasa Indonesia untuk narasi penjelasan, Bahasa Inggris untuk terminologi teknis yang telah mapan).
 
 ---
 
-## 1. Kebijakan Bahasa Resmi (*Language Policy*)
+## 1. Prinsip Dasar & Kebijakan Bahasa
 
-1. **Bahasa Pengantar:** Seluruh narasi penjelasan konsep, pengantar bab, petunjuk instruksi latihan, deskripsi tugas, dan rubrik penilaian ditulis dalam **Bahasa Indonesia formal dan komunikatif**.
-2. **Terminologi Pemrograman:** Istilah teknis inti pemrograman Python **tetap ditulis dalam Bahasa Inggris** (diformat sebagai `code span` atau teks miring/tegak sesuai konteks), terutama istilah yang telah menjadi konvensi global dunia rekayasa perangkat lunak.
-3. **Larangan Terjemahan Harfiah (*No Literal Translations*):** Dilarang keras menerjemahkan secara kaku kata-kata teknis yang jika diterjemahkan justru menimbulkan kebingungan konseptual bagi mahasiswa dan developer (misalnya: tidak menerjemahkan `dictionary` menjadi "kamus", `slicing` menjadi "irisan", `list` menjadi "daftar", atau `exception` menjadi "pengecualian").
+Dalam dunia rekayasa perangkat lunak dan komputasi, menerjemahkan istilah teknis bahasa Inggris secara harfiah (*literal translation*) hanya karena padanan bahasa Indonesia-nya ada sering kali menimbulkan kerancuan, kebingungan konseptual, dan ketidaksesuaian dengan dokumentasi resmi pemrograman.
+
+Platform **Python Learning Hub** menetapkan kebijakan resmi:
+1. **Bahasa Pengantar:** Tulis narasi penjelasan konsep, instruksi tutorial, deskripsi tugas, dan rubrik penilaian dalam **Bahasa Indonesia yang natural, lugas, baku, dan komunikatif**.
+2. **Terminologi Teknis Standar:** Pertahankan terminologi teknis yang diakui secara internasional tetap dalam **Bahasa Inggris** (menggunakan format `code span` atau teks tegak/miring sesuai konteks).
+3. **Larangan Terjemahan Harfiah Mesin:** Jangan menggunakan terjemahan harfiah kaku (misalnya: dilarang menerjemahkan `dictionary` menjadi "kamus", `virtual environment` menjadi "lingkungan virtual", atau `inheritance` menjadi "pewarisan").
+4. **Preservasi Sintaksis & Identifier:** Pertahankan sintaksis Python, kata kunci bawaan (`def`, `class`, `yield`, `import`, dll.), nama modul/pustaka (`numpy`, `pytest`, `sqlite3`, dll.), dan nama framework tanpa modifikasi.
+5. **Kebiasaan Profesional:** Gunakan terminologi Bahasa Inggris ketika istilah tersebut jauh lebih lazim dan standar dalam industri rekayasa perangkat lunak internasional.
+6. **Penjelasan Istilah Baru:** Berikan penjelasan singkat atau definisi ketika sebuah istilah teknis baru pertama kali diperkenalkan kepada pembelajar.
+7. **Konsistensi Lintas Media:** Terapkan standar terminologi yang seragam di seluruh modul bacaan, slide presentasi, penjelasan kode, latihan (*exercises*), tugas mandiri (*assignments*), dan tutorial.
+8. **Preservasi Istilah Indonesia yang Tepat:** Jangan menulis ulang istilah Bahasa Indonesia yang memang sudah tepat dan lazim secara teknis tanpa alasan yang jelas.
+9. **Kepatuhan Atribusi & Referensi:** Jangan mengubah judul asli karya referensi eksternal atau catatan atribusi lisensi yang diwajibkan secara hukum.
+10. **Hindari Campuran Bahasa Berlebihan:** Hindari mencampuradukkan kata bahasa Inggris ke dalam kalimat narasi umum sehari-hari; gunakan istilah bahasa Inggris secara spesifik untuk konsep teknis yang telah mapan.
 
 ---
 
-## 2. Tabel Istilah Teknis yang Wajib Dipertahankan dalam Bahasa Inggris
+## 2. Tabel Standar Terminologi Baku (Avoid vs. Preferred)
 
-Terminologi berikut **tidak boleh diterjemahkan secara harfiah** dalam materi pembelajaran Python Learning Hub:
+Tabel berikut menetapkan terminologi yang **wajib digunakan (*Preferred*)** dan padanan harfiah yang **harus dihindari (*Avoid*)** di seluruh materi Python Learning Hub:
 
-| Terminologi Asli (Wajib Dipakai) | Terjemahan Harfiah yang DILARANG | Contoh Penerapan yang BENAR |
+| Istilah yang DILARANG / DIHINDARI (*Avoid*) | Terminologi Baku yang WAJIB DIGUNAKAN (*Preferred*) | Catatan Kontekstual |
 | :--- | :--- | :--- |
-| **`list`** | daftar | `list` digunakan untuk menyimpan sekumpulan elemen terurut yang mutable. |
-| **`tuple`** | tupel / daftar tetap | `tuple` bersifat immutable dan aman untuk integritas data koordinat. |
-| **`dictionary`** / **`dict`** | kamus | `dictionary` menyimpan data dalam bentuk pasangan `key-value`. |
-| **`set`** | himpunan (dalam konteks tipe) | Gunakan `set` untuk operasi keanggotaan dan deduplikasi data. |
-| **`string`** / **`str`** | untai / tali | Manipulasi teks dilakukan dengan metode bawaan pada objek `string`. |
-| **`function`** | fungsi (tetap boleh "fungsi") | Mendefinisikan `function` modular dengan kata kunci `def`. |
-| **`method`** | metode | `method` adalah fungsi yang terikat pada suatu objek atau class. |
-| **`class`** | kelas | `class` bertindak sebagai blueprint untuk menginisialisasi objek. |
-| **`object`** | objek | Setiap nilai di Python direpresentasikan sebagai sebuah `object`. |
-| **`attribute`** | atribut | Mengakses `attribute` objek menggunakan notasi titik (`obj.attr`). |
-| **`module`** | modul | Mengimpor `module` bawaan `math` dan `sys`. |
-| **`package`** | paket | Mengorganisasi kode ke dalam `package` berstruktur hierarkis. |
-| **`exception`** | pengecualian | Menangkap `exception` saat runtime menggunakan blok `try-except`. |
-| **`error handling`** | penanganan kesalahan | Menerapkan `error handling` defensif untuk menjaga keandalan sistem. |
-| **`debugging`** | penelusuran galat | Melakukan `debugging` sistematis dengan breakpoint dan `pdb`. |
-| **`loop`** | gelung | Menghentikan `loop` lebih awal dengan statement `break`. |
-| **`comprehension`** | pemahaman | Menulis `list comprehension` ringkas untuk transformasi data. |
-| **`slicing`** | irisan / pengirisan | Gunakan `slicing` `data[start:stop:step]` untuk mengambil sub-array. |
-| **`indexing`** | pengindeksan | Mengakses elemen melalui `indexing` berbasis nol (*zero-based indexing*). |
-| **`iterator`** | pengulang / penelusur | Objek `iterator` mengimplementasikan metode `__iter__()` dan `__next__()`. |
-| **`iterable`** | dapat diulang | List dan tuple merupakan struktur data yang bersifat `iterable`. |
-| **`generator`** | pembangkit | `generator` mengevaluasi elemen secara lazy (*on-demand*) dengan `yield`. |
-| **`decorator`** | penghias | Menerapkan `decorator` `@property` untuk enkapsulasi getter. |
-| **`inheritance`** | pewarisan | Menurunkan atribut dan method superclass melalui `inheritance`. |
-| **`polymorphism`** | polimorfisme | Memanfaatkan `polymorphism` antarmuka melalui method overriding. |
-| **`encapsulation`** | pengkapsulan | Menyembunyikan state internal objek melalui prinsip `encapsulation`. |
-| **`constructor`** | pembangun | Method `__init__()` bertindak sebagai `constructor` inisialisasi instance. |
-| **`scope`** | cakupan | Variabel lokal dibatasi oleh `scope` fungsi tempat ia dideklarasikan. |
-| **`return value`** | nilai balik | Fungsi menghasilkan `return value` yang dikembalikan ke pemanggil. |
-| **`parameter`** | parameter | `parameter` didefinisikan pada deklarasi tanda tangan fungsi. |
-| **`argument`** | argumen | Nilai aktual yang dikirim saat pemanggilan fungsi adalah `argument`. |
-| **`key-value pair`** | pasangan kunci-nilai | Mengiterasi `key-value pair` menggunakan `dict.items()`. |
-| **`sorting`** | pengurutan (konteks algoritma) | Melakukan `sorting` data dengan algoritma Timsort bawaan. |
-| **`searching`** | pencarian (konteks algoritma) | Melakukan `searching` linear $O(n)$ atau binary search $O(\log n)$. |
-| **`runtime`** | waktu jalan / waktu eksekusi | Terjadi runtime exception `ZeroDivisionError` saat pembagian nol. |
-| **`unit test`** | uji unit | Memverifikasi ketepatan logika modul dengan `unit test` otomatis. |
-| **`type hint`** | petunjuk tipe | Menambahkan `type hint` eksplisit untuk dokumentasi dan static analysis. |
-| **`virtual environment`**| lingkungan virtual | Mengisolasi dependensi proyek dalam `virtual environment` (`.venv`). |
-| **`file handling`** | penanganan berkas | Mengelola pembacaan dan penulisan berkas melalui `file handling`. |
-| **`serialization`** | serialisasi | Proses `serialization` data objek Python menjadi string JSON. |
-| **`deserialization`** | deserialisasi | Proses `deserialization` payload JSON mentah menjadi dictionary. |
+| Lingkungan pengembangan | **Development Environment** | Konteks konfigurasi IDE, compiler, dan tooling kerja |
+| Lingkungan pemrograman | **Programming Environment** | Ekosistem eksekusi kode dan runtime |
+| Lingkungan virtual | **Virtual Environment** | Isolasi dependensi paket via `.venv` |
+| Penerjemah Python | **Python Interpreter** | Mesin eksekusi CPython / runtime Python |
+| Penyunting kode | **Code Editor** | Perangkat lunak editor teks (misal: VS Code) |
+| Kamus Python | **Python Dictionary** / **`dict`** | Struktur data hash map pasangan key-value |
+| Daftar Python | **Python List** / **`list`** | Koleksi elemen berurutan yang mutable |
+| Pewarisan | **Inheritance** | Relasi turunan class pada paradigma OOP |
+| Pengkapsulan | **Encapsulation** | Penyembunyian state internal via private attribute |
+| Polimorfisme | **Polymorphism** | Kemampuan antarmuka seragam (duck typing/overriding) |
+| Pembelajaran mesin | **Machine Learning** | Disiplin dan algoritma pemodelan data |
+| Pembelajaran mendalam | **Deep Learning** | Arsitektur neural network berlapis banyak |
+| Jaringan saraf tiruan | **Artificial Neural Network** | Model jaringan komputasi terinspirasi biologis |
+| Pelatihan model | **Model Training** / **Training** | Proses optimasi bobot model dengan data |
+| Penyetelan halus | **Fine-Tuning** | Penyesuaian bobot pre-trained model |
+| Penyebaran model | **Model Deployment** / **Deployment** | Penerbitan model/aplikasi ke server produksi |
+| Penanganan pengecualian | **Exception Handling** | Blok proteksi `try-except-finally` |
+| Penanganan kesalahan | **Error Handling** | Strategi defensif mitigasi galat runtime |
+| Pengujian unit | **Unit Testing** | Validasi fungsional komponen via test suite |
+| Cakupan pengujian | **Test Coverage** | Persentase eksekusi kode yang diuji |
+| Pemanggilan balik | **Callback** | Fungsi yang diteruskan sebagai argumen |
+| Pengulangan asinkron | **Asynchronous Execution** | Operasi non-blocking berbasis event loop |
+| Manajemen dependensi | **Dependency Management** | Pengelolaan pustaka via pip/pyproject.toml |
+
+> **Catatan Penting:** Tabel di atas menetapkan terminologi preferensi resmi untuk Python Learning Hub, bukan menyatakan bahwa setiap padanan bahasa Indonesia salah secara inheren. Istilah Bahasa Indonesia yang telah mapan seperti **algoritma**, **variabel**, **parameter**, **perulangan**, **percabangan**, **pengujian**, dan **evaluasi** tetap digunakan secara wajar dan natural.
 
 ---
 
-## 3. Istilah Bahasa Indonesia yang Dianjurkan
+## 3. Contoh Penulisan Kalimat yang Benar (*BAD vs. GOOD*)
 
-Kosakata Bahasa Indonesia berikut telah mapan dalam terminologi akademik dan industri komputasi serta sangat dianjurkan untuk digunakan dalam kalimat narasi:
+### Contoh 1: Konfigurasi Tooling
+- ❌ **SALAH (BAD):**  
+  *"Pada bab ini kita akan menyiapkan lingkungan pengembangan Python dan memasang penerjemah Python."*
+- ✔️ **BENAR (GOOD):**  
+  *"Pada bab ini kita akan menyiapkan Python Development Environment dan menginstal Python Interpreter."*
 
-- **variabel** (bukan *peubah*)
-- **algoritma** (bukan *tatacara*)
-- **percabangan** / **kondisional** (alur seleksi logika `if-elif-else`)
-- **perulangan** / **iterasi** (eksekusi berulang `for` dan `while`)
-- **operator** (simbol komputasi seperti `+`, `-`, `==`, `and`)
-- **ekspresi** (kombinasi nilai dan operator yang menghasilkan nilai)
-- **masukan** (data masukan dari pengguna / argumen fungsi)
-- **keluaran** (hasil cetak / keluaran program di terminal)
-- **pengujian** (proses validasi kebenaran fungsional program)
-- **struktur data** (organisasi penyimpanan koleksi data)
-- **konkurensi** (penanganan multi-tugas secara bersamaan)
-- **rekursi** (fungsi yang memanggil dirinya sendiri)
+### Contoh 2: Struktur Data
+- ❌ **SALAH (BAD):**  
+  *"Buat kamus yang berisi pasangan kunci dan nilai."*
+- ✔️ **BENAR (GOOD):**  
+  *"Buat dictionary yang menyimpan pasangan key-value."*
+
+### Contoh 3: Machine Learning & Pemodelan
+- ❌ **SALAH (BAD):**  
+  *"Kita akan melakukan pelatihan model pembelajaran mesin."*
+- ✔️ **BENAR (GOOD):**  
+  *"Kita akan melakukan training pada model Machine Learning."*
+
+### Contoh 4: Isolasi Proyek & Dependensi
+- ❌ **SALAH (BAD):**  
+  *"Aktifkan lingkungan virtual sebelum menginstal paket agar tidak mencemari lingkungan global."*
+- ✔️ **BENAR (GOOD):**  
+  *"Aktifkan Virtual Environment sebelum menginstal paket agar tidak mencemari Python environment global."*
+
+### Contoh 5: Paradigma Berorientasi Objek (OOP)
+- ❌ **SALAH (BAD):**  
+  *"Pewarisan dan pengkapsulan memungkinkan kelas anak mewarisi atribut kelas induk."*
+- ✔️ **BENAR (GOOD):**  
+  *"Prinsip Inheritance dan Encapsulation memungkinkan subclass mewarisi atribut dari superclass."*
+
+### Contoh 6: Robustness & Testing
+- ❌ **SALAH (BAD):**  
+  *"Gunakan penanganan pengecualian dan lakukan pengujian unit dengan cakupan pengujian tinggi."*
+- ✔️ **BENAR (GOOD):**  
+  *"Terapkan Exception Handling dan lakukan Unit Testing dengan target Test Coverage yang tinggi."*
 
 ---
 
-## 4. Konvensi Penulisan & Tipografi
+## 4. Panduan Tipografi & Format Teks
 
 ### A. Format Kode Inline (`code span`)
 Gunakan backtick (`` `...` ``) untuk:
-- Nama tipe data bawaan (`int`, `float`, `str`, `bool`, `list`, `dict`, `set`, `tuple`).
-- Sintaksis dan kata kunci Python (`def`, `return`, `with`, `try`, `except`, `raise`, `class`, `import`).
-- Nama variabel, fungsi, method, class, dan argumen (`hitung_snr()`, `node_id`, `data_processor`).
-- Nama file, path direktori, dan ekstensi berkas (`config.json`, `data.csv`, `main.py`, `pathlib.Path`).
+- Tipe data bawaan: `int`, `float`, `str`, `bool`, `list`, `dict`, `set`, `tuple`.
+- Kata kunci Python: `def`, `class`, `return`, `with`, `try`, `except`, `raise`, `import`, `yield`.
+- Variabel, fungsi, class, argumen: `hitung_snr()`, `node_id`, `NetworkNode`.
+- File, direktori, ekstensi: `pyproject.toml`, `.venv`, `requirements.txt`, `main.py`.
+- Perintah terminal / CLI: `python3 -m venv .venv`, `py -m pip install -r requirements.txt`.
 
 ### B. Format Teks Penjelasan
-- **Huruf Tebal (**teks**)**: Digunakan untuk menekankan konsep kunci atau istilah penting saat pertama kali diperkenalkan.
-- **Huruf Miring (*teks*)**: Digunakan untuk istilah serapan asing dalam frasa non-kode, misalnya *lazy evaluation*, *eager loading*, *space-time tradeoff*, *early-stop*.
-- **KaTeX / LaTeX Math**: Digunakan untuk formula matematis atau notasi asimtotik komputasi ($O(1)$, $O(\log n)$, $O(n)$, $O(n \log n)$, $O(n^2)$).
+- **Huruf Tebal (**teks**)**: Digunakan untuk penekanan konsep penting saat pertama kali dikenalkan.
+- **Huruf Miring (*teks*)**: Digunakan untuk istilah asing non-kode, misalnya *lazy evaluation*, *type coercion*, *race condition*.
+- **KaTeX / LaTeX Math**: Digunakan untuk formula matematis atau notasi asimtotik komputasi ($O(1)$, $O(\log n)$, $O(n)$, $O(n \log n)$).
 
 ---
 
-## 5. Kaidah Penulisan Komentar Kode Python
+## 5. Komentar Kode & Docstring
 
-Komentar di dalam berkas Python (`# komentar`) dan docstring (`"""docstring"""`) harus mematuhi kaidah:
-1. **Bahasa Indonesia Baku & Jelas:** Komentar baris bertujuan memandu pembelajar memahami alur algoritma.
-2. **Singkat dan Kontekstual:** Menjelaskan *alasan* (why) dan bukan sekadar mengulang kode (what).
-3. **Identifier Tetap Bahasa Indonesia / Standar Teknis:**
-   ```python
-   # BENAR:
-   # 1. Menyiapkan dataset pencarian berukuran 10.000 elemen
-   dataset = list(range(10_000))
-   target = 9_999
+Komentar di dalam skrip Python (`# komentar`) dan docstring (`"""docstring"""`) mematuhi kaidah:
+1. Narasi menggunakan Bahasa Indonesia yang ringkas dan komunikatif.
+2. Identifier dan nama fungsi menggunakan konvensi PEP 8.
+3. Istilah teknis tetap dalam Bahasa Inggris.
 
-   # 2. Uji lookup menggunakan set O(1)
-   himpunan_data = set(dataset)
-   ditemukan = target in himpunan_data
-   ```
-
----
-
-## 6. Contoh Perbandingan Frasa (*Before & After*)
-
-| Kalimat Canggung / Terjemahan Kaku | Kalimat Standar yang Disempurnakan |
-| :--- | :--- |
-| *Kamus Python digunakan untuk menyimpan pasangan kunci dan nilai.* | *`dictionary` digunakan untuk menyimpan data dalam bentuk pasangan `key-value`.* |
-| *Gunakan irisan untuk memotong daftar menjadi potongan lebih kecil.* | *Gunakan `slicing` untuk mengambil subset elemen dari `list`.* |
-| *Pengecualian dilemparkan saat indeks daftar melampaui batas.* | *Runtime exception `IndexError` dipicu saat indeks `list` berada di luar rentang valid.* |
-| *Pembangkit melakukan evaluasi malas dengan menghasilkan nilai demi nilai.* | *`generator` menerapkan evaluasi lazy (*on-demand*) menggunakan kata kunci `yield`.* |
-| *Penghias fungsi membungkus fungsi lain dengan logika tambahan.* | *`decorator` menerima sebuah fungsi dan mengembalikan fungsi baru dengan fungsionalitas tambahan.* |
-| *Petunjuk tipe diperiksa oleh pemeriksa tipe statis.* | *`type hint` divalidasi oleh static type checker seperti mypy.* |
-| *Penanganan berkas menggunakan manajer konteks memastikan berkas ditutup.* | *`file handling` menggunakan context manager `with` menjamin berkas ditutup secara otomatis.* |
+```python
+# Inisialisasi Virtual Environment dan konfigurasi Dependency Management
+# Memuat data telemetri ke dalam dictionary dengan skema key-value terstruktur
+telemetry_data: dict[str, float] = {
+    "latency_ms": 24.5,
+    "packet_loss_pct": 0.02
+}
+```
 
 ---
 
-## 7. Panduan Khusus Slide Presentasi (Reveal.js)
+## 6. Integrasi dengan Aturan AI Agent (Antigravity Workspace Rule)
 
-1. **Judul Slide:** Ringkas, langsung ke inti konsep, tanpa singkatan non-standar.
-2. **Kepadatan Teks:** Maksimal 3–5 butir poin per slide. Jangan menyalin paragraf panjang modul ke dalam slide.
-3. **Pemisahan Kode:** Jika kode contoh lebih dari 12–15 baris, bagi menjadi 2 slide berturutan (misal: "Implementasi Bagian 1" dan "Implementasi Bagian 2").
-4. **Identitas Resmi:** Seluruh slide wajib menyertakan identitas platform resmi:
-   - Platform: **Python Learning Hub**
-   - Tagline: **Learn Python, One Chapter at a Time**
-   - Author: **Aji Pamungkas Tri Nurcahyo**
-   - Institusi: **Institut Teknologi Sumatera**
-   - Bebas dari istilah legacy (*pertemuan*, *pengkom*, *alpro*, *prodi*, *fakultas*).
-
+Kebijakan ini dienkapsulasi ke dalam berkas aturan workspace agent:
+- `.agent/rules/technical-terminology.md`
+- Berlaku otomatis bagi seluruh asisten AI pemrograman untuk memvalidasi setiap generasi modul, slide, latihan, dan tutorial baru.

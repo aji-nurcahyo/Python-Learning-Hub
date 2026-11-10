@@ -54,8 +54,10 @@
 
         // Generic SPA redirect to hash route
         if (route) {
-          var target = base + '#' + route + (l.search ? (route.includes('?') ? '&' : '?') + l.search.slice(1) : '') + l.hash;
+          var target = base + (l.search || '') + '#' + route;
           l.replace(target);
+        } else if (hasRepoPrefix && !path.endsWith('/')) {
+          l.replace(base + (l.search || '') + (l.hash || ''));
         }
       })();
     </script>

@@ -15,7 +15,7 @@
     "title": "Taksonomi Galat dalam Pemrograman",
     "body": "<ul><li><strong>Syntax Errors (Parsing-Time):</strong> Pelanggaran tata bahasa Python (misal tanda titik dua hilang). Terdeteksi oleh interpreter sebelum program dijalankan.</li><li><strong>Runtime Exceptions (Execution-Time):</strong> Operasi tidak sah saat program berjalan (pembagian nol, file tidak ditemukan, indeks terlampaui).</li><li><strong>Logical Errors (Semantics):</strong> Program berjalan mulus tanpa error namun menghasilkan keluaran kalkulasi yang keliru.</li></ul>",
     "kind": "content",
-    "notes": "Tekankan bahwa exception handling berfokus pada Runtime Exceptions, sedangkan logical errors diatasi melalui debugging dan pengujian unit."
+    "notes": "Tekankan bahwa exception handling berfokus pada Runtime Exceptions, sedangkan logical errors diatasi melalui debugging dan Unit Testing."
   },
   {
     "title": "Hirarki Built-in Exception Python",
