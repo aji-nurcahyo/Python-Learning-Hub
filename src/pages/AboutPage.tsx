@@ -1,5 +1,6 @@
 import { Icon } from '../ui/Icon';
 import { getAssetUrl } from '../curriculum/resources';
+import { CURRICULUM_DISCLAIMER } from '../curriculum';
 
 interface AboutPageProps {
   onNavigateHome: () => void;
@@ -111,8 +112,8 @@ export function AboutPage({ onNavigateHome, onNavigateLevel }: AboutPageProps) {
             </div>
             <div className="philosophy-item">
               <div className="philosophy-num">02</div>
-              <h4>Eksekusi Nyata & Praktis</h4>
-              <p>Seluruh keluaran program berasal dari eksekusi CPython 3 riil tanpa simulasi rekaan browser.</p>
+              <h4>Eksekusi Nyata &amp; Teruji</h4>
+              <p>Seluruh keluaran program pada contoh kode divalidasi langsung menggunakan Python Interpreter (CPython 3).</p>
             </div>
             <div className="philosophy-item">
               <div className="philosophy-num">03</div>
@@ -126,8 +127,8 @@ export function AboutPage({ onNavigateHome, onNavigateLevel }: AboutPageProps) {
             </div>
             <div className="philosophy-item">
               <div className="philosophy-num">05</div>
-              <h4>Keterampilan Teruji & Reusable</h4>
-              <p>Mengajarkan konvensi PEP 8, modularitas kode, penanganan error, dan struktur data standar industri.</p>
+              <h4>Keterampilan Teruji &amp; Reusable</h4>
+              <p>Mengajarkan konvensi PEP 8, modularitas kode, Error Handling, Unit Testing, dan struktur data standar industri.</p>
             </div>
             <div className="philosophy-item">
               <div className="philosophy-num">06</div>
@@ -135,6 +136,31 @@ export function AboutPage({ onNavigateHome, onNavigateLevel }: AboutPageProps) {
               <p>Materi pembelajaran dapat diakses secara gratis dan terbuka untuk kemajuan pendidikan pemrograman.</p>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Content Section: Quality & Academic Standards */}
+      <section className="about-section-card" id="standards">
+        <div className="about-card-header">
+          <div className="about-icon-pill">
+            <Icon name="verified" size={24} />
+          </div>
+          <div>
+            <h2>Standar Kualitas, Pengujian &amp; Disclaimer Akademik</h2>
+            <p className="about-card-desc">Quality Assurance Methodology &amp; Curriculum Alignment Disclaimer</p>
+          </div>
+        </div>
+        <div className="about-card-body">
+          <p>
+            <strong>Metodologi Pengujian Konten &amp; Kode:</strong> Setiap pembaruan kurikulum divalidasi melalui
+            rangkaian skrip pemeriksaan otomatis: verifikasi luaran 209 contoh kode Python terhadap runtime CPython 3
+            (<code>check:outputs</code>), eksekusi 19 suite <em>Unit Testing</em> modular untuk modul Intermediate dan
+            Professional, validasi konsistensi aset statis (<code>check:resources</code> &amp; <code>check:content</code>),
+            serta pengecekan struktur slide presentasi.
+          </p>
+          <p>
+            <strong>Pernyataan Standar Akademik &amp; Sertifikasi:</strong> {CURRICULUM_DISCLAIMER}
+          </p>
         </div>
       </section>
 

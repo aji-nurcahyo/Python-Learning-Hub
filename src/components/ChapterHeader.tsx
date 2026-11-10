@@ -69,25 +69,14 @@ export function ChapterHeader({
         {chapter.available && (
           <div className="chapter-launch-bar">
             <div className="launch-group">
-              {(chapter.resources?.hasSlides ?? hasInteractivePresentation(chapter.id)) ? (
+              {hasInteractivePresentation(chapter.id) && (
                 <button
                   type="button"
                   className="button primary button-lg"
                   onClick={() => (onNavigateSlides ? onNavigateSlides(chapter.id) : (location.hash = `chapter/${chapter.id}/slides`))}
                 >
                   <Icon name="slideshow" size={20} />
-                  <span>Buka Presentasi Interaktif Reveal.js</span>
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  className="button subtle button-lg"
-                  disabled
-                  title="Slide presentasi interaktif sedang disiapkan untuk modul ini"
-                  style={{ opacity: 0.65, cursor: 'not-allowed' }}
-                >
-                  <Icon name="slideshow" size={20} />
-                  <span>Slide Sedang Disiapkan</span>
+                  <span>Buka Slide</span>
                 </button>
               )}
               <button
@@ -96,7 +85,7 @@ export function ChapterHeader({
                 onClick={() => (onNavigateReading ? onNavigateReading(chapter.id) : (location.hash = `chapter/${chapter.id}/read`))}
               >
                 <Icon name="menu_book" size={20} />
-                <span>Mode Baca Dokumen</span>
+                <span>Baca Materi</span>
               </button>
               <button
                 type="button"
@@ -104,7 +93,7 @@ export function ChapterHeader({
                 onClick={() => (onNavigateTask ? onNavigateTask(chapter.id) : (location.hash = `chapter/${chapter.id}/task`))}
               >
                 <Icon name="assignment" size={20} />
-                <span>Tugas Mandiri</span>
+                <span>Lihat Tugas</span>
               </button>
             </div>
           </div>

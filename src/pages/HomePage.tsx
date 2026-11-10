@@ -3,13 +3,11 @@ import {
   LEVELS,
   CHAPTERS,
   SPECIALIZATION_TRACKS,
-  CURRICULUM_DISCLAIMER,
   type Level,
   type Chapter,
 } from '../curriculum';
 import { DifficultyBadge } from '../components/DifficultyBadge';
 import { Icon } from '../ui/Icon';
-import { getAssetUrl } from '../curriculum/resources';
 
 interface HomePageProps {
   onNavigateLevel: (levelId: number) => void;
@@ -247,8 +245,8 @@ export function HomePage({
             <div className="step-number">01</div>
             <div className="step-content">
               <h4>Foundations (Ch 01–12)</h4>
-              <p>Sintaks Python 3, variabel, logika if/else, perulangan, list, dict, set, dan fungsi modular.</p>
-              <span className="roadmap-tag">Sertifikasi: Aligned PCEP</span>
+              <p>Sintaks Python 3, variabel, logika if/else, perulangan, list, dictionary, set, dan fungsi modular.</p>
+              <span className="roadmap-tag">Dasar Pemrograman &amp; Logika</span>
             </div>
           </div>
           <div className="roadmap-arrow">→</div>
@@ -256,8 +254,8 @@ export function HomePage({
             <div className="step-number">02</div>
             <div className="step-content">
               <h4>Intermediate (Ch 13–22)</h4>
-              <p>Algoritma pencarian/pengurutan, penanganan file, exception handling, dan OOP (Class & Inheritence).</p>
-              <span className="roadmap-tag">Sertifikasi: Aligned PCAP</span>
+              <p>Algoritma searching &amp; sorting, File Handling, Exception Handling, dan OOP (Class &amp; Inheritance).</p>
+              <span className="roadmap-tag">Struktur Data, File &amp; OOP</span>
             </div>
           </div>
           <div className="roadmap-arrow">→</div>
@@ -460,39 +458,6 @@ export function HomePage({
             </button>
           </div>
         )}
-      </section>
-
-      {/* Quality & Pedagogy Note */}
-      <section className="hub-pedagogy-section">
-        <div className="pedagogy-card">
-          <div className="pedagogy-symbol">&lt;/&gt;</div>
-          <div className="pedagogy-body">
-            <h3>Rekayasa Kode Python Terverifikasi</h3>
-            <p>
-              Seluruh contoh kode dalam platform ini dijalankan menggunakan interpreter CPython standar.
-              Hasil eksekusi terminal yang ditampilkan adalah keluaran sistem sebenarnya tanpa simulasi buatan.
-              Pelajari kode, uji di mesin lokal Anda, dan bangun intuisi pemrograman yang presisi.
-            </p>
-          </div>
-          <div className="pedagogy-actions">
-            <a
-              href={getAssetUrl('downloads/Materi_Pengkom_Pertemuan_9_10_Python.pptx')}
-              className="button subtle"
-              download
-            >
-              <Icon name="download" size={18} />
-              <span>Unduh Slide Sumber (.pptx)</span>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* Curriculum Disclaimer Notice */}
-      <section className="hub-disclaimer-section">
-        <div className="disclaimer-inner">
-          <Icon name="gavel" size={20} />
-          <p>{CURRICULUM_DISCLAIMER}</p>
-        </div>
       </section>
     </div>
   );

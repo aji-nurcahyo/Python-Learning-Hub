@@ -179,8 +179,8 @@ export function ChapterLayout({
               return (
                 <ResourceDownloads
                   pptxUrl={res.powerpoint}
-                  starterCodeUrl={res.pythonFiles[0] || (chapter.resources?.starterCode ? `downloads/chapter-${chapter.number}/contoh.py` : undefined)}
-                  guideUrl={res.assignmentGuide || (chapter.resources?.assignmentGuide ? `downloads/chapter-${chapter.number}/tugas.md` : undefined)}
+                  starterCodeUrl={res.pythonFiles[0] || null}
+                  guideUrl={res.assignmentGuide}
                 />
               );
             })()}

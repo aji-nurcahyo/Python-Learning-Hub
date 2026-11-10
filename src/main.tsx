@@ -140,8 +140,7 @@ function Footer() {
         <a href="https://github.com/informatika-itera/pengkom" target="_blank" rel="noreferrer">
           Pengkom ITERA
         </a>{' '}
-        · React 19 + Reveal.js 6 ·{' '}
-        <a href={`${base}downloads/LICENSE.upstream`}>Lisensi MIT</a>
+        · <a href={`${base}downloads/LICENSE.upstream`}>Lisensi MIT</a>
       </div>
     </footer>
   );
@@ -490,14 +489,14 @@ function Reading({
             className="button primary"
             onClick={() => (onNavigateSlides ? onNavigateSlides() : (location.hash = `chapter/${meeting}/slides`))}
           >
-            <Icon name="slideshow" size={16} /> <span>Buka Mode Presentasi</span>
+            <Icon name="slideshow" size={16} /> <span>Buka Slide</span>
           </button>
           <button
             type="button"
             className="button subtle"
             onClick={() => (onNavigateTask ? onNavigateTask() : (location.hash = `chapter/${meeting}/task`))}
           >
-            <Icon name="assignment" size={16} /> <span>Lihat Tugas Mandiri</span>
+            <Icon name="assignment" size={16} /> <span>Lihat Tugas</span>
           </button>
         </div>
       </div>
@@ -555,14 +554,14 @@ function Task({
           className="button primary"
           onClick={() => (onNavigateSlides ? onNavigateSlides() : (location.hash = `chapter/${meeting}/slides`))}
         >
-          <Icon name="slideshow" size={16} /> <span>Buka Mode Presentasi</span>
+          <Icon name="slideshow" size={16} /> <span>Buka Slide</span>
         </button>
         <a
           className="button subtle"
           href={`${base}downloads/chapter-${String(meeting).padStart(2, '0')}/contoh.py`}
           download
         >
-          <Icon name="download" size={16} /> <span>Unduh Contoh Python (.py)</span>
+          <Icon name="download" size={16} /> <span>Download Python Code</span>
         </a>
       </div>
     </main>

@@ -65,8 +65,7 @@ export function ChapterPage({
           <div>
             <h4>Pendekatan Belajar Terarah</h4>
             <p>
-              Mulailah dengan menyimak materi presentasi interaktif Reveal.js untuk memahami konsep visual dan rumus komputasional.
-              Lanjutkan dengan membaca contoh kode nyata, mencoba latihan mandiri, menjawab kuis penguatan konsep, dan menyelesaikan tugas terstruktur.
+              Mulailah dengan mempelajari slide, kemudian baca penjelasan materi, coba contoh kode, dan kerjakan latihan serta kuis penguatan konsep.
             </p>
           </div>
         </div>
@@ -76,10 +75,10 @@ export function ChapterPage({
           <div>
             <div className="section-heading-clean">
               <div>
-                <div className="eyebrow">EKSEKUSI PYTHON 3 ASLI</div>
-                <h3>Kode Sumber & Hasil Keluaran Terminal</h3>
+                <div className="eyebrow">CONTOH KODE PYTHON</div>
+                <h3>Kode Sumber & Output Terminal</h3>
               </div>
-              <p>Kode berikut dijalankan langsung di mesin Python Interpreter tanpa simulasi.</p>
+              <p>Pelajari implementasi kode Python berikut beserta keluaran program di terminal.</p>
             </div>
 
             <div className="code-output-side-by-side">

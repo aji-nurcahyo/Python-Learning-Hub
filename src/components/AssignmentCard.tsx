@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Icon } from '../ui/Icon';
 import { CodeBlock } from './CodeBlock';
-import { getAssetUrl } from '../curriculum/resources';
 
 export interface RubricItem {
   criteria: string;
@@ -28,8 +27,6 @@ export function AssignmentCard({
   rubric,
   starterCode,
   starterFilename = 'tugas.py',
-  downloadMdUrl,
-  downloadPyUrl,
   deadlineNotice = 'Kerjakan secara mandiri atau dalam kelompok praktikum sesuai arahan instruktur.',
 }: AssignmentCardProps) {
   const [showStarter, setShowStarter] = useState(false);
@@ -117,17 +114,7 @@ export function AssignmentCard({
       </div>
 
       <div className="assignment-actions">
-        {downloadMdUrl && (
-          <a className="button primary" href={getAssetUrl(downloadMdUrl)} download>
-            <Icon name="download" size={16} /> <span>Unduh Panduan (.md)</span>
-          </a>
-        )}
-        {downloadPyUrl && (
-          <a className="button subtle" href={getAssetUrl(downloadPyUrl)} download>
-            <Icon name="download" size={16} /> <span>Unduh Starter (.py)</span>
-          </a>
-        )}
-        <div className="assignment-deadline-info">
+        <div className="assignment-deadline-info" style={{ marginLeft: 0 }}>
           <Icon name="info" size={16} />
           <span>{deadlineNotice}</span>
         </div>
