@@ -1,0 +1,93 @@
+{
+  "id": "C04",
+  "trackId": "web-api",
+  "trackTitle": "Web Development & APIs",
+  "order": 4,
+  "title": "API Security, Config, Logging & Testing",
+  "subtitle": "Environment Variables, Password Hashing PBKDF2, Bearer Token & Middleware",
+  "description": "Amankan dan audit REST API Anda dengan konfigurasi environment variables, password hashing kriptografis (PBKDF2-HMAC + compare_digest), Bearer token guard berbasis Depends, logging middleware terstruktur, serta automated security tests.",
+  "difficulty": "Intermediate",
+  "estimatedHours": 5,
+  "prerequisites": [
+    "Modul C02 (Modern REST API with FastAPI & Pydantic)",
+    "Modul C03 (Database Persistence with SQLAlchemy ORM)",
+    "Chapter 26 (Advanced Testing & Logging)"
+  ],
+  "learningObjectives": [
+    "Memisahkan rahasia konfigurasi dari kode sumber melalui environment variables.",
+    "Melakukan hashing password memakai hashlib.pbkdf2_hmac + salt acak dan verifikasi konstan-waktu hmac.compare_digest.",
+    "Melindungi rute sensitif FastAPI menggunakan HTTPBearer / Depends auth guard (401 Unauthorized).",
+    "Membangun HTTP middleware untuk mencatat request path, status code, dan latensi proses secara terstruktur."
+  ],
+  "dependencies": ["fastapi>=0.115", "pydantic>=2.7", "httpx>=0.27", "pytest>=8.0"],
+  "tags": ["security", "authentication", "logging", "middleware", "testing"],
+  "codeExample": {
+    "title": "Password Hashing Kriptografis & Token HMAC Bertanda Tangan",
+    "filename": "c04_02_password_hash_hmac_token.py",
+    "outputKey": "spec/C04/c04_02_password_hash_hmac_token",
+    "explanation": "Skrip ini mendemonstrasikan hashing kata sandi memakai PBKDF2-HMAC-SHA256 bersalt acak, verifikasi aman menggunakan hmac.compare_digest (anti timing attack), serta pembuatan dan verifikasi token akses bertanda tangan HMAC."
+  },
+  "exercise": {
+    "title": "Proteksi Endpoint Admin & Audit Middleware Log",
+    "instructions": [
+      "Implementasikan fungsi hash_password(raw) dan verify_password(raw, stored) memakai hashlib.pbkdf2_hmac.",
+      "Buat fungsi create_signed_token(subject, secret, ttl_sec) dan verify_signed_token(token, secret) menggunakan HMAC-SHA256 + JSON base64url.",
+      "Tambahkan dependency verify_bearer_token ke endpoint GET /admin/metrics.",
+      "Uji via TestClient bahwa request tanpa header Authorization memicu HTTP 401 dan token valid membalas 200 OK."
+    ],
+    "tips": "Selalu gunakan hmac.compare_digest untuk membandingkan signature atau hash, jangan memakai operator == yang rentan timing side-channel attack.",
+    "time": "55 Menit"
+  },
+  "quiz": {
+    "question": "Mengapa kata sandi pengguna tidak boleh disimpan dalam bentuk plain-text maupun hash SHA-256 tunggal tanpa salt, dan sebaiknya memakai PBKDF2 / scrypt / bcrypt?",
+    "options": [
+      "Karena SHA-256 tidak didukung di Python 3.12",
+      "Karena SHA-256 cepat sekali dihitung GPU dan tanpa salt rentan terhadap serangan Rainbow Table untuk password yang sama",
+      "Karena PBKDF2 otomatis mengenkripsi seluruh tabel database menjadi XML",
+      "Karena plain-text membuat file SQLite melebihi batas 2 MB"
+    ],
+    "correctIndex": 1,
+    "explanation": "Salt acak unik per pengguna mengalahkan precomputed Rainbow Table, sementara key-stretching (ratusan ribu iterasi PBKDF2/scrypt/bcrypt) memperlambat serangan brute-force secara drastis.",
+    "hint": "Pertimbangkan kecepatan tebak brute-force modern di GPU serta tabrakan hash untuk kata sandi populer yang sama."
+  },
+  "assignment": {
+    "title": "Proyek Mini: Middleware Audit & Autentikasi Token untuk FastAPI",
+    "description": "Tambahkan lapisan keamanan dan observability ke aplikasi FastAPI berupa konfigurasi env, hashing PBKDF2, dependency token HMAC berbatas waktu, dan request logging middleware.",
+    "instructions": [
+      "Implementasikan AppSettings.from_env(environ_mapping) membaca APP_ENV, API_SECRET, dan TOKEN_TTL_SECONDS tanpa hardcoded production secret.",
+      "Implementasikan hash_secret_value / verify_secret_value menggunakan hashlib.pbkdf2_hmac dan secrets.token_hex.",
+      "Implementasikan issue_token & decode_verified_token menggunakan HMAC-SHA256 dengan validasi expiry timestamp.",
+      "Bangun app FastAPI terlindungi token di endpoint privat dan verifikasi perilaku 401, 200, dan expired token lewat pytest."
+    ],
+    "rubric": [
+      { "criteria": "Manajemen Konfigurasi Env Bebas Hardcoded Secret", "weight": 20, "description": "Settings terbaca fleksibel dari environment mapping dengan validasi ketat." },
+      { "criteria": "Hashing Kriptografis & Token HMAC-SHA256", "weight": 30, "description": "Salt acak, compare_digest konstan-waktu, dan pengecekan kedaluwarsa berjalan tepat." },
+      { "criteria": "FastAPI Security Guard & Logging Middleware", "weight": 30, "description": "Mengembalikan 401 pada token hilang/palsu dan mencatat request terstruktur." },
+      { "criteria": "Cakupan Security Unit Tests (Pytest)", "weight": 20, "description": "Seluruh kasus positif, expired, tampered, dan log output teruji." }
+    ],
+    "starterFilename": "tugas.py"
+  },
+  "resources": {
+    "hasSlides": true,
+    "codeDownload": "/downloads/specializations/C04/c04_02_password_hash_hmac_token.py",
+    "notebookDownload": null,
+    "datasetDownload": null,
+    "guideDownload": "/downloads/specializations/C04/tugas.md",
+    "pptxDownload": null
+  },
+  "references": [
+    {
+      "title": "FastAPI Security Tutorial: First Steps & OAuth2 Bearer",
+      "source": "FastAPI Developers",
+      "url": "https://fastapi.tiangolo.com/tutorial/security/",
+      "license": "MIT"
+    },
+    {
+      "title": "Python Standard Library Security Modules: secrets, hmac & hashlib",
+      "source": "Python Software Foundation",
+      "url": "https://docs.python.org/3/library/secrets.html",
+      "license": "PSF-2.0"
+    }
+  ]
+}
+

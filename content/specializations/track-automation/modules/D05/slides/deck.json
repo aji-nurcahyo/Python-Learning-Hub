@@ -1,0 +1,100 @@
+[
+  {
+    "title": "Capstone: Autonomous Ingestion & Reporting Bot",
+    "subtitle": "End-to-End Scraping, Excel/PDF Export, Rotating ZIP, Idempotency & Webhook",
+    "kind": "cover",
+    "body": "<p>Menyatukan seluruh materi Track D (pathlib, OpenPyXL, fpdf2, BeautifulSoup, Retry Backoff &amp; Idempotent Ledger) menjadi bot pelaporan harian otonom teruji.</p>",
+    "notes": "Capstone Track D meniru sistem otomasi laporan harian nyata di tim Data Ops maupun Finance."
+  },
+  {
+    "title": "Arsitektur Orkestrasi Bot Harian",
+    "kind": "content",
+    "body": "<ul><li><strong>Stage 1 — Feed Collector:</strong> Ambil HTML harian dengan <code>httpx.Client</code> tahan retry dan parse dengan <code>BeautifulSoup4</code>.</li><li><strong>Stage 2 — Dual Publisher:</strong> Ekspor ke Excel berformula aktif (<code>openpyxl</code>) + ringkasan eksekutif PDF (<code>fpdf2</code>).</li><li><strong>Stage 3 — Archive &amp; Notify:</strong> Kompresi laporan ke arsip <code>.zip</code> berotasi lalu kirim webhook ringkasan.</li><li><strong>Stage 4 — Ledger Commit:</strong> Catat batch tanggal selesai di akhir siklus.</li></ul>",
+    "notes": "Setiap tahap dipisahkan ke fungsi modular agar mudah dirawat dan diuji secara terisolasi."
+  },
+  {
+    "title": "Tahap 1: Pengambilan Feed Tahan Gangguan",
+    "kind": "content",
+    "body": "<ul><li><strong>Retry Selektif:</strong> Bila server sumber mengembalikan <code>503 Service Unavailable</code> sesaat, ulangi hingga batas percobaan.</li><li><strong>Normalisasi Nilai:</strong> Ubah string harga <code>'Rp 2.400.000'</code> menjadi integer bersih <code>2400000</code> segera saat ekstraksi.</li></ul>",
+    "notes": "Validasi tipe segera di batas ingestion mencegah error kalkulasi di tahap openpyxl dan PDF."
+  },
+  {
+    "title": "Contoh Kode: Feed Collector Berbasis BeautifulSoup + Retry",
+    "kind": "code",
+    "example": "spec/D05/d05_01_feed_collector",
+    "body": "<p>Mengunduh <code>daily_feed_snapshot.html</code> lewat <code>MockTransport</code> yang membalas HTTP 503 di percobaan pertama lalu 200 OK.</p>",
+    "notes": "Perhatikan bot langsung memulihkan diri pada percobaan kedua dan mem-parsing semua baris."
+  },
+  {
+    "title": "Tahap 2: Publikasi Ganda Excel (.xlsx) + PDF (.pdf)",
+    "kind": "content",
+    "body": "<ul><li><strong>Workbook Excel Terstruktur:</strong> Header berlatar kontras, number format ribuan <code>#,##0</code>, dan formula dinamis <code>=SUM(B2:B4)</code>.</li><li><strong>Laporan PDF Baku:</strong> Dokumen siap cetak dengan judul tanggal batch serta kolom angka rata kanan.</li></ul>",
+    "notes": "Satu set data tervalidasi menjadi sumber tunggal untuk dua format distribusi berbeda."
+  },
+  {
+    "title": "Contoh Kode: Publisher Excel + PDF",
+    "kind": "code",
+    "example": "spec/D05/d05_02_excel_pdf_publisher",
+    "body": "<p>Menerbitkan sepasang file <code>daily_report_2025-02-10.xlsx</code> dan <code>.pdf</code> secara otomatis ke folder laporan target.</p>",
+    "notes": "Penamaan file bertanggal YYYY-MM-DD mencegah penimpaan antar laporan harian."
+  },
+  {
+    "title": "Tahap 3: Arsip ZIP Berotasi & State Store",
+    "kind": "content",
+    "body": "<ul><li><strong>Backup Harian Ringkas:</strong> Satukan Excel dan PDF menjadi satu berkas <code>bundle_YYYY-MM-DD.zip</code> dengan kompresi ZIP_DEFLATED.</li><li><strong>Retensi Otomatis:</strong> Hapus ZIP lama secara otomatis di luar <code>keep=3</code> agar storage server tetap lega.</li></ul>",
+    "notes": "Pengarsipan otomatis memudahkan audit historis jika stakeholder meminta laporan bulan lalu."
+  },
+  {
+    "title": "Contoh Kode: Rotating Archive, State & Webhook",
+    "kind": "code",
+    "example": "spec/D05/d05_03_idempotent_notifier",
+    "body": "<p>Mengelola arsip ZIP berotasi, state JSON <code>BotStateStore</code>, serta pengiriman notifikasi penyelesaian lewat HTTP webhook.</p>",
+    "notes": "Webhook mengirim ringkasan total biaya dan nama arsip hasil proses."
+  },
+  {
+    "title": "Tahap 4: Urutan Commit Ledger yang Aman",
+    "kind": "content",
+    "body": "<ul><li><strong>Aturan Transaksi:</strong> Jangan catat status selesai di awal skrip sebelum ekspor dan notifikasi beres!</li><li><strong>Eksekusi 1 vs Eksekusi 2:</strong> Run ke-1 mengembalikan <code>EXECUTED</code>; run ke-2 di tanggal sama langsung mendeteksi ledger dan mengembalikan <code>SKIPPED_IDEMPOTENT</code>.</li></ul>",
+    "notes": "Uji perilaku dua run berturut-turut menjadi penguji wajib sifat idempotency bot."
+  },
+  {
+    "title": "Contoh Kode: Orkestrator Autonomous Reporting Bot",
+    "kind": "code",
+    "example": "spec/D05/d05_04_reporting_bot_runner",
+    "body": "<p>Menjalankan simulasi penuh dua eksekusi berturut-turut untuk tanggal <code>2025-02-10</code> dan memverifikasi pencegahan duplikasi otomatis.</p>",
+    "notes": "Run ke-1 mengeksekusi 100% pipeline; Run ke-2 langsung skip tanpa mengirim webhook ganda."
+  },
+  {
+    "title": "Integration Test Menyeluruh untuk Bot",
+    "kind": "content",
+    "body": "<ul><li><strong>Cek 5 Hal Sekaligus:</strong> Status run-1 &amp; run-2, jumlah panggilan webhook tepat <code>1</code>, formula <code>=SUM</code> di Excel, header biner <code>%PDF-</code>, dan keberadaan ZIP.</li><li><strong>Eksekusi Instan:</strong> Seluruh integrasi terverifikasi dalam <code>tmp_path</code> tanpa internet eksternal maupun sisa file.</li></ul>",
+    "notes": "Lihat test_d05_capstone.py sebagai contoh pengujian end-to-end berstandar industri."
+  },
+  {
+    "title": "Praktik Deployment Otomasi Terjadwal",
+    "kind": "content",
+    "body": "<ul><li><strong>Jadwal Harian:</strong> Jalankan lewat crontab Linux, Windows Task Scheduler, atau GitHub Actions <code>schedule</code> cron.</li><li><strong>Isolasi Folder Kerja:</strong> Gunakan path berbasis environment variable untuk direktori laporan dan ledger.</li><li><strong>Alerting Kegagalan:</strong> Pastikan pengecualian tidak tertangkap memicu notifikasi darurat dan exit code 1.</li></ul>",
+    "notes": "Jika memakai GitHub Actions schedule, hasil arsip juga dapat disimpan sebagai workflow artifact atau dirilis ke storage cloud."
+  },
+  {
+    "title": "Kuis Cepat: Urutan Transaksi Bot Idempoten",
+    "kind": "question",
+    "body": "<p>Uji pemahaman Anda mengenai ketahanan bot pelaporan terhadap kegagalan di tengah proses.</p>",
+    "question": "Apa akibatnya jika developer memanggil ledger.record_done(job_key) tepat setelah fetch_daily_feed() berhasil, sebelum publish_excel_and_pdf() dipanggil?",
+    "answer": "Apabila pembuatan PDF gagal karena disk penuh atau bug template, ledger sudah terlanjur menandai hari tersebut selesai. Ketika operator memperbaiki masalah dan menjalankan ulang bot untuk tanggal itu, bot akan salah melakukan SKIPPED dan laporan tidak pernah tercipta.",
+    "notes": "Selalu letakkan commit/record_done di tahap paling akhir sesudah seluruh efek samping sukses."
+  },
+  {
+    "title": "Latihan Mandiri: Verifikasi Autonomous Bot",
+    "kind": "exercise",
+    "body": "<ul><li>Audit seluruh alur <code>d05_01</code> sampai <code>d05_04</code>.</li><li>Jalankan <code>pytest code/test_d05_capstone.py</code> untuk memastikan run ke-1 dan run ke-2 lolos penuh.</li><li>Selesaikan tugas capstone pada <code>assignments/tugas.py</code>.</li></ul>",
+    "notes": "Berikutnya kita melangkah ke Track kelima (terakhir): Track E — IoT, Signal Processing & Telecommunications!"
+  },
+  {
+    "title": "Penutup Track D: Automation & Scripting",
+    "kind": "content",
+    "body": "<ul><li>Selamat menuntaskan seluruh 5 modul Track D: <strong>File System (D01)</strong>, <strong>Excel/PDF Docs (D02)</strong>, <strong>Ethical Web Parsing (D03)</strong>, <strong>Scheduling &amp; Idempotency (D04)</strong>, serta <strong>Capstone Reporting Bot (D05)</strong>.</li><li>Siap menuju Batch terakhir? Di <strong>Track E</strong> kita menyelami sensor serial, MQTT IoT, Digital Signal Processing (FFT/SciPy), dan Wireless Telecom Analytics (RSRP/RSRQ/SINR)!</li></ul>",
+    "notes": "Selamat menyelesaikan Batch 4 (Track D: Automation & Scripting)!"
+  }
+]
+

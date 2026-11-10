@@ -1,0 +1,100 @@
+[
+  {
+    "title": "HTTP Client Utility & JSON Contract Consumption",
+    "subtitle": "httpx Client, Timeout, Retry Selektif, Pagination & Validasi Pydantic",
+    "kind": "cover",
+    "body": "<p>Merancang modul integrasi REST API yang tangguh di sisi klien Python menggunakan <code>httpx.Client</code>, pengujian deterministik <code>MockTransport</code>, dan kontrak skema Pydantic.</p>",
+    "notes": "Track C dimulai dari sudut pandang konsumen API yang disiplin sebelum membangun server API FastAPI di C02."
+  },
+  {
+    "title": "Anatomi Komunikasi HTTP Client-Server",
+    "kind": "content",
+    "body": "<ul><li><strong>Request Line &amp; Headers:</strong> Metode (<code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>DELETE</code>), URL + query params, serta header seperti <code>Accept</code> dan <code>Authorization</code>.</li><li><strong>Status Codes:</strong> <code>2xx</code> (sukses), <code>4xx</code> (kesalahan klien), <code>5xx</code> (kesalahan server).</li><li><strong>Timeout Wajib:</strong> Tanpa parameter <code>timeout=5.0</code>, server eksternal yang macet dapat menggantung aplikasi Anda tanpa batas.</li></ul>",
+    "notes": "Selalu tetapkan timeout eksplisit pada setiap library HTTP client di Python."
+  },
+  {
+    "title": "Keunggulan httpx.Client Dibanding Request Tunggal",
+    "kind": "content",
+    "body": "<ul><li><strong>Connection Pooling:</strong> Membuka satu context manager <code>with httpx.Client(...)</code> memakai ulang koneksi TCP untuk puluhan panggilan berurutan.</li><li><strong>Konfigurasi Terpusat:</strong> <code>base_url</code>, <code>headers</code>, dan <code>timeout</code> cukup diset sekali saat instansiasi.</li><li><strong>Siap Async:</strong> Antarmuka sinkron <code>httpx.Client</code> identik dengan <code>httpx.AsyncClient</code>.</li></ul>",
+    "notes": "Hindari memanggil httpx.get() berulang kali di dalam loop karena membuka socket baru di setiap iterasi."
+  },
+  {
+    "title": "Contoh Kode: httpx Client & MockTransport",
+    "kind": "code",
+    "example": "spec/C01/c01_01_httpx_mock_client",
+    "body": "<p>Mengonfigurasi <code>httpx.Client</code> dengan <code>base_url</code>, <code>timeout</code>, dan menguji endpoint secara offline memakai <code>MockTransport</code>.</p>",
+    "notes": "MockTransport berjalan murni di memori tanpa perlu menyalakan server port fisik saat unit testing."
+  },
+  {
+    "title": "Query Parameters & Penarikan Pagination",
+    "kind": "content",
+    "body": "<ul><li><strong>Encoding Aman:</strong> Gunakan <code>params={'page': page, 'region': region}</code> ketimbang string f-format manual agar spasi dan karakter khusus otomatis ter-escape.</li><li><strong>Pagination Loop:</strong> Tarik <code>page=1, 2, ...</code> sampai array <code>items</code> kosong atau token halaman habis.</li><li><strong>Batas Aman:</strong> Selalu pasang batas keamanan atau kondisi berhenti eksplisit agar tidak memicu loop tak berujung.</li></ul>",
+    "notes": "Hampir semua API produksi membatasi jumlah rekaman per respons untuk melindungi memori server."
+  },
+  {
+    "title": "Contoh Kode: Query Params & Pagination Otomatis",
+    "kind": "code",
+    "example": "spec/C01/c01_02_query_params_pagination",
+    "body": "<p>Menarik seluruh perangkat terfilter wilayah <code>Sumatera</code> lintas beberapa halaman memakai loop pagination deterministik.</p>",
+    "notes": "Perhatikan bagaimana MockTransport meniru slicing halaman API nyata."
+  },
+  {
+    "title": "Membedakan Error 4xx vs 5xx",
+    "kind": "content",
+    "body": "<ul><li><strong><code>400 Bad Request</code> / <code>422</code>:</strong> Format payload/parameter salah. Mengulang request tetap akan ditolak.</li><li><strong><code>401</code> / <code>403</code> / <code>404</code>:</strong> Kredensial tidak valid atau resource tidak ada. Segera gagalkan dengan <code>raise_for_status()</code>.</li><li><strong><code>502</code>, <code>503</code>, <code>504</code>:</strong> Gangguan gateway/overload sementara (<em>transient error</em>) — kandidat tepat untuk retry terkontrol.</li></ul>",
+    "notes": "Membabi buta mengulang status 404 hanya memboroskan kuota dan membebani server mitra."
+  },
+  {
+    "title": "Pola Retry Selektif & Backoff",
+    "kind": "content",
+    "body": "<ul><li><strong>Tentukan Retryable Codes:</strong> <code>{502, 503, 504}</code> atau exception timeout jaringan.</li><li><strong>Batasi Percobaan:</strong> Umumnya <code>max_attempts = 3</code> dengan jeda bertumbuh (<em>exponential backoff</em>) di produksi.</li><li><strong>Gagalkan di Percobaan Akhir:</strong> Jika semua percobaan tetap gagal, panggil <code>resp.raise_for_status()</code> agar pemanggil tahu penyebabnya.</li></ul>",
+    "notes": "Pastikan operasi POST non-idempoten berhati-hati terhadap retry jika server belum memakai idempotency key."
+  },
+  {
+    "title": "Contoh Kode: Retry Selektif pada Status 503",
+    "kind": "code",
+    "example": "spec/C01/c01_03_error_handling_retry",
+    "body": "<p>Menunjukkan percobaan ulang otomatis saat endpoint membalas HTTP 503 dan penghentian seketika ketika endpoint membalas HTTP 404.</p>",
+    "notes": "Pola ini memisahkan gangguan sementara dari kesalahan logika permintaan."
+  },
+  {
+    "title": "Kontrak Data JSON dengan Pydantic v2",
+    "kind": "content",
+    "body": "<ul><li><strong>Risiko Dictionary Polos:</strong> Kesalahan ketik key atau tipe string alih-alih float bisa lolos diam-diam hingga memicu bug jauh di hilir.</li><li><strong>Model <code>BaseModel</code>:</strong> Mendeklarasikan skema tipe data dan batasan nilai (<code>Field(ge=-40.0, le=120.0)</code>).</li><li><strong><code>ValidationError</code> Jelas:</strong> Memberi laporan persis field mana yang melanggar kontrak skema.</li></ul>",
+    "notes": "Pydantic juga merupakan inti validasi FastAPI yang akan kita pelajari di Modul C02!"
+  },
+  {
+    "title": "Contoh Kode: Validasi Payload JSON via Pydantic",
+    "kind": "code",
+    "example": "spec/C01/c01_04_pydantic_response_parser",
+    "body": "<p>Mem-parsing payload JSON telemetri valid ke model bertipe dan menangkap error terstruktur saat nilai suhu atau baterai melampaui batas wajar.</p>",
+    "notes": "Validasi di batas sistem (boundary validation) mencegah korupsi data masuk ke database."
+  },
+  {
+    "title": "Strategi Pengujian Klien HTTP Secara Offline",
+    "kind": "content",
+    "body": "<ul><li><strong>Mengapa Jangan Panggil Internet di Test CI?</strong> Situs eksternal bisa down atau terkena rate limit sehingga build CI gagal acak.</li><li><strong><code>httpx.MockTransport</code>:</strong> Memungkinkan unit testing cepat (&lt;50 ms), deterministik, dan menguji skenario 503/404 sesuka hati.</li></ul>",
+    "notes": "Sertakan test negatif (404 dan ValidationError) di samping test sukses 200 OK."
+  },
+  {
+    "title": "Kuis Cepat: Retry & Status Code HTTP",
+    "kind": "question",
+    "body": "<p>Uji pemahaman Anda mengenai strategi retry yang sehat saat mengintegrasikan REST API.</p>",
+    "question": "Mengapa fungsi safe_get_json sebaiknya TIDAK melakukan retry ketika menerima status 401 Unauthorized atau 422 Unprocessable Entity?",
+    "answer": "Status 401 dan 422 adalah kesalahan deterministik dari sisi klien (token otorisasi salah atau format permintaan ditolak). Mengulang permintaan identik tanpa memperbaiki token/payload pasti menghasilkan kegagalan yang sama.",
+    "notes": "Retry hanya ditujukan bagi kegagalan transient seperti 502, 503, 504, atau timeout koneksi."
+  },
+  {
+    "title": "Latihan Mandiri: Klien REST & Pydantic",
+    "kind": "exercise",
+    "body": "<ul><li>Buat handler <code>MockTransport</code> yang membalas <code>503</code> lalu <code>200</code>.</li><li>Tulis helper retry selektif dan validasi payload dengan Pydantic.</li><li>Jalankan <code>pytest code/test_c01_http_client.py</code> untuk verifikasi offline.</li></ul>",
+    "notes": "Lanjutkan mengerjakan starter file assignments/tugas.py."
+  },
+  {
+    "title": "Ringkasan Modul C01",
+    "kind": "content",
+    "body": "<ul><li>Gunakan <code>httpx.Client</code> bermodal <code>timeout</code> eksplisit, <code>params</code> ter-encode, dan <code>MockTransport</code> untuk test.</li><li>Terapkan retry selektif pada kesalahan transient (5xx) dan hentikan segera pada 4xx.</li><li>Validasikan JSON masuk memakai Pydantic <code>BaseModel</code> sebelum melangkah membangun server FastAPI di Modul C02.</li></ul>",
+    "notes": "Di Modul C02 kita berpindah ke sisi server: merancang endpoint REST API modern menggunakan FastAPI."
+  }
+]
+

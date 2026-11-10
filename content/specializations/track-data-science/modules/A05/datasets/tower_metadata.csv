@@ -1,0 +1,12 @@
+tower_id,region,city,technology,sla_latency_ms
+TWR-01,Sumatera,Bandar Lampung,4G,35.0
+TWR-02,Sumatera,Bandar Lampung,5G,20.0
+TWR-03,Jawa,Jakarta,5G,20.0
+TWR-04,Jawa,Bandung,4G,35.0
+TWR-05,Sumatera,Palembang,4G,35.0
+TWR-06,Kalimantan,Balikpapan,4G,35.0
+TWR-07,Jawa,Jakarta,5G,20.0
+TWR-08,Kalimantan,Samarinda,4G,35.0
+TWR-09,Jawa,Bekasi,4G,35.0
+TWR-10,Sumatera,Medan,5G,20.0
+

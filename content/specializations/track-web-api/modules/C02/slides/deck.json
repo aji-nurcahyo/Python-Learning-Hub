@@ -1,0 +1,100 @@
+[
+  {
+    "title": "Modern REST API with FastAPI & Pydantic",
+    "subtitle": "Routing, Path/Query Parameters, CRUD Status Codes & OpenAPI",
+    "kind": "cover",
+    "body": "<p>Merancang RESTful backend modern berkecepatan tinggi dengan validasi payload otomatis Pydantic v2, konvensi status HTTP akurat, dan dokumentasi OpenAPI instan.</p>",
+    "notes": "Setelah bertindak sebagai klien di C01, di C02 kita membangun server API yang rapi dan teruji."
+  },
+  {
+    "title": "Mengapa FastAPI?",
+    "kind": "content",
+    "body": "<ul><li><strong>Type Hints sebagai Kontrak:</strong> Anotasi tipe Python otomatis menjadi validator runtime dan dokumentasi.</li><li><strong>Pydantic v2 Engine:</strong> Parsing dan validasi JSON berkinerja tinggi berbasis inti Rust.</li><li><strong>Standar Terbuka:</strong> Otomatis menghasilkan skema OpenAPI 3.1 (<code>/openapi.json</code>) dan antarmuka interaktif Swagger UI (<code>/docs</code>).</li></ul>",
+    "notes": "FastAPI menghilangkan boilerplate serialisasi manual yang umum pada framework web generasi lama."
+  },
+  {
+    "title": "Path Parameters vs Query Parameters",
+    "kind": "content",
+    "body": "<ul><li><strong>Path Parameter (<code>/items/{item_id}</code>):</strong> Mengidentifikasi satu resource spesifik dan otomatis dikonversi ke tipe target (misal <code>int</code>).</li><li><strong>Query Parameter (<code>?category=iot</code>):</strong> Opsional untuk penyaringan, pengurutan, atau pagination daftar item.</li><li><strong>Error Otomatis:</strong> Mengirim <code>/items/abc</code> ke parameter <code>item_id: int</code> langsung dibalas HTTP <code>422</code>.</li></ul>",
+    "notes": "Pemisahan path vs query merupakan standar baku desain RESTful API."
+  },
+  {
+    "title": "Contoh Kode: Routing, Path & Query Parameters",
+    "kind": "code",
+    "example": "spec/C02/c02_01_fastapi_routing",
+    "body": "<p>Mendeklarasikan endpoint <code>/health</code>, filter opsional query <code>category</code>, serta path parameter bertipe <code>int</code>.</p>",
+    "notes": "TestClient memungkinkan verifikasi endpoint tanpa harus mengeksekusi server Uvicorn di terminal terpisah."
+  },
+  {
+    "title": "Validasi Ketat Request Body via Pydantic",
+    "kind": "content",
+    "body": "<ul><li><strong>Deklarasi Skema:</strong> Gunakan <code>BaseModel</code> dengan <code>Field(ge=0)</code>, <code>Field(gt=0)</code>, dan <code>min_length</code>.</li><li><strong>Pemisahan Model Input &amp; Output:</strong> <code>ItemCreate</code> menerima payload pengguna tanpa <code>id</code>; <code>ItemOut</code> menyertakan <code>id</code> buatan server.</li><li><strong>Proteksi Data Masuk:</strong> Nilai stok negatif atau harga nol ditolak di pintu masuk dengan HTTP <code>422 Unprocessable Entity</code>.</li></ul>",
+    "notes": "Pemisahan skema input vs output melindungi ID atau field sensitif agar tidak dimanipulasi klien."
+  },
+  {
+    "title": "Contoh Kode: Pydantic Validation & HTTP 422",
+    "kind": "code",
+    "example": "spec/C02/c02_02_pydantic_validation",
+    "body": "<p>Memeriksa respons sukses <code>201 Created</code> vs penolakan terstruktur <code>422</code> saat payload melanggar batas <code>Field</code>.</p>",
+    "notes": "FastAPI mengembalikan detail list field error JSON sehingga frontend mudah menampilkan pesan ke pengguna."
+  },
+  {
+    "title": "Semantik HTTP Methods & Status Codes",
+    "kind": "content",
+    "body": "<ul><li><code>POST /products</code> -&gt; <strong><code>201 Created</code></strong> (pembuatan resource baru).</li><li><code>GET /products/{id}</code> -&gt; <strong><code>200 OK</code></strong> atau <strong><code>404 Not Found</code></strong>.</li><li><code>PUT /products/{id}</code> -&gt; <strong><code>200 OK</code></strong> (pembaruan data penuh).</li><li><code>DELETE /products/{id}</code> -&gt; <strong><code>204 No Content</code></strong> (penghapusan sukses tanpa body respons).</li></ul>",
+    "notes": "Jangan mengembalikan 200 OK berisi pesan error! Gunakan status HTTP semantik."
+  },
+  {
+    "title": "Penanganan Resource Hilang dengan HTTPException",
+    "kind": "content",
+    "body": "<ul><li><strong><code>raise HTTPException(status_code=404, detail='...')</code>:</strong> Langsung memutus alur endpoint dan mengirim respons JSON standar 404.</li><li><strong>Jangan Mengembalikan <code>None</code>:</strong> Mengembalikan None untuk ID kosong membuat status menjadi 200 null, membingungkan klien.</li></ul>",
+    "notes": "HTTPException juga dapat membawa custom headers seperti WWW-Authenticate untuk endpoint terproteksi."
+  },
+  {
+    "title": "Contoh Kode: Siklus CRUD Lengkap & Status Codes",
+    "kind": "code",
+    "example": "spec/C02/c02_03_crud_inmemory_status",
+    "body": "<p>Menjalankan factory <code>build_inventory_app()</code> dan menguji siklus POST (201) -&gt; PUT (200) -&gt; DELETE (204) -&gt; GET (404).</p>",
+    "notes": "Membungkus pembuatan app di fungsi factory memudahkan isolasi state di setiap test case pytest."
+  },
+  {
+    "title": "Dokumentasi OpenAPI Otomatis",
+    "kind": "content",
+    "body": "<ul><li><strong>Single Source of Truth:</strong> Spesifikasi <code>app.openapi()</code> selalu mutakhir mengikuti kode Python, tidak pernah usang seperti dokumen manual.</li><li><strong>Swagger UI &amp; ReDoc:</strong> Tersedia bawaan pada rute <code>/docs</code> dan <code>/redoc</code>.</li><li><strong>Code Generation:</strong> Tim frontend atau mobile dapat men-generate klien TypeScript otomatis dari JSON OpenAPI tersebut.</li></ul>",
+    "notes": "Menambahkan tags=['Devices'] dan docstring endpoint otomatis memperkaya deskripsi Swagger UI."
+  },
+  {
+    "title": "Contoh Kode: Inspeksi Skema OpenAPI",
+    "kind": "code",
+    "example": "spec/C02/c02_04_openapi_schema_inspect",
+    "body": "<p>Memanggil <code>app.openapi()</code> secara programatik untuk memeriksa metadata judul, daftar paths, dan skema komponen.</p>",
+    "notes": "Pengecekan skema OpenAPI sering dijadikan salah satu regression check di CI."
+  },
+  {
+    "title": "Pola Testing Cepat dengan TestClient",
+    "kind": "content",
+    "body": "<ul><li><strong>Antarmuka Familiar:</strong> <code>TestClient</code> memakai mesin <code>httpx</code> di belakang layar, sehingga metode <code>.get()</code> dan <code>.post()</code> persis seperti Modul C01.</li><li><strong>Kecepatan Eksekusi:</strong> Ratusan pengujian endpoint selesai dalam hitungan sepersepuluh detik.</li><li><strong>Uji Kasus Negatif:</strong> Wajib menguji skenario <code>422</code> dan <code>404</code> di samping jalur sukses <code>200/201/204</code>.</li></ul>",
+    "notes": "Selalu pisahkan pembuatan app agar state in-memory antar unit test tidak saling mencemari."
+  },
+  {
+    "title": "Kuis Cepat: Desain Skema & Status Code",
+    "kind": "question",
+    "body": "<p>Uji ketepatan Anda menerapkan kontrak REST API di FastAPI.</p>",
+    "question": "Mengapa endpoint POST /devices sebaiknya menerima model DeviceCreate (tanpa field id) dan mengembalikan response_model=DeviceOut (dengan id), bukannya memakai satu model tunggal untuk keduanya?",
+    "answer": "Klien tidak seharusnya menentukan primary key internal server saat membuat record baru, dan pemisahan model menjaga agar field internal/server-generated (seperti id atau password_hash tersembunyi) tetap terkontrol di kontrak input vs output.",
+    "notes": "Pemisahan CreateSchema vs OutSchema merupakan standar industri bersama SQLAlchemy ORM di C03."
+  },
+  {
+    "title": "Latihan Mandiri: Inventory REST API",
+    "kind": "exercise",
+    "body": "<ul><li>Buat endpoint CRUD <code>/devices</code> dengan validasi <code>Field(gt=0)</code>.</li><li>Pastikan penghapusan mengembalikan <code>204 No Content</code> dan ID hilang mengembalikan <code>404</code>.</li><li>Verifikasi lewat <code>pytest code/test_c02_fastapi.py</code>.</li></ul>",
+    "notes": "Di C03 data yang masih tersimpan di dictionary memori akan kita pindahkan ke database SQLite via SQLAlchemy ORM."
+  },
+  {
+    "title": "Ringkasan Modul C02",
+    "kind": "content",
+    "body": "<ul><li>FastAPI menyatukan routing bertipe, validasi Pydantic v2 (422), dan dokumentasi OpenAPI otomatis.</li><li>Gunakan status HTTP semantik: <code>201 Created</code>, <code>200 OK</code>, <code>204 No Content</code>, dan <code>404 Not Found</code>.</li><li>Langkah berikutnya (Modul C03): menyambungkan FastAPI ke database persisten SQLite + SQLAlchemy 2.0 ORM.</li></ul>",
+    "notes": "Lanjutkan ke Modul C03 untuk persistensi data relasional yang nyata."
+  }
+]
+

@@ -1,0 +1,8 @@
+node_id,site,region,temp_c,battery_v,rsrp_dbm,rsrq_db,sinr_db,snr_db,packet_loss_pct
+NODE-LPG-01,ITERA-North,Sumatera,30.2,3.92,-78.0,-8.1,18.4,22.5,0.08
+NODE-LPG-02,ITERA-South,Sumatera,39.8,3.88,-84.5,-14.9,1.9,19.0,1.45
+NODE-JKT-01,Bekasi-Core,Jawa,32.1,3.95,-81.2,-8.9,16.2,21.0,0.11
+NODE-JKT-02,Depok-Edge,Jawa,33.5,3.71,-111.5,-16.2,-0.8,8.5,2.85
+NODE-KLM-01,Balikpapan,Kalimantan,29.4,3.90,-87.0,-9.6,13.5,18.8,0.16
+NODE-KLM-02,Samarinda-West,Kalimantan,41.6,3.62,-107.8,-15.5,1.2,9.8,2.10
+

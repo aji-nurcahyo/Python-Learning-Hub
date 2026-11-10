@@ -1,0 +1,92 @@
+{
+  "id": "A04",
+  "trackId": "data-science",
+  "trackTitle": "Data Science & Visualization",
+  "order": 4,
+  "title": "Data Visualization with Matplotlib & Seaborn",
+  "subtitle": "Grafik Statistik Profesional, Multi-Panel Dashboard, Boxplot & Correlation Heatmap",
+  "description": "Rancang visualisasi data yang informatif, bebas distorsi visual (chartjunk), dan siap publikasi menggunakan Object-Oriented API Matplotlib serta grafik statistik Seaborn (histplot, boxplot, scatter, heatmap).",
+  "difficulty": "Intermediate",
+  "estimatedHours": 5,
+  "prerequisites": [
+    "Modul A02 (Data Manipulation with Pandas)",
+    "Modul A03 (Exploratory Data Analysis)"
+  ],
+  "learningObjectives": [
+    "Memisahkan Figure dan Axes memakai Object-Oriented API Matplotlib (fig, ax = plt.subplots()).",
+    "Memilih jenis chart yang tepat: histogram/KDE, boxplot, scatter plot, dan heatmap korelasi.",
+    "Mengonfigurasi palet warna colorblind-safe, anotasi, label sumbu berunit, dan tata letak multi-panel.",
+    "Mengekspor visualisasi resolusi tinggi (DPI >= 150) secara terprogram dalam mode headless."
+  ],
+  "dependencies": ["matplotlib>=3.8", "seaborn>=0.13", "pandas>=2.2", "pytest>=8.0"],
+  "tags": ["matplotlib", "seaborn", "visualization", "heatmap", "boxplot"],
+  "codeExample": {
+    "title": "Dashboard Multi-Panel QoS Jaringan dengan Matplotlib & Seaborn",
+    "filename": "a04_04_multipanel_dashboard.py",
+    "outputKey": "spec/A04/a04_04_multipanel_dashboard",
+    "explanation": "Skrip ini membangun figur multi-panel 2x2 (distribusi latensi, boxplot antar teknologi, scatter trafik vs latensi, dan heatmap korelasi) memakai backend headless Agg lalu memverifikasi ukuran berkas PNG keluaran."
+  },
+  "exercise": {
+    "title": "Merancang Figur Statistik Publikasi Multi-Panel",
+    "instructions": [
+      "Gunakan datasets/telecom_qos_kpi.csv sebagai sumber data.",
+      "Buat figur berdimensi 1x2 dengan plt.subplots(1, 2, figsize=(11, 4.5)).",
+      "Panel kiri: sns.boxplot() untuk membandingkan latency_ms antar region dengan sumbu berlabel satuan ms.",
+      "Panel kanan: sns.heatmap(..., annot=True, cmap='coolwarm') untuk matriks korelasi metrik numerik."
+    ],
+    "tips": "Gunakan fig.tight_layout() atau constrained_layout=True agar judul dan label sumbu tidak saling tumpang tindih saat disimpan.",
+    "time": "50 Menit"
+  },
+  "quiz": {
+    "question": "Mengapa Object-Oriented API (fig, ax = plt.subplots()) lebih direkomendasikan daripada pemanggilan global plt.plot() saat membuat multi-panel dashboard?",
+    "options": [
+      "Karena plt.subplots() hanya bekerja di Jupyter Notebook",
+      "Karena setiap panel memiliki objek Axes terpisah sehingga pengaturan judul, batas sumbu, dan anotasi menjadi eksplisit dan bebas konflik state global",
+      "Karena Seaborn tidak mendukung figur dengan dua panel",
+      "Karena plt.plot() tidak bisa mengekspor berkas berformat PNG"
+    ],
+    "correctIndex": 1,
+    "explanation": "State-based API (pyplot) bergantung pada 'active axes' tersembunyi yang rentan memodifikasi subplot keliru, sedangkan OO API memegang referensi objek ax[i] secara eksplisit.",
+    "hint": "Bandingkan kejelasan variabel eksplisit ax1, ax2 melawan state global tersembunyi."
+  },
+  "assignment": {
+    "title": "Proyek Mini: Generator Figur Analitik Siap Publikasi",
+    "description": "Bangun modul visualisasi Python yang menghasilkan tiga figur analitik terstandarisasi (distribusi boxplot, korelasi heatmap, dan ringkasan multi-panel) lengkap dengan judul informatif dan ekspor resolusi tinggi.",
+    "instructions": [
+      "Implementasikan plot_latency_distribution(df, out_path) menggunakan sns.histplot(..., kde=True) dan garis vertikal median.",
+      "Implementasikan plot_correlation_heatmap(df, cols, out_path) menggunakan mask segitiga atas dan anotasi dua desimal.",
+      "Implementasikan build_qos_dashboard(df, out_path) berlayout 2x2 dengan judul figur utama fig.suptitle().",
+      "Pastikan setiap fungsi memanggil plt.close(fig) setelah fig.savefig() untuk mencegah kebocoran memori."
+    ],
+    "rubric": [
+      { "criteria": "Kejelasan Object-Oriented API & Layout", "weight": 30, "description": "Seluruh chart dibangun di atas objek Axes eksplisit dengan tight/constrained layout bersih." },
+      { "criteria": "Kesesuaian Jenis Chart & Estetika", "weight": 25, "description": "Memiliki judul deskriptif, satuan sumbu, palet kontras aman, dan tanpa elemen chartjunk." },
+      { "criteria": "Ekspor & Manajemen Memori Figure", "weight": 25, "description": "Menghasilkan berkas PNG >= 150 DPI serta menutup figur via plt.close(fig)." },
+      { "criteria": "Unit Testing & Dokumentasi", "weight": 20, "description": "Lulus verifikasi pytest pada tmp_path." }
+    ],
+    "starterFilename": "tugas.py"
+  },
+  "resources": {
+    "hasSlides": true,
+    "codeDownload": "/downloads/specializations/A04/a04_04_multipanel_dashboard.py",
+    "notebookDownload": "/downloads/specializations/A04/a04_visualization_gallery.ipynb",
+    "datasetDownload": "/downloads/specializations/A04/telecom_qos_kpi.csv",
+    "guideDownload": "/downloads/specializations/A04/tugas.md",
+    "pptxDownload": null
+  },
+  "references": [
+    {
+      "title": "Matplotlib Tutorials: Lifecycle of a Plot & Artist Layer",
+      "source": "Matplotlib Developers",
+      "url": "https://matplotlib.org/stable/tutorials/lifecycle.html",
+      "license": "PSF-based / BSD"
+    },
+    {
+      "title": "Seaborn Official User Guide: Visualising Statistical Relationships",
+      "source": "Seaborn Developers",
+      "url": "https://seaborn.pydata.org/tutorial.html",
+      "license": "BSD-3-Clause"
+    }
+  ]
+}
+

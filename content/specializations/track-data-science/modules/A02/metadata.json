@@ -1,0 +1,93 @@
+{
+  "id": "A02",
+  "trackId": "data-science",
+  "trackTitle": "Data Science & Visualization",
+  "order": 2,
+  "title": "Data Manipulation with Pandas",
+  "subtitle": "DataFrame, Data Cleaning, Missing Values, GroupBy & Time-Series Merge",
+  "description": "Transformasikan dataset tabular mentah menjadi tabel analitik siap pakai menggunakan Pandas Series dan DataFrame, penanganan missing values, deduplikasi, groupby aggregation, pivot table, serta merge antar tabel.",
+  "difficulty": "Intermediate",
+  "estimatedHours": 5,
+  "prerequisites": [
+    "Modul A01 (Numerical Computing with NumPy)",
+    "Chapter 09 (Dictionary & Set)",
+    "Chapter 17 (File Handling)"
+  ],
+  "learningObjectives": [
+    "Memilih baris dan kolom secara aman menggunakan .loc dan .iloc.",
+    "Mengaudit serta menangani missing values (isna, fillna), data duplikat, dan inkonsistensi string.",
+    "Menghitung ringkasan multi-dimensi dengan groupby().agg() dan pivot_table().",
+    "Menggabungkan tabel (pd.merge) serta mengurai kolom waktu (pd.to_datetime)."
+  ],
+  "dependencies": ["pandas>=2.2", "numpy>=1.26", "pytest>=8.0"],
+  "tags": ["pandas", "dataframe", "data-cleaning", "groupby", "merge"],
+  "codeExample": {
+    "title": "Audit & Pembersihan Missing Values serta Duplikasi Transaksi",
+    "filename": "a02_02_cleaning_missing_duplicates.py",
+    "outputKey": "spec/A02/a02_02_cleaning_missing_duplicates",
+    "explanation": "Skrip ini memuat dataset transaksi kotor, menyeragamkan spasi/kapitalisasi kategori, membuang baris duplikat berdasarkan order_id, mengisi missing price dengan median per kategori, dan menghitung total omzet bersih."
+  },
+  "exercise": {
+    "title": "Wrangling Data Penjualan Regional",
+    "instructions": [
+      "Muat datasets/retail_transactions_raw.csv menjadi DataFrame Pandas.",
+      "Standardisasi kolom category dengan .str.strip().str.title() dan buang baris ber-order_id duplikat.",
+      "Imputasi nilai quantity yang kosong dengan 1.0 dan nilai unit_price yang kosong memakai median per kategori.",
+      "Buat kolom revenue = quantity * unit_price lalu tampilkan total revenue per kota menggunakan groupby."
+    ],
+    "tips": "Gunakan df.groupby('category')['unit_price'].transform('median') agar pengisian missing value menghormati kelompok kategori masing-masing.",
+    "time": "50 Menit"
+  },
+  "quiz": {
+    "question": "Apa perbedaan mendasar antara indexing df.loc[0:2] dan df.iloc[0:2] pada DataFrame dengan indeks integer default 0, 1, 2, 3?",
+    "options": [
+      "Keduanya mengembalikan tepat 2 baris (indeks 0 dan 1)",
+      "df.loc[0:2] bersifat inklusif hingga label 2 (3 baris), sedangkan df.iloc[0:2] eksklusif di posisi 2 (2 baris)",
+      "df.iloc hanya bekerja untuk memilih satu kolom saja",
+      "df.loc mengembalikan NumPy array sedangkan df.iloc mengembalikan dictionary"
+    ],
+    "correctIndex": 1,
+    "explanation": ".loc memakai label indexing sehingga ujung kanan slice disertakan [start, stop], sedangkan .iloc mengikuti aturan Python positional slicing [start, stop).",
+    "hint": "Ingat: L pada .loc berarti Label (inklusif), I pada .iloc berarti Integer position (eksklusif)."
+  },
+  "assignment": {
+    "title": "Proyek Mini: Pipeline Pembersihan & Agregasi Laporan Penjualan",
+    "description": "Kembangkan modul Pandas yang membersihkan data transaksi kotor, menggabungkannya dengan tabel cabang regional, dan menghasilkan ringkasan omzet bulanan yang siap audit.",
+    "instructions": [
+      "Implementasikan clean_transactions(df) untuk standardisasi teks kategori/kota, deduplikasi order_id, dan parsing tanggal.",
+      "Lakukan imputasi missing values dengan median per kategori untuk unit_price.",
+      "Implementasikan summarize_by_region_category(df_clean) menggunakan groupby().agg().",
+      "Pastikan seluruh test di test_a02_pandas.py lulus tanpa warning SettingWithCopyWarning."
+    ],
+    "rubric": [
+      { "criteria": "Kebenaran Data Cleaning & Deduplikasi", "weight": 30, "description": "Seluruh spasi liar, kapitalisasi campuran, dan duplikasi order_id bersih dengan tepat." },
+      { "criteria": "Strategi Imputasi Missing Values", "weight": 25, "description": "Menggunakan median per kategori tanpa merusak tipe numerik kolom." },
+      { "criteria": "Agregasi GroupBy & Time-Series", "weight": 25, "description": "Pengelompokan multi-metrik dan parsing datetime berjalan akurat." },
+      { "criteria": "Unit Testing & Dokumentasi", "weight": 20, "description": "Skrip bersih memakai .copy() eksplisit dan lulus pytest." }
+    ],
+    "starterFilename": "tugas.py"
+  },
+  "resources": {
+    "hasSlides": true,
+    "codeDownload": "/downloads/specializations/A02/a02_02_cleaning_missing_duplicates.py",
+    "notebookDownload": "/downloads/specializations/A02/a02_pandas_wrangling.ipynb",
+    "datasetDownload": "/downloads/specializations/A02/retail_transactions_raw.csv",
+    "guideDownload": "/downloads/specializations/A02/tugas.md",
+    "pptxDownload": null
+  },
+  "references": [
+    {
+      "title": "Pandas User Guide: 10 Minutes to Pandas & Missing Data",
+      "source": "Pandas Development Team",
+      "url": "https://pandas.pydata.org/docs/user_guide/index.html",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "title": "Pandas Cookbook & GroupBy Split-Apply-Combine",
+      "source": "Pandas Documentation",
+      "url": "https://pandas.pydata.org/docs/user_guide/groupby.html",
+      "license": "BSD-3-Clause"
+    }
+  ]
+}
+

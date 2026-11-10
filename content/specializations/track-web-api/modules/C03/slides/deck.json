@@ -1,0 +1,100 @@
+[
+  {
+    "title": "Database Persistence with SQLAlchemy ORM",
+    "subtitle": "SQLAlchemy 2.0 Declarative Models, Session CRUD, ForeignKey & Depends(get_db)",
+    "kind": "cover",
+    "body": "<p>Menyimpan data API secara persisten ke database relasional memakai SQLAlchemy 2.0 ORM type-safe, relasi antar tabel, dan dependency injection FastAPI yang bersih.</p>",
+    "notes": "Persistensi relasional mengubah prototipe API C02 menjadi backend sesungguhnya."
+  },
+  {
+    "title": "Mengapa ORM (Object-Relational Mapping)?",
+    "kind": "content",
+    "body": "<ul><li><strong>Mengurangi SQL String Rawan Bug:</strong> Menulis string SQL mentah rentan typo dan celah <em>SQL Injection</em> bila tidak berhati-hati memakai placeholder.</li><li><strong>Type Safety SQLAlchemy 2.0:</strong> Mendukung <code>Mapped[int]</code> dan <code>Mapped[str]</code> yang terbaca oleh IDE dan linter.</li><li><strong>Portabilitas Mesin DB:</strong> Kode Python yang sama bekerja di SQLite (dev/test) maupun PostgreSQL (produksi).</li></ul>",
+    "notes": "SQLAlchemy selalu menggunakan parameterized query di balik layar sehingga aman dari SQL Injection."
+  },
+  {
+    "title": "Deklarasi Tabel Modern SQLAlchemy 2.0",
+    "kind": "content",
+    "body": "<ul><li><strong><code>DeclarativeBase</code>:</strong> Kelas induk pembuat metadata seluruh tabel aplikasi.</li><li><strong><code>Mapped[...]</code> &amp; <code>mapped_column(...)</code>:</strong> Mendefinisikan tipe kolom, panjang varchar, <code>primary_key=True</code>, dan constraint <code>unique=True</code>.</li><li><strong><code>Base.metadata.create_all(engine)</code>:</strong> Menciptakan skema tabel di database bila belum ada.</li></ul>",
+    "notes": "Di proyek berskala besar, migrasi perubahan tabel produksi biasanya dikelola memakai Alembic."
+  },
+  {
+    "title": "Contoh Kode: Skema Tabel & Inspeksi SQLite",
+    "kind": "code",
+    "example": "spec/C03/c03_01_sqlalchemy_models",
+    "body": "<p>Membuat tabel <code>devices</code> pada SQLite sementara serta menginspeksi nama tabel dan kolom memakai <code>inspect(engine)</code>.</p>",
+    "notes": "Jangan lupa memanggil engine.dispose() di blok finally agar handle file database dilepas bersih."
+  },
+  {
+    "title": "Mengelola Siklus Hidup Session",
+    "kind": "content",
+    "body": "<ul><li><strong>Unit of Work Pattern:</strong> Objek <code>Session</code> melacak perubahan objek Python lalu menyinkronkannya saat <code>session.commit()</code>.</li><li><strong>Kueri Gaya 2.0:</strong> Gunakan <code>session.scalars(select(Model).where(...))</code> yang eksplisit.</li><li><strong><code>session.refresh(obj)</code>:</strong> Mengisi ulang atribut hasil generator database (seperti <code>id</code> auto-increment) ke objek Python setelah commit.</li></ul>",
+    "notes": "Gunakan context manager with Session(engine) as session: agar transaksi tidak pernah menggantung."
+  },
+  {
+    "title": "Contoh Kode: Insert, Select, Update & Delete Session",
+    "kind": "code",
+    "example": "spec/C03/c03_02_crud_session_queries",
+    "body": "<p>Melakukan siklus lengkap penambahan sensor baru, pencarian bersyarat, pembaruan status, dan penghapusan record di SQLite.</p>",
+    "notes": "Perhatikan betapa naturalnya mengubah atribut target.status = 'active' lalu session.commit()."
+  },
+  {
+    "title": "Relasi Satu-ke-Banyak & ForeignKey",
+    "kind": "content",
+    "body": "<ul><li><strong><code>ForeignKey('regions.id')</code>:</strong> Menegakkan integritas referensial di level database agar node tidak menunjuk wilayah fiktif.</li><li><strong><code>relationship(back_populates=...)</code>:</strong> Memungkinkan navigasi objek dua arah (dari Region ke daftar Node dan sebaliknya).</li><li><strong><code>select(Node).join(Node.region)</code>:</strong> Menjalankan SQL JOIN terstruktur memakai Python.</li></ul>",
+    "notes": "Relasi yang jelas mencegah duplikasi string nama wilayah di ribuan baris perangkat."
+  },
+  {
+    "title": "Contoh Kode: Relasi Region - Node & Join Query",
+    "kind": "code",
+    "example": "spec/C03/c03_03_relationships_join",
+    "body": "<p>Menghubungkan tabel <code>Region</code> dan <code>Node</code> satu-ke-banyak lalu menarik daftar node khusus region <code>Sumatera</code>.</p>",
+    "notes": "Cascading save lewat region.nodes.extend(...) otomatis menyisipkan parent dan child dalam satu transaksi."
+  },
+  {
+    "title": "Menghubungkan Database ke FastAPI dengan Depends()",
+    "kind": "content",
+    "body": "<ul><li><strong>Yield Dependency <code>get_db()</code>:</strong> Membuka <code>SessionLocal()</code> sebelum handler jalan dan menutupnya pasti di blok <code>finally: db.close()</code>.</li><li><strong>Pydantic <code>from_attributes=True</code>:</strong> Mengizinkan Pydantic membaca atribut ORM objek SQLAlchemy secara langsung sebagai <code>response_model</code>.</li><li><strong><code>check_same_thread=False</code>:</strong> Diperlukan oleh SQLite saat diakses melalui worker thread FastAPI TestClient.</li></ul>",
+    "notes": "FastAPI otomatis mengelola lifecycle dependency per HTTP request."
+  },
+  {
+    "title": "Pencegahan Duplikasi & HTTP 409 Conflict",
+    "kind": "content",
+    "body": "<ul><li><strong>Masalah Unique Constraint:</strong> Jika klien mendaftarkan <code>hostname</code> yang sudah ada, database akan menolak transaksi dengan <code>IntegrityError</code>.</li><li><strong>Best Practice REST:</strong> Periksa eksistensi record terlebih dahulu atau tangkap konflik tersebut dan balas klien memakai <code>HTTPException(status_code=409)</code>.</li></ul>",
+    "notes": "Mengembalikan 409 Conflict jauh lebih informatif bagi klien dibandingkan crash 500 Internal Server Error."
+  },
+  {
+    "title": "Contoh Kode: FastAPI + SQLAlchemy + Depends(get_db)",
+    "kind": "code",
+    "example": "spec/C03/c03_04_fastapi_db_dependency",
+    "body": "<p>Membangun aplikasi FastAPI persisten SQLite lengkap dengan pengecekan konflik <code>409</code> dan serialisasi <code>AssetOut</code> via <code>ConfigDict</code>.</p>",
+    "notes": "Perhatikan pola build app factory yang memudahkan injeksi URL database uji di TestClient."
+  },
+  {
+    "title": "Isolasi Pengujian Database di Pytest",
+    "kind": "content",
+    "body": "<ul><li><strong><code>tmp_path</code> SQLite:</strong> Setiap test fungsi mendapatkan file <code>.db</code> sendiri yang langsung bersih sesudah test selesai.</li><li><strong><code>dependency_overrides</code>:</strong> FastAPI mengizinkan penggantian dependency <code>get_db</code> ke DB test kapan saja.</li><li><strong><code>engine.dispose()</code> di <code>finally</code>:</strong> Menjaga Windows tidak mengunci file SQLite sementara saat pembersihan folder temp.</li></ul>",
+    "notes": "Tidak ada test yang memengaruhi database produksi atau test lainnya."
+  },
+  {
+    "title": "Kuis Cepat: Dependency Lifecycle & ORM",
+    "kind": "question",
+    "body": "<p>Uji pemahaman Anda mengenai integrasi database pada endpoint FastAPI.</p>",
+    "question": "Apa yang terjadi jika AssetOut lupa menambahkan model_config = ConfigDict(from_attributes=True) saat endpoint mengembalikan objek SQLAlchemy RouterAsset?",
+    "answer": "FastAPI / Pydantic v2 akan gagal memvalidasi response (ValidationError / Internal Server Error) karena secara default BaseModel mengharapkan dictionary, bukan membaca atribut langsung dari objek kelas ORM.",
+    "notes": "Di Pydantic v1 dahulu ini bernama orm_mode = True; di Pydantic v2 standarnya ConfigDict(from_attributes=True)."
+  },
+  {
+    "title": "Latihan Mandiri: Migrasi API ke SQLite",
+    "kind": "exercise",
+    "body": "<ul><li>Bangun model relasional <code>Location</code> dan <code>Asset</code> di SQLAlchemy 2.0.</li><li>Sambungkan ke endpoint FastAPI menggunakan <code>Depends(get_db)</code>.</li><li>Jalankan <code>pytest code/test_c03_database.py</code> untuk memvalidasi persistensi dan HTTP 409.</li></ul>",
+    "notes": "Pada modul C04 berikutnya kita akan menambahkan autentikasi, environment config, logging, dan keamanan API."
+  },
+  {
+    "title": "Ringkasan Modul C03",
+    "kind": "content",
+    "body": "<ul><li>SQLAlchemy 2.0 memakai <code>DeclarativeBase</code>, <code>Mapped</code>, dan <code>select()</code> untuk kode database type-safe.</li><li>Generator <code>get_db()</code> dengan <code>try/yield/finally</code> serta <code>ConfigDict(from_attributes=True)</code> menghubungkan DB ke FastAPI secara rapi.</li><li>Di Modul C04 kita memperkuat API dengan manajemen secret via env vars, hashing kredensial, proteksi token, dan logging middleware!</li></ul>",
+    "notes": "Lanjutkan ke Modul C04: Security, Authentication & Automated API Testing."
+  }
+]
+

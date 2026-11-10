@@ -1,0 +1,100 @@
+[
+  {
+    "title": "Capstone: End-to-End Analytics Report",
+    "subtitle": "Dari Ingestion Multi-Tabel hingga Artefak Laporan Eksekutif Otomatis",
+    "kind": "cover",
+    "body": "<p>Menyatukan NumPy, Pandas, EDA statistik, Matplotlib/Seaborn, serta arsitektur modular dan unit testing pytest menjadi pipeline pelaporan siap produksi.</p>",
+    "notes": "Capstone Track A menunjukkan cara merangkai eksperimen notebook menjadi sistem analitik teruji."
+  },
+  {
+    "title": "Dari Eksperimen Notebook ke Pipeline Produksi",
+    "kind": "content",
+    "body": "<ul><li><strong>Masalah Notebook Monolitik:</strong> Sel dijalankan acak, state tersembunyi, dan sulit diuji otomatis.</li><li><strong>Solusi Modular Pipeline:</strong> Pecah alur kerja menjadi fungsi murni yang jelas input-outputnya (Ingestion -&gt; Cleaning -&gt; KPI Engine -&gt; Reporting).</li><li><strong>Reprodusibilitas:</strong> Menjalankan ulang skrip pada data yang sama selalu menghasilkan laporan identik.</li></ul>",
+    "notes": "Notebook sangat ideal untuk eksplorasi awal, sementara modul .py memudahkan otomatisasi berjadwal dan testing."
+  },
+  {
+    "title": "Arsitektur 4 Tahap Pipeline Analitik",
+    "kind": "content",
+    "body": "<ul><li><strong>1. Ingestion &amp; Schema Check:</strong> Gagal cepat (<em>fail fast</em>) bila kolom kunci hilang.</li><li><strong>2. Cleaning &amp; Enrichment:</strong> Deduplikasi, koreksi anomali fisik, imputasi median segmen, dan left join master tabel.</li><li><strong>3. KPI Engine:</strong> Kalkulasi SLA compliance rate, median, dan latensi persentil ke-95 (P95).</li><li><strong>4. Artifact Generator:</strong> Render PNG dashboard, ringkasan JSON, dan narasi laporan Markdown.</li></ul>",
+    "notes": "Struktur empat lapis ini mudah diperluas jika kelak sumber data berubah dari CSV menjadi database SQL."
+  },
+  {
+    "title": "Tahap 1: Validasi Skema Data Masuk",
+    "kind": "content",
+    "body": "<ul><li><strong>Kontrak Skema:</strong> Definisikan <code>REQUIRED_LOG_COLS</code> dan <code>REQUIRED_META_COLS</code> memakai <code>set</code>.</li><li><strong>Deteksi Dini:</strong> Gunakan selisih himpunan <code>REQUIRED - set(df.columns)</code> sebelum memproses jutaan baris.</li><li><strong>Pesan Kesalahan Eksplisit:</strong> Lempar <code>ValueError</code> yang langsung menyebut nama kolom yang hilang.</li></ul>",
+    "notes": "Fail-fast validation menghemat berjam-jam waktu debugging saat format CSV eksternal berubah."
+  },
+  {
+    "title": "Contoh Kode: Ingestion & Schema Validation",
+    "kind": "code",
+    "example": "spec/A05/a05_01_pipeline_ingestion",
+    "body": "<p>Membaca log operasional menara serta metadata menara sekaligus memastikan semua kolom wajib tersedia.</p>",
+    "notes": "Pendekatan himpunan (set difference) sangat ringkas dan jelas."
+  },
+  {
+    "title": "Tahap 2: Cleaning Anomali & Enrichment Join",
+    "kind": "content",
+    "body": "<ul><li><strong>Koreksi Aturan Domain:</strong> Latensi jaringan tidak mungkin negatif (<code>-5.0 ms</code>) — ubah ke <code>NaN</code> agar ikut terimputasi wajar.</li><li><strong>Left Join Master Data:</strong> Menggabungkan <code>tower_metadata.csv</code> membawa atribut <code>region</code>, <code>technology</code>, dan target <code>sla_latency_ms</code>.</li><li><strong>Flagging Pelanggaran SLA:</strong> Buat kolom boolean <code>sla_breach</code> untuk mempermudah agregasi selanjutnya.</li></ul>",
+    "notes": "Aturan domain fisik adalah filter kualitas data yang tidak tergantikan oleh statistik semata."
+  },
+  {
+    "title": "Contoh Kode: Cleaning & Enrichment Multi-Tabel",
+    "kind": "code",
+    "example": "spec/A05/a05_02_cleaning_enrichment",
+    "body": "<p>Menjalankan deduplikasi <code>log_id</code>, perbaikan nilai negatif, left join metadata, serta identifikasi pelanggaran SLA.</p>",
+    "notes": "Seluruh nilai missing berhasil ditangani tanpa menghapus observasi menara penting."
+  },
+  {
+    "title": "Tahap 3: Rekayasa Metrik KPI & Persentil P95",
+    "kind": "content",
+    "body": "<ul><li><strong>Mengapa P95 Penting?</strong> Rata-rata latensi 20 ms menyembunyikan pengalaman buruk 5% pengguna terparah; P95 mengukur ambang layanan nyata.</li><li><strong>SLA Compliance (%):</strong> <code>(1 - breaches / total_logs) * 100</code>.</li><li><strong>Prioritas Tindakan:</strong> Urutkan wilayah secara menaik berdasarkan kepatuhan SLA sehingga wilayah terlemah tampil paling atas.</li></ul>",
+    "notes": "P95 dan P99 merupakan metrik standar Reliability Engineering di industri telekomunikasi dan cloud."
+  },
+  {
+    "title": "Contoh Kode: KPI Engine Regional",
+    "kind": "code",
+    "example": "spec/A05/a05_03_kpi_engine",
+    "body": "<p>Menghitung total log, pelanggaran SLA, median, P95 latency, dan compliance rate tiap wilayah.</p>",
+    "notes": "Perhatikan kombinasi NumPy percentile di dalam Named Aggregation Pandas."
+  },
+  {
+    "title": "Tahap 4: Orkestrasi Visual & Laporan Multi-Format",
+    "kind": "content",
+    "body": "<ul><li><strong>Visualisasi Otomatis:</strong> Render chart KPI compliance dan distribusi teknologi beresolusi tinggi via backend headless.</li><li><strong>Output Siap Mesin (JSON):</strong> Ekspor KPI ke <code>kpi_summary.json</code> agar mudah dikonsumsi dashboard web atau API.</li><li><strong>Output Siap Manusia (Markdown):</strong> Susun <code>analytics_report.md</code> berisi ringkasan jumlah pelanggaran dan kinerja regional.</li></ul>",
+    "notes": "Satu kali eksekusi pipeline melayani dua audiens sekaligus: insinyur/sistem melalui JSON dan manajer melalui Markdown/PNG."
+  },
+  {
+    "title": "Contoh Kode: Orkestrator Report Generator",
+    "kind": "code",
+    "example": "spec/A05/a05_04_report_generator",
+    "body": "<p>Menjalankan keseluruhan pipeline end-to-end dan menghasilkan file dashboard PNG, kpi_summary.json, dan analytics_report.md di folder output terisolasi.</p>",
+    "notes": "Penggunaan TemporaryDirectory atau tmp_path menjaga kebersihan repositori."
+  },
+  {
+    "title": "Pengujian End-to-End dengan Pytest",
+    "kind": "content",
+    "body": "<ul><li><strong>Verifikasi Kontrak Output:</strong> Pastikan seluruh artefak (PNG, JSON, MD) benar-benar tercipta dan tidak kosong.</li><li><strong>Isolasi Sistem File:</strong> Gunakan fixture <code>tmp_path</code> bawaan <code>pytest</code> agar uji coba tidak meninggalkan file sampah.</li><li><strong>Cek Integritas Numerik:</strong> Parse balik JSON yang dihasilkan dan pastikan seluruh region muncul konsisten.</li></ul>",
+    "notes": "Pipeline analitik tanpa pengujian otomatis rentan rusak diam-diam ketika skema data berubah."
+  },
+  {
+    "title": "Kuis Cepat: Arsitektur Modular Analytics",
+    "kind": "question",
+    "body": "<p>Evaluasi pemahaman Anda mengenai desain pipeline analitik yang kokoh.</p>",
+    "question": "Mengapa pada tahap cleaning capstone kita mengubah latency_ms bernilai negatif (-5.0) menjadi NaN terlebih dahulu daripada langsung menghapus seluruh barisnya?",
+    "answer": "Menghapus seluruh baris akan menghilangkan catatan log menara dan metrik lain (throughput, packet loss) dari laporan insiden; mengubahnya ke NaN dan mengimputasi dengan median menara terkait mempertahankan jumlah observasi SLA sambil memperbaiki angka fisik yang mustahil.",
+    "notes": "Pilihan drop vs imputasi bergantung pada dampak terhadap pelaporan jumlah insiden."
+  },
+  {
+    "title": "Latihan Mandiri: Audit & Pengujian Pipeline",
+    "kind": "exercise",
+    "body": "<ul><li>Periksa seluruh langkah transformasi di <code>a05_02</code> dan <code>a05_03</code>.</li><li>Jalankan <code>pytest</code> pada <code>test_a05_capstone.py</code> dan amati verifikasi artefak.</li><li>Lanjutkan merancang solusi Anda di <code>assignments/tugas.py</code>.</li></ul>",
+    "notes": "Pastikan seluruh rubrik 100 poin terpenuhi sebelum menyelesaikan Track A."
+  },
+  {
+    "title": "Penutup Track A: Data Science & Visualization",
+    "kind": "content",
+    "body": "<ul><li>Anda kini telah menguasai <strong>NumPy (A01)</strong>, <strong>Pandas (A02)</strong>, <strong>EDA (A03)</strong>, <strong>Matplotlib/Seaborn (A04)</strong>, dan <strong>Capstone Pipeline (A05)</strong>.</li><li>Bekal ini langsung menjadi fondasi kuat untuk membangun model prediktif di <strong>Track B: AI &amp; Machine Learning</strong>.</li></ul>",
+    "notes": "Selamat telah menuntaskan seluruh 5 modul Track A!"
+  }
+]
+

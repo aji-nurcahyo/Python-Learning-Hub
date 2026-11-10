@@ -1,0 +1,100 @@
+[
+  {
+    "title": "Sensor Telemetry, Serial Framing & Checksums",
+    "subtitle": "Frame ASCII/Hex, XOR Checksum, Binary struct.pack & Virtual Serial Loopback",
+    "kind": "cover",
+    "body": "<p>Membangun lapisan akuisisi data IoT yang tahan terhadap derau kabel dan baris terpotong, efisien dengan payload biner <code>struct</code>, dan teruji offline via virtual loopback serial.</p>",
+    "notes": "Track E memulai perjalanan IoT & Telekomunikasi dari lapisan terbawah: komunikasi data sensor mentah."
+  },
+  {
+    "title": "Mengapa Membaca Port Serial Rawan Data Korup?",
+    "kind": "content",
+    "body": "<ul><li><strong>Stream Berkelanjutan Tanpa Batas Pesan:</strong> Port UART/serial mengirim aliran byte kontinu; penerima bisa mulai membaca tepat di tengah kalimat.</li><li><strong>Interferensi Elektromagnetik:</strong> Motor atau relay dekat kabel memicu perubahan bit acak.</li><li><strong>Prinsip Defensif:</strong> Jangan pernah mengasumsikan setiap baris dari serial langsung berbentuk angka bersih.</li></ul>",
+    "notes": "Satu baris korup tanpa pengecekan dapat merusak grafik suhu atau memicu crash parser float()."
+  },
+  {
+    "title": "Anatomi Protokol Framing Telemetri",
+    "kind": "content",
+    "body": "<ul><li><strong>Start Delimiter (<code>$</code>):</strong> Menandai awal paket baru agar receiver tahu kapan sinkronisasi dimulai.</li><li><strong>Payload Terpisah Koma:</strong> <code>TELEM,101,28.4,62.0,3.85</code> berisi ID perangkat serta pembacaan sensor.</li><li><strong>Checksum Delimiter (<code>*XX</code>):</strong> Dua digit heksadesimal hasil bitwise XOR seluruh karakter payload di antara <code>$</code> dan <code>*</code>.</li></ul>",
+    "notes": "Konvensi $...*XX ini mengadopsi pola NMEA 0183 yang dipakai luas di modul GPS dan sensor industri."
+  },
+  {
+    "title": "Contoh Kode: Parser Serial & Validasi Checksum XOR",
+    "kind": "code",
+    "example": "spec/E01/e01_01_serial_frame_parser",
+    "body": "<p>Menyaring berkas <code>serial_sensor_frames.log</code> berisi baris valid, boot noise, checksum salah <code>*FF</code>, serta baris terpotong.</p>",
+    "notes": "Hanya frame terverifikasi utuh yang diizinkan melaju ke pipeline penyimpanan."
+  },
+  {
+    "title": "Kompresi Payload Biner Memakai Modul struct",
+    "kind": "content",
+    "body": "<ul><li><strong>Kendala Teks ASCII:</strong> Pada jaringan daya rendah (LoRa, Zigbee, NB-IoT), setiap byte ekstra menyedot baterai dan airtime radio.</li><li><strong>Binary Packing (<code>&lt;Hff</code>):</strong> Tanda <code>&lt;</code> (little-endian), <code>H</code> (uint16 2-byte), <code>f</code> (float32 4-byte) memadatkan payload ke tepat <strong>10 byte</strong>!</li><li><strong>Kontrak Pengirim-Penerima:</strong> Firmware C/C++ mikrokontroler dan skrip Python wajib menyepakati urutan dan endianness yang identik.</li></ul>",
+    "notes": "Penggunaan < atau ! (network big-endian) mencegah bug akibat perbedaan arsitektur CPU."
+  },
+  {
+    "title": "Contoh Kode: Binary struct.pack & unpack",
+    "kind": "code",
+    "example": "spec/E01/e01_02_binary_struct_packing",
+    "body": "<p>Membandingkan ukuran paket biner 10-byte vs teks ASCII dan menguji pengemasan-pembongkaran data sensor secara presisi.</p>",
+    "notes": "Penghematan hampir 3x lipat sangat terasa pada ribuan transmisi per hari."
+  },
+  {
+    "title": "Kalibrasi Sensor & Smoothing Jitter",
+    "kind": "content",
+    "body": "<ul><li><strong>Kalibrasi Linear:</strong> Terapkan faktor <code>gain</code> dan <code>offset</code> hasil uji lab terhadap sensor mentah.</li><li><strong>Exponential Moving Average (EMA):</strong> Rumus <code>y_t = alpha * x_t + (1 - alpha) * y_{t-1}</code> meredam lonjakan sesaat tanpa menyimpan riwayat panjang di mikrokontroler maupun gateway.</li></ul>",
+    "notes": "Nilai alpha kecil (0.15-0.35) menghasilkan kurva lebih halus namun merespons perubahan nyata sedikit lebih lambat."
+  },
+  {
+    "title": "Contoh Kode: Kalibrasi & Filter EMA",
+    "kind": "code",
+    "example": "spec/E01/e01_03_sensor_smoothing_calib",
+    "body": "<p>Menerapkan koreksi <code>gain/offset</code> dan filter EMA pada deret pembacaan suhu yang mengandung spike sesaat.</p>",
+    "notes": "Perhatikan bagaimana lonjakan 32.5 diredam bertahap pada output EMA."
+  },
+  {
+    "title": "Menguji Port Serial Secara Offline dengan pySerial",
+    "kind": "content",
+    "body": "<ul><li><strong>Kendala Hardware Lab:</strong> Pengembang dan CI pipeline sering tidak memiliki board Arduino/ESP32 tertancap di port COM saat menjalankan pengujian.</li><li><strong><code>serial.serial_for_url('loop://')</code>:</strong> Handler loopback virtual bawaan <code>pyserial</code> memantulkan byte yang ditulis langsung ke antrean baca.</li><li><strong>Manajemen Resource:</strong> Selalu bungkus pembacaan dalam blok <code>try ... finally: ser.close()</code> agar port tidak terkunci.</li></ul>",
+    "notes": "URL loop:// sangat berguna untuk menguji batas timeout dan decoding frame serial."
+  },
+  {
+    "title": "Contoh Kode: Simulasi Stream pySerial Loopback",
+    "kind": "code",
+    "example": "spec/E01/e01_04_serial_stream_simulator",
+    "body": "<p>Membuka port virtual <code>loop://</code> pada baudrate 115200, menulis frame biner/ASCII, lalu membacanya kembali lewat <code>readline()</code>.</p>",
+    "notes": "Ganti saja URL 'loop://' menjadi 'COM3' atau '/dev/ttyUSB0' saat menyambung ke perangkat nyata."
+  },
+  {
+    "title": "Penanganan Timeout & Kesalahan SerialException",
+    "kind": "content",
+    "body": "<ul><li><strong>Selalu Set <code>timeout=0.5</code>:</strong> Tanpa timeout, <code>ser.readline()</code> membeku selamanya bila kabel sensor tercabut.</li><li><strong>Tangkap <code>UnicodeDecodeError</code> / <code>errors='replace'</code>:</strong> Byte acak akibat kabel longgar tidak boleh mematikan daemon gateway IoT Anda.</li></ul>",
+    "notes": "Gateway edge yang tangguh harus bisa pulih otomatis ketika sensor restart."
+  },
+  {
+    "title": "Pengujian Otomatis Akuisisi Data di Pytest",
+    "kind": "content",
+    "body": "<ul><li>Verifikasi kalkulasi checksum pada string terstandar.</li><li>Uji baris terpotong, header asing, dan checksum palsu <code>*FF</code> agar seluruhnya dikembalikan sebagai <code>None</code>.</li><li>Pastikan roundtrip <code>struct.pack/unpack</code> mengembalikan tipe dan akurasi presisi.</li></ul>",
+    "notes": "Uji coba parser di desktop mempercepat integrasi ketika perangkat fisik sudah siap."
+  },
+  {
+    "title": "Kuis Cepat: Checksum & Endianness",
+    "kind": "question",
+    "body": "<p>Uji pemahaman Anda tentang pengamanan dan efisiensi komunikasi serial IoT.</p>",
+    "question": "Dalam format struct.Struct('<Hff'), apa arti simbol '<' dan mengapa menuliskannya secara eksplisit sangat penting?",
+    "answer": "Simbol '<' menetapkan urutan byte Little-Endian tanpa alignment padding C. Menuliskannya secara eksplisit menjamin layout biner 10-byte tetap identik di mikrokontroler maupun server x86/ARM tanpa selisih byte tersembunyi.",
+    "notes": "Native alignment tanpa prefiks endianness (<, >, !) bisa menyisipkan byte padding kosong dan mengubah ukuran paket."
+  },
+  {
+    "title": "Latihan Mandiri: Serial Telemetry Parser",
+    "kind": "exercise",
+    "body": "<ul><li>Validasi checksum XOR semua baris di <code>serial_sensor_frames.log</code>.</li><li>Bandingkan ukuran frame ASCII vs paket biner <code>&lt;Hff</code>.</li><li>Jalankan <code>pytest code/test_e01_telemetry.py</code>.</li></ul>",
+    "notes": "Setelah membaca data sensor dari kabel serial, di Modul E02 kita mengirimkannya ke jaringan memakai protokol IoT MQTT!"
+  },
+  {
+    "title": "Ringkasan Modul E01",
+    "kind": "content",
+    "body": "<ul><li>Protokol framing <code>$...*XX</code> + XOR checksum melindungi gateway IoT dari bit rusak dan buffer terpotong.</li><li><code>struct</code> meringkas paket data ke format biner ringkas, sedangkan EMA meredam jitter pembacaan sensor.</li><li>Di Modul E02 kita mempelajari protokol komunikasi IoT terdistribusi berbasis publish-subscribe <strong>MQTT</strong>!</li></ul>",
+    "notes": "Lanjutkan ke Modul E02: IoT Protocols & MQTT Publish-Subscribe."
+  }
+]
+

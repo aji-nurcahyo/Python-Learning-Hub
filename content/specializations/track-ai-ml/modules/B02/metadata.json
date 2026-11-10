@@ -1,0 +1,92 @@
+{
+  "id": "B02",
+  "trackId": "ai-ml",
+  "trackTitle": "Artificial Intelligence & Machine Learning",
+  "order": 2,
+  "title": "Supervised Learning: Regression & Classification",
+  "subtitle": "Linear/Ridge Regression, Logistic Regression, Decision Tree & Random Forest",
+  "description": "Pahami dan bandingkan algoritma supervised learning utama di Scikit-Learn: regresi linear dan Ridge terregularisasi untuk target kontinu, serta Logistic Regression, Decision Tree, dan Random Forest untuk klasifikasi.",
+  "difficulty": "Intermediate",
+  "estimatedHours": 5,
+  "prerequisites": [
+    "Modul B01 (ML Foundations & Scikit-Learn Pipelines)",
+    "Modul A03 (Exploratory Data Analysis)"
+  ],
+  "learningObjectives": [
+    "Melatih LinearRegression dan Ridge(alpha=1.0) serta mengevaluasi MAE, RMSE, dan R2 pada test set.",
+    "Menggunakan LogisticRegression dengan predict_proba() dan menafsirkan probabilitas kelas.",
+    "Membandingkan DecisionTreeClassifier melawan ensemble RandomForestClassifier.",
+    "Mengekstrak feature_importances_ serta menyusun tabel komparasi multi-model secara objektif."
+  ],
+  "dependencies": ["scikit-learn>=1.4", "pandas>=2.2", "numpy>=1.26", "pytest>=8.0"],
+  "tags": ["regression", "classification", "random-forest", "decision-tree", "ridge"],
+  "codeExample": {
+    "title": "Decision Tree vs Random Forest untuk Prediksi Risiko Kongesti",
+    "filename": "b02_03_decision_tree_rf.py",
+    "outputKey": "spec/B02/b02_03_decision_tree_rf",
+    "explanation": "Skrip ini melatih DecisionTreeClassifier (max_depth=4) dan RandomForestClassifier (n_estimators=60, random_state=42) pada data kapasitas menara jaringan, membandingkan akurasi uji serta mencetak urutan feature importances."
+  },
+  "exercise": {
+    "title": "Komparasi Regresi & Klasifikasi Kapasitas Menara",
+    "instructions": [
+      "Muat datasets/network_capacity_metrics.csv.",
+      "Untuk tugas regresi, prediksi throughput_mbps menggunakan Ridge(alpha=1.0) di dalam Pipeline dengan StandardScaler.",
+      "Hitung MAE, RMSE, dan R2 pada test set terpisah (random_state=42).",
+      "Untuk tugas klasifikasi, latih RandomForestClassifier dan identifikasi dua fitur paling berpengaruh."
+    ],
+    "tips": "Model berbasis pohon (Decision Tree & Random Forest) tidak wajib memakai StandardScaler, namun tetap rapi ditaruh dalam Pipeline bila digabung imputer.",
+    "time": "55 Menit"
+  },
+  "quiz": {
+    "question": "Mengapa ensemble RandomForestClassifier umumnya lebih tahan terhadap overfitting dibandingkan satu DecisionTreeClassifier tanpa batasan max_depth?",
+    "options": [
+      "Karena Random Forest menghapus 50% kolom input secara permanen sebelum training",
+      "Karena Random Forest melatih banyak pohon pada bootstrap sample dan subset fitur acak lalu menggabungkan prediksinya sehingga menurunkan varians model",
+      "Karena Random Forest tidak menggunakan fitur numerik",
+      "Karena Decision Tree hanya mendukung klasifikasi multi-kelas"
+    ],
+    "correctIndex": 1,
+    "explanation": "Teknik bagging + random feature subspace pada Random Forest merata-ratakan kesalahan individual tiap pohon (variance reduction) sehingga jauh lebih generalis.",
+    "hint": "Ingat konsep Bootstrap Aggregating (Bagging) dan reduksi varians."
+  },
+  "assignment": {
+    "title": "Proyek Mini: Benchmark Regresi Throughput & Klasifikasi Risiko Kongesti",
+    "description": "Bangun suite benchmarking supervised learning yang membandingkan model linear dan tree-based secara seragam di atas train/test split yang identik.",
+    "instructions": [
+      "Implementasikan evaluate_regressors(df) untuk membandingkan DummyRegressor, LinearRegression, dan Ridge berdasarkan MAE, RMSE, dan R2.",
+      "Implementasikan evaluate_classifiers(df) untuk membandingkan LogisticRegression dan RandomForestClassifier.",
+      "Ekstrak top feature importances dari RandomForestClassifier terlatih.",
+      "Pastikan fungsi tervalidasi oleh test_b02_supervised.py."
+    ],
+    "rubric": [
+      { "criteria": "Implementasi Pipeline Regresi & Metrik", "weight": 30, "description": "MAE, RMSE, dan R2 dihitung tepat di test set terisolasi." },
+      { "criteria": "Implementasi Klasifikasi & Probabilitas", "weight": 25, "description": "LogisticRegression dan RandomForest berjalan deterministik (random_state=42)." },
+      { "criteria": "Komparasi Baseline & Interpretasi Fitur", "weight": 25, "description": "Menyajikan tabel komparasi serta fitur dominan dengan benar." },
+      { "criteria": "Unit Testing & Kebersihan Kode", "weight": 20, "description": "Seluruh skrip modular dan lulus pytest." }
+    ],
+    "starterFilename": "tugas.py"
+  },
+  "resources": {
+    "hasSlides": true,
+    "codeDownload": "/downloads/specializations/B02/b02_03_decision_tree_rf.py",
+    "notebookDownload": "/downloads/specializations/B02/b02_supervised_models.ipynb",
+    "datasetDownload": "/downloads/specializations/B02/network_capacity_metrics.csv",
+    "guideDownload": "/downloads/specializations/B02/tugas.md",
+    "pptxDownload": null
+  },
+  "references": [
+    {
+      "title": "Scikit-Learn User Guide: Linear Models & Regularization",
+      "source": "Scikit-Learn Developers",
+      "url": "https://scikit-learn.org/stable/modules/linear_model.html",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "title": "Scikit-Learn Ensemble Methods: Random Forests",
+      "source": "Scikit-Learn Developers",
+      "url": "https://scikit-learn.org/stable/modules/ensemble.html#forest",
+      "license": "BSD-3-Clause"
+    }
+  ]
+}
+

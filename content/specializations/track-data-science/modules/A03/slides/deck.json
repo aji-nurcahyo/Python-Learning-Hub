@@ -1,0 +1,100 @@
+[
+  {
+    "title": "Exploratory Data Analysis (EDA)",
+    "subtitle": "Distribusi Statistik, Deteksi Outlier IQR/Z-Score & Korelasi",
+    "kind": "cover",
+    "body": "<p>Menyelidiki struktur data sebelum pemodelan atau visualisasi: mengenali kemencengan distribusi, menyaring anomali dengan pagar IQR, serta memisahkan korelasi linear vs monotonik.</p>",
+    "notes": "EDA mencegah kesalahan interpretasi metrik rata-rata pada dataset operasional nyata."
+  },
+  {
+    "title": "Mengapa Mean Saja Bisa Menyesatkan?",
+    "kind": "content",
+    "body": "<ul><li><strong>Sensitivitas Ekstrem:</strong> Satu menara gangguan dengan latensi 118 ms menaikkan rata-rata seluruh wilayah.</li><li><strong>Median sebagai Pusat Stabil:</strong> 50% pengamatan berada di bawah median dan tidak bergeser oleh satu lonjakan besar.</li><li><strong>Kapan Mengaudit Skew:</strong> Selalu bandingkan selisih <code>mean</code> vs <code>median</code> dan cek nilai <code>.skew()</code>.</li></ul>",
+    "notes": "Distribusi metrik waktu tunggu dan trafik hampir selalu right-skewed."
+  },
+  {
+    "title": "Ukuran Penyebaran: Std Dev vs IQR",
+    "kind": "content",
+    "body": "<ul><li><strong>Standar Deviasi:</strong> Pasangan alami untuk <code>mean</code>, cocok bila distribusi relatif simetris tanpa outlier ekstrem.</li><li><strong>Interquartile Range (IQR):</strong> Selisih kuartil atas dan bawah (<code>Q3 - Q1</code>) yang merepresentasikan 50% sebaran data inti.</li><li><strong>Keunggulan Non-Parametrik:</strong> Median + IQR adalah standar ringkasan untuk distribusi skewed.</li></ul>",
+    "notes": "Konsep Q1, median, dan Q3 menjadi dasar pembacaan Box Plot pada modul A04 nanti."
+  },
+  {
+    "title": "Contoh Kode: Ringkasan Distribusi & Skewness",
+    "kind": "code",
+    "example": "spec/A03/a03_01_distribution_summary",
+    "body": "<p>Membandingkan mean, median, IQR, dan skewness metrik jaringan pada <code>telecom_qos_kpi.csv</code>.</p>",
+    "notes": "Terlihat langsung mengapa latency_ms memiliki skewness positif paling tinggi."
+  },
+  {
+    "title": "Deteksi Outlier dengan Metode IQR (Tukey Fences)",
+    "kind": "content",
+    "body": "<ul><li><strong>Pagar Bawah:</strong> <code>Q1 - 1.5 * IQR</code>.</li><li><strong>Pagar Atas:</strong> <code>Q3 + 1.5 * IQR</code>.</li><li><strong>Keunggulan Praktis:</strong> Tidak bergantung asumsi kurva lonceng (Normal) karena batas dihitung dari kuartil empiris.</li></ul>",
+    "notes": "Outlier tidak selalu harus dihapus; dalam deteksi anomali jaringan, outlier justru merupakan sinyal insiden terpenting."
+  },
+  {
+    "title": "Deteksi Outlier dengan Z-Score",
+    "kind": "content",
+    "body": "<ul><li><strong>Formula:</strong> <code>z = (x - mean) / std</code> menunjukkan jarak observasi dari rata-rata dalam satuan deviasi standar.</li><li><strong>Ambang Lazim:</strong> Nilai <code>|z| &gt; 2.5</code> atau <code>3.0</code> menandai pengamatan tidak biasa.</li><li><strong>Keterbatasan Z-Score:</strong> Pada dataset kecil dengan outlier sangat ekstrem, nilai ekstrem ikut membesarkan <code>mean</code> dan <code>std</code> (efek masking).</li></ul>",
+    "notes": "Untuk dataset kecil atau sangat skewed, IQR atau Modified Z-score berbasis MAD jauh lebih andal."
+  },
+  {
+    "title": "Contoh Kode: Perbandingan IQR vs Z-Score",
+    "kind": "code",
+    "example": "spec/A03/a03_02_outlier_iqr_zscore",
+    "body": "<p>Mendeteksi tower berlatensi ekstrem dan mengamati perubahan mean setelah menara anomali disaring.</p>",
+    "notes": "Perhatikan bagaimana median hampir tidak berubah setelah outlier dikeluarkan, sedangkan mean turun signifikan."
+  },
+  {
+    "title": "Korelasi: Pearson vs Spearman",
+    "kind": "content",
+    "body": "<ul><li><strong>Pearson (r):</strong> Mengukur kekuatan garis lurus linear antara dua variabel kontinu. Sangat dipengaruhi outlier ekstrem.</li><li><strong>Spearman (rho):</strong> Mengukur kecenderungan naik/turun konsisten (monotonik) berdasarkan urutan peringkat.</li><li><strong>Prinsip Penting:</strong> Korelasi bukan kausalitas; variabel ketiga (misal kepadatan trafik) dapat memengaruhi keduanya sekaligus.</li></ul>",
+    "notes": "Selalu hitung keduanya jika data memiliki distribusi menceng atau hubungan non-linear."
+  },
+  {
+    "title": "Analisis Silang Variabel Kategorikal (Crosstab)",
+    "kind": "content",
+    "body": "<ul><li><strong>Tabulasi Silang:</strong> <code>pd.crosstab(df['region'], df['sla_status'], margins=True)</code> merangkum frekuensi antar kategori.</li><li><strong>Deteksi Pola Operasional:</strong> Menunjukkan wilayah mana yang paling sering mengalami status <code>DEGRADED</code> atau <code>CRITICAL</code>.</li></ul>",
+    "notes": "Menambahkan margins=True otomatis menyertakan total baris dan kolom untuk menghitung proporsi cepat."
+  },
+  {
+    "title": "Contoh Kode: Matriks Korelasi & Crosstab",
+    "kind": "code",
+    "example": "spec/A03/a03_03_correlation_crosstabs",
+    "body": "<p>Membandingkan koefisien Pearson vs Spearman metrik QoS serta memetakan status SLA per region.</p>",
+    "notes": "Amati tingginya korelasi antara latency_ms dan packet_loss_pct."
+  },
+  {
+    "title": "Merumuskan Hipotesis Analitik Berbasis Segmen",
+    "kind": "content",
+    "body": "<ul><li><strong>Analisis Bivariat &amp; Segmen:</strong> Pecah dataset menurut teknologi (<code>4G</code> vs <code>5G</code>) untuk melihat perbedaan median latensi.</li><li><strong>Tindak Lanjut Operasional:</strong> Output EDA harus ditutup dengan daftar temuan spesifik yang dapat ditindaklanjuti oleh tim teknik atau pemodelan ML.</li></ul>",
+    "notes": "EDA bukan sekadar menjalankan .describe(), melainkan menjawab pertanyaan bisnis/teknis konkret."
+  },
+  {
+    "title": "Contoh Kode: Komparasi Segmen 4G vs 5G",
+    "kind": "code",
+    "example": "spec/A03/a03_04_hypothesis_framing",
+    "body": "<p>Mengelompokkan menara berdasarkan teknologi radio serta mengekstrak seluruh tower berisiko tinggi (latensi &gt; 50 ms).</p>",
+    "notes": "Hasil ini langsung mengarah ke hipotesis kapasitas infrastruktur."
+  },
+  {
+    "title": "Kuis Cepat: Ketahanan Statistik",
+    "kind": "question",
+    "body": "<p>Uji pemahaman Anda dalam memilih ukuran pemusatan dan penyebaran data pada kondisi anomali.</p>",
+    "question": "Dari empat metrik berikut — mean, median, standar deviasi, IQR — pasangan manakah yang paling stabil saat dataset latensi mengandung beberapa spike ekstrem 500 ms?",
+    "answer": "Pasangan median dan IQR karena keduanya dihitung dari posisi kuartil (persentil ke-50 dan ke-25/ke-75), sehingga besarnya angka ekstrem di ekor distribusi tidak menyeret nilainya.",
+    "notes": "Konsep ini sangat penting dalam pelaporan SLA dan monitoring KPI telekomunikasi."
+  },
+  {
+    "title": "Latihan Mandiri: Diagnostik QoS Jaringan",
+    "kind": "exercise",
+    "body": "<ul><li>Muat <code>telecom_qos_kpi.csv</code> dan audit distribusi <code>latency_ms</code>.</li><li>Identifikasi outlier menggunakan pagar atas IQR.</li><li>Bandingkan korelasi Pearson vs Spearman dan cek sebaran status SLA via <code>pd.crosstab</code>.</li></ul>",
+    "notes": "Setelah mengekstrak wawasan numerik di A03, kita siap memvisualisasikannya di Modul A04."
+  },
+  {
+    "title": "Ringkasan Modul A03",
+    "kind": "content",
+    "body": "<ul><li>Bandingkan <code>mean</code> vs <code>median</code> serta nilai <code>skew</code> untuk menilai simetri distribusi.</li><li>Gunakan aturan <code>1.5 * IQR</code> sebagai detektor outlier non-parametrik yang andal.</li><li>Kombinasikan korelasi Pearson/Spearman dan <code>pd.crosstab</code> untuk menyusun kesimpulan segmen sebelum membuat chart di Modul A04.</li></ul>",
+    "notes": "Lanjutkan ke Modul A04 untuk menyulap temuan EDA menjadi grafik siap publikasi."
+  }
+]
+

@@ -1,0 +1,17 @@
+tower_id,region,technology,traffic_gbps,latency_ms,packet_loss_pct,active_users,sla_status
+TWR-01,Sumatera,4G,4.2,19.4,0.12,410,OK
+TWR-02,Sumatera,5G,8.5,14.1,0.05,620,OK
+TWR-03,Jawa,5G,11.2,16.8,0.08,890,OK
+TWR-04,Jawa,4G,6.8,24.5,0.21,540,OK
+TWR-05,Sumatera,4G,9.4,82.6,1.45,780,DEGRADED
+TWR-06,Kalimantan,4G,3.5,21.0,0.15,290,OK
+TWR-07,Jawa,5G,12.1,15.9,0.07,940,OK
+TWR-08,Kalimantan,4G,4.9,26.3,0.28,360,OK
+TWR-09,Jawa,4G,10.5,118.4,2.80,860,CRITICAL
+TWR-10,Sumatera,5G,7.9,15.2,0.06,580,OK
+TWR-11,Kalimantan,4G,5.8,64.0,0.92,430,DEGRADED
+TWR-12,Sumatera,4G,4.6,20.1,0.14,420,OK
+TWR-13,Jawa,5G,9.8,17.3,0.09,750,OK
+TWR-14,Kalimantan,5G,6.4,18.7,0.11,480,OK
+TWR-15,Sumatera,4G,5.1,22.8,0.19,445,OK
+TWR-16,Jawa,4G,7.4,25.9,0.24,610,OK

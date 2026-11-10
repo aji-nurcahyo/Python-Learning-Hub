@@ -66,7 +66,7 @@ export function HomePage({
             Interactive Python Learning Modules
           </p>
           <p className="hero-subtext">
-            Explore Python programming through structured learning modules, interactive presentations, practical coding examples, and hands-on exercises. Platform mencakup 3 Level Kompetensi, 30 Chapter Terstruktur, dan 5 Jalur Spesialisasi Industri.
+            Explore Python programming through structured learning modules, interactive presentations, practical coding examples, and hands-on exercises. Platform mencakup 3 Level Kompetensi, 30 Core Chapter Terstruktur, dan 5 Jalur Spesialisasi Industri (25 Modul Spesialisasi).
           </p>
           <div className="hero-cta-group">
             <button

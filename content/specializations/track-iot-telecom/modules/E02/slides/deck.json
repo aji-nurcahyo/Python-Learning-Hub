@@ -1,0 +1,100 @@
+[
+  {
+    "title": "IoT Protocols & MQTT Publish-Subscribe",
+    "subtitle": "Topic Hierarchy, Wildcards (+/#), QoS 0/1/2, Retained & LWT",
+    "kind": "cover",
+    "body": "<p>Memahami arsitektur komunikasi ringan berbasis publish-subscribe di jaringan IoT memakai protokol standar MQTT dan pustaka <code>paho-mqtt</code> v2.</p>",
+    "notes": "MQTT merupakan tulang punggung transmisi telemetri perangkat lapangan ke cloud maupun edge server."
+  },
+  {
+    "title": "Mengapa Publish-Subscribe Mengalahkan HTTP di IoT?",
+    "kind": "content",
+    "body": "<ul><li><strong>Header Ringan:</strong> Packet MQTT minimal hanya berukuran 2 byte, sangat hemat bandwidth seluler/LoRa-IP dibanding header teks HTTP ratusan byte.</li><li><strong>Decoupling Pengirim &amp; Penerima:</strong> Sensor cukup menerbitkan data ke Broker tanpa tahu siapa saja layanan yang memantau.</li><li><strong>Push Seketika:</strong> Broker langsung mendorong data masuk ke seluruh subscriber tanpa polling periodik.</li></ul>",
+    "notes": "Satu sensor suhu dapat dipantau bersamaan oleh dashboard real-time, database logger, dan sistem alarm."
+  },
+  {
+    "title": "Aturan Hierarki Topik & Wildcards (+ vs #)",
+    "kind": "content",
+    "body": "<ul><li><strong>Struktur Hierarkis:</strong> Contoh <code>itera/gedung-c/node-01/env/temp</code> — hindari slash depan (<code>/itera/...</code>) karena menambah segmen kosong.</li><li><strong>Single-Level Wildcard (<code>+</code>):</strong> Menggantikan tepat satu tingkat segmen, misalnya <code>itera/+/node-01/+</code>.</li><li><strong>Multi-Level Wildcard (<code>#</code>):</strong> Menggantikan nol atau banyak tingkat hingga akhir topik (<code>itera/gedung-c/#</code>).</li></ul>",
+    "notes": "Desain hierarki topik yang rapi sejak awal memudahkan penyaringan akses ACL dan analitik lintas gedung."
+  },
+  {
+    "title": "Contoh Kode: Pencocokan Topik paho-mqtt",
+    "kind": "code",
+    "example": "spec/E02/e02_01_mqtt_topic_hierarchy",
+    "body": "<p>Menggunakan <code>mqtt.topic_matches_sub(sub, topic)</code> untuk mengevaluasi filter <code>+</code> dan <code>#</code> terhadap berbagai topik sensor.</p>",
+    "notes": "Fungsi topic_matches_sub bawaan paho-mqtt mengikuti spesifikasi OASIS MQTT secara persis."
+  },
+  {
+    "title": "Memilih Level QoS 0, QoS 1, atau QoS 2",
+    "kind": "content",
+    "body": "<ul><li><strong>QoS 0 (At most once):</strong> Sekali kirim tanpa konfirmasi ACK — tercepat dan hemat baterai, cocok untuk data berkala tiap 5 detik.</li><li><strong>QoS 1 (At least once):</strong> Menjamin pesan tiba via PUBACK, namun retry di sinyal buruk bisa mengirim duplikat sehingga penerima wajib idempoten.</li><li><strong>QoS 2 (Exactly once):</strong> Handshake 4 langkah tanpa duplikat — latensi tertinggi, dipakai untuk perintah aktuator kritis.</li></ul>",
+    "notes": "Pemilihan QoS merupakan kompromi antara reliabilitas, latensi, dan konsumsi energi/kuota."
+  },
+  {
+    "title": "Retained Messages & Last Will and Testament (LWT)",
+    "kind": "content",
+    "body": "<ul><li><strong>Retained Message (<code>retain=True</code>):</strong> Broker menyimpan salinan pesan terakhir di topik tersebut agar aplikasi baru yang baru <code>subscribe</code> langsung mendapat status terkini.</li><li><strong>Last Will and Testament (LWT):</strong> Pesan darurat yang dititipkan ke broker saat koneksi awal; jika perangkat mati listrik atau kehilangan sinyal melewati <em>keep-alive</em>, broker otomatis menerbitkan LWT (<code>OFFLINE</code>).</li></ul>",
+    "notes": "Retained message + LWT adalah kombinasi baku untuk melacak status online/offline ribuan node lapangan."
+  },
+  {
+    "title": "Contoh Kode: Simulasi Retained & LWT Disconnect",
+    "kind": "code",
+    "example": "spec/E02/e02_02_qos_retained_lwt_concepts",
+    "body": "<p>Memperagakan bagaimana pesan status awal <code>ONLINE</code> otomatis berubah menjadi <code>OFFLINE_LWT</code> di broker ketika sensor terputus mendadak.</p>",
+    "notes": "Pada klien paho-mqtt nyata, Anda cukup memanggil client.will_set(topic, payload, retain=True) sebelum connect()."
+  },
+  {
+    "title": "Perubahan API Penting di paho-mqtt 2.0",
+    "kind": "content",
+    "body": "<ul><li><strong>Callback API Version Eksplisit:</strong> Di <code>paho-mqtt &gt;= 2.0</code>, selalu sertakan <code>mqtt.CallbackAPIVersion.VERSION2</code> saat membuat <code>mqtt.Client(...)</code>.</li><li><strong>Validasi Payload di <code>on_message</code>:</strong> Selalu bungkus <code>json.loads(msg.payload.decode())</code> dalam blok <code>try/except</code> agar satu paket korup tidak menghentikan loop listener.</li></ul>",
+    "notes": "Callback on_message tetap berjalan aman di memori untuk pengujian tanpa koneksi broker eksternal."
+  },
+  {
+    "title": "Contoh Kode: Callback MQTT v2 & Parsing JSON Aman",
+    "kind": "code",
+    "example": "spec/E02/e02_03_mqtt_payload_router",
+    "body": "<p>Membangun instance <code>mqtt.Client(VERSION2)</code> dan menguji callback <code>on_message</code> terhadap payload JSON valid maupun payload cacat.</p>",
+    "notes": "Perhatikan pesan invalid langsung diabaikan bersih tanpa memicu uncaught JSONDecodeError."
+  },
+  {
+    "title": "Menangani Duplikasi QoS 1 & Alerting Threshold",
+    "kind": "content",
+    "body": "<ul><li><strong>Idempotensi Penerima QoS 1:</strong> Lacak ID paket (<code>packet_id</code>) atau timestamp terakhir agar pengiriman ulang tidak memicu alarm ganda.</li><li><strong>Pencocokan Terintegrasi:</strong> Ketika pesan tiba, evaluasi ambang batas (misal <code>temp_c &gt;= 35.0</code>) secara real-time.</li></ul>",
+    "notes": "Menggabungkan pola idempotency dari Track D dengan IoT QoS 1 menjaga sistem alert tetap tenang dan akurat."
+  },
+  {
+    "title": "Contoh Kode: Broker Simulasi Offline Lengkap",
+    "kind": "code",
+    "example": "spec/E02/e02_04_offline_broker_pipeline",
+    "body": "<p>Menjalankan pipeline <code>OfflineMqttBroker</code> yang melakukan deduplikasi QoS 1, mengirim pesan retained ke subscriber baru, dan memicu alert suhu tinggi.</p>",
+    "notes": "Simulasi offline memungkinkan unit test deterministik di CI tanpa container broker Mosquitto terpisah."
+  },
+  {
+    "title": "Keamanan Komunikasi MQTT di Produksi",
+    "kind": "content",
+    "body": "<ul><li><strong>Transport Enkripsi:</strong> Gunakan port TLS <code>8883</code> (<code>client.tls_set()</code>) daripada port polos <code>1883</code> di jaringan publik.</li><li><strong>Autentikasi &amp; ACL Topik:</strong> Terapkan username/password atau client certificate dan batasi node hanya boleh publish ke ID miliknya sendiri.</li></ul>",
+    "notes": "Keamanan perangkat tepi (edge) dimulai dari enkripsi TLS dan pembatasan hak publish per node."
+  },
+  {
+    "title": "Kuis Cepat: Semantik QoS & Wildcards",
+    "kind": "question",
+    "body": "<p>Uji pemahaman Anda mengenai wildcard matching dan reliabilitas pengiriman MQTT.</p>",
+    "question": "Apakah filter subscription 'itera/+/env' cocok dengan topik 'itera/gedung-c/lantai-2/env'? Jelaskan alasannya!",
+    "answer": "Tidak cocok. Wildcard '+' hanya mencocokkan tepat SATU tingkat level di antara garis miring, sedangkan topik tersebut memiliki dua segmen ('gedung-c/lantai-2') di tengahnya. Agar cocok, gunakan 'itera/+/+/env' atau 'itera/#'",
+    "notes": "Bila bingung, selalu verifikasi aturan pola dengan mqtt.topic_matches_sub()."
+  },
+  {
+    "title": "Latihan Mandiri: Router & Simulator MQTT",
+    "kind": "exercise",
+    "body": "<ul><li>Uji pencocokan topik <code>+</code> dan <code>#</code> memakai <code>topic_matches_sub</code>.</li><li>Implementasikan <code>OfflineMqttBroker</code> dengan retained message dan deduplikasi QoS 1.</li><li>Jalankan <code>pytest code/test_e02_mqtt.py</code>.</li></ul>",
+    "notes": "Setelah mengangkut data sensor lewat jaringan di E02, di Modul E03 kita menganalisis bentuk gelombang dan spektrum sinyal memakai SciPy FFT & Filter!"
+  },
+  {
+    "title": "Ringkasan Modul E02",
+    "kind": "content",
+    "body": "<ul><li>MQTT mengandalkan Publish-Subscribe ringan lewat Broker dengan topik hierarkis dan wildcard <code>+</code> / <code>#</code>.</li><li>Pilih QoS 0/1/2 sesuai kebutuhan keandalan, manfaatkan <code>retain=True</code> serta LWT untuk pemantauan status hidup perangkat.</li><li>Di Modul E03 kita memasuki jantung rekayasa telekomunikasi &amp; sinyal: <strong>Digital Signal Processing (FFT &amp; SciPy Filtering)</strong>!</li></ul>",
+    "notes": "Lanjutkan ke Modul E03: Digital Signal Processing with SciPy & FFT."
+  }
+]
+

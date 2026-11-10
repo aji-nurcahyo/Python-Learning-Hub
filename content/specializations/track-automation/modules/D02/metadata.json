@@ -1,0 +1,92 @@
+{
+  "id": "D02",
+  "trackId": "automation",
+  "trackTitle": "Automation & Scripting",
+  "order": 2,
+  "title": "Spreadsheet & PDF Document Automation",
+  "subtitle": "OpenPyXL Styling, Excel Formulas Multi-Sheet & Laporan PDF Otomatis fpdf2",
+  "description": "Otomatisasikan penyusunan laporan kantor berulang dari data CSV/Pandas menjadi file Excel (.xlsx) terformat rapi dengan formula aktif (=SUM, =AVERAGE) lintas sheet serta dokumen PDF eksekutif menggunakan fpdf2.",
+  "difficulty": "Intermediate",
+  "estimatedHours": 5,
+  "prerequisites": [
+    "Modul D01 (File System Automation with pathlib & shutil)",
+    "Modul A02 (Data Manipulation with Pandas)"
+  ],
+  "learningObjectives": [
+    "Membangun workbook Excel terstruktur (.xlsx) lengkap dengan styling header dan format angka via openpyxl.",
+    "Menyisipkan formula Excel dinamis (=SUM, =AVERAGE) lintas multi-sheet dan memvalidasinya kembali.",
+    "Menghasilkan dokumen PDF eksekutif terstruktur (judul, tabel berbaris zebra, ringkasan) menggunakan fpdf2.",
+    "Menggabungkan konversi CSV -> Excel + PDF menjadi pipeline ekspor otomatis yang teruji pytest."
+  ],
+  "dependencies": ["openpyxl>=3.1", "fpdf2>=2.7", "pandas>=2.2", "pytest>=8.0"],
+  "tags": ["openpyxl", "excel", "fpdf2", "pdf", "reporting"],
+  "codeExample": {
+    "title": "Pipeline Ekspor CSV Menjadi Laporan Excel & PDF Sekaligus",
+    "filename": "d02_04_csv_to_excel_pdf_pipeline.py",
+    "outputKey": "spec/D02/d02_04_csv_to_excel_pdf_pipeline",
+    "explanation": "Skrip ini membaca dataset biaya operasional regional, meringkas agregasi via Pandas, menulis workbook Excel berformula di openpyxl, lalu merender laporan PDF berformat tabel via fpdf2 ke folder sementara dan memverifikasi integritas kedua berkas."
+  },
+  "exercise": {
+    "title": "Membangun Generator Laporan Keuangan Regional Excel + PDF",
+    "instructions": [
+      "Muat datasets/regional_expense_records.csv dengan Pandas.",
+      "Buat workbook openpyxl berisi sheet 'Detail' dan 'Ringkasan' dengan styling header tebal biru dan format ribuan.",
+      "Sisipkan baris total dengan formula Excel '=SUM(...)' pada sheet 'Ringkasan'.",
+      "Bangun fungsi PDF export via fpdf.FPDF yang menampilkan tabel ringkasan dan memverifikasi magic header '%PDF-'."
+    ],
+    "tips": "Di fpdf2 modern, gunakan parameter new_x='LMARGIN', new_y='NEXT' pada pdf.cell() untuk berpindah baris tanpa deprecation warning.",
+    "time": "55 Menit"
+  },
+  "quiz": {
+    "question": "Mengapa menuliskan string '=SUM(B2:B10)' pada sel openpyxl lebih unggul daripada menuliskan angka hasil penjumlahan statis saja ketika dokumen dibagikan ke tim keuangan?",
+    "options": [
+      "Karena Excel tidak bisa membuka file jika tidak memiliki fungsi SUM",
+      "Karena formula '=SUM(B2:B10)' bersifat dinamis sehingga angka total di spreadsheet otomatis terhitung ulang saat analis mengubah salah satu sel input di Excel",
+      "Karena formula mengurangi ukuran file .xlsx hingga 90%",
+      "Karena openpyxl otomatis mengonversi formula menjadi file PDF"
+    ],
+    "correctIndex": 1,
+    "explanation": "Formula asli Excel tetap hidup saat file dibuka di Microsoft Excel atau LibreOffice Calc, memungkinkan tim bisnis mengedit atau menyimulasikan perubahan nilai tanpa merusak penjumlahan total.",
+    "hint": "Pikirkan apa yang terjadi jika penerima laporan mengedit angka pada baris transaksi di Excel."
+  },
+  "assignment": {
+    "title": "Proyek Mini: Automated Expense Report Builder (Excel + PDF)",
+    "description": "Bangun generator laporan bulanan otomatis yang mengubah log transaksi CSV menjadi dua dokumen siap edar: workbook .xlsx multi-sheet dengan formula aktif dan PDF eksekutif.",
+    "instructions": [
+      "Implementasikan export_styled_workbook(df, out_xlsx) yang membuat sheet 'Transaksi' & 'Rekap_Wilayah' dengan styling header, auto-width, dan formula =SUM().",
+      "Implementasikan export_executive_pdf(summary_df, out_pdf, title) menggunakan fpdf2 (FPDF) lengkap dengan header, tabel berbingkai, dan total nominal.",
+      "Pastikan kedua berkas dapat dibaca ulang tanpa error dan formula tetap tersimpan di sel target.",
+      "Uji seluruh output di pytest memakai openpyxl.load_workbook dan pemeriksaan header %PDF-."
+    ],
+    "rubric": [
+      { "criteria": "Formatting & Styling Excel OpenPyXL", "weight": 30, "description": "Header kontras, format angka ribuan (#,##0), dan lebar kolom rapi tanpa terpotong." },
+      { "criteria": "Kebenaran Formula & Multi-Sheet", "weight": 25, "description": "Formula =SUM() menunjuk rentang sel tepat pada sheet ringkasan." },
+      { "criteria": "Kualitas Tata Letak PDF fpdf2", "weight": 25, "description": "Dokumen PDF valid (%PDF-), tabel terbaca bersih tanpa teks bertumpuk." },
+      { "criteria": "Unit Testing Artefak Dokumen (Pytest)", "weight": 20, "description": "Validasi workbook & biner PDF lulus di tmp_path." }
+    ],
+    "starterFilename": "tugas.py"
+  },
+  "resources": {
+    "hasSlides": true,
+    "codeDownload": "/downloads/specializations/D02/d02_04_csv_to_excel_pdf_pipeline.py",
+    "notebookDownload": null,
+    "datasetDownload": "/downloads/specializations/D02/regional_expense_records.csv",
+    "guideDownload": "/downloads/specializations/D02/tugas.md",
+    "pptxDownload": null
+  },
+  "references": [
+    {
+      "title": "OpenPyXL Official Documentation: Styles, Formulas & Charts",
+      "source": "Eric Gazoni & Charlie Clark",
+      "url": "https://openpyxl.readthedocs.io/en/stable/",
+      "license": "MIT"
+    },
+    {
+      "title": "fpdf2 Documentation: Tutorial & Tables",
+      "source": "fpdf2 Contributors",
+      "url": "https://py-pdf.github.io/fpdf2/",
+      "license": "LGPL-3.0"
+    }
+  ]
+}
+

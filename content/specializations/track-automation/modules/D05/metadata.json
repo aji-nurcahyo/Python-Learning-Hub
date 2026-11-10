@@ -1,0 +1,95 @@
+{
+  "id": "D05",
+  "trackId": "automation",
+  "trackTitle": "Automation & Scripting",
+  "order": 5,
+  "title": "Capstone: Autonomous Data Ingestion & Reporting Bot",
+  "subtitle": "End-to-End Scraping, Excel/PDF Export, Rotating ZIP, Idempotency & Webhook Notify",
+  "description": "Integrasikan seluruh keahlian Track D menjadi Autonomous Reporting Bot yang mengambil feed HTML harian, mem-parsing data bersih memakai BeautifulSoup, memproduksi workbook Excel berformula dan laporan PDF, mengarsipkan ke ZIP berotasi, mencatat state idempotency, dan mengirim notifikasi webhook.",
+  "difficulty": "Advanced",
+  "estimatedHours": 8,
+  "isCapstone": true,
+  "prerequisites": [
+    "Modul D01 (File System Automation with pathlib & shutil)",
+    "Modul D02 (Spreadsheet & PDF Document Automation)",
+    "Modul D03 (Web Data Collection & Ethical HTML Parsing)",
+    "Modul D04 (Workflow Scheduling, Retry & Alerting)"
+  ],
+  "learningObjectives": [
+    "Merangkai pipeline otomasi multi-langkah (Collect -> Transform -> Export Excel/PDF -> Archive ZIP -> Notify Webhook).",
+    "Menjamin eksekusi harian bersifat idempotent lewat state ledger agar laporan tidak terduplikasi saat dijalankan ulang.",
+    "Mengelola retry backoff pada tahap pengambilan feed serta mengisolasi output artefak secara rapi memakai Path.",
+    "Menulis integration test pytest menyeluruh memverifikasi Excel, PDF, arsip ZIP, ledger idempotency, dan webhook notification."
+  ],
+  "dependencies": ["beautifulsoup4>=4.12", "httpx>=0.27", "openpyxl>=3.1", "fpdf2>=2.7", "pandas>=2.2", "pytest>=8.0"],
+  "tags": ["capstone", "bot", "etl-automation", "excel-pdf", "idempotency"],
+  "codeExample": {
+    "title": "Orkestrator Autonomous Reporting Bot (Run 1 Executed -> Run 2 Idempotent Skip)",
+    "filename": "d05_04_reporting_bot_runner.py",
+    "outputKey": "spec/D05/d05_04_reporting_bot_runner",
+    "explanation": "Orkestrator ini menjalankan bot laporan harian secara penuh pada eksekusi pertama (mengunduh feed HTML mock, mengekspor .xlsx berformula & .pdf, membuat backup .zip, dan mengirim webhook), lalu membuktikan eksekusi kedua untuk tanggal sama otomatis di-skip bersih oleh idempotency ledger."
+  },
+  "exercise": {
+    "title": "Audit Siklus Penuh & Idempotensi Bot Pelaporan",
+    "instructions": [
+      "Tinjau pemisahan modul d05_01_feed_collector.py, d05_02_excel_pdf_publisher.py, dan d05_03_idempotent_notifier.py.",
+      "Jalankan runner bot dua kali berturut-turut dengan batch_date yang sama pada folder sementara.",
+      "Pastikan eksekusi pertama mengembalikan status EXECUTED dengan seluruh file Excel, PDF, ZIP valid.",
+      "Pastikan eksekusi kedua mengembalikan status SKIPPED_IDEMPOTENT tanpa mengirim notifikasi webhook duplikat."
+    ],
+    "tips": "Pastikan setiap tahap mengembalikan status eksplisit (misal Executed vs Skipped) agar monitoring cron dan pytest dapat memverifikasi perilaku bot tanpa ambiguitas.",
+    "time": "65 Menit"
+  },
+  "quiz": {
+    "question": "Dalam arsitektur Autonomous Reporting Bot, kapan status batch_date seharusnya dicatat ke Idempotent Ledger sebagai 'completed'?",
+    "options": [
+      "Di baris paling pertama sebelum mengunduh feed agar cepat",
+      "Hanya setelah seluruh langkah krusial (ekspor Excel, ekspor PDF, dan pengarsipan ZIP) berhasil selesai tanpa error",
+      "Sesudah komputer dimatikan",
+      "Saat HTML gagal di-download agar hari itu langsung di-skip"
+    ],
+    "correctIndex": 1,
+    "explanation": "Jika kita menandai selesai di awal lalu langkah ekspor PDF gagal karena crash, run ulang berikutnya akan mengira hari itu sudah tuntas dan melewatkan pembuatan laporan permanen.",
+    "hint": "Pikirkan konsekuensi jika bot crash tepat di tengah jalan."
+  },
+  "assignment": {
+    "title": "Capstone Track D: Autonomous Daily Ingestion & Reporting Bot",
+    "description": "Bangun sistem bot otomasi pelaporan lengkap yang mengumpulkan feed HTML harian melalui httpx client tahan retry, memproduksi Excel + PDF + backup ZIP, menjaga idempotensi harian, dan mengirim ringkasan via webhook.",
+    "instructions": [
+      "Implementasikan collect_daily_feed(client, url) memakai BeautifulSoup + backoff retry.",
+      "Implementasikan publish_report_bundle(records, out_dir, batch_date) memproduksi workbook .xlsx berformula =SUM() dan laporan .pdf.",
+      "Implementasikan archive_and_notify(report_files, backup_dir, webhook_client, ledger, batch_date).",
+      "Validasikan run ke-1 (EXECUTED) dan run ke-2 tanggal sama (SKIPPED) menggunakan integration test pytest di tmp_path."
+    ],
+    "rubric": [
+      { "criteria": "Ingestion Feed HTML & Ketahanan Retry", "weight": 25, "description": "Ekstraksi BeautifulSoup akurat dan tahan gangguan 503 sementara." },
+      { "criteria": "Kualitas Ekspor Excel & PDF + Arsip ZIP", "weight": 30, "description": "Formula Excel valid, header PDF b'%PDF-', serta ZIP terkompresi rapi." },
+      { "criteria": "Idempotency Ledger & Webhook Notifier", "weight": 25, "description": "Penandaan selesai terjadi setelah artefak tuntas; run kedua aman ter-skip." },
+      { "criteria": "Arsitektur Modular & Cakupan Pytest", "weight": 20, "description": "Seluruh skenario teruji otomatis di tmp_path tanpa efek samping disk." }
+    ],
+    "starterFilename": "tugas.py"
+  },
+  "resources": {
+    "hasSlides": true,
+    "codeDownload": "/downloads/specializations/D05/d05_04_reporting_bot_runner.py",
+    "notebookDownload": null,
+    "datasetDownload": "/downloads/specializations/D05/daily_feed_snapshot.html",
+    "guideDownload": "/downloads/specializations/D05/tugas.md",
+    "pptxDownload": null
+  },
+  "references": [
+    {
+      "title": "Beautiful Soup, OpenPyXL & fpdf2 Documentation",
+      "source": "Python Community Ecosystem",
+      "url": "https://openpyxl.readthedocs.io/en/stable/",
+      "license": "MIT"
+    },
+    {
+      "title": "HTTPX & Pytest Temporary Directories Testing Guide",
+      "source": "Pytest / Encode OSS",
+      "url": "https://docs.pytest.org/en/stable/howtouse/tmp_path.html",
+      "license": "MIT"
+    }
+  ]
+}
+

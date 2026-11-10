@@ -1,0 +1,6 @@
+tower_id,uptime_days,temp_c,latency_ms,packet_loss_pct,active_users,bandwidth_mhz
+NEW-101,15,28.9,16.2,0.07,170,40
+NEW-102,225,43.9,76.0,1.88,480,20
+NEW-103,160,39.0,51.4,0.92,405,20
+NEW-104,40,31.1,19.8,0.12,235,40
+

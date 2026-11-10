@@ -1,0 +1,93 @@
+{
+  "id": "D03",
+  "trackId": "automation",
+  "trackTitle": "Automation & Scripting",
+  "order": 3,
+  "title": "Web Data Collection & Ethical HTML Parsing",
+  "subtitle": "BeautifulSoup Selectors, Ekstraksi Tabel HTML, robots.txt & Normalisasi Teks",
+  "description": "Kumpulkan data terstruktur dari halaman web HTML secara etis dan tahan banting menggunakan BeautifulSoup4, pembersihan nilai angka/harga kotor, pemeriksaan robots.txt via RobotFileParser, serta pengujian offline dengan httpx.MockTransport.",
+  "difficulty": "Intermediate",
+  "estimatedHours": 5,
+  "prerequisites": [
+    "Modul C01 (HTTP Client Utility & JSON Contract)",
+    "Chapter 17 (File Handling & CSV/JSON)",
+    "Chapter 28 (Networking & API Integration)"
+  ],
+  "learningObjectives": [
+    "Menulis selector CSS presisi di BeautifulSoup4 (.select, .select_one) yang aman terhadap elemen hilang (None).",
+    "Mengekstrak tabel HTML multi-kolom menjadi daftar dictionary terstruktur dan menyimpannya sebagai CSV/JSON.",
+    "Memeriksa izin crawling robots.txt memakai urllib.robotparser.RobotFileParser sebelum mengirim permintaan.",
+    "Menguji pipeline web extraction secara deterministik offline menggunakan snapshot HTML lokal dan httpx.MockTransport."
+  ],
+  "dependencies": ["beautifulsoup4>=4.12", "httpx>=0.27", "pytest>=8.0"],
+  "tags": ["web-scraping", "beautifulsoup", "html-parsing", "robots-txt", "httpx"],
+  "codeExample": {
+    "title": "Ekstraksi Tabel Katalog HTML & Normalisasi Harga ke Struktur JSON",
+    "filename": "d03_02_table_extraction_to_csv.py",
+    "outputKey": "spec/D03/d03_02_table_extraction_to_csv",
+    "explanation": "Skrip ini mengurai berkas HTML lokal datasets/catalog_snapshot.html memakai BeautifulSoup4, mengekstrak baris tabel perangkat jaringan, membersihkan format string harga ('Rp 1.450.000' -> integer 1450000), dan mengekspor daftar terstruktur."
+  },
+  "exercise": {
+    "title": "Parser HTML Aman & Validasi Etika robots.txt",
+    "instructions": [
+      "Muat datasets/catalog_snapshot.html dan parse memakai BeautifulSoup(html, 'html.parser').",
+      "Ekstrak setiap <tr class='device-row'> untuk mengambil kode, nama, wilayah, harga bersih (int), dan status ketersediaan.",
+      "Gunakan urllib.robotparser.RobotFileParser untuk memverifikasi jalur '/public/catalog' vs '/admin/private'.",
+      "Uji parser Anda saat elemen opsional (misal badge catatan) tidak ditemukan agar tidak memicu AttributeError."
+    ],
+    "tips": "Jika tersedia REST API publik resmi dari pemilik situs, selalu utamakan REST API terlebih dahulu sebelum melakukan HTML scraping.",
+    "time": "50 Menit"
+  },
+  "quiz": {
+    "question": "Dalam penulisan HTML parser menggunakan BeautifulSoup, mengapa pengecekan eksplisit 'if tag is not None' wajib dilakukan sebelum memanggil .get_text()?",
+    "options": [
+      "Karena HTML5 tidak mendukung metode .get_text()",
+      "Karena .select_one() atau .find() mengembalikan None bila struktur halaman berubah atau elemen opsional absen, sehingga langsung memanggil .get_text() memicu AttributeError crash",
+      "Karena BeautifulSoup mengembalikan dictionary jika tag ditemukan",
+      "Karena .get_text() otomatis menghapus seluruh tag induk di HTML"
+    ],
+    "correctIndex": 1,
+    "explanation": "Halaman web tidak seketat skema JSON API; satu artikel atau baris produk bisa tidak memiliki badge tertentu. Helper aman extract_text(node, default='') mencegah seluruh scraper berhenti di tengah jalan.",
+    "hint": "Apa yang dikembalikan .find() / .select_one() ketika selector CSS tidak cocok?"
+  },
+  "assignment": {
+    "title": "Proyek Mini: Polite Catalog & Maintenance Notice Extractor",
+    "description": "Bangun ekstraktor data HTML yang mematuhi robots.txt, membaca multi-halaman secara offline melalui httpx.MockTransport, menormalisasi nilai mata uang IDR kotor, dan lolos seluruh unit test pytest.",
+    "instructions": [
+      "Implementasikan is_path_allowed(robots_txt: str, user_agent: str, path: str) -> bool memakai RobotFileParser.parse().",
+      "Implementasikan parse_idr_price(raw_text: str) -> int untuk mengubah string seperti 'Rp 1.450.000' menjadi integer 1450000.",
+      "Implementasikan extract_catalog_rows(html: str) -> list[dict] untuk mengekstrak tabel perangkat beserta penanganan field opsional yang hilang.",
+      "Uji pengambilan multi-halaman mock & penolakan jalur terlarang robots.txt di test_d03_scraping.py."
+    ],
+    "rubric": [
+      { "criteria": "Kepatuhan Etika robots.txt & Headers", "weight": 25, "description": "RobotFileParser akurat mengizinkan jalur publik dan memblokir jalur disallowed." },
+      { "criteria": "Selector BeautifulSoup Tahan Elemen Hilang", "weight": 30, "description": "Tidak memicu AttributeError jika badge opsional tidak ada." },
+      { "criteria": "Normalisasi Teks & Parsing Harga Bersih", "weight": 25, "description": "Angka rupiah dan spasi berlebih dibersihkan akurat ke integer/string bersih." },
+      { "criteria": "Unit Testing Offline & Dokumentasi", "weight": 20, "description": "Seluruh skenario berjalan deterministik tanpa koneksi internet di pytest." }
+    ],
+    "starterFilename": "tugas.py"
+  },
+  "resources": {
+    "hasSlides": true,
+    "codeDownload": "/downloads/specializations/D03/d03_02_table_extraction_to_csv.py",
+    "notebookDownload": null,
+    "datasetDownload": "/downloads/specializations/D03/catalog_snapshot.html",
+    "guideDownload": "/downloads/specializations/D03/tugas.md",
+    "pptxDownload": null
+  },
+  "references": [
+    {
+      "title": "Beautiful Soup 4 Official Documentation",
+      "source": "Leonard Richardson / Crummy",
+      "url": "https://www.crummy.com/software/BeautifulSoup/bs4/doc/",
+      "license": "MIT"
+    },
+    {
+      "title": "Python Docs: urllib.robotparser — Parser for robots.txt",
+      "source": "Python Software Foundation",
+      "url": "https://docs.python.org/3/library/urllib.robotparser.html",
+      "license": "PSF-2.0"
+    }
+  ]
+}
+

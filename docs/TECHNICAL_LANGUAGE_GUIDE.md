@@ -2,9 +2,9 @@
 ## Python Learning Hub — Official Technical Language Policy & Style Guide
 
 > **Prioritas:** TERTINGGI (*HIGHEST*) — Berlaku untuk seluruh konten edukasi saat ini dan masa depan.  
-> **Versi Panduan:** 2.0.0  
-> **Tanggal Efektif:** 4 November 2026  
-> **Ruang Lingkup:** Seluruh modul Python (Chapter 01–30), materi pembelajaran AI/ML masa depan, slide presentasi interaktif Reveal.js, tutorial setup lingkungan, penjelasan kode, latihan, tugas mandiri, serta dokumentasi kurikulum.  
+> **Versi Panduan:** 2.1.0  
+> **Tanggal Efektif:** 11 November 2026  
+> **Ruang Lingkup:** Seluruh modul Python (Core Chapter 01–30 dan 25 Modul Spesialisasi Track A–E), tutorial setup lingkungan, penjelasan kode, latihan, tugas mandiri, serta dokumentasi kurikulum.  
 > **Prinsip Fundamental:** *"Indonesian for explanations, English for established technical terminology."* (Bahasa Indonesia untuk narasi penjelasan, Bahasa Inggris untuk terminologi teknis yang telah mapan).
 
 ---
@@ -141,3 +141,14 @@ telemetry_data: dict[str, float] = {
 Kebijakan ini dienkapsulasi ke dalam berkas aturan workspace agent:
 - `.agent/rules/technical-terminology.md`
 - Berlaku otomatis bagi seluruh asisten AI pemrograman untuk memvalidasi setiap generasi modul, slide, latihan, dan tutorial baru.
+
+---
+
+## 7. Standar Istilah Domain Spesialisasi (Tracks A–E)
+
+Istilah berikut dipertahankan konsisten di seluruh 25 modul spesialisasi (`A01`–`E05`):
+- **Data Science (Track A):** `ndarray`, `vectorization`, `broadcasting`, `DataFrame`, `Series`, `missing values`, `outlier`, `IQR`, `boxplot`, `heatmap`, `correlation`.
+- **AI & Machine Learning (Track B):** `train_test_split`, `stratify`, `Pipeline`, `ColumnTransformer`, `data leakage`, `baseline`, `overfitting`, `ROC-AUC`, `Precision`, `Recall`, `F1-score`, `cross-validation`, `GridSearchCV`, `joblib`.
+- **Web & APIs (Track C):** `REST API`, `endpoint`, `payload`, `schema validation`, `HTTP 422`, `HTTP 401`, `ORM`, `Dependency Injection`, `middleware`, `OpenAPI`.
+- **Automation (Track D):** `dry-run`, `checksum SHA-256`, `workbook`, `formula`, `robots.txt`, `CSS selector`, `exponential backoff`, `idempotency`, `webhook`, `cron`.
+- **IoT & Telecom (Track E):** `framing`, `XOR checksum`, `struct`, `Publish-Subscribe`, `QoS`, `Retained Message`, `Last Will and Testament (LWT)`, `FFT`, `Nyquist`, `Butterworth`, `SOS`, `RSSI`, `RSRP`, `RSRQ`, `SNR` vs `SINR`, `FSPL`.

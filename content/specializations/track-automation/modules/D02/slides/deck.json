@@ -1,0 +1,100 @@
+[
+  {
+    "title": "Spreadsheet & PDF Document Automation",
+    "subtitle": "OpenPyXL Styling, Excel Formulas Multi-Sheet & Laporan PDF fpdf2",
+    "kind": "cover",
+    "body": "<p>Mengubah dataset CSV mentah secara otomatis menjadi workbook Excel berformula aktif lintas sheet dan dokumen laporan PDF eksekutif siap kirim.</p>",
+    "notes": "Otomasi pelaporan adalah salah satu keterampilan Python dengan dampak penghematan waktu paling cepat di lingkungan kerja."
+  },
+  {
+    "title": "Keterbatasan df.to_excel() vs Kendali Penuh OpenPyXL",
+    "kind": "content",
+    "body": "<ul><li><strong><code>df.to_excel()</code> Polos:</strong> Lebar kolom sempit sehingga angka sering tampil <code>###</code>, tidak ada format mata uang ribuan, dan tidak menyisipkan formula Excel.</li><li><strong>Keunggulan <code>openpyxl</code>:</strong> Mengatur <code>Font</code>, <code>PatternFill</code>, alignment, lebar kolom dinamis, serta formula hidup seperti <code>=SUM()</code> dan <code>=SUMIF()</code>.</li></ul>",
+    "notes": "Kombinasi Pandas untuk agregasi data + OpenPyXL untuk penyajian visual menghasilkan laporan spreadsheet bermutu tinggi."
+  },
+  {
+    "title": "Styling Sel & Number Formatting di OpenPyXL",
+    "kind": "content",
+    "body": "<ul><li><strong>Header Berkontras:</strong> Gunakan <code>PatternFill('solid', fgColor='1E3A8A')</code> dengan <code>Font(bold=True, color='FFFFFF')</code>.</li><li><strong>Format Angka Ribuan:</strong> Terapkan <code>cell.number_format = '#,##0'</code> agar angka jutaan mudah dibaca tanpa mengubah tipe numeriknya.</li><li><strong>Lebar Kolom Rapi:</strong> Set <code>ws.column_dimensions['A'].width</code> cukup lebar agar label teks tidak terpotong.</li></ul>",
+    "notes": "Menjaga angka tetap bertipe numerik (bukan string berawalan 'Rp ') agar tetap bisa dijumlahkan oleh Excel!"
+  },
+  {
+    "title": "Contoh Kode: Workbook Excel Ber-Styling",
+    "kind": "code",
+    "example": "spec/D02/d02_01_openpyxl_styled_workbook",
+    "body": "<p>Membangun sheet <code>Biaya_Regional</code> dengan header berlatar biru tua, perataan sel, format ribuan, serta verifikasi ulang via <code>load_workbook</code>.</p>",
+    "notes": "Selalu baca kembali hasil ekspor dalam unit test guna memverifikasi metadata styling dan nilai sel."
+  },
+  {
+    "title": "Formula Hidup & Referensi Lintas Sheet",
+    "kind": "content",
+    "body": "<ul><li><strong>Sintaks Formula:</strong> Tulis string berawalan <code>=</code> persis seperti di Excel, misal <code>'=SUM(B2:B4)'</code> atau <code>'=SUMIF(Detail!A2:A5, \"Sumatera\", Detail!B2:B5)'</code>.</li><li><strong>Catatan Evaluasi:</strong> <code>openpyxl</code> menyimpan teks formulanya; nilai hasil perhitungan akan dihitung otomatis ketika berkas dibuka oleh Excel/LibreOffice.</li></ul>",
+    "notes": "Gunakan tanda kutip ganda di dalam formula SUMIF sesuai konvensi Excel."
+  },
+  {
+    "title": "Contoh Kode: Multi-Sheet & Formula SUMIF",
+    "kind": "code",
+    "example": "spec/D02/d02_02_excel_formulas_multisheet",
+    "body": "<p>Membuat sheet <code>Detail</code> dan <code>Ringkasan</code> yang terhubung lewat formula <code>=SUMIF</code> lintas sheet serta <code>=SUM</code> di baris total.</p>",
+    "notes": "Memeriksa openpyxl.load_workbook(..., data_only=False) memastikan teks formula tersimpan utuh."
+  },
+  {
+    "title": "Mengapa Menghasilkan PDF Terprogram via fpdf2?",
+    "kind": "content",
+    "body": "<ul><li><strong>Ringan &amp; Tanpa Browser:</strong> Tidak membutuhkan instalasi LibreOffice headless atau Chromium ratusan MB.</li><li><strong>Kontrol Layout Eksplisit:</strong> Pengembang mengatur font, ukuran sel tabel, batas border, alignment kanan untuk angka, dan pergantian halaman.</li><li><strong>Ideal untuk Dokumen Baku:</strong> Cocok untuk slip laporan harian, sertifikat kelulusan, dan ringkasan manajemen.</li></ul>",
+    "notes": "Untuk halaman HTML kompleks dengan CSS grid, WeasyPrint/Playwright PDF bisa menjadi pelengkap, namun fpdf2 jauh lebih cepat dan portabel."
+  },
+  {
+    "title": "Tips Modern Menggunakan fpdf2",
+    "kind": "content",
+    "body": "<ul><li><strong>Pengganti Parameter <code>ln=1</code>:</strong> Gunakan <code>new_x='LMARGIN', new_y='NEXT'</code> pada <code>pdf.cell()</code> sesuai API modern fpdf2.</li><li><strong>Perataan Numerik:</strong> Sel tabel teks pakai <code>align='L'</code>, jumlah pakai <code>align='C'</code>, dan nominal uang pakai <code>align='R'</code> agar digit satuan sejajar vertikal.</li></ul>",
+    "notes": "Mengikuti API baru fpdf2 menjaga kode bebas dari DeprecationWarning."
+  },
+  {
+    "title": "Contoh Kode: Mencetak Laporan Tabel PDF",
+    "kind": "code",
+    "example": "spec/D02/d02_03_fpdf2_pdf_report",
+    "body": "<p>Menyusun laporan PDF berheader tabel dan baris <code>GRAND TOTAL</code> memakai <code>fpdf.FPDF</code> lalu memeriksa header biner <code>%PDF-</code>.</p>",
+    "notes": "Pengecekan b'%PDF-' memastikan berkas keluaran benar-benar merupakan dokumen PDF valid."
+  },
+  {
+    "title": "Pipeline Terpadu: CSV -> Pandas -> Excel + PDF",
+    "kind": "content",
+    "body": "<ul><li><strong>Satu Sumber Kebenaran:</strong> Agregasi dijalankan sekali dengan Pandas <code>groupby().agg()</code>.</li><li><strong>Dua Format Distribusi:</strong> Ekspor ke <code>.xlsx</code> untuk analis keuangan yang butuh formula olahan lanjutan, serta <code>.pdf</code> untuk pimpinan yang butuh bacaan statis siap cetak.</li></ul>",
+    "notes": "Pola ekspor ganda ini sangat sering diminta di divisi operasional dan keuangan."
+  },
+  {
+    "title": "Contoh Kode: Pipeline Bundle Excel + PDF",
+    "kind": "code",
+    "example": "spec/D02/d02_04_csv_to_excel_pdf_pipeline",
+    "body": "<p>Mengubah <code>regional_expense_records.csv</code> secara simultan menjadi <code>regional_expenses.xlsx</code> (berformula <code>=SUM</code>) dan <code>regional_expenses.pdf</code>.</p>",
+    "notes": "Baris total di Excel memanfaatkan len(summary) secara dinamis sehingga tahan terhadap perubahan jumlah region."
+  },
+  {
+    "title": "Pengujian Artefak Biner di Pytest",
+    "kind": "content",
+    "body": "<ul><li><strong>Jangan Hanya Cek <code>path.exists()</code>:</strong> File 0 byte tetap dianggap ada!</li><li><strong>Verifikasi Konten Nyata:</strong> Buka ulang <code>.xlsx</code> via <code>openpyxl.load_workbook</code> untuk menginspeksi formula, dan cek ukuran minimal serta header <code>b'%PDF-'</code> pada PDF.</li></ul>",
+    "notes": "Pengujian berbasis konten mencegah rilis laporan kosong atau rusak."
+  },
+  {
+    "title": "Kuis Cepat: Formula Dinamis vs Nilai Statis",
+    "kind": "question",
+    "body": "<p>Uji pemahaman Anda mengenai desain spreadsheet terotomasi menggunakan OpenPyXL.</p>",
+    "question": "Dalam sel nominal uang di OpenPyXL, mengapa kita menyimpan integer mentah (4500000) + number_format '#,##0' daripada langsung menulis string 'Rp 4,500,000'?",
+    "answer": "Jika disimpan sebagai teks/string 'Rp 4,500,000', formula Excel seperti =SUM(C2:C4) akan mengabaikannya atau menghasilkan angka nol. Menyimpan integer asli dengan number_format menjaga nilai tetap dapat dikalkulasi sambil tampil rapi.",
+    "notes": "Pemisahan nilai data dan tampilan visual (data vs presentation) berlaku juga di Excel."
+  },
+  {
+    "title": "Latihan Mandiri: Expense Report Builder",
+    "kind": "exercise",
+    "body": "<ul><li>Olah <code>regional_expense_records.csv</code> menjadi workbook multi-sheet berformula <code>=SUM</code>.</li><li>Render versi ringkasan ke berkas <code>.pdf</code> memakai <code>fpdf2</code>.</li><li>Validasi kedua artefak memakai <code>pytest code/test_d02_documents.py</code>.</li></ul>",
+    "notes": "Setelah menguasai manipulasi file & dokumen, di Modul D03 kita belajar mengumpulkan data web secara etis."
+  },
+  {
+    "title": "Ringkasan Modul D02",
+    "kind": "content",
+    "body": "<ul><li><code>openpyxl</code> menghasilkan workbook profesional ber-styling, number format numerik asli, dan formula dinamis lintas sheet.</li><li><code>fpdf2</code> memproduksi PDF berstruktur rapi secara portabel tanpa browser eksternal.</li><li>Di Modul D03 kita akan mengekstrak data dari dokumen HTML memakai <code>BeautifulSoup</code>, <code>robots.txt</code> parser, dan <code>httpx</code>!</li></ul>",
+    "notes": "Lanjutkan ke Modul D03: Web Data Collection & Ethical HTML Parsing."
+  }
+]
+

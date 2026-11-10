@@ -11,6 +11,7 @@ export function DeckShell({
   slides,
   meeting,
   base,
+  specId,
   onNavigateChapter,
   onNavigateReading,
   onNavigateTask,
@@ -18,6 +19,7 @@ export function DeckShell({
   slides: SlideData[];
   meeting: number;
   base: string;
+  specId?: string;
   onNavigateChapter?: () => void;
   onNavigateReading?: () => void;
   onNavigateTask?: () => void;
@@ -131,12 +133,19 @@ export function DeckShell({
     return () => window.removeEventListener('keydown', onKeyDown);
   }, [toggleFullscreen, toggleOverview, openSpeakerNotes]);
 
+  const displayLabel = specId ? `Module ${specId}` : `Chapter ${meeting}`;
+  const baseRoute = specId ? `spec/${specId}` : `chapter/${meeting}`;
+
   function print() {
     const url = new URL(location.href);
     url.searchParams.set('print-pdf', '');
-    url.searchParams.set('chapter', String(meeting));
+    if (specId) {
+      url.searchParams.set('spec', specId);
+    } else {
+      url.searchParams.set('chapter', String(meeting));
+    }
     url.searchParams.set('view', 'slides');
-    url.hash = `chapter/${meeting}/slides`;
+    url.hash = `${baseRoute}/slides`;
     location.href = url.href;
   }
 
@@ -145,23 +154,23 @@ export function DeckShell({
       <header className="deck-toolbar">
         <a
           className="brand compact"
-          href={`${base}index.html#chapter/${meeting}`}
+          href={`${base}index.html#${baseRoute}`}
           onClick={(e) => {
             if (onNavigateChapter) {
               e.preventDefault();
               onNavigateChapter();
             }
           }}
-          aria-label={`Kembali ke Chapter ${meeting}`}
+          aria-label={`Kembali ke ${displayLabel}`}
         >
-          <Icon name="arrow_back" size={18} /> <span>Chapter {meeting}</span>
+          <Icon name="arrow_back" size={18} /> <span>{displayLabel}</span>
         </a>
         <span className="toolbar-meeting">
-          <Icon name="slideshow" size={16} /> Chapter {meeting}
+          <Icon name="slideshow" size={16} /> {displayLabel}
         </span>
         <div className="toolbar-actions">
           <a
-            href={`${base}index.html#chapter/${meeting}/read`}
+            href={`${base}index.html#${baseRoute}/read`}
             onClick={(e) => {
               if (onNavigateReading) {
                 e.preventDefault();
@@ -173,7 +182,7 @@ export function DeckShell({
             <Icon name="menu_book" size={16} /> <span>Baca</span>
           </a>
           <a
-            href={`${base}index.html#chapter/${meeting}/task`}
+            href={`${base}index.html#${baseRoute}/task`}
             onClick={(e) => {
               if (onNavigateTask) {
                 e.preventDefault();
@@ -243,7 +252,7 @@ export function DeckShell({
 
       {printing && (
         <div className="print-banner">
-          <a href={`${base}index.html#chapter/${meeting}/slides`}>
+          <a href={`${base}index.html#${baseRoute}/slides`}>
             <Icon name="arrow_back" size={16} /> Kembali ke slide interaktif
           </a>
           <button onClick={() => window.print()}>
@@ -257,12 +266,12 @@ export function DeckShell({
         ref={host}
         className="reveal"
         tabIndex={0}
-        aria-label={`Presentasi Python Learning Hub Chapter ${meeting}`}
+        aria-label={`Presentasi Python Learning Hub ${displayLabel}`}
       >
         <div className="slides">
           {slides.map((slide, i) => (
             <section key={i} className={`lesson-slide ${slide.kind}`}>
-              <SlideContent slide={slide} meeting={meeting} base={base} />
+              <SlideContent slide={slide} meeting={meeting} base={base} specId={specId} />
             </section>
           ))}
         </div>

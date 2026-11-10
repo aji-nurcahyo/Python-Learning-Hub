@@ -1,0 +1,99 @@
+[
+  {
+    "title": "Data Visualization with Matplotlib & Seaborn",
+    "subtitle": "Object-Oriented API, Statistik Visual & Multi-Panel Dashboard",
+    "kind": "cover",
+    "body": "<p>Mengubah temuan EDA menjadi grafik publikasi yang jernih, akurat, ramah pembaca, dan bebas distorsi visual menggunakan Matplotlib OO API dan Seaborn.</p>",
+    "notes": "Visualisasi bukan hiasan laporan; visualisasi adalah alat komunikasi kuantitatif."
+  },
+  {
+    "title": "Dua Antarmuka Matplotlib: Pyplot vs OO API",
+    "kind": "content",
+    "body": "<ul><li><strong>State-Based Pyplot:</strong> Pemanggilan langsung <code>plt.plot()</code> cocok untuk eksplorasi kilat satu grafik, namun rapuh untuk banyak panel.</li><li><strong>Object-Oriented API:</strong> <code>fig, ax = plt.subplots()</code> memberi referensi eksplisit ke <code>Figure</code> (kanvas) dan <code>Axes</code> (panel plot).</li><li><strong>Manajemen Memori:</strong> Selalu panggil <code>plt.close(fig)</code> sesudah <code>fig.savefig()</code> dalam pipeline otomatis.</li></ul>",
+    "notes": "Setiap skrip produksi dan aplikasi backend wajib menutup objek Figure agar memori tidak terus menumpuk."
+  },
+  {
+    "title": "Anatomi Grafik Siap Publikasi",
+    "kind": "content",
+    "body": "<ul><li><strong>Judul Berwawasan:</strong> Nyatakan temuan utama, bukan sekadar 'Plot Latensi'.</li><li><strong>Label Sumbu Bersatuan:</strong> Selalu cantumkan satuan seperti <code>Latensi (ms)</code> atau <code>Trafik (Gbps)</code>.</li><li><strong>Rasio Data-Ink Tinggi:</strong> Hapus border kanan/atas (<code>spines</code>) dan gunakan grid halus transparan.</li></ul>",
+    "notes": "Prinsip Edward Tufte: maksimalkan data-ink dan hilangkan chartjunk seperti efek 3D dekoratif."
+  },
+  {
+    "title": "Contoh Kode: Anatomi Matplotlib OO API",
+    "kind": "code",
+    "example": "spec/A04/a04_01_matplotlib_anatomy",
+    "body": "<p>Membuat horizontal bar chart latensi rata-rata per wilayah lengkap dengan label nilai langsung dan ekspor PNG 150 DPI.</p>",
+    "notes": "Horizontal bar chart lebih mudah dibaca label kategorinya dibandingkan vertical bar saat nama kategori panjang."
+  },
+  {
+    "title": "Memilih Grafik Sesuai Tujuan Analisis",
+    "kind": "content",
+    "body": "<ul><li><strong>Distribusi 1 Variabel:</strong> <code>sns.histplot(..., kde=True)</code> dan garis penanda median.</li><li><strong>Komparasi Antar Segmen:</strong> <code>sns.boxplot()</code> memamerkan Q1, median, Q3, dan titik outlier secara ringkas.</li><li><strong>Hubungan 2 Numerik:</strong> <code>sns.scatterplot(..., hue='technology')</code>.</li><li><strong>Matriks Korelasi:</strong> <code>sns.heatmap(..., annot=True, cmap='coolwarm', center=0)</code>.</li></ul>",
+    "notes": "Jangan pernah memakai pie chart untuk kategori di atas 4 elemen atau bar chart tanpa sumbu 0."
+  },
+  {
+    "title": "Mengamati Skewness & Segmen di Seaborn",
+    "kind": "content",
+    "body": "<ul><li><strong>Garis Median pada Histogram:</strong> Membantu pembaca langsung melihat perbedaan pusat distribusi dibandingkan ekor panjang outlier.</li><li><strong>Boxplot Lintas Kategori:</strong> Dalam satu lirikan terlihat selisih sebaran latensi menara 4G vs 5G.</li><li><strong>Palet Ramah Buta Warna:</strong> Gunakan <code>palette='colorblind'</code> agar grafik tetap jelas bagi semua audiens.</li></ul>",
+    "notes": "Menyatukan histogram dan boxplot secara berdampingan memberi gambaran lengkap bentuk dan ringkasan kuartil."
+  },
+  {
+    "title": "Contoh Kode: Histplot & Boxplot di Seaborn",
+    "kind": "code",
+    "example": "spec/A04/a04_02_distribution_seaborn",
+    "body": "<p>Menampilkan distribusi latensi menyeluruh berserta garis median sekaligus membandingkan sebaran 4G vs 5G.</p>",
+    "notes": "Mode Agg backend memungkinkan skrip berjalan di server CI/headless tanpa jendela GUI."
+  },
+  {
+    "title": "Mengurangi Chartjunk & Pemilihan Palet Warna",
+    "kind": "content",
+    "body": "<ul><li><strong>Fokus pada Data:</strong> Hindari garis kisi terlalu tebal, efek bayangan 3D, dan warna latar belakang mencolok.</li><li><strong>Kontras Semantik:</strong> Gunakan warna cerah/tegas hanya untuk titik anomali atau garis target SLA, sisanya netral.</li><li><strong>Aksesibilitas:</strong> Uji palet dengan skema ramah buta warna agar laporan tetap terbaca di cetak monokrom maupun proyektor.</li></ul>",
+    "notes": "Setiap piksel warna harus membawa makna data, bukan sekadar dekorasi."
+  },
+  {
+    "title": "Visualisasi Korelasi Multi-Variabel",
+    "kind": "content",
+    "body": "<ul><li><strong>Scatter + Multi-Encoding:</strong> Gunakan <code>hue</code> untuk warna teknologi dan <code>style</code> untuk bentuk marker status SLA.</li><li><strong>Upper Triangle Mask Heatmap:</strong> Matriks korelasi simetris, sehingga separuh atasnya bisa disembunyikan via <code>np.triu(...)</code>.</li><li><strong>Skala Warna Terpusat:</strong> Selalu pasang <code>center=0</code> pada peta korelasi agar korelasi negatif dan positif mudah dibedakan.</li></ul>",
+    "notes": "Anotasi fmt='.2f' memastikan pembaca langsung memperoleh besaran korelasi eksak."
+  },
+  {
+    "title": "Contoh Kode: Scatter & Upper-Triangle Heatmap",
+    "kind": "code",
+    "example": "spec/A04/a04_03_relationship_heatmap",
+    "body": "<p>Memetakan relasi beban trafik terhadap latensi sekaligus menyajikan heatmap korelasi Spearman yang bersih.</p>",
+    "notes": "Terlihat titik CRITICAL menonjol jelas dengan kombinasi marker dan warna."
+  },
+  {
+    "title": "Merancang Multi-Panel Dashboard",
+    "kind": "content",
+    "body": "<ul><li><strong>Grid Terstruktur:</strong> <code>fig, axes = plt.subplots(2, 2, figsize=(12, 8))</code> membentuk 4 panel konsisten.</li><li><strong><code>fig.suptitle()</code>:</strong> Judul besar payung laporan di bagian puncak kanvas.</li><li><strong><code>tight_layout(rect=[0, 0.02, 1, 0.95])</code>:</strong> Memberi ruang ekstra di atas agar judul panel tidak bertabrakan dengan <code>suptitle</code>.</li></ul>",
+    "notes": "Multi-panel dashboard memadatkan satu halaman laporan analitik tanpa membuang perhatian pembaca."
+  },
+  {
+    "title": "Contoh Kode: Dashboard 2x2 QoS Jaringan",
+    "kind": "code",
+    "example": "spec/A04/a04_04_multipanel_dashboard",
+    "body": "<p>Menggabungkan distribusi latensi, boxplot regional, scatter packet loss, dan heatmap dalam satu figur eksekutif.</p>",
+    "notes": "Ini menjadi blok visual utama sebelum dirangkai dalam laporan capstone Modul A05."
+  },
+  {
+    "title": "Kuis Cepat: Arsitektur Plotting & Memori",
+    "kind": "question",
+    "body": "<p>Uji pemahaman Anda tentang praktik rekayasa visualisasi pada aplikasi produksi.</p>",
+    "question": "Apa dua risiko utama jika sebuah skrip batch laporan menggunakan plt.plot() tanpa Object-Oriented API dan lupa memanggil plt.close(fig)?",
+    "answer": "Pertama, plot dapat tertumpuk ke panel atau figur yang keliru karena state global active axes; kedua, seluruh objek Figure tetap tersimpan di memori Matplotlib sehingga berisiko kehabisan RAM pada eksekusi berulang.",
+    "notes": "Pastikan test_a04_visualization.py lulus pada folder sementara pytest (tmp_path)."
+  },
+  {
+    "title": "Latihan Mandiri: Galeri Visualisasi QoS",
+    "kind": "exercise",
+    "body": "<ul><li>Bangun figur <code>1x2</code> menggunakan <code>fig, axes = plt.subplots(1, 2)</code>.</li><li>Tampilkan boxplot antar wilayah dan heatmap korelasi beranotasi.</li><li>Ekspor grafik ke PNG beresolusi 150 DPI dalam folder temp.</li></ul>",
+    "notes": "Eksplorasi variasi palet warna dan margin di a04_visualization_gallery.ipynb."
+  },
+  {
+    "title": "Ringkasan Modul A04",
+    "kind": "content",
+    "body": "<ul><li>Object-Oriented API (<code>fig, ax = plt.subplots()</code>) wajib dipakai untuk figur multi-panel dan pipeline laporan otomatis.</li><li>Seaborn mempermudah visualisasi distribusi, perbandingan segmen, serta korelasi langsung dari DataFrame Pandas.</li><li>Setelah data dibersihkan (A02), dieksplorasi (A03), dan divisualisasikan (A04), kita siap merakit Capstone End-to-End Analytics Report di Modul A05.</li></ul>",
+    "notes": "Lanjutkan ke Modul A05 untuk menggabungkan seluruh proses dalam satu arsitektur pipeline laporan terpadu."
+  }
+]

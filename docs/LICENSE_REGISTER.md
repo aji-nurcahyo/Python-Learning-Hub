@@ -98,3 +98,21 @@ Setiap berkas modul `index.md` yang mengadopsi materi terbuka wajib menyertakan 
 2. `public/downloads/LICENSE.upstream`: Salinan lisensi MIT repositori fondasi peramban slide Pengkom ITERA.
 3. `THIRD_PARTY_NOTICES.md`: Catatan hak cipta lengkap seluruh pustaka npm (React, Reveal.js, Shiki, KaTeX, Google Fonts) dan pustaka referensi Python.
 
+---
+
+## 6. Tambahan Inventaris Ekosistem Specialization Tracks (`requirements-specializations.txt`)
+
+Seluruh pustaka pihak ketiga yang dimanfaatkan pada implementasi 25 Modul Spesialisasi (`A01`–`E05`) menggunakan lisensi open-source permisif / standar industri:
+
+| Paket / Referensi | Track Terkait | Lisensi | Tautan Dokumentasi Resmi |
+| :--- | :--- | :--- | :--- |
+| `numpy`, `pandas`, `scipy`, `matplotlib`, `seaborn` | Track A, B, E | BSD-3-Clause / PSF-based | [numpy.org](https://numpy.org), [pandas.pydata.org](https://pandas.pydata.org), [scipy.org](https://scipy.org) |
+| `scikit-learn`, `joblib`, `nbformat` | Track A, B | BSD-3-Clause | [scikit-learn.org](https://scikit-learn.org) |
+| `fastapi`, `pydantic`, `sqlalchemy`, `httpx` | Track C, D | MIT / BSD-3-Clause | [fastapi.tiangolo.com](https://fastapi.tiangolo.com), [docs.sqlalchemy.org](https://docs.sqlalchemy.org) |
+| `beautifulsoup4`, `openpyxl` | Track D | MIT | [openpyxl.readthedocs.io](https://openpyxl.readthedocs.io) |
+| `fpdf2` | Track D | LGPL-3.0 | [py-pdf.github.io/fpdf2](https://py-pdf.github.io/fpdf2/) |
+| `pyserial`, `paho-mqtt`, `pytest` | Track A–E | BSD-3-Clause / EPL-2.0 / MIT | [pyserial.readthedocs.io](https://pyserial.readthedocs.io), [eclipse.dev/paho](https://eclipse.dev/paho) |
+
+*Catatan: Seluruh dataset CSV, log serial, drive test RF, serta snapshot HTML pada `content/specializations/*/modules/*/datasets/` merupakan data sintetis edukatif buatan mandiri (`Python Learning Hub`) tanpa data pribadi pelanggan (PII) maupun informasi berpemilik operator mana pun.*
+
+

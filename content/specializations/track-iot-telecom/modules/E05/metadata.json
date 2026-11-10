@@ -1,0 +1,95 @@
+{
+  "id": "E05",
+  "trackId": "iot-telecom",
+  "trackTitle": "IoT, Signal Processing & Telecommunications",
+  "order": 5,
+  "title": "Capstone: IoT Monitoring & Signal Analytics System",
+  "subtitle": "Telemetry Decoding, MQTT Routing, SciPy Denoising & RF SLA Monitoring Dashboard",
+  "description": "Bangun sistem pemantauan jaringan telekomunikasi dan sensor IoT end-to-end: validasi frame & routing MQTT offline, pembersihan sinyal getaran/sensor memakai Butterworth DSP, diagnosa kualitas radio RSRP/RSRQ/SINR, serta ekspor dashboard monitoring & laporan JSON/Markdown.",
+  "difficulty": "Advanced",
+  "estimatedHours": 8,
+  "isCapstone": true,
+  "prerequisites": [
+    "Modul E01 (Sensor Telemetry, Serial Framing & Checksums)",
+    "Modul E02 (IoT Protocols & MQTT Publish-Subscribe)",
+    "Modul E03 (Digital Signal Processing with SciPy & FFT)",
+    "Modul E04 (Wireless Network & Cellular Signal Analytics)"
+  ],
+  "learningObjectives": [
+    "Menggabungkan lapisan akuisisi serial/MQTT, Digital Signal Processing SciPy, dan analitik radio LTE/5G dalam satu arsitektur modular.",
+    "Menjalankan FFT + filter Butterworth SOS untuk mengekstrak frekuensi dominan serta memperbaiki SNR gelombang sensor.",
+    "Mengaudit kesehatan jaringan tiap node menggunakan skor komposit berbasis RSRP, SINR, suhu perangkat, dan status koneksi.",
+    "Menghasilkan artefak monitoring (rf_monitoring_dashboard.png, node_health_report.json, ops_summary.md) yang teruji otomatis oleh pytest."
+  ],
+  "dependencies": ["numpy>=1.26", "pandas>=2.2", "scipy>=1.13", "matplotlib>=3.8", "paho-mqtt>=2.0", "pytest>=8.0"],
+  "tags": ["capstone", "iot", "dsp", "telecom", "monitoring", "mqtt"],
+  "codeExample": {
+    "title": "Orkestrator Sistem Monitoring IoT & Analitik Sinyal Telekomunikasi",
+    "filename": "e05_04_monitoring_dashboard_runner.py",
+    "outputKey": "spec/E05/e05_04_monitoring_dashboard_runner",
+    "explanation": "Orkestrator Capstone ini memproses log telemetri multi-node lewat simulasi MQTT, menjalankan DSP denoising SciPy pada gelombang sensor getaran/arus, mengevaluasi status RSRP vs SINR tiap node, serta mengekspor grafik PNG dua panel, laporan JSON kesehatan node, dan ringkasan Markdown."
+  },
+  "exercise": {
+    "title": "Audit End-to-End Monitoring Gateway Telekomunikasi",
+    "instructions": [
+      "Tinjau keterhubungan e05_01_telemetry_decoder_mqtt.py, e05_02_signal_conditioning.py, dan e05_03_rf_sla_diagnostics.py.",
+      "Pelajari dataset datasets/iot_node_telemetry_stream.csv dan lihat node mana yang mengalami HIGH_INTERFERENCE vs COVERAGE_BLINDSPOT.",
+      "Pastikan komponen noise 150 Hz pada sinyal getaran menara tersaring bersih oleh filter Butterworth (cutoff 75 Hz).",
+      "Jalankan pytest code/test_e05_capstone.py di direktori modul E05."
+    ],
+    "tips": "Pastikan setiap komponen (MQTT ingest, DSP filter, RF SLA auditor) berdiri sebagai modul berparameter jelas sehingga mudah diganti dengan stream live saat deployment!",
+    "time": "70 Menit"
+  },
+  "quiz": {
+    "question": "Dalam sistem monitoring gateway IoT + Menara BTS, mengapa kombinasi evaluasi RSRP, SINR, dan suhu/getaran terfilter DSP lebih unggul daripada hanya memasang alarm suhu tinggi?",
+    "options": [
+      "Karena sensor suhu selalu menghasilkan angka heksadesimal",
+      "Karena analisis lintas-lapis membedakan gangguan perangkat fisik (suhu/getaran mekanis di menara), masalah cakupan RF (RSRP lemah), dan gangguan interferensi kanal tetangga (SINR rendah)",
+      "Karena filter Butterworth otomatis memancarkan sinyal radio 5G",
+      "Karena MQTT tidak dapat mengirim data numerik float"
+    ],
+    "correctIndex": 1,
+    "explanation": "Observabilitas jaringan modern menggabungkan kondisi perangkat keras edge (suhu, baterai, getaran mekanis via DSP) dengan kualitas tautan radio (RSRP/SINR) agar tim NOC mengirim teknisi yang tepat dengan peralatan yang tepat.",
+    "hint": "Pikirkan tindakan lapangan berbeda antara memperbaiki kipas/motor generator vs mengubah azimuth antena."
+  },
+  "assignment": {
+    "title": "Capstone Track E: End-to-End IoT Telemetry & RF Signal Analytics System",
+    "description": "Bangun platform pemantauan stasiun pemancar IoT terpadu yang memvalidasi telemetri melalui simulasi topik MQTT, membersihkan sinyal sensor berderau memakai FFT + Butterworth SOS, mendiagnosis anomali RF (RSRP vs SINR), dan menghasilkan dashboard visual serta JSON laporan kesehatan.",
+    "instructions": [
+      "Implementasikan route_telemetry_via_mqtt(csv_path) memakai mqtt.topic_matches_sub untuk mengelompokkan telemetri per region.",
+      "Implementasikan denoise_tower_vibration(fs=600.0, cutoff_hz=75.0) memakai scipy.signal.butter(..., output='sos') dan hitung peningkatan SNR (dB).",
+      "Implementasikan evaluate_node_rf_health(df) untuk menandai HEALTHY, HIGH_INTERFERENCE, COVERAGE_BLINDSPOT, atau THERMAL_ALERT.",
+      "Implementasikan export_monitoring_bundle(csv_path, out_dir) yang menghasilkan dashboard PNG, node_health_report.json, dan ops_summary.md beserta integration tests pytest."
+    ],
+    "rubric": [
+      { "criteria": "Akuisisi & Routing Telemetri MQTT", "weight": 25, "description": "Validasi schema CSV & pencocokan wildcard topik MQTT akurat." },
+      { "criteria": "DSP Spectral Check & Butterworth Filtering", "weight": 25, "description": "Filter SOS zero-phase menekan interferensi dan meningkatkan SNR > 10 dB." },
+      { "criteria": "Diagnosa RF (RSRP/RSRQ/SINR) & Kesehatan Node", "weight": 25, "description": "Klasifikasi blindspot vs interferensi tepat tanpa mencampur konsep SNR vs SINR." },
+      { "criteria": "Dashboard Artefak & Integration Test Pytest", "weight": 25, "description": "PNG, JSON, dan Markdown tervalidasi tuntas di tmp_path." }
+    ],
+    "starterFilename": "tugas.py"
+  },
+  "resources": {
+    "hasSlides": true,
+    "codeDownload": "/downloads/specializations/E05/e05_04_monitoring_dashboard_runner.py",
+    "notebookDownload": null,
+    "datasetDownload": "/downloads/specializations/E05/iot_node_telemetry_stream.csv",
+    "guideDownload": "/downloads/specializations/E05/tugas.md",
+    "pptxDownload": null
+  },
+  "references": [
+    {
+      "title": "SciPy Signal Processing & Eclipse Paho MQTT Documentation",
+      "source": "SciPy & Eclipse Foundations",
+      "url": "https://docs.scipy.org/doc/scipy/reference/signal.html",
+      "license": "BSD-3-Clause / EPL-2.0"
+    },
+    {
+      "title": "3GPP LTE Physical Layer Measurements & Python Data Stack",
+      "source": "ETSI / NumPy Developers",
+      "url": "https://numpy.org/doc/stable/",
+      "license": "BSD-3-Clause"
+    }
+  ]
+}
+

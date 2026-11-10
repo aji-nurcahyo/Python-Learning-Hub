@@ -1,0 +1,93 @@
+{
+  "id": "E01",
+  "trackId": "iot-telecom",
+  "trackTitle": "IoT, Signal Processing & Telecommunications",
+  "order": 1,
+  "title": "Sensor Telemetry, Serial Framing & Checksums",
+  "subtitle": "Frame ASCII/Hex, XOR Checksum, Binary struct.pack & Simulasi Serial Offline",
+  "description": "Bangun lapisan akuisisi data perangkat keras yang tangguh: parsing frame telemetri serial ber-checksum XOR, pengemasan payload biner ringkas memakai modul struct, smoothing jitter sensor, dan simulasi stream serial offline.",
+  "difficulty": "Intermediate",
+  "estimatedHours": 4,
+  "prerequisites": [
+    "Chapter 08 (List & Tuple)",
+    "Chapter 17 (File Handling & CSV/JSON)",
+    "Chapter 18 (Error Handling & Exceptions)"
+  ],
+  "learningObjectives": [
+    "Mengurai protokol framing telemetri ASCII ($TELEM,...*XX) dan memverifikasi integritas XOR checksum.",
+    "Mengompresi struktur pengukuran sensor ke frame biner berukuran tetap memakai struct.pack/unpack.",
+    "Mengurangi jitter pengukuran sensor memakai Exponential Moving Average (EMA) dan kalibrasi linear.",
+    "Menjalankan pengujian parser serial secara deterministik offline menggunakan loopback/BytesIO stream tanpa hardware USB fisik."
+  ],
+  "dependencies": ["pyserial>=3.5", "numpy>=1.26", "pytest>=8.0"],
+  "tags": ["iot", "serial", "telemetry", "struct", "checksum"],
+  "codeExample": {
+    "title": "Parser Frame Telemetri Serial & Validasi XOR Checksum",
+    "filename": "e01_01_serial_frame_parser.py",
+    "outputKey": "spec/E01/e01_01_serial_frame_parser",
+    "explanation": "Skrip ini membaca dataset frame telemetri serial yang bercampur antara frame valid, baris checksum rusak akibat derau kabel, dan baris terpotong, lalu meloloskan hanya paket yang terverifikasi utuh."
+  },
+  "exercise": {
+    "title": "Decoder Paket Sensor Serial & Kompresi Biner struct",
+    "instructions": [
+      "Muat datasets/serial_sensor_frames.log dan terapkan fungsi parse_telem_frame(line).",
+      "Hitung XOR seluruh karakter di antara '$' dan '*' lalu cocokkan dengan dua digit heksadesimal checksum.",
+      "Kemaskan reading valid (node_num, temp_c, humidity) menjadi paket biner 8-byte menggunakan struct.pack('<Bff', ...).",
+      "Terapkan EMA alpha=0.35 pada deret suhu bersih untuk memperhalus noise sesaat."
+    ],
+    "tips": "Di komunikasi RF berkecepatan rendah seperti LoRa, mengubah teks CSV 35 byte menjadi struct biner 9 byte menghemat lebih dari 70% airtime dan daya baterai!",
+    "time": "45 Menit"
+  },
+  "quiz": {
+    "question": "Mengapa frame serial mikrokontroler seperti NMEA selalu menyertakan karakter pemisah dan nilai checksum (seperti *4A) di ujung setiap baris pesan?",
+    "options": [
+      "Agar ukuran baudrate kabel otomatis meningkat 2 kali lipat",
+      "Untuk mendeteksi bit rusak atau baris terpotong akibat gangguan elektromagnetik sebelum angka salah masuk ke database",
+      "Karena Python tidak dapat membaca string tanpa tanda bintang",
+      "Untuk mengenkripsi password Wi-Fi di dalam sensor"
+    ],
+    "correctIndex": 1,
+    "explanation": "Kabel serial maupun tautan radio rentan interferensi atau frame terpotong saat inisialisasi port. Checksum memastikan penerima langsung membuang paket cacat daripada menyimpan suhu 9999 C.",
+    "hint": "Pikirkan integritas paket data di jalur fisik berderau."
+  },
+  "assignment": {
+    "title": "Proyek Mini: Resilient Serial Telemetry Frame Decoder",
+    "description": "Bangun pustaka decoder telemetri perangkat IoT yang memvalidasi checksum XOR, men-decode frame biner struct ringkas, dan mengaudit stream serial berderau secara offline.",
+    "instructions": [
+      "Implementasikan compute_xor_checksum(payload: str) -> str mengembalikan string hex kapital 2 digit.",
+      "Implementasikan parse_telem_frame(raw_line: str) -> dict | None yang menolak baris tanpa '$', '*', atau checksum tidak cocok.",
+      "Implementasikan encode_binary_packet / decode_binary_packet memakai struct.Struct('<Hff').",
+      "Uji parser Anda dengan stream BytesIO dan unit test pada test_e01_telemetry.py."
+    ],
+    "rubric": [
+      { "criteria": "Kebenaran Framing & XOR Checksum", "weight": 30, "description": "Validasi checksum tepat dan aman menolak pesan rusak atau malformat." },
+      { "criteria": "Efisiensi Binary Packing (struct)", "weight": 25, "description": "Format little-endian konsisten dengan ukuran byte eksak saat pack & unpack." },
+      { "criteria": "Kalibrasi & Smoothing Sinyal Sensor", "weight": 25, "description": "Penerapan EMA dan offset kalibrasi akurat secara numerik." },
+      { "criteria": "Unit Testing Stream Offline (Pytest)", "weight": 20, "description": "Lulus seluruh skenario tanpa memerlukan perangkat serial COM fisik." }
+    ],
+    "starterFilename": "tugas.py"
+  },
+  "resources": {
+    "hasSlides": true,
+    "codeDownload": "/downloads/specializations/E01/e01_01_serial_frame_parser.py",
+    "notebookDownload": null,
+    "datasetDownload": "/downloads/specializations/E01/serial_sensor_frames.log",
+    "guideDownload": "/downloads/specializations/E01/tugas.md",
+    "pptxDownload": null
+  },
+  "references": [
+    {
+      "title": "Python Official Docs: struct — Interpret bytes as packed binary data",
+      "source": "Python Software Foundation",
+      "url": "https://docs.python.org/3/library/struct.html",
+      "license": "PSF-2.0"
+    },
+    {
+      "title": "pySerial Documentation: URL Handlers (loop://) & Stream API",
+      "source": "Chris Liechti / pySerial",
+      "url": "https://pyserial.readthedocs.io/en/latest/url_handlers.html",
+      "license": "BSD-3-Clause"
+    }
+  ]
+}
+

@@ -1,0 +1,95 @@
+{
+  "id": "B05",
+  "trackId": "ai-ml",
+  "trackTitle": "Artificial Intelligence & Machine Learning",
+  "order": 5,
+  "title": "Capstone: Predictive Analytics Application",
+  "subtitle": "Feature Engineering, Model Selection, Joblib Persistence & Batch Inference",
+  "description": "Bangun sistem Machine Learning end-to-end siap produksi: rekayasa fitur domain, seleksi model via StratifiedKFold CV melawan baseline, serialisasi Pipeline dengan joblib, verifikasi paritas inferensi, dan eksekusi batch scoring pada dataset baru.",
+  "difficulty": "Advanced",
+  "estimatedHours": 8,
+  "isCapstone": true,
+  "prerequisites": [
+    "Modul B01 (Scikit-Learn Pipelines)",
+    "Modul B02 (Regression & Classification)",
+    "Modul B03 (Unsupervised Learning)",
+    "Modul B04 (Evaluation & Hyperparameter Tuning)"
+  ],
+  "learningObjectives": [
+    "Menciptakan fitur domain prediktif secara konsisten di fase training dan inferensi memakai FunctionTransformer atau helper murni.",
+    "Memilih model terbaik lewat StratifiedKFold ROC-AUC di atas baseline tanpa kebocoran data.",
+    "Menyimpan dan memuat ulang Pipeline terlatih memakai joblib beserta metadata versi model.",
+    "Menjalankan batch scoring pada menara baru dan mengekspor JSON laporan prediksi yang teruji oleh pytest."
+  ],
+  "dependencies": ["scikit-learn>=1.4", "pandas>=2.2", "numpy>=1.26", "joblib>=1.3", "pytest>=8.0"],
+  "tags": ["capstone", "joblib", "inference", "feature-engineering", "predictive-ml"],
+  "codeExample": {
+    "title": "End-to-End Predictive Maintenance Pipeline & Batch Inference",
+    "filename": "b05_04_batch_inference_engine.py",
+    "outputKey": "spec/B05/b05_04_batch_inference_engine",
+    "explanation": "Orkestrator capstone ini melakukan feature engineering, melatih kandidat model dengan CV di X_train, memverifikasi ROC-AUC holdout test set, menyimpan model via joblib ke direktori sementara, dan menghasilkan skor risiko pada batch menara baru."
+  },
+  "exercise": {
+    "title": "Audit Paritas Model Tersimpan & Batch Scoring",
+    "instructions": [
+      "Pelajari feature engineering pada telecom_maintenance_train.csv dan telecom_maintenance_batch.csv.",
+      "Pastikan transformasi fitur diterapkan identik pada data training maupun batch baru.",
+      "Simpan Pipeline terbaik dengan joblib.dump lalu muat kembali dengan joblib.load.",
+      "Verifikasi bahwa prediksi probabilitas sebelum dan sesudah joblib roundtrip identik (np.allclose)."
+    ],
+    "tips": "Karena pra-pemrosesan dan model dibungkus dalam satu Scikit-Learn Pipeline, Anda hanya perlu menyimpan satu berkas .joblib tanpa risiko inkonsistensi scaler!",
+    "time": "65 Menit"
+  },
+  "quiz": {
+    "question": "Mengapa menyerialisasi seluruh objek Scikit-Learn Pipeline menggunakan joblib jauh lebih aman daripada menyimpan objek classifier saja secara terpisah dari StandardScaler?",
+    "options": [
+      "Karena joblib tidak mendukung objek NumPy array mentah",
+      "Karena Pipeline menyatukan tahapan imputer, scaler, encoder, dan estimator ke dalam satu unit atomik sehingga parameter skala saat training tidak pernah tertukar saat inferensi produksi",
+      "Karena file model menjadi 100x lebih kecil tanpa bobot model",
+      "Karena classifier terpisah otomatis kehilangan fungsi predict_proba()"
+    ],
+    "correctIndex": 1,
+    "explanation": "Jika scaler dan classifier disimpan terpisah atau dilatih ulang pada batch baru, skala fitur akan bergeser dan merusak akurasi prediksi. Pipeline menjamin konsistensi 100% antara training dan serving.",
+    "hint": "Pikirkan risiko skewness atau ketidaksamaan versi preprocessing ketika model dideploy ke layanan lain."
+  },
+  "assignment": {
+    "title": "Capstone Track B: Predictive Maintenance & Inference System",
+    "description": "Rancang aplikasi Machine Learning end-to-end untuk memprediksi risiko kegagalan peralatan menara telekomunikasi lengkap dengan persistence joblib, metadata akurasi holdout, dan batch scoring.",
+    "instructions": [
+      "Implementasikan add_domain_features(df) untuk menghitung load_per_trx = active_users / max(bandwidth_mhz, 1) dan loss_latency_index = packet_loss_pct * latency_ms.",
+      "Implementasikan train_and_select_model(train_df) memakai stratified split, CV 4-fold ROC-AUC terhadap DummyClassifier, LogisticRegression, dan RandomForestClassifier.",
+      "Implementasikan save_model_bundle(model, metrics, out_dir) yang menyimpan pipeline.joblib dan model_metadata.json.",
+      "Implementasikan score_new_batch(bundle_dir, batch_csv) dan lulus seluruh 4 test di test_b05_capstone.py."
+    ],
+    "rubric": [
+      { "criteria": "Rekayasa Fitur Domain & Konsistensi Pipeline", "weight": 25, "description": "Fitur domain aman terhadap pembagian nol dan konsisten antar tahap." },
+      { "criteria": "Seleksi Model & Evaluasi Holdout Anti-Leakage", "weight": 30, "description": "Model mengalahkan DummyClassifier serta dievaluasi jujur pada holdout set." },
+      { "criteria": "Serialisasi Joblib & Batch Inference Engine", "weight": 25, "description": "Model roundtrip identik dan mengekspor JSON laporan prediksi prioritas." },
+      { "criteria": "Kualitas Arsitektur & Cakupan Pytest", "weight": 20, "description": "Teruji menyeluruh dengan tmp_path tanpa artefak sisa." }
+    ],
+    "starterFilename": "tugas.py"
+  },
+  "resources": {
+    "hasSlides": true,
+    "codeDownload": "/downloads/specializations/B05/b05_04_batch_inference_engine.py",
+    "notebookDownload": "/downloads/specializations/B05/b05_capstone_predictive.ipynb",
+    "datasetDownload": "/downloads/specializations/B05/telecom_maintenance_train.csv",
+    "guideDownload": "/downloads/specializations/B05/tugas.md",
+    "pptxDownload": null
+  },
+  "references": [
+    {
+      "title": "Scikit-Learn Model Persistence Documentation (joblib)",
+      "source": "Scikit-Learn Developers",
+      "url": "https://scikit-learn.org/stable/model_persistence.html",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "title": "Google Machine Learning Rules: Best Practices for ML Engineering",
+      "source": "Google Developers",
+      "url": "https://developers.google.com/machine-learning/guides/rules-of-ml",
+      "license": "CC BY 4.0"
+    }
+  ]
+}
+

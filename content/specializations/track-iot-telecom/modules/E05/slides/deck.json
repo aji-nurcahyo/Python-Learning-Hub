@@ -1,0 +1,100 @@
+[
+  {
+    "title": "Capstone: IoT Monitoring & Signal Analytics System",
+    "subtitle": "Telemetry Routing MQTT, SciPy Denoising & RF SLA Monitoring Dashboard",
+    "kind": "cover",
+    "body": "<p>Menyatukan seluruh keahlian Track E — Serial Telemetry, MQTT Publish-Subscribe, Digital Signal Processing (FFT/Butterworth), dan Analitik Radio Seluler — menjadi sistem monitoring stasiun telekomunikasi terintegrasi.</p>",
+    "notes": "Capstone Track E menyatukan rekayasa perangkat IoT, pemrosesan sinyal digital, dan optimasi jaringan seluler."
+  },
+  {
+    "title": "Arsitektur Platform Monitoring Lintas Lapis",
+    "kind": "content",
+    "body": "<ul><li><strong>1. MQTT Telemetry Router:</strong> Mengelompokkan telemetri node menurut wilayah melalui topik hierarkis <code>iot/{region}/{node_id}/telemetry</code>.</li><li><strong>2. DSP Signal Conditioning:</strong> Membersihkan sinyal sensor getaran motor pendingin menara dengan filter <em>Butterworth</em> SOS + verifikasi <code>rfft</code>.</li><li><strong>3. RF SLA Diagnostic Engine:</strong> Memisahkan masalah cakupan (<code>RSRP</code>) vs interferensi kanal (<code>SINR</code>) vs panas perangkat.</li><li><strong>4. Dual Dashboard Exporter:</strong> Menerbitkan PNG, JSON, dan ringkasan Markdown.</li></ul>",
+    "notes": "Pendekatan terpadu memberi tim operasi infrastruktur gambaran lengkap dari menara sampai komponen fisik."
+  },
+  {
+    "title": "Tahap 1: Routing Stream Telemetri ke Topik MQTT",
+    "kind": "content",
+    "body": "<ul><li><strong>Hierarki Konsisten:</strong> <code>iot/Sumatera/NODE-LPG-01/telemetry</code> mempermudah sub-sistem regional berlangganan memakai filter <code>iot/Sumatera/#</code>.</li><li><strong>Pemanfaatan Wildcard:</strong> Auditor tingkat nasional memakai <code>iot/#</code>, sedangkan operator gedung atau wilayah memakai prefiks regional.</li></ul>",
+    "notes": "Hierarki topik yang jelas menghemat bandwidth pemrosesan di subscriber edge."
+  },
+  {
+    "title": "Contoh Kode: MQTT Topic Dispatcher",
+    "kind": "code",
+    "example": "spec/E05/e05_01_telemetry_decoder_mqtt",
+    "body": "<p>Memetakan rekaman telemetri ke topik MQTT lalu menyaring pesan khusus region <code>Sumatera</code> dengan <code>topic_matches_sub</code>.</p>",
+    "notes": "Pola ini langsung terhubung dengan listener MQTT produksi maupun simulator lokal."
+  },
+  {
+    "title": "Tahap 2: DSP Conditioning Gelombang Sensor",
+    "kind": "content",
+    "body": "<ul><li><strong>Pemantauan Fisik Menara:</strong> Sensor getaran pada kipas pendingin atau generator di BTS sering tercemar dengung listrik 150 Hz.</li><li><strong>Filter Butterworth + Validasi <code>rfft</code>:</strong> Memastikan komponen fundamental 25 Hz tetap dominan sambil melonjakkan SNR lebih dari +10 dB.</li></ul>",
+    "notes": "Menggabungkan analisis spektrum rfft dengan penyaringan sosfiltfilt menjaga akurasi pemeliharaan prediktif."
+  },
+  {
+    "title": "Contoh Kode: Butterworth Denoising & FFT Health Check",
+    "kind": "code",
+    "example": "spec/E05/e05_02_signal_conditioning",
+    "body": "<p>Menjalankan filter low-pass Butterworth 75 Hz pada laju cuplik 600 Hz dan memastikan frekuensi puncak pasca filter kembali ke 25.0 Hz.</p>",
+    "notes": "Perbaikan SNR > 10 dB terlihat langsung pada sinyal uji."
+  },
+  {
+    "title": "Tahap 3: Diagnostik Kesehatan RF & Termal Node",
+    "kind": "content",
+    "body": "<ul><li><strong>Multi-Flag Audit:</strong> Setiap node diperiksa terhadap 4 kondisi: <code>COVERAGE_BLINDSPOT</code>, <code>HIGH_INTERFERENCE</code>, <code>THERMAL_ALERT</code>, dan <code>HIGH_PACKET_LOSS</code>.</li><li><strong>Prioritas Eskalasi:</strong> Node dengan 2 atau lebih pelanggaran berstatus <code>CRITICAL</code> dan ditempatkan paling atas daftar inspeksi.</li></ul>",
+    "notes": "NODE-LPG-02 (HIGH_INTERFERENCE + THERMAL_ALERT) memerlukan penanganan berbeda dibanding NODE-JKT-02 (COVERAGE_BLINDSPOT + HIGH_PACKET_LOSS)."
+  },
+  {
+    "title": "Contoh Kode: Mesin Diagnostik RF & Termal",
+    "kind": "code",
+    "example": "spec/E05/e05_03_rf_sla_diagnostics",
+    "body": "<p>Mengaudit <code>iot_node_telemetry_stream.csv</code> serta memberi peringkat prioritas berdasarkan keparahan status dan rendahnya SINR.</p>",
+    "notes": "Penalti interferensi (snr_db - sinr_db) membantu insinyur langsung melihat beratnya tabrakan sel."
+  },
+  {
+    "title": "Tahap 4: Visualisasi Dashboard & Artefak Laporan",
+    "kind": "content",
+    "body": "<ul><li><strong>Panel Kiri:</strong> Bar chart SINR per node dilengkapi garis batas ambang kritis <code>3 dB</code>.</li><li><strong>Panel Kanan:</strong> Kurva gelombang getaran mentah vs hasil filter Butterworth lengkap dengan keterangan dB SNR gain.</li><li><strong>JSON + Markdown Report:</strong> Mendukung integrasi API dashboard sekaligus ringkasan cepat tim NOC.</li></ul>",
+    "notes": "Satu kali eksekusi orkestrator memproduksi seluruh bukti grafis dan numerik secara konsisten."
+  },
+  {
+    "title": "Contoh Kode: Orkestrator Monitoring Dashboard",
+    "kind": "code",
+    "example": "spec/E05/e05_04_monitoring_dashboard_runner",
+    "body": "<p>Menjalankan seluruh rantai pipeline Track E dan menghasilkan PNG dashboard, <code>node_health_report.json</code>, serta <code>ops_summary.md</code>.</p>",
+    "notes": "Terlihat bahwa node dengan SINR di bawah 3 dB otomatis ditandai warna merah pada grafik."
+  },
+  {
+    "title": "Verifikasi Sistem End-to-End di Pytest",
+    "kind": "content",
+    "body": "<ul><li><strong>Integritas File:</strong> Memastikan PNG, JSON, dan Markdown tercipta lengkap pada direktori sementara <code>tmp_path</code>.</li><li><strong>Validasi Logika Domain:</strong> Memastikan <code>NODE-LPG-02</code> memicu flag <code>HIGH_INTERFERENCE</code> sementara <code>NODE-JKT-02</code> memicu <code>COVERAGE_BLINDSPOT</code>.</li><li><strong>Validasi Metrik DSP:</strong> Memastikan kenaikan SNR lebih dari 10 dB dan frekuensi dominan tepat 25.0 Hz.</li></ul>",
+    "notes": "Integration testing menyatukan logika IoT, DSP, dan RF Telecom dalam satu garis pertahanan otomatis."
+  },
+  {
+    "title": "Menghubungkan ke Sistem Produksi Nyata",
+    "kind": "content",
+    "body": "<ul><li><strong>Live Serial / MQTT Listener:</strong> Ganti sumber CSV menjadi stream serial atau callback <code>paho-mqtt</code> berjangka waktu.</li><li><strong>Sajikan via Track C FastAPI:</strong> Ekspos output <code>node_health_report.json</code> sebagai endpoint REST API bagi dashboard frontend.</li></ul>",
+    "notes": "Kelima specialization track pada Python Learning Hub saling melengkapi menjadi ekosistem rekayasa utuh."
+  },
+  {
+    "title": "Kuis Cepat: Membedakan Akar Masalah Node Lapangan",
+    "kind": "question",
+    "body": "<p>Uji ketajaman diagnosa lintas-lapis Anda dari laporan kesehatan node capstone.</p>",
+    "question": "Dari hasil audit, NODE-LPG-02 mencatat RSRP -84.5 dBm, SINR 1.9 dB, SNR 19.0 dB, dan temp_c 39.8 C. Mengapa mengirim tim teknisi antena tanpa teknisi kelistrikan/pendingin ruang kurang lengkap?",
+    "answer": "NODE-LPG-02 mengalami masalah ganda (CRITICAL): interferensi ko-kanal RF berat (SINR jatuh ke 1.9 dB meski SNR 19 dB) DAN kegagalan pendinginan perangkat (THERMAL_ALERT 39.8 C). Kedua akar masalah fisik dan radio tersebut harus ditangani agar menara tidak mengalami thermal shutdown sekaligus meningkatkan throughput.",
+    "notes": "Diagnosa multi-dimensi mencegah kunjungan ulang teknisi lapangan."
+  },
+  {
+    "title": "Latihan Mandiri: Audit Sistem Monitoring E05",
+    "kind": "exercise",
+    "body": "<ul><li>Periksa alur integrasi <code>e05_01</code> sampai <code>e05_04</code>.</li><li>Jalankan <code>pytest code/test_e05_capstone.py</code> dan amati verifikasi flag serta metrik DSP.</li><li>Selesaikan tugas akhir Track E pada <code>assignments/tugas.py</code>.</li></ul>",
+    "notes": "Selamat telah menuntaskan seluruh 5 Track Spesialisasi (25 modul profesional)!"
+  },
+  {
+    "title": "Selamat! Seluruh 25 Modul Spesialisasi Selesai",
+    "kind": "content",
+    "body": "<ul><li>Anda telah menaklukkan seluruh <strong>Track E: IoT, Signal Processing &amp; Telecommunications</strong> (Serial/Struct, MQTT, SciPy FFT/Filter, RF Analytics, hingga Capstone Monitoring).</li><li>Bersama 30 Core Chapters, Anda kini menguasai kurikulum penuh <strong>55 Modul Python Learning Hub</strong> dari dasar hingga tingkat rekayasa profesional!</li></ul>",
+    "notes": "Terus bereksperimen, menulis unit test yang rapi, dan membangun sistem Python berdampak nyata."
+  }
+]
+

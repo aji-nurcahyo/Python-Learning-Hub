@@ -1,0 +1,100 @@
+[
+  {
+    "title": "Data Manipulation with Pandas",
+    "subtitle": "DataFrame, Data Cleaning, Missing Values, GroupBy & Merge",
+    "kind": "cover",
+    "body": "<p>Menguasai pengolahan data tabular skala menengah hingga besar: seleksi akurat <code>.loc</code>/<code>.iloc</code>, strategi pembersihan data kotor, imputasi berbasis grup, serta penggabungan tabel analitik.</p>",
+    "notes": "Pandas menjadi jembatan utama antara file CSV mentah dan analisis statistik maupun pipeline machine learning."
+  },
+  {
+    "title": "Dari NumPy ke Pandas DataFrame",
+    "kind": "content",
+    "body": "<ul><li><strong>NumPy ndarray:</strong> Unggul pada matriks angka homogen tanpa nama kolom.</li><li><strong>Pandas Series:</strong> Vektor 1 dimensi berindeks yang mendukung tipe numerik, string, maupun datetime.</li><li><strong>Pandas DataFrame:</strong> Kumpulan <code>Series</code> yang berbagi label baris (<code>index</code>) dan nama kolom (<code>columns</code>).</li></ul>",
+    "notes": "Setiap kolom DataFrame pada dasarnya adalah satu objek Series dengan dtype masing-masing."
+  },
+  {
+    "title": "Seleksi Presisi: .loc vs .iloc",
+    "kind": "content",
+    "body": "<ul><li><strong><code>df.loc[baris, kolom]</code>:</strong> Berbasis label/kondisi boolean; rentang slice bersifat inklusif di kedua batas.</li><li><strong><code>df.iloc[pos_baris, pos_kolom]</code>:</strong> Berbasis indeks posisi nol; rentang slice mengikuti aturan standar Python (batas kanan eksklusif).</li><li><strong>Hindari Chained Indexing:</strong> Jangan menulis <code>df[df['a']&gt;1]['b'] = 0</code>; gunakan <code>df.loc[df['a']&gt;1, 'b'] = 0</code> untuk mencegah <code>SettingWithCopyWarning</code>.</li></ul>",
+    "notes": "Penggunaan .loc untuk assignment bersyarat menjaga konsistensi mutasi DataFrame."
+  },
+  {
+    "title": "Contoh Kode: Series, DataFrame & Seleksi .loc/.iloc",
+    "kind": "code",
+    "example": "spec/A02/a02_01_series_dataframe",
+    "body": "<p>Membuat DataFrame monitoring node jaringan dan melakukan filter kombinasi kondisi menggunakan <code>.loc</code> dan <code>.iloc</code>.</p>",
+    "notes": "Perhatikan penggunaan & disertai tanda kurung pada setiap ekspresi kondisi Pandas."
+  },
+  {
+    "title": "Audit Kualitas Data Mentah",
+    "kind": "content",
+    "body": "<ul><li><strong>Inspeksi Awal:</strong> Gunakan <code>df.info()</code>, <code>df.shape</code>, dan <code>df.isna().sum()</code> segera setelah <code>pd.read_csv()</code>.</li><li><strong>Kotoran Umum:</strong> Spasi di awal/akhir teks, huruf besar-kecil acak, duplikasi baris akibat retry API, dan kolom angka yang terbaca sebagai object.</li><li><strong>Immutability Praktis:</strong> Selalu awali fungsi cleaning dengan <code>clean = df.copy()</code>.</li></ul>",
+    "notes": "Mayoritas waktu kerja Data Scientist di industri habis pada tahap audit dan pembersihan data."
+  },
+  {
+    "title": "Strategi Penanganan Missing Values & Duplikat",
+    "kind": "content",
+    "body": "<ul><li><strong>Deduplikasi Tepat Sasaran:</strong> <code>df.drop_duplicates(subset=['order_id'], keep='first')</code> membuang duplikasi kunci transaksi.</li><li><strong>Normalisasi String Vectorized:</strong> <code>df['category'].str.strip().str.title()</code> menyeragamkan label kategori.</li><li><strong>Imputasi Cerdas:</strong> Isi nilai kosong dengan median per grup kategori memakai <code>groupby(...).transform('median')</code>, bukan rata-rata global yang bias.</li></ul>",
+    "notes": "Imputasi menggunakan rata-rata global berisiko menaikkan harga aksesoris secara tidak wajar oleh harga elektronik mahal."
+  },
+  {
+    "title": "Contoh Kode: Cleaning, Deduplikasi & Imputasi Grup",
+    "kind": "code",
+    "example": "spec/A02/a02_02_cleaning_missing_duplicates",
+    "body": "<p>Membersihkan <code>retail_transactions_raw.csv</code> secara sistematis dari inkonsistensi kategori, duplikat, hingga missing values.</p>",
+    "notes": "transform('median') mengembalikan Series sepanjang jumlah baris DataFrame asli sehingga aman di-assign ke fillna()."
+  },
+  {
+    "title": "Split-Apply-Combine dengan groupby().agg()",
+    "kind": "content",
+    "body": "<ul><li><strong>Split:</strong> Memecah tabel menjadi partisi logis per kategori/kota.</li><li><strong>Apply:</strong> Menghitung <code>count</code>, <code>sum</code>, <code>mean</code>, atau <code>median</code> secara terpisah.</li><li><strong>Combine:</strong> Menyusun ulang menjadi DataFrame ringkas menggunakan <em>named aggregation</em> (<code>total_rev=('revenue', 'sum')</code>).</li></ul>",
+    "notes": "Gunakan as_index=False bila ingin mempertahankan kolom kunci grup sebagai kolom biasa."
+  },
+  {
+    "title": "Pivot Table untuk Matriks Lintas Dimensi",
+    "kind": "content",
+    "body": "<ul><li><strong>Struktur Matriks:</strong> Memetakan satu kategori pada baris (<code>index</code>) dan kategori lain pada kolom (<code>columns</code>).</li><li><strong><code>fill_value=0.0</code>:</strong> Mengganti kombinasi kota-kategori yang kosong menjadi nol agar mudah dibaca atau dijumlahkan.</li><li><strong>Kegunaan:</strong> Ideal untuk laporan manajerial maupun input visualisasi heatmap.</li></ul>",
+    "notes": "Pivot table di Pandas sangat mirip konsepnya dengan Pivot Table pada spreadsheet modern."
+  },
+  {
+    "title": "Contoh Kode: GroupBy Aggregations & Pivot Table",
+    "kind": "code",
+    "example": "spec/A02/a02_03_groupby_pivot",
+    "body": "<p>Meringkas performa penjualan tiap kota dengan named aggregation lalu membentuk matriks perbandingan Kota x Kategori.</p>",
+    "notes": "Urutkan hasil menggunakan .sort_values(..., ascending=False) agar peninjauan eksekutif langsung menyorot kontributor terbesar."
+  },
+  {
+    "title": "Penggabungan Tabel (pd.merge) & Parsing Datetime",
+    "kind": "content",
+    "body": "<ul><li><strong><code>pd.merge(left, right, on='city', how='left')</code>:</strong> Memperkaya tabel transaksi dengan metadata wilayah/SLA.</li><li><strong>Mengapa Left Join Aman:</strong> Menjaga seluruh baris fakta transaksi tetap ada meskipun referensi wilayah baru belum masuk master tabel.</li><li><strong>Ekstraksi Waktu:</strong> Setelah <code>pd.to_datetime()</code>, akses atribut <code>.dt.day_name()</code>, <code>.dt.month</code>, atau resample berkala.</li></ul>",
+    "notes": "Selalu verifikasi jumlah baris sebelum dan sesudah merge agar tidak terjadi ledakan baris akibat duplicate key di tabel kanan."
+  },
+  {
+    "title": "Contoh Kode: Merge Master Wilayah & Waktu",
+    "kind": "code",
+    "example": "spec/A02/a02_04_merge_timeseries",
+    "body": "<p>Menggabungkan data transaksi bersih ke tabel master wilayah serta menghitung rata-rata SLA pengiriman dan total omzet regional.</p>",
+    "notes": "Perhatikan konversi format tanggal eksplisit %Y-%m-%d untuk menghindari ambiguitas MM-DD vs DD-MM."
+  },
+  {
+    "title": "Kuis Cepat: Pemilihan .loc vs .iloc",
+    "kind": "question",
+    "body": "<p>Pastikan Anda memahami perilaku batas slice antara label indexing dan positional indexing.</p>",
+    "question": "Pada DataFrame dengan indeks integer standar 0, 1, 2, 3, berapa jumlah baris yang dikembalikan oleh df.loc[0:2] dibandingkan df.iloc[0:2]?",
+    "answer": "df.loc[0:2] mengembalikan 3 baris (indeks label 0, 1, dan 2 bersifat inklusif), sedangkan df.iloc[0:2] mengembalikan 2 baris (posisi 0 dan 1 bersifat eksklusif pada batas atas).",
+    "notes": "Kesalahan asumsi di sini sering menyebabkan off-by-one error dalam ekstraksi rentang waktu."
+  },
+  {
+    "title": "Latihan Mandiri: Wrangling Transaksi Regional",
+    "kind": "exercise",
+    "body": "<ul><li>Audit <code>missing values</code> dan duplikasi di <code>retail_transactions_raw.csv</code>.</li><li>Seragamkan nama kota/kategori, isi harga kosong berdasarkan median kategori.</li><li>Hitung total omzet per kota dan uji logika Anda dengan <code>pytest</code>.</li></ul>",
+    "notes": "Buka a02_pandas_wrangling.ipynb untuk melihat hasil langkah demi langkah."
+  },
+  {
+    "title": "Ringkasan Modul A02",
+    "kind": "content",
+    "body": "<ul><li><code>.loc</code> dan <code>.iloc</code> memisahkan seleksi berbasis label/kondisi vs posisi integer.</li><li>Cleaning disiplin mencakup copy eksplisit, normalisasi <code>.str</code>, deduplikasi kunci, dan imputasi grup via <code>transform</code>.</li><li><code>groupby().agg()</code>, <code>pivot_table()</code>, dan <code>pd.merge(..., how='left')</code> membentuk fondasi persiapan data sebelum tahap EDA di Modul A03.</li></ul>",
+    "notes": "Pada modul A03 berikutnya kita akan menggali anomali statistik, distribusi, dan korelasi dari data yang sudah bersih."
+  }
+]
+

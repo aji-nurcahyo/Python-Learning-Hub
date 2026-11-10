@@ -1,0 +1,92 @@
+{
+  "id": "C03",
+  "trackId": "web-api",
+  "trackTitle": "Web Development & APIs",
+  "order": 3,
+  "title": "Database Persistence with SQLAlchemy ORM",
+  "subtitle": "SQLAlchemy 2.0 Declarative Models, Session CRUD, ForeignKey & FastAPI Dependency",
+  "description": "Hubungkan layanan FastAPI ke penyimpanan persisten menggunakan SQLAlchemy 2.0 ORM modern (`DeclarativeBase`, `Mapped`, `mapped_column`), relasi satu-ke-banyak, manajemen Session aman, serta `Depends(get_db)` yang mudah dioverride saat testing.",
+  "difficulty": "Intermediate",
+  "estimatedHours": 5,
+  "prerequisites": [
+    "Modul C02 (Modern REST API with FastAPI & Pydantic)",
+    "Chapter 19 (Object-Oriented Programming)"
+  ],
+  "learningObjectives": [
+    "Mendefinisikan tabel relasional memakai DeclarativeBase dan type-safe Mapped[...] SQLAlchemy 2.0.",
+    "Melakukan operasi Create, Select, Update, dan Delete secara atomik menggunakan Session(engine) dan select().",
+    "Membangun relasi ForeignKey satu-ke-banyak dan melakukan query terfilter antar tabel.",
+    "Mengintegrasikan Session database ke FastAPI melalui yield dependency Depends(get_db) serta app.dependency_overrides."
+  ],
+  "dependencies": ["sqlalchemy>=2.0", "fastapi>=0.115", "pydantic>=2.7", "httpx>=0.27", "pytest>=8.0"],
+  "tags": ["sqlalchemy", "sqlite", "orm", "fastapi", "dependency-injection"],
+  "codeExample": {
+    "title": "Integrasi FastAPI + SQLAlchemy 2.0 + Depends(get_db)",
+    "filename": "c03_04_fastapi_db_dependency.py",
+    "outputKey": "spec/C03/c03_04_fastapi_db_dependency",
+    "explanation": "Skrip ini mengintegrasikan SQLite via SQLAlchemy Session generator dependency pada endpoint POST/GET FastAPI, membuktikan data persisten antar request, dan menutup koneksi engine bersih di akhir eksekusi."
+  },
+  "exercise": {
+    "title": "Model Relasional & Session Dependency di SQLite",
+    "instructions": [
+      "Buat kelas Category dan Device yang terhubung dengan ForeignKey('categories.id') memakai DeclarativeBase SQLAlchemy 2.0.",
+      "Buat engine SQLite sementara dengan connect_args={'check_same_thread': False} lalu panggil Base.metadata.create_all(engine).",
+      "Tambahkan 1 kategori dan 2 perangkat menggunakan Session(engine), lalu query kembali memakai select(Device).",
+      "Panggil engine.dispose() di blok finally sebelum direktori sementara dihapus."
+    ],
+    "tips": "Di SQLAlchemy 2.0, gunakan session.scalars(select(Model).where(...)).all() sebagai standar modern menggantikan .query().",
+    "time": "55 Menit"
+  },
+  "quiz": {
+    "question": "Mengapa fungsi dependency get_db() pada FastAPI menggunakan pola try ... yield db ... finally: db.close() alih-alih return SessionLocal() biasa?",
+    "options": [
+      "Karena Python melarang keyword return di dalam router FastAPI",
+      "Karena blok finally setelah yield menjamin sesi koneksi database tetap ditutup bersih bahkan jika endpoint melempar HTTPException atau runtime error",
+      "Karena yield otomatis mengubah SQLite menjadi PostgreSQL",
+      "Karena db.close() otomatis melakukan rollback sekaligus menghapus tabel"
+    ],
+    "correctIndex": 1,
+    "explanation": "Generator dependency dengan try/finally memastikan sumber daya koneksi selalu dikembalikan/ditutup sesudah respons HTTP selesai dikirim, mencegah kebocoran connection pool.",
+    "hint": "Pikirkan cara FastAPI menangani cleanup setelah eksekusi handler endpoint selesai."
+  },
+  "assignment": {
+    "title": "Proyek Mini: REST API Inventaris Persisten Berbasis SQLAlchemy 2.0",
+    "description": "Migrasi inventaris perangkat in-memory dari Modul C02 menjadi aplikasi FastAPI berdatabase SQLite persisten menggunakan SQLAlchemy 2.0 ORM dan Dependency Injection.",
+    "instructions": [
+      "Definisikan model ORM LocationModel (id, name) dan AssetModel (id, hostname unik, status, location_id ForeignKey).",
+      "Buat factory build_db_app(db_url: str) yang mengonfigurasi sessionmaker serta yield dependency get_db().",
+      "Implementasikan endpoint POST /locations, POST /assets, dan GET /assets (filter optional location_id).",
+      "Uji menggunakan temp SQLite DB di pytest fixture tmp_path serta test pelanggaran unique constraint."
+    ],
+    "rubric": [
+      { "criteria": "Skema Declarative SQLAlchemy 2.0 & ForeignKey", "weight": 30, "description": "Penggunaan Mapped, mapped_column, unique constraint, dan relationship tepat." },
+      { "criteria": "Manajemen Session & Lifecycle Cleanup", "weight": 25, "description": "Generator get_db() menutup sesi dan engine.dispose() berjalan bersih." },
+      { "criteria": "Integrasi FastAPI CRUD & Pydantic ConfigDict", "weight": 25, "description": "Model output mengaktifkan model_config = ConfigDict(from_attributes=True)." },
+      { "criteria": "Unit Testing Terisolasi dengan tmp_path", "weight": 20, "description": "Lulus pytest termasuk skenario duplikasi hostname." }
+    ],
+    "starterFilename": "tugas.py"
+  },
+  "resources": {
+    "hasSlides": true,
+    "codeDownload": "/downloads/specializations/C03/c03_04_fastapi_db_dependency.py",
+    "notebookDownload": null,
+    "datasetDownload": null,
+    "guideDownload": "/downloads/specializations/C03/tugas.md",
+    "pptxDownload": null
+  },
+  "references": [
+    {
+      "title": "SQLAlchemy 2.0 ORM Quickstart & Unified Tutorial",
+      "source": "SQLAlchemy Authors",
+      "url": "https://docs.sqlalchemy.org/en/20/orm/quickstart.html",
+      "license": "MIT"
+    },
+    {
+      "title": "FastAPI SQL (Relational) Databases Guide",
+      "source": "FastAPI Developers",
+      "url": "https://fastapi.tiangolo.com/tutorial/sql-databases/",
+      "license": "MIT"
+    }
+  ]
+}
+

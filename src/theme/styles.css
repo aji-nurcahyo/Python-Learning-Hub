@@ -5457,5 +5457,94 @@ select option {
   padding: 36px 24px 64px;
 }
 
+/* Specialization Module Cards & Reading Document Styles */
+.clickable-module-row {
+  width: 100%;
+  text-align: left;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 18px 20px;
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.clickable-module-row:hover {
+  border-color: var(--brand);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-2px);
+}
+
+.clickable-module-row:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+
+.reading-markdown-guide {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 28px 32px;
+  margin-bottom: 28px;
+  box-shadow: var(--shadow-sm);
+  color: var(--ink);
+}
+
+.reading-markdown-guide h1 {
+  font-size: 26px;
+  font-weight: 800;
+  margin: 0 0 14px;
+  color: var(--ink);
+}
+
+.reading-markdown-guide h2 {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 24px 0 10px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  color: var(--ink);
+}
+
+.reading-markdown-guide h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 18px 0 8px;
+  color: var(--brand);
+}
+
+.reading-markdown-guide p {
+  font-size: 15px;
+  line-height: 1.7;
+  margin: 0 0 12px;
+  color: var(--ink);
+}
+
+.reading-md-list {
+  margin: 0 0 14px;
+  padding-left: 22px;
+  color: var(--ink);
+}
+
+.reading-md-list li {
+  font-size: 14.5px;
+  line-height: 1.65;
+  margin-bottom: 6px;
+}
+
+.reading-md-code {
+  background: #0f172a;
+  color: #e2e8f0;
+  border-radius: 10px;
+  padding: 14px 18px;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.55;
+  margin: 12px 0 16px;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+
 
 

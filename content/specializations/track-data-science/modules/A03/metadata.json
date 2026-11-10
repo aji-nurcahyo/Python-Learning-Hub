@@ -1,0 +1,92 @@
+{
+  "id": "A03",
+  "trackId": "data-science",
+  "trackTitle": "Data Science & Visualization",
+  "order": 3,
+  "title": "Exploratory Data Analysis (EDA)",
+  "subtitle": "Distribusi Statistik, Deteksi Outlier IQR/Z-Score, Korelasi & Analisis Segmen",
+  "description": "Pelajari cara membedah distribusi metrik numerik, membandingkan mean vs median pada data skewed, mendeteksi outlier secara objektif dengan metode IQR dan Z-score, serta mengukur korelasi antar variabel.",
+  "difficulty": "Intermediate",
+  "estimatedHours": 5,
+  "prerequisites": [
+    "Modul A01 (Numerical Computing with NumPy)",
+    "Modul A02 (Data Manipulation with Pandas)"
+  ],
+  "learningObjectives": [
+    "Mengevaluasi bentuk distribusi menggunakan mean, median, IQR, dan skewness.",
+    "Mengidentifikasi serta mengkuantifikasi outlier menggunakan aturan 1.5 * IQR dan Z-score.",
+    "Memilih koefisien korelasi Pearson (linear) vs Spearman (monotonik/tahan outlier).",
+    "Menyusun tabulasi silang (crosstab) dan merumuskan hipotesis analitik berbasis data."
+  ],
+  "dependencies": ["pandas>=2.2", "numpy>=1.26", "scipy>=1.13", "pytest>=8.0"],
+  "tags": ["eda", "statistics", "outlier", "correlation", "iqr"],
+  "codeExample": {
+    "title": "Deteksi Outlier dengan Metode IQR & Perbandingan Statistik",
+    "filename": "a03_02_outlier_iqr_zscore.py",
+    "outputKey": "spec/A03/a03_02_outlier_iqr_zscore",
+    "explanation": "Skrip ini menghitung kuartil Q1, Q3, dan IQR untuk metrik latensi jaringan menara, menandai tower dengan latensi ekstrem di atas batas Q3 + 1.5*IQR, lalu membandingkan mean vs median sebelum dan sesudah penyaringan outlier."
+  },
+  "exercise": {
+    "title": "Audit Outlier & Korelasi QoS Jaringan Telekomunikasi",
+    "instructions": [
+      "Muat datasets/telecom_qos_kpi.csv memakai Pandas.",
+      "Hitung Q1, Q3, dan batas atas IQR (Q3 + 1.5 * IQR) untuk kolom latency_ms.",
+      "Bandingkan nilai mean dan median latency_ms sebelum vs sesudah mengecualikan outlier.",
+      "Hitung matriks korelasi Pearson dan Spearman antara traffic_gbps, latency_ms, dan packet_loss_pct."
+    ],
+    "tips": "Jika nilai mean jauh lebih tinggi daripada median, distribusi mengalami right-skewed (positively skewed) akibat beberapa nilai ekstrem tinggi.",
+    "time": "50 Menit"
+  },
+  "quiz": {
+    "question": "Mengapa median dan IQR lebih disarankan daripada mean dan standar deviasi untuk meringkas metrik latensi jaringan yang memiliki beberapa spike ekstrem?",
+    "options": [
+      "Karena median lebih cepat dihitung untuk array integer kecil",
+      "Karena mean dan standar deviasi sangat sensitif terhadap outlier ekstrem sehingga terdistorsi, sedangkan median dan IQR bersifat robust",
+      "Karena IQR selalu bernilai nol jika jumlah observasi genap",
+      "Karena standar deviasi hanya berlaku untuk data kategorikal"
+    ],
+    "correctIndex": 1,
+    "explanation": "Satu nilai spike ekstrem (misalnya 320 ms ketika mayoritas data 18-25 ms) dapat menarik mean naik tajam, sementara median dan IQR (persentil ke-25 hingga ke-75) tetap mencerminkan kondisi mayoritas data.",
+    "hint": "Pikirkan sensitivitas kuadrat deviasi terhadap angka yang jauh dari pusat distribusi."
+  },
+  "assignment": {
+    "title": "Proyek Mini: Laporan Diagnostik EDA Kualitas Jaringan Multi-Region",
+    "description": "Buat skrip analisis EDA otomatis untuk memeriksa dataset kualitas layanan (QoS) jaringan seluler antar wilayah, mengidentifikasi anomali menara, dan mengevaluasi korelasi beban trafik terhadap latensi.",
+    "instructions": [
+      "Implementasikan detect_iqr_outliers(series) yang mengembalikan boolean mask dan dict batas (q1, q3, iqr, lower_bound, upper_bound).",
+      "Implementasikan summarize_skewness(df, cols) untuk menghitung mean, median, iqr, dan skewness tiap metrik.",
+      "Implementasikan regional_crosstabs(df) untuk memetakan sebaran status kesehatan jaringan per region.",
+      "Validasikan fungsi Anda menggunakan unit test pada test_a03_eda.py."
+    ],
+    "rubric": [
+      { "criteria": "Akurasi Statistik Deskriptif & Skewness", "weight": 25, "description": "Mean, median, kuartil, IQR, dan skewness dihitung tanpa error tipe." },
+      { "criteria": "Logika Deteksi Outlier IQR & Z-Score", "weight": 30, "description": "Batas pagar bawah/atas IQR serta masking teruji pada kasus ekstrem." },
+      { "criteria": "Analisis Korelasi & Crosstab Segmen", "weight": 25, "description": "Perbedaan Pearson vs Spearman dan segmentasi wilayah terinterpretasi benar." },
+      { "criteria": "Testing & Kebersihan Kode", "weight": 20, "description": "Seluruh fungsi modular memiliki type annotations dan lulus pytest." }
+    ],
+    "starterFilename": "tugas.py"
+  },
+  "resources": {
+    "hasSlides": true,
+    "codeDownload": "/downloads/specializations/A03/a03_02_outlier_iqr_zscore.py",
+    "notebookDownload": "/downloads/specializations/A03/a03_eda_workflow.ipynb",
+    "datasetDownload": "/downloads/specializations/A03/telecom_qos_kpi.csv",
+    "guideDownload": "/downloads/specializations/A03/tugas.md",
+    "pptxDownload": null
+  },
+  "references": [
+    {
+      "title": "NIST Engineering Statistics Handbook: Exploratory Data Analysis",
+      "source": "NIST",
+      "url": "https://www.itl.nist.gov/div898/handbook/eda/eda.htm",
+      "license": "Public Domain"
+    },
+    {
+      "title": "SciPy Stats Documentation: Skewness & Correlation",
+      "source": "SciPy Developers",
+      "url": "https://docs.scipy.org/doc/scipy/reference/stats.html",
+      "license": "BSD-3-Clause"
+    }
+  ]
+}
+

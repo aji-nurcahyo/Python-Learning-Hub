@@ -1,0 +1,100 @@
+[
+  {
+    "title": "Supervised Learning: Regression & Classification",
+    "subtitle": "Linear/Ridge Regression, Logistic Regression, Decision Tree & Random Forest",
+    "kind": "cover",
+    "body": "<p>Membandingkan keluarga algoritma linear terregularisasi dan model berbasis pohon keputusan untuk memprediksi angka kontinu maupun risiko kategorikal.</p>",
+    "notes": "Setiap model dilatih dan diuji di atas pemisahan data yang konsisten dan deterministik."
+  },
+  {
+    "title": "Regresi vs Klasifikasi dalam Praktik",
+    "kind": "content",
+    "body": "<ul><li><strong>Regression:</strong> Memprediksi besaran angka kontinu (<code>throughput_mbps</code>, harga rumah, konsumsi daya).</li><li><strong>Classification:</strong> Memprediksi kelas diskrit (<code>congestion_risk</code> 0 atau 1, kategori gangguan).</li><li><strong>Pemilihan Metrik:</strong> Regresi memakai MAE/RMSE/R2; Klasifikasi memakai Accuracy, F1-Score, Precision/Recall, dan ROC-AUC.</li></ul>",
+    "notes": "Kesalahan paling fatal adalah memakai metrik regresi pada masalah label kelas atau sebaliknya."
+  },
+  {
+    "title": "Linear Regression & Regularisasi Ridge (L2)",
+    "kind": "content",
+    "body": "<ul><li><strong>Linear Regression:</strong> Mencocokkan bidang linear yang meminimalkan jumlah kuadrat residual.</li><li><strong>Masalah Multikolinearitas:</strong> Jika fitur saling berkorelasi kuat, koefisien menjadi tidak stabil.</li><li><strong>Ridge Regularization:</strong> Menambahkan penalti <code>alpha * sum(w^2)</code> agar bobot tetap terkendali dan generalisasi membaik.</li></ul>",
+    "notes": "Ridge memerlukan StandardScaler terlebih dahulu agar penalti bobot bekerja adil di semua fitur."
+  },
+  {
+    "title": "Contoh Kode: Benchmark Linear vs Ridge Regression",
+    "kind": "code",
+    "example": "spec/B02/b02_01_linear_ridge_regression",
+    "body": "<p>Membandingkan <code>DummyRegressor</code>, <code>LinearRegression</code>, dan <code>Ridge(alpha=1.0)</code> berdasarkan MAE, RMSE, dan R2.</p>",
+    "notes": "Terlihat bahwa model linear berhasil meningkatkan R2 jauh di atas Dummy baseline."
+  },
+  {
+    "title": "Logistic Regression & Output Probabilitas",
+    "kind": "content",
+    "body": "<ul><li><strong>Fungsi Sigmoid:</strong> Memetakan skor kombinasi linear menjadi probabilitas rentang 0.0 hingga 1.0.</li><li><strong><code>.predict(X)</code> vs <code>.predict_proba(X)</code>:</strong> <code>predict</code> memotong di ambang 0.5, sedangkan <code>predict_proba</code> memberi skor keyakinan kontinu.</li><li><strong>Kegunaan Bisnis:</strong> Tim NOC memprioritaskan inspeksi menara dengan probabilitas risiko 0.94 terlebih dahulu.</li></ul>",
+    "notes": "Jangan mengabaikan output probabilitas; ambang keputusan bisa disetel sesuai prioritas risiko di B04."
+  },
+  {
+    "title": "Contoh Kode: Klasifikasi & Probabilitas Risiko",
+    "kind": "code",
+    "example": "spec/B02/b02_02_logistic_classification",
+    "body": "<p>Menampilkan label prediksi bersandingan dengan skor <code>prob_risk</code> untuk meninjau keyakinan model pada setiap menara uji.</p>",
+    "notes": "Memeriksa tabel probabilitas membantu mengaudit sampel batas (borderline)."
+  },
+  {
+    "title": "Decision Tree: Aturan Hirarkis & Overfitting",
+    "kind": "content",
+    "body": "<ul><li><strong>Interpretabilitas Tinggi:</strong> Membentuk struktur pemisahan if-else yang mudah dibaca manusia.</li><li><strong>Tanpa Wajib Scaling:</strong> Pemisahan ambang batas tahan terhadap perbedaan satuan fitur.</li><li><strong>Risiko Varians Tinggi:</strong> Pohon tanpa batas <code>max_depth</code> mudah menghafal noise data latih; batasi kedalaman pohon.</li></ul>",
+    "notes": "Perubahan kecil pada beberapa baris pelatihan bisa mengubah struktur cabang pohon tunggal secara drastis."
+  },
+  {
+    "title": "Random Forest: Kekuatan Ensemble Bagging",
+    "kind": "content",
+    "body": "<ul><li><strong>Bootstrap Sampling:</strong> Setiap pohon dilatih pada sampel acak dengan pengembalian dari data latih.</li><li><strong>Feature Subsampling:</strong> Tiap split simpul hanya mempertimbangkan sebagian acak fitur.</li><li><strong>Feature Importances:</strong> Rata-rata pengurangan ketidaksucian (impurity reduction) mengungkap fitur mana paling menentukan target.</li></ul>",
+    "notes": "Random Forest adalah model tabular default yang sangat kuat sebelum masuk ke gradient boosting."
+  },
+  {
+    "title": "Contoh Kode: Decision Tree vs Random Forest",
+    "kind": "code",
+    "example": "spec/B02/b02_03_decision_tree_rf",
+    "body": "<p>Membandingkan akurasi uji <code>DecisionTreeClassifier</code> vs <code>RandomForestClassifier</code> beserta peringkat <code>feature_importances_</code>.</p>",
+    "notes": "Perhatikan bagaimana backhaul_util_pct dan snr_db mendominasi prediksi kongesti."
+  },
+  {
+    "title": "Benchmark Multi-Model yang Adil",
+    "kind": "content",
+    "body": "<ul><li><strong>Satu Split Identik:</strong> Seluruh kandidat model wajib dilatih dan dievaluasi di partisi train/test yang persis sama.</li><li><strong>Urutan Eskalasi Kompleksitas:</strong> Selalu mulai dari Dummy -&gt; Linear -&gt; Tree -&gt; Ensemble.</li><li><strong>Trade-off:</strong> Model sederhana jauh lebih cepat serta mudah diaudit; pilih model rumit hanya jika peningkatannya signifikan.</li></ul>",
+    "notes": "Mencatat hasil dalam DataFrame terstruktur mempermudah audit oleh tim teknis."
+  },
+  {
+    "title": "Contoh Kode: Tabel Komparasi 4 Kandidat Klasifikasi",
+    "kind": "code",
+    "example": "spec/B02/b02_04_model_comparison",
+    "body": "<p>Menguji empat kandidat model sekaligus pada <code>network_capacity_metrics.csv</code> dan mengurutkan berdasarkan F1-score dan accuracy.</p>",
+    "notes": "Pengujian terstandarisasi mencegah bias pemilihan model secara subjektif."
+  },
+  {
+    "title": "Memilih Antara Model Linear dan Tree-Based",
+    "kind": "content",
+    "body": "<ul><li><strong>Pilih Linear / Ridge / Logistic:</strong> Jika hubungan fitur cenderung monotonik halus, jumlah fitur sangat besar (sparse), atau butuh inferensi milidetik ultra-ringan.</li><li><strong>Pilih Random Forest / Ensemble:</strong> Jika terdapat interaksi non-linear kompleks antar fitur tanpa perlu merancang fitur polinomial manual.</li></ul>",
+    "notes": "Pemahaman karakteristik data dari EDA di Track A menuntun pemilihan keluarga model yang tepat."
+  },
+  {
+    "title": "Kuis Cepat: Regularisasi & Overfitting",
+    "kind": "question",
+    "body": "<p>Uji pemahaman Anda mengenai cara mengendalikan kompleksitas model di B02.</p>",
+    "question": "Apa perbedaan efek saat kita memperbesar nilai alpha pada Ridge Regression vs memperbesar nilai max_depth pada DecisionTreeClassifier?",
+    "answer": "Memperbesar alpha pada Ridge memperketat penalti bobot sehingga model makin sederhana (mengurangi overfitting), sedangkan memperbesar max_depth pada Decision Tree membiarkan pohon tumbuh makin dalam dan kompleks (justru meningkatkan risiko overfitting).",
+    "notes": "Arah perubahan kompleksitas hyperparameter tiap algoritma perlu dipahami sebelum melakukan tuning di B04."
+  },
+  {
+    "title": "Latihan Mandiri: Benchmark Kapasitas Jaringan",
+    "kind": "exercise",
+    "body": "<ul><li>Bandingkan regresi <code>Ridge</code> vs <code>LinearRegression</code> pada target <code>throughput_mbps</code>.</li><li>Evaluasi <code>RandomForestClassifier</code> pada <code>congestion_risk</code> dan audit <code>feature_importances_</code>.</li><li>Validasi menggunakan <code>pytest code/test_b02_supervised.py</code>.</li></ul>",
+    "notes": "Eksperimen tambahan dapat langsung dicoba di b02_supervised_models.ipynb."
+  },
+  {
+    "title": "Ringkasan Modul B02",
+    "kind": "content",
+    "body": "<ul><li>Regresi dievaluasi memakai MAE, RMSE, dan $R^2$; Ridge membantu menstabilkan koefisien fitur berkorelasi.</li><li>Klasifikasi memproduksi label diskrit maupun probabilitas (<code>predict_proba</code>).</li><li>Ensemble <code>RandomForestClassifier</code> mengurangi varians pohon tunggal; selanjutnya di B03 kita beralih ke data tanpa label (*Unsupervised Learning*).</li></ul>",
+    "notes": "Modul B03 membahas K-Means clustering, DBSCAN outlier, dan PCA."
+  }
+]
+

@@ -1,0 +1,100 @@
+[
+  {
+    "title": "Unsupervised Learning & Dimensionality Reduction",
+    "subtitle": "K-Means Clustering, Silhouette Analysis, DBSCAN & PCA",
+    "kind": "cover",
+    "body": "<p>Menemukan pola segmen pengguna, menyaring pengamatan anomali di luar kerumunan, serta memampatkan dimensi fitur berkolinearitas tinggi tanpa membutuhkan label target.</p>",
+    "notes": "Unsupervised learning sering menjadi tahap eksplorasi lanjutan sebelum membuat target klasifikasi atau segmentasi bisnis."
+  },
+  {
+    "title": "Perbedaan Fundamental Supervised vs Unsupervised",
+    "kind": "content",
+    "body": "<ul><li><strong>Tanpa Variabel Target (<code>y</code>):</strong> Hanya tersedia matriks fitur <code>X</code> tanpa label ground-truth.</li><li><strong>Tugas Clustering:</strong> Mengelompokkan sampel serupa ke dalam grup kohesif (misal profil pemakaian rendah, sedang, tinggi).</li><li><strong>Tugas Dimensionality Reduction:</strong> Memampatkan fitur agar mudah divisualisasikan atau mempercepat model hilir.</li></ul>",
+    "notes": "Evaluasi unsupervised membutuhkan kombinasi metrik geometris (Silhouette) dan interpretasi domain."
+  },
+  {
+    "title": "Kewajiban StandardScaler untuk Algoritma Jarak",
+    "kind": "content",
+    "body": "<ul><li><strong>Sensitivitas Jarak Euclidean:</strong> Fitur <code>active_minutes</code> (0–510) jauh lebih besar daripada <code>video_ratio</code> (0.05–0.96).</li><li><strong>Efek Bias Skala:</strong> Tanpa normalisasi, selisih menit hampir seluruhnya menentukan cluster dan menenggelamkan kontribusi rasio video.</li><li><strong>Solusi Baku:</strong> Selalu bungkus dalam <code>StandardScaler()</code> (<code>mean=0</code>, <code>std=1</code>).</li></ul>",
+    "notes": "Berbeda dengan Random Forest, algoritma berbasis jarak dan varians mutlak mensyaratkan skala fitur seragam."
+  },
+  {
+    "title": "Algoritma K-Means Clustering",
+    "kind": "content",
+    "body": "<ul><li><strong>Mekanisme Iteratif:</strong> Memilih <code>K</code> centroid awal, menugaskan setiap titik ke centroid terdekat, lalu memperbarui posisi centroid hingga konvergen.</li><li><strong><code>n_init=10</code> &amp; <code>random_state=42</code>:</strong> Mengulangi inisialisasi acak agar tidak terjebak optimum lokal buruk.</li><li><strong>Interpretasi Profil:</strong> Hitung rata-rata fitur per cluster (<code>groupby('cluster').mean()</code>) untuk menamai segmen bisnis.</li></ul>",
+    "notes": "K-Means bekerja optimal pada cluster berbentuk relatif bulat (spherical) dengan ukuran seimbang."
+  },
+  {
+    "title": "Contoh Kode: Segmentasi Profil Penggunaan K-Means",
+    "kind": "code",
+    "example": "spec/B03/b03_01_kmeans_clustering",
+    "body": "<p>Mengelompokkan 17 profil pengguna data ke dalam 3 cluster dengan <code>Pipeline(StandardScaler, KMeans)</code> lalu meringkas karakteristik tiap grup.</p>",
+    "notes": "Dari output rata-rata daily_gb dan active_minutes langsung tampak segmen Lite, Moderate, dan Heavy."
+  },
+  {
+    "title": "Memilih Jumlah Cluster Optimal: Elbow & Silhouette",
+    "kind": "content",
+    "body": "<ul><li><strong>Inertia (Within-Cluster SSE):</strong> Selalu turun saat <code>K</code> dinaikkan — cari titik tekuk ('siku' / Elbow) di mana penurunan melambat.</li><li><strong>Silhouette Score (-1 s/d +1):</strong> Menggabungkan kedekatan intra-cluster dan pemisahan antar-cluster terdekat.</li><li><strong>Aturan Praktis:</strong> Nilai Silhouette tertinggi menunjukkan separasi paling bersih.</li></ul>",
+    "notes": "Jangan memilih K terlalu besar hanya demi menurunkan inertia."
+  },
+  {
+    "title": "Contoh Kode: Evaluasi Rentang K (Inertia & Silhouette)",
+    "kind": "code",
+    "example": "spec/B03/b03_02_elbow_silhouette",
+    "body": "<p>Memindai <code>K=2..5</code> untuk membandingkan kurva penurunan inersia dan puncak Silhouette Score secara objektif.</p>",
+    "notes": "K yang memaksimalkan Silhouette sering selaras dengan pembagian grup alami dataset."
+  },
+  {
+    "title": "DBSCAN: Clustering Berbasis Kepadatan & Deteksi Noise",
+    "kind": "content",
+    "body": "<ul><li><strong>Tidak Perlu Menebak <code>K</code>:</strong> Jumlah cluster muncul alami dari dua parameter: radius tetangga (<code>eps</code>) dan minimal titik padat (<code>min_samples</code>).</li><li><strong>Bentuk Bebas:</strong> Mampu memetakan cluster melengkung atau berkerumun padat.</li><li><strong>Label Khusus <code>-1</code>:</strong> Titik terpencil yang gagal mencapai ambang kepadatan ditandai sebagai noise/anomali otomatis.</li></ul>",
+    "notes": "Sifat menolak titik terpencil ini membuat DBSCAN sangat populer sebagai detektor outlier multivariat."
+  },
+  {
+    "title": "Contoh Kode: Mengisolasi Anomali dengan DBSCAN",
+    "kind": "code",
+    "example": "spec/B03/b03_03_dbscan_anomaly",
+    "body": "<p>Menjalankan <code>DBSCAN(eps=0.9, min_samples=3)</code> di atas fitur terskala untuk menemukan pengguna dengan pola trafik dan latensi ekstrem.</p>",
+    "notes": "U16 (hampir pasif + latensi ekstrem 112 ms) dan U17 (pemakaian raksasa 18.5 GB) otomatis dilabeli -1."
+  },
+  {
+    "title": "Principal Component Analysis (PCA)",
+    "kind": "content",
+    "body": "<ul><li><strong>Ide Inti:</strong> Memutar sumbu koordinat sehingga komponen pertama (<code>PC1</code>) searah varians informasi terbesar, diikuti <code>PC2</code> ortogonal.</li><li><strong>Manfaat Ganda:</strong> Memudahkan plot 2D untuk fitur berdimensi tinggi sekaligus menghilangkan kolinearitas antar fitur.</li><li><strong><code>explained_variance_ratio_</code>:</strong> Menilai berapa persen informasi asli yang masih dipertahankan sesudah kompresi.</li></ul>",
+    "notes": "PCA bersifat linear dan sensitif terhadap skala fitur, sehingga StandardScaler wajib didahulukan."
+  },
+  {
+    "title": "Contoh Kode: Proyeksi 4D ke 2D Memakai PCA",
+    "kind": "code",
+    "example": "spec/B03/b03_04_pca_projection",
+    "body": "<p>Mereduksi 4 fitur penggunaan menjadi 2 komponen utama dan mencetak rasio varians kumulatif yang berhasil dipertahankan.</p>",
+    "notes": "Sering kali 2 komponen pertama sudah mempertahankan >85-90% varians data!"
+  },
+  {
+    "title": "Kapan Menggunakan K-Means, DBSCAN, atau PCA?",
+    "kind": "content",
+    "body": "<ul><li><strong>K-Means:</strong> Segmentasi bisnis dengan jumlah grup terdefinisi dan butuh centroid representatif.</li><li><strong>DBSCAN:</strong> Menemukan anomali jaringan/transaksi berpola tak teratur tanpa asumsi jumlah grup.</li><li><strong>PCA:</strong> Visualisasi dataset berpuluh-puluh kolom atau pra-pemrosesan sebelum regresi.</li></ul>",
+    "notes": "Menggabungkan PCA lalu cluster atau DBSCAN sering meningkatkan keterbacaan temuan ke stakeholder."
+  },
+  {
+    "title": "Kuis Cepat: K-Means vs DBSCAN pada Outlier",
+    "kind": "question",
+    "body": "<p>Evaluasi pemahaman Anda mengenai perilaku kedua algoritma clustering terhadap titik ekstrem.</p>",
+    "question": "Apa perbedaan perlakuan terhadap titik ekstrem seperti U17 (pemakaian ekstrem 18.5 GB) antara K-Means dan DBSCAN?",
+    "answer": "K-Means memaksa U17 masuk ke cluster terdekat dan ikut menggeser posisi centroid cluster tersebut, sedangkan DBSCAN menandai U17 dengan label khusus -1 (noise/outlier) tanpa merusak bentuk kelompok normal lainnya.",
+    "notes": "Pemilihan algoritma clustering memengaruhi kebersihan profil segmen utama."
+  },
+  {
+    "title": "Latihan Mandiri: Eksplorasi Cluster & PCA",
+    "kind": "exercise",
+    "body": "<ul><li>Skalakan fitur di <code>user_usage_profiles.csv</code> dan uji rentang <code>K=2..5</code>.</li><li>Deteksi outlier menggunakan <code>DBSCAN</code> dan ukur varians tersimpan dari <code>PCA(n_components=2)</code>.</li><li>Jalankan <code>pytest code/test_b03_unsupervised.py</code> untuk memvalidasi.</li></ul>",
+    "notes": "Lanjutkan ke b03_clustering_pca.ipynb untuk uji coba interaktif."
+  },
+  {
+    "title": "Ringkasan Modul B03",
+    "kind": "content",
+    "body": "<ul><li><code>StandardScaler</code> wajib diterapkan sebelum K-Means, DBSCAN, dan PCA.</li><li>Silhouette Score memandu pemilihan <code>K</code> yang seimbang; DBSCAN efektif menandai noise (<code>-1</code>); PCA mereduksi dimensi dengan metrik <code>explained_variance_ratio_</code>.</li><li>Di Modul B04 kita mendalami validasi silang (Cross-Validation), metrik data tidak seimbang, dan Hyperparameter Tuning.</li></ul>",
+    "notes": "Siap masuk ke teknik evaluasi lanjutan di Modul B04."
+  }
+]
+

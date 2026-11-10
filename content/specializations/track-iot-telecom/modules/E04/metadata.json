@@ -1,0 +1,93 @@
+{
+  "id": "E04",
+  "trackId": "iot-telecom",
+  "trackTitle": "IoT, Signal Processing & Telecommunications",
+  "order": 4,
+  "title": "Wireless Network & Cellular Signal Analytics",
+  "subtitle": "RSSI, RSRP, RSRQ, SINR vs SNR, Path Loss & Deteksi Zona Blindspot",
+  "description": "Analisis kualitas jaringan seluler 4G/5G dari data drive-test: klasifikasi standar RSRP dan RSRQ, pembedaan kritis SINR vs SNR pada sel padat interferensi, estimasi Free-Space Path Loss (FSPL), dan pemetaan zona interferensi serta blindspot.",
+  "difficulty": "Intermediate",
+  "estimatedHours": 5,
+  "prerequisites": [
+    "Modul A02 (Data Manipulation with Pandas)",
+    "Modul A04 (Data Visualization with Matplotlib & Seaborn)",
+    "Modul E01 (Sensor Telemetry & Smoothing)"
+  ],
+  "learningObjectives": [
+    "Membedakan secara tepat definisi fisik RSSI, RSRP, RSRQ, SNR, dan SINR dalam jaringan seluler.",
+    "Mengklasifikasikan kualitas cakupan RSRP/RSRQ menjadi kategori Excellent, Good, Mid-Cell, dan Cell-Edge.",
+    "Mendeteksi zona interferensi (RSRP memadai namun SINR rendah) serta blindspot cakupan dari log koordinat drive test.",
+    "Menghitung estimasi Free-Space Path Loss (FSPL) serta merender peta sebar cakupan RSRP lat/lon."
+  ],
+  "dependencies": ["pandas>=2.2", "numpy>=1.26", "matplotlib>=3.8", "pytest>=8.0"],
+  "tags": ["telecom", "wireless", "rsrp", "rsrq", "sinr", "drive-test"],
+  "codeExample": {
+    "title": "Deteksi Zona Blindspot & Interferensi Co-Channel pada Data Drive-Test",
+    "filename": "e04_02_drive_test_blindspots.py",
+    "outputKey": "spec/E04/e04_02_drive_test_blindspots",
+    "explanation": "Skrip ini membedah log drive-test LTE multi-sel untuk memisahkan zona Coverage Blindspot (RSRP < -105 dBm) dari zona Heavy Interference / Pilot Pollution (RSRP >= -90 dBm tetapi SINR <= 3 dB akibat gangguan sel tetangga)."
+  },
+  "exercise": {
+    "title": "Klasifikasi Metrik Radio LTE & Evaluasi Link Budget FSPL",
+    "instructions": [
+      "Muat datasets/drive_test_lte_measurements.csv dengan Pandas.",
+      "Terapkan fungsi classify_rf_quality(rsrp_dbm, sinr_db) pada setiap titik pengukuran.",
+      "Hitung selisih rata-rata antara snr_db dan sinr_db untuk mengkuantifikasi dampak interferensi antar-sel.",
+      "Hitung Free-Space Path Loss (dB) pada frekuensi 1800 MHz untuk jarak 0.5 km, 1.0 km, dan 2.0 km."
+    ],
+    "tips": "Sinyal RSRP kuat (-75 dBm) belum menjamin kecepatan unduh tinggi bila SINR rendah (< 3 dB) karena menara bertabrakan kanal dengan sel tetangga!",
+    "time": "50 Menit"
+  },
+  "quiz": {
+    "question": "Dalam optimasi jaringan seluler LTE/5G, apa perbedaan paling penting antara SNR dan SINR, dan mengapa RSRP kuat bisa tetap menghasilkan throughput lambat?",
+    "options": [
+      "SNR dan SINR selalu bernilai identik di seluruh stasiun pemancar",
+      "SNR hanya membandingkan sinyal terhadap thermal noise (S/N), sedangkan SINR memperhitungkan interferensi sel tetangga plus noise (S/(I+N)); RSRP kuat tetapi SINR rendah menandakan interferensi ko-kanal berat",
+      "SINR diukur dalam watt sedangkan SNR diukur dalam meter",
+      "RSRP selalu bernilai positif (+80 dBm) di daerah perkotaan"
+    ],
+    "correctIndex": 1,
+    "explanation": "Pada jaringan seluler modern dengan frequency reuse = 1, sumber gangguan utama di perkotaan adalah interferensi sinyal sel tetangga (I), bukan sekadar thermal noise latar (N). Itulah sebabnya SINR jauh lebih berkorelasi dengan modulasi QAM dan throughput dibanding SNR.",
+    "hint": "Perhatikan huruf 'I' (Interference) di dalam singkatan SINR."
+  },
+  "assignment": {
+    "title": "Proyek Mini: Drive-Test RF Quality Auditor & Blindspot Locator",
+    "description": "Kembangkan mesin analisis drive-test telekomunikasi yang mengklasifikasikan kondisi radio tiap titik koordinat, memisahkan penyebab degradasi (Coverage vs Interference), dan menghitung rekap per cell_id.",
+    "instructions": [
+      "Implementasikan classify_rsrp(rsrp_dbm: float) -> str ('Excellent' >= -80, 'Good' >= -90, 'Mid-Cell' >= -105, 'Cell-Edge' < -105).",
+      "Implementasikan diagnose_rf_issue(rsrp_dbm: float, sinr_db: float) -> str ('HEALTHY', 'COVERAGE_BLINDSPOT', 'HIGH_INTERFERENCE', 'CRITICAL_EDGE').",
+      "Implementasikan compute_fspl_db(distance_km: float, freq_mhz: float) -> float memakai 32.44 + 20*log10(d_km) + 20*log10(f_mhz).",
+      "Uji seluruh fungsi dan rekap per cell_id lewat pytest di test_e04_rf_analytics.py."
+    ],
+    "rubric": [
+      { "criteria": "Akurasi Klasifikasi RSRP, RSRQ & Diagnosa SINR", "weight": 35, "description": "Pemisahan kondisi coverage-limited vs interference-limited akurat 100%." },
+      { "criteria": "Kebenaran Formula FSPL Link Budget", "weight": 25, "description": "Implementasi logaritma basis 10 serta penanganan unit jarak dan frekuensi tepat." },
+      { "criteria": "Agregasi Statistik per Cell ID & Peta Coverage", "weight": 20, "description": "Rekap median RSRP, SINR, serta ekspor scatter map lat/lon informatif." },
+      { "criteria": "Unit Testing RF Analytics (Pytest)", "weight": 20, "description": "Lulus seluruh skenario batas dan dataset drive test." }
+    ],
+    "starterFilename": "tugas.py"
+  },
+  "resources": {
+    "hasSlides": true,
+    "codeDownload": "/downloads/specializations/E04/e04_02_drive_test_blindspots.py",
+    "notebookDownload": null,
+    "datasetDownload": "/downloads/specializations/E04/drive_test_lte_measurements.csv",
+    "guideDownload": "/downloads/specializations/E04/tugas.md",
+    "pptxDownload": null
+  },
+  "references": [
+    {
+      "title": "3GPP TS 36.214: E-UTRA Physical Layer Measurements (RSRP, RSRQ, RSSI)",
+      "source": "3GPP Specification",
+      "url": "https://www.etsi.org/standards",
+      "license": "3GPP Technical Standard"
+    },
+    {
+      "title": "NumPy & Pandas Scientific Computing Documentation",
+      "source": "NumPy / Pandas Developers",
+      "url": "https://numpy.org/doc/stable/",
+      "license": "BSD-3-Clause"
+    }
+  ]
+}
+

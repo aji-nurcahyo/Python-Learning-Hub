@@ -1,0 +1,93 @@
+{
+  "id": "C02",
+  "trackId": "web-api",
+  "trackTitle": "Web Development & APIs",
+  "order": 2,
+  "title": "Modern REST API with FastAPI & Pydantic",
+  "subtitle": "Routing, Path/Query Parameters, CRUD Status Codes, Pydantic Validation & OpenAPI",
+  "description": "Bangun layanan backend RESTful berkinerja tinggi dengan FastAPI: deklarasi path & query parameters bertipe, validasi payload otomatis berbasis Pydantic v2, HTTP status codes standar (200/201/204/404/422), serta dokumentasi OpenAPI otomatis.",
+  "difficulty": "Intermediate",
+  "estimatedHours": 5,
+  "prerequisites": [
+    "Modul C01 (HTTP Client Utility & JSON Contract)",
+    "Chapter 25 (Type Hints & Code Quality)",
+    "Chapter 28 (Networking & API Integration)"
+  ],
+  "learningObjectives": [
+    "Merancang endpoint FastAPI dengan path parameters, query parameters opsional, dan response_model.",
+    "Memanfaatkan Pydantic BaseModel dan Field() untuk menegakkan validasi input otomatis (HTTP 422).",
+    "Mengimplementasikan operasi CRUD lengkap dengan HTTP status codes standar (201 Created, 204 No Content, 404 Not Found).",
+    "Menguji seluruh endpoint ASGI secara langsung melalui fastapi.testclient.TestClient tanpa menjalankan Uvicorn eksternal."
+  ],
+  "dependencies": ["fastapi>=0.115", "pydantic>=2.7", "httpx>=0.27", "pytest>=8.0"],
+  "tags": ["fastapi", "pydantic", "rest-api", "crud", "openapi"],
+  "codeExample": {
+    "title": "Operasi CRUD Inventaris & HTTP Status Codes di FastAPI",
+    "filename": "c02_03_crud_inmemory_status.py",
+    "outputKey": "spec/C02/c02_03_crud_inmemory_status",
+    "explanation": "Skrip ini membangun API inventaris FastAPI lengkap (POST 201, GET 200, PUT 200, DELETE 204, serta HTTPException 404) lalu memverifikasi seluruh siklus request-response memakai TestClient."
+  },
+  "exercise": {
+    "title": "Merakit Endpoint CRUD Katalog Perangkat dengan Validasi Ketat",
+    "instructions": [
+      "Buat aplikasi FastAPI baru dengan model ItemCreate (name, category, stock >= 0, price > 0).",
+      "Tambahkan endpoint POST /items yang mengembalikan status_code=201 dan objek lengkap ber-ID.",
+      "Tambahkan endpoint GET /items/{item_id} serta DELETE /items/{item_id} (status 204).",
+      "Uji via TestClient: pastikan stok negatif ditolak dengan status 422 dan ID tidak ada mengembalikan 404."
+    ],
+    "tips": "Gunakan Field(gt=0) untuk harga dan Field(ge=0) untuk stok agar validasi ditangani otomatis oleh FastAPI sebelum masuk ke body fungsi.",
+    "time": "50 Menit"
+  },
+  "quiz": {
+    "question": "Apa respons standar yang otomatis dihasilkan FastAPI ketika request POST mengirim JSON dengan tipe string pada field yang dideklarasikan sebagai stock: int = Field(ge=0)?",
+    "options": [
+      "HTTP 200 OK dengan nilai stock diubah menjadi None",
+      "HTTP 422 Unprocessable Entity berisi detail lokasi dan pesan kesalahan validasi",
+      "HTTP 500 Internal Server Error",
+      "HTTP 404 Not Found"
+    ],
+    "correctIndex": 1,
+    "explanation": "FastAPI memanfaatkan Pydantic di lapisan batas request sehingga kesalahan tipe atau pelanggaran Field constraint otomatis dibalas dengan HTTP 422 Unprocessable Entity yang terstruktur.",
+    "hint": "Status code khusus antara 400-499 yang dipakai FastAPI untuk error validasi skema JSON."
+  },
+  "assignment": {
+    "title": "Proyek Mini: REST API Manajemen Inventaris Perangkat Jaringan",
+    "description": "Bangun FastAPI app terstruktur untuk mengelola inventaris perangkat telekomunikasi lengkap dengan model Pydantic, filtering query, status code akurat, serta test suite TestClient.",
+    "instructions": [
+      "Definisikan DeviceCreate(BaseModel) dan DeviceOut(BaseModel) dengan validasi serial_number minimal 4 karakter dan power_watt > 0.",
+      "Implementasikan endpoint POST /devices (201), GET /devices (filter optional status), GET /devices/{device_id}, PUT /devices/{device_id}, dan DELETE /devices/{device_id} (204).",
+      "Pastikan ID tidak ditemukan melempar HTTPException(status_code=404).",
+      "Sertakan verifikasi OpenAPI schema pada test_c02_fastapi.py."
+    ],
+    "rubric": [
+      { "criteria": "Desain Route & HTTP Status Codes", "weight": 30, "description": "Penggunaan 200, 201, 204, dan HTTPException 404 tepat sesuai konvensi REST." },
+      { "criteria": "Validasi Skema Pydantic v2", "weight": 30, "description": "Field constraints menegakkan integritas data dan memicu 422 bila tidak valid." },
+      { "criteria": "Response Model & OpenAPI Docs", "weight": 20, "description": "Skema OpenAPI tergenerate bersih tanpa kebocoran field internal." },
+      { "criteria": "Test Suite TestClient (Pytest)", "weight": 20, "description": "Seluruh skenario sukses dan error diuji tuntas." }
+    ],
+    "starterFilename": "tugas.py"
+  },
+  "resources": {
+    "hasSlides": true,
+    "codeDownload": "/downloads/specializations/C02/c02_03_crud_inmemory_status.py",
+    "notebookDownload": null,
+    "datasetDownload": null,
+    "guideDownload": "/downloads/specializations/C02/tugas.md",
+    "pptxDownload": null
+  },
+  "references": [
+    {
+      "title": "FastAPI Official Tutorial: First Steps, Body, Query & Status Codes",
+      "source": "Sebastián Ramírez / FastAPI",
+      "url": "https://fastapi.tiangolo.com/tutorial/",
+      "license": "MIT"
+    },
+    {
+      "title": "FastAPI Testing Documentation: TestClient",
+      "source": "FastAPI Developers",
+      "url": "https://fastapi.tiangolo.com/tutorial/testing/",
+      "license": "MIT"
+    }
+  ]
+}
+

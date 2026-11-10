@@ -1,0 +1,92 @@
+{
+  "id": "B04",
+  "trackId": "ai-ml",
+  "trackTitle": "Artificial Intelligence & Machine Learning",
+  "order": 4,
+  "title": "Model Evaluation, Cross-Validation & Tuning",
+  "subtitle": "Confusion Matrix, Precision/Recall/ROC-AUC, StratifiedKFold & GridSearchCV",
+  "description": "Tinggalkan evaluasi akurasi naif pada dataset tidak seimbang: kuasai Confusion Matrix, Precision, Recall, F1-score, ROC-AUC, validasi silang StratifiedKFold, tuning hyperparameter terisolasi dengan GridSearchCV, serta kalibrasi decision threshold.",
+  "difficulty": "Intermediate",
+  "estimatedHours": 5,
+  "prerequisites": [
+    "Modul B01 (ML Foundations & Scikit-Learn Pipelines)",
+    "Modul B02 (Supervised Learning: Regression & Classification)"
+  ],
+  "learningObjectives": [
+    "Menghitung dan menafsirkan confusion_matrix, precision_score, recall_score, F1, dan roc_auc_score.",
+    "Mengukur stabilitas generalisasi model menggunakan StratifiedKFold dan cross_val_score.",
+    "Melakukan pencarian hyperparameter sistematis melalui GridSearchCV di atas objek Pipeline.",
+    "Menyesuaikan ambang keputusan probabilitas (threshold tuning) sesuai bobot risiko False Negative vs False Positive."
+  ],
+  "dependencies": ["scikit-learn>=1.4", "pandas>=2.2", "numpy>=1.26", "pytest>=8.0"],
+  "tags": ["cross-validation", "gridsearchcv", "roc-auc", "precision-recall", "tuning"],
+  "codeExample": {
+    "title": "Hyperparameter Tuning Terpadu Memakai Pipeline & GridSearchCV",
+    "filename": "b04_03_gridsearch_tuning.py",
+    "outputKey": "spec/B04/b04_03_gridsearch_tuning",
+    "explanation": "Skrip ini membungkus LogisticRegression dan RandomForest dalam GridSearchCV bervalidasi silang StratifiedKFold(n_splits=4) dengan metrik scoring='roc_auc', memilih parameter terbaik, lalu mengevaluasi skor final pada holdout test set."
+  },
+  "exercise": {
+    "title": "Evaluasi Imbalanced Dataset & Penyetelan Threshold",
+    "instructions": [
+      "Muat datasets/fraud_alert_sample.csv dan periksa proporsi kelas fraud_flag.",
+      "Bagi menjadi train/test stratified lalu latih Pipeline(StandardScaler, LogisticRegression).",
+      "Hitung confusion_matrix, precision, recall, F1, dan ROC-AUC pada threshold default 0.5.",
+      "Uji threshold 0.30 dan amati perubahan antara nilai Recall dan Precision."
+    ],
+    "tips": "Gunakan prefix nama step pada param_grid GridSearchCV (misal 'rf__max_depth') saat mengoptimasi estimator di dalam Pipeline.",
+    "time": "55 Menit"
+  },
+  "quiz": {
+    "question": "Pada sistem deteksi anomali atau penipuan di mana kegagalan mendeteksi kejadian asli (False Negative) jauh lebih merugikan daripada peringatan palsu (False Positive), metrik dan arah penyesuaian threshold mana yang tepat?",
+    "options": [
+      "Maksimalkan Accuracy dan naikkan threshold dari 0.5 ke 0.8",
+      "Prioritaskan Recall (serta F1/ROC-AUC) dan turunkan decision threshold misalnya dari 0.5 ke 0.3",
+      "Gunakan Precision saja dengan threshold 0.95",
+      "Hapus seluruh data kelas minoritas agar dataset menjadi seimbang"
+    ],
+    "correctIndex": 1,
+    "explanation": "Menurunkan decision threshold membuat model lebih sensitif mengklasifikasikan kasus positif sehingga Recall naik (lebih sedikit False Negative yang lolos), dengan konsekuensi Precision perlu diawasi agar tidak terlalu banyak false alarm.",
+    "hint": "Ingat rumus Recall = TP / (TP + FN)."
+  },
+  "assignment": {
+    "title": "Proyek Mini: Audit Cross-Validation & Hyperparameter Tuning Engine",
+    "description": "Bangun utilitas evaluasi dan tuning model klasifikasi yang mengevaluasi model dengan StratifiedKFold, melakukan pencarian GridSearchCV tanpa kebocoran data, serta menyusun tabel trade-off threshold probabilitas.",
+    "instructions": [
+      "Implementasikan evaluate_with_cv(pipeline, X, y, n_splits=5) menggunakan StratifiedKFold dan mengembalikan rata-rata serta std dev skor ROC-AUC.",
+      "Implementasikan run_grid_search(X_train, y_train) memakai Pipeline + GridSearchCV untuk RandomForestClassifier dengan random_state=42.",
+      "Implementasikan threshold_tradeoff_table(y_true, y_prob, thresholds) untuk mengembalikan precision, recall, dan f1 di setiap ambang.",
+      "Pastikan seluruh test di test_b04_evaluation.py lulus."
+    ],
+    "rubric": [
+      { "criteria": "Stratified Cross-Validation & Bebas Leakage", "weight": 30, "description": "Validasi silang memakai StratifiedKFold di atas Pipeline lengkap." },
+      { "criteria": "Implementasi GridSearchCV & Holdout Eval", "weight": 30, "description": "Holdout test set tidak tersentuh GridSearchCV hingga evaluasi final." },
+      { "criteria": "Threshold Tuning & Metrik Imbalanced", "weight": 20, "description": "Precision, Recall, F1, dan ROC-AUC akurat di seluruh threshold." },
+      { "criteria": "Unit Testing & Kebersihan Kode", "weight": 20, "description": "Skrip deterministik dan lulus pytest." }
+    ],
+    "starterFilename": "tugas.py"
+  },
+  "resources": {
+    "hasSlides": true,
+    "codeDownload": "/downloads/specializations/B04/b04_03_gridsearch_tuning.py",
+    "notebookDownload": "/downloads/specializations/B04/b04_eval_tuning.ipynb",
+    "datasetDownload": "/downloads/specializations/B04/fraud_alert_sample.csv",
+    "guideDownload": "/downloads/specializations/B04/tugas.md",
+    "pptxDownload": null
+  },
+  "references": [
+    {
+      "title": "Scikit-Learn User Guide: Cross-validation & Scoring Metrics",
+      "source": "Scikit-Learn Developers",
+      "url": "https://scikit-learn.org/stable/modules/cross_validation.html",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "title": "Scikit-Learn GridSearchCV: Tuning Hyper-parameters",
+      "source": "Scikit-Learn Developers",
+      "url": "https://scikit-learn.org/stable/modules/grid_search.html",
+      "license": "BSD-3-Clause"
+    }
+  ]
+}
+

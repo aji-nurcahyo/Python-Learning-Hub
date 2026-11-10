@@ -1,0 +1,100 @@
+[
+  {
+    "title": "Web Data Collection & Ethical HTML Parsing",
+    "subtitle": "BeautifulSoup Selectors, Ekstraksi Tabel, robots.txt & MockTransport",
+    "kind": "cover",
+    "body": "<p>Mengambil informasi terstruktur dari dokumen web secara sopan, mematuhi aturan <code>robots.txt</code>, tahan terhadap elemen opsional yang hilang, serta teruji deterministik di lingkungan offline.</p>",
+    "notes": "Etika pengumpulan data web sama pentingnya dengan ketepatan selector parsing HTML."
+  },
+  {
+    "title": "Etika Web Scraping & Hirarki Akses Data",
+    "kind": "content",
+    "body": "<ul><li><strong>1. Cari API Resmi Dulu:</strong> REST API JSON atau open dataset CSV jauh lebih stabil daripada HTML scraping.</li><li><strong>2. Patuhi <code>robots.txt</code>:</strong> Cek izin crawl memakai <code>RobotFileParser</code> sebelum mengunduh rute.</li><li><strong>3. Identitas &amp; Laju Sopan:</strong> Cantumkan <code>User-Agent</code> jelas, pasang rate limit, dan jangan pernah membobol login, paywall, atau anti-bot challenge.</li></ul>",
+    "notes": "Selalu baca Terms of Service dan robots.txt situs sumber."
+  },
+  {
+    "title": "Mengenal BeautifulSoup4 & html.parser",
+    "kind": "content",
+    "body": "<ul><li><strong>Parser Tanpa Dependensi Eksternal:</strong> <code>BeautifulSoup(html, 'html.parser')</code> memakai parser bawaan Python standar Library.</li><li><strong>CSS Selectors Modern:</strong> <code>soup.select('table#id tbody tr')</code> mencari seluruh elemen cocok; <code>.select_one(...)</code> mengambil elemen pertama atau <code>None</code>.</li><li><strong><code>.get_text(' ', strip=True)</code>:</strong> Menggabungkan teks terpisah spasi bersih tanpa whitespace liar.</li></ul>",
+    "notes": "Selector berbasis id/class semantik jauh lebih tahan perubahan tata letak dibanding jalur XPath panjang."
+  },
+  {
+    "title": "Contoh Kode: Selector CSS & Penanganan Elemen Opsional",
+    "kind": "code",
+    "example": "spec/D03/d03_01_beautifulsoup_selectors",
+    "body": "<p>Membaca <code>catalog_snapshot.html</code> menggunakan CSS selector serta memeriksa keberadaan <code>&lt;span class='badge-note'&gt;</code> secara aman terhadap <code>None</code>.</p>",
+    "notes": "Beberapa baris produk memiliki badge Prioritas/Outdoor sementara baris lain tidak — pengecekan None wajib ada."
+  },
+  {
+    "title": "Ekstraksi Tabel & Normalisasi String Kotor",
+    "kind": "content",
+    "body": "<ul><li><strong>Masalah Teks Web:</strong> Angka di halaman HTML sering bercampur simbol mata uang, titik ribuan, dan spasi tak beraturan (<code>'Rp 4.250.000'</code>).</li><li><strong>Normalisasi Regex:</strong> <code>re.sub(r'[^\\d]', '', raw)</code> mengekstrak digit murni sebelum konversi ke <code>int</code>.</li><li><strong>Struktur Siap Analisis:</strong> Hasilkan <code>list[dict]</code> sehingga mudah disimpan ke JSON, CSV, maupun DataFrame Pandas.</li></ul>",
+    "notes": "Pisahkan logika parsing harga ke fungsi helper murni agar mudah diuji unit test."
+  },
+  {
+    "title": "Contoh Kode: Ekstraksi Tabel Katalog ke Dictionary",
+    "kind": "code",
+    "example": "spec/D03/d03_02_table_extraction_to_csv",
+    "body": "<p>Mengubah struktur tabel HTML <code>#device-catalog</code> menjadi daftar dictionary terstruktur beserta harga integer bersih.</p>",
+    "notes": "Perhatikan pembersihan suffix badge dari teks nama perangkat."
+  },
+  {
+    "title": "Memeriksa robots.txt dengan urllib.robotparser",
+    "kind": "content",
+    "body": "<ul><li><strong>Parser Bawaan Python:</strong> <code>rp = RobotFileParser(); rp.parse(lines)</code>.</li><li><strong>Uji Sebelum Akses:</strong> Panggil <code>rp.can_fetch(user_agent, path)</code> untuk memastikan scraper tidak melangkah ke folder <code>/admin/</code> atau <code>/private/</code> yang dilarang.</li></ul>",
+    "notes": "Mematuhi robots.txt menunjukkan profesionalisme rekayasa otomasi."
+  },
+  {
+    "title": "Contoh Kode: Polite Fetcher Mematuhi robots.txt",
+    "kind": "code",
+    "example": "spec/D03/d03_03_respectful_fetcher_robots",
+    "body": "<p>Mengambil <code>/robots.txt</code> terlebih dahulu, memverifikasi izin rute dengan <code>RobotFileParser</code>, dan hanya mengambil rute publik yang diizinkan.</p>",
+    "notes": "Rute /admin/export langsung dilewati tanpa mengirim request HTTP."
+  },
+  {
+    "title": "Mengumpulkan Halaman Web Berhalaman (Pagination)",
+    "kind": "content",
+    "body": "<ul><li><strong>Iterasi Halaman Terkendali:</strong> Naikkan nomor halaman (<code>?page=1, 2, ...</code>) hingga selector daftar pengumuman tidak mengembalikan baris lagi.</li><li><strong>User-Agent &amp; Timeout:</strong> Selalu pasang <code>timeout</code> pada <code>httpx.Client</code> dan header <code>User-Agent</code> yang mengidentifikasi bot secara jujur.</li></ul>",
+    "notes": "Di skrip produksi antar-jaringan, tambahkan time.sleep(1.0) antar permintaan halaman agar tidak membebani server target."
+  },
+  {
+    "title": "Contoh Kode: Incremental Multi-Page Scraper",
+    "kind": "code",
+    "example": "spec/D03/d03_04_incremental_html_scraper",
+    "body": "<p>Menarik halaman pengumuman berurut lewat <code>MockTransport</code> hingga daftar HTML kosong dan mem-parsing seluruh butir berita.</p>",
+    "notes": "Menggunakan MockTransport menjaga skrip belajar berjalan konsisten kapan saja tanpa bergantung pada kondisi situs luar."
+  },
+  {
+    "title": "Kapan Beralih dari BeautifulSoup ke Browser Automation?",
+    "kind": "content",
+    "body": "<ul><li><strong>HTML Statis / Server-Rendered:</strong> Cukup <code>httpx + BeautifulSoup</code> — 20x lebih cepat dan jauh lebih hemat memori.</li><li><strong>Konten Dirender JavaScript Penuh (SPA):</strong> Bila HTML awal kosong dan data baru muncul sesudah eksekusi JS sah, pertimbangkan Playwright atau cek terlebih dahulu apakah frontend sebenarnya memanggil JSON API publik.</li></ul>",
+    "notes": "Memeriksa tab Network DevTools sering kali mengungkap JSON API bersih di balik web modern."
+  },
+  {
+    "title": "Menguji Scraper secara Offline dengan Snapshot HTML",
+    "kind": "content",
+    "body": "<ul><li><strong>Mengapa Snapshot HTML Lokal?</strong> Memisahkan pengujian logika selector parser dari fluktuasi jaringan eksternal.</li><li><strong>Fixture Cepat:</strong> Simpan contoh HTML representatif (termasuk variasi tanpa elemen opsional) untuk diuji di <code>pytest</code>.</li></ul>",
+    "notes": "Jika struktur situs target kelak berubah, Anda cukup memperbarui snapshot uji dan menyesuaikan selector."
+  },
+  {
+    "title": "Kuis Cepat: Selector Tahan Banting",
+    "kind": "question",
+    "body": "<p>Uji pemahaman Anda mengenai ketahanan parser HTML terhadap variasi struktur dokumen web.</p>",
+    "question": "Mengapa selector berbasis atribut semantik seperti 'table#device-catalog tr.device-row' jauh lebih baik daripada 'body > div:nth-child(2) > table > tr'?",
+    "answer": "Selector struktural nth-child sangat rapuh dan langsung rusak bila desainer web menyisipkan satu tag pembungkus atau banner baru, sedangkan ID dan class semantik tetap akurat menarget tabel dan baris yang dimaksud.",
+    "notes": "Kombinasikan selector semantik dengan pengecekan None pada setiap sub-elemen."
+  },
+  {
+    "title": "Latihan Mandiri: Catalog HTML Parser",
+    "kind": "exercise",
+    "body": "<ul><li>Parse <code>catalog_snapshot.html</code> menggunakan <code>BeautifulSoup4</code>.</li><li>Bersihkan nominal harga Rupiah ke integer dan periksa izin path via <code>RobotFileParser</code>.</li><li>Jalankan <code>pytest code/test_d03_scraping.py</code>.</li></ul>",
+    "notes": "Berikutnya di Modul D04 kita mempelajari keandalan eksekusi otomatis: retry backoff, idempotency, scheduling, dan alerting!"
+  },
+  {
+    "title": "Ringkasan Modul D03",
+    "kind": "content",
+    "body": "<ul><li>Utamakan etika: API resmi lebih dulu, patuhi <code>robots.txt</code>, dan gunakan <code>User-Agent</code> transparan.</li><li>Gunakan CSS selector semantik <code>BeautifulSoup</code> beserta pengecekan <code>None</code> dan normalisasi teks bersih.</li><li>Lanjutkan ke Modul D04 untuk memastikan tugas otomasi berjalan aman berulang kali lewat retry, idempotency, dan alerting!</li></ul>",
+    "notes": "Lanjutkan ke Modul D04: Scheduling, Retry, Idempotency & Alerting."
+  }
+]
+

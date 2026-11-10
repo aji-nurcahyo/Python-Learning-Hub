@@ -1,0 +1,93 @@
+{
+  "id": "D04",
+  "trackId": "automation",
+  "trackTitle": "Automation & Scripting",
+  "order": 4,
+  "title": "Workflow Scheduling, Retry & Alerting",
+  "subtitle": "Exponential Backoff, Idempotency Key Ledger, Webhook Alerts & CLI Cron Runner",
+  "description": "Rancang skrip otomasi yang aman dijalankan berulang secara terjadwal (cron / Task Scheduler): terapkan exponential backoff retry terkontrol, pencatatan state idempotent agar pekerjaan tidak terduplikasi, serta pengiriman alert webhook terstruktur.",
+  "difficulty": "Intermediate",
+  "estimatedHours": 5,
+  "prerequisites": [
+    "Modul D01 (File System Automation)",
+    "Modul C01 (HTTP Client Utility & JSON Contract)",
+    "Chapter 26 (Advanced Testing & Logging)"
+  ],
+  "learningObjectives": [
+    "Mengimplementasikan exponential backoff retry yang dapat disuntik fungsi sleep tiruan agar unit test berjalan instan.",
+    "Merancang state ledger berbasis idempotency key sehingga eksekusi ulang job pada periode sama tidak menggandakan output/notifikasi.",
+    "Mengirim payload JSON webhook alert terstruktur memakai httpx.MockTransport saat terjadi kegagalan job.",
+    "Mempaketkan runner CLI terjadwal memakai argparse dengan exit code standar (0=sukses/skip, 1=gagal) dan logging."
+  ],
+  "dependencies": ["httpx>=0.27", "pytest>=8.0"],
+  "tags": ["scheduling", "retry", "idempotency", "webhook", "cli", "cron"],
+  "codeExample": {
+    "title": "Job Ledger Idempotent untuk Mencegah Eksekusi Ganda",
+    "filename": "d04_02_idempotent_job_ledger.py",
+    "outputKey": "spec/D04/d04_02_idempotent_job_ledger",
+    "explanation": "Skrip ini menyimpan daftar kunci eksekusi harian ('daily-sync-2025-02-01') di berkas ledger JSON sehingga pemanggilan ulang job yang sudah tuntas otomatis di-skip tanpa memproses transaksi dua kali."
+  },
+  "exercise": {
+    "title": "Membangun Runner Job Otomatis Idempoten & Webhook Alert",
+    "instructions": [
+      "Implementasikan retry_with_backoff(fn, max_attempts=3, base_delay=0.5, sleep_fn=...) untuk mencatat jeda eksponensial 0.5s, 1.0s, ...",
+      "Buat kelas IdempotentLedger(state_path) untuk mengecek has_completed(job_key) dan menandai mark_completed(job_key).",
+      "Kirim JSON alert berisi severity, job_name, dan error_message memakai httpx.Client jika operasi gagal.",
+      "Uji seluruh logika memakai sleep tiruan dan httpx.MockTransport di pytest."
+    ],
+    "tips": "Menyuntikkan parameter sleep_fn ke helper retry memungkinkan Anda memverifikasi urutan jeda backoff [0.5, 1.0] dalam hitungan milidetik di unit test!",
+    "time": "50 Menit"
+  },
+  "quiz": {
+    "question": "Apa arti sifat 'idempotent' pada sebuah skrip otomatisasi pelaporan harian yang dijalankan oleh cron setiap pagi?",
+    "options": [
+      "Skrip wajib dijalankan memakai bahasa pemrograman C++",
+      "Menjalankan skrip berkali-kali untuk kunci periode yang sama menghasilkan status akhir identik tanpa mengirim laporan ganda atau menduplikasi catatan",
+      "Skrip otomatis menghapus file log setelah selesai",
+      "Skrip hanya dapat dijalankan pada sistem operasi Linux"
+    ],
+    "correctIndex": 1,
+    "explanation": "Karena cron atau worker terkadang memicu eksekusi ulang akibat retry atau restart server, pencatatan state idempotency key mencegah pengiriman email/invoice/transaksi ganda.",
+    "hint": "Bayangkan operator menjalankan ulang job tanggal '2025-02-01' dua kali berturut-turut."
+  },
+  "assignment": {
+    "title": "Proyek Mini: Resilient Scheduled Automation & Alert Dispatcher",
+    "description": "Bangun kerangka kerja tugas otomasi tahan gangguan yang menggabungkan exponential backoff retry, state ledger idempoten di disk JSON, CLI runner ber-exit-code tepat, dan alert webhook HTTP.",
+    "instructions": [
+      "Implementasikan run_with_backoff(op, max_attempts=3, base_delay=1.0, sleep_fn=...) yang mengembalikan nilai sukses atau melempar exception setelah percobaan habis.",
+      "Implementasikan JobLedger(path: Path) untuk membaca/menulis status eksekusi per job_key secara persisten ke JSON.",
+      "Implementasikan dispatch_webhook_alert(client, webhook_url, job_name, message) mengembalikan status HTTP balikan.",
+      "Tulis test pytest menguji backoff delays, skip eksekusi kedua oleh JobLedger, serta alert webhook."
+    ],
+    "rubric": [
+      { "criteria": "Exponential Backoff & Injectable Sleep", "weight": 25, "description": "Urutan delay eksponensial (base * 2**attempt) akurat dan cepat diuji." },
+      { "criteria": "Desain Idempotent JobLedger Persisten", "weight": 30, "description": "Run pertama menandai sukses; run ulang untuk key sama ter-skip aman." },
+      { "criteria": "Webhook Alert Formatter & HTTP Client", "weight": 25, "description": "Mengirim payload JSON terstruktur lengkap dan memeriksa raise_for_status." },
+      { "criteria": "CLI Design & Unit Testing Pytest", "weight": 20, "description": "Exit code CLI bersih dan seluruh test case lulus." }
+    ],
+    "starterFilename": "tugas.py"
+  },
+  "resources": {
+    "hasSlides": true,
+    "codeDownload": "/downloads/specializations/D04/d04_02_idempotent_job_ledger.py",
+    "notebookDownload": null,
+    "datasetDownload": null,
+    "guideDownload": "/downloads/specializations/D04/tugas.md",
+    "pptxDownload": null
+  },
+  "references": [
+    {
+      "title": "Python Official Docs: argparse & logging HOWTO",
+      "source": "Python Software Foundation",
+      "url": "https://docs.python.org/3/library/argparse.html",
+      "license": "PSF-2.0"
+    },
+    {
+      "title": "Twelve-Factor App: Admin Processes & Logs",
+      "source": "Twelve-Factor Contributors",
+      "url": "https://12factor.net/logs",
+      "license": "MIT"
+    }
+  ]
+}
+

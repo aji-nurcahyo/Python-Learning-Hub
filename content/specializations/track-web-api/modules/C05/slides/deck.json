@@ -1,0 +1,100 @@
+[
+  {
+    "title": "Capstone: Production-Ready Modular REST API",
+    "subtitle": "Modular APIRouter, Repository Pattern, Auth Guard, Middleware & Testing",
+    "kind": "cover",
+    "body": "<p>Menyatukan seluruh materi Track C (httpx, FastAPI, Pydantic, SQLAlchemy 2.0, Keamanan &amp; Logging) ke dalam microservice REST API terstruktur siap produksi.</p>",
+    "notes": "Capstone Track C berfokus pada modularitas kode dan pengujian integrasi menyeluruh."
+  },
+  {
+    "title": "Mengapa Menghindari File API Tunggal Raksasa?",
+    "kind": "content",
+    "body": "<ul><li><strong>Sulit Dipelihara:</strong> Mencampur definisi tabel SQL, model validasi JSON, logika autentikasi, dan endpoint HTTP dalam satu file menciptakan <em>tight coupling</em>.</li><li><strong>Solusi Berlapis (Layered Architecture):</strong> Pisahkan tanggung jawab menjadi Lapisan Schema -&gt; Repository -&gt; Router/Service -&gt; App Factory.</li><li><strong>Keuntungan Testing:</strong> Tiap lapisan mudah digantikan atau diuji terpisah di <code>pytest</code>.</li></ul>",
+    "notes": "Prinsip arsitektur bersih menjaga backend tetap lincah meski jumlah endpoint tumbuh menjadi puluhan."
+  },
+  {
+    "title": "Peta 4 Lapis Microservice Track C",
+    "kind": "content",
+    "body": "<ul><li><strong>1. Domain Schemas:</strong> <code>NodeCreate</code>, <code>NodeUpdate</code>, <code>NodeOut</code> beserta <code>ServiceConfig</code>.</li><li><strong>2. Repository Layer:</strong> <code>NodeRepository</code> membungkus seluruh query SQLAlchemy 2.0 <code>select()</code> dan <code>commit()</code>.</li><li><strong>3. APIRouter &amp; Auth Guard:</strong> Mengelompokkan rute <code>/api/v1/nodes</code> dan mengunci endpoint modifikasi dengan HMAC Bearer token.</li><li><strong>4. Application Factory:</strong> <code>create_app(config)</code> merakit middleware, <code>/health</code>, dan router.</li></ul>",
+    "notes": "Struktur empat lapis ini langsung siap dipaketkan ke kontainer Docker atau server ASGI."
+  },
+  {
+    "title": "Contoh Kode: Kontrak Domain Schemas & Config",
+    "kind": "code",
+    "example": "spec/C05/c05_01_domain_schemas",
+    "body": "<p>Mendefinisikan validasi pola status (<code>online|maintenance|offline</code>) memakai regex <code>pattern</code> Pydantic v2 serta <code>ServiceConfig</code>.</p>",
+    "notes": "Pattern validation menolak status typo seperti 'aktiffff' langsung di pintu gerbang API dengan HTTP 422."
+  },
+  {
+    "title": "Repository Pattern untuk Akses Database",
+    "kind": "content",
+    "body": "<ul><li><strong>Abstraksi Kueri:</strong> Endpoint cukup memanggil <code>repo.get_by_code(...)</code> atau <code>repo.create(...)</code> tanpa tahu detail SQL di baliknya.</li><li><strong>Konsistensi Transaksi:</strong> <code>commit()</code> dan <code>refresh()</code> dilakukan terpusat di metode repository.</li><li><strong>Kemudahan Audit:</strong> Optimasi indeks atau perubahan kolom cukup menyentuh kelas Repository.</li></ul>",
+    "notes": "Repository menerima Session via constructor __init__(self, db: Session)."
+  },
+  {
+    "title": "Contoh Kode: SQLAlchemy NodeRepository",
+    "kind": "code",
+    "example": "spec/C05/c05_02_repository_db",
+    "body": "<p>Mengimplementasikan <code>NodeRepository</code> lengkap (create, get_by_id, get_by_code, list_all, update, delete) di atas SQLAlchemy 2.0.</p>",
+    "notes": "Perhatikan pemakaian session.scalars(stmt) dan filter region opsional."
+  },
+  {
+    "title": "Modularitas dengan FastAPI APIRouter",
+    "kind": "content",
+    "body": "<ul><li><strong>Organisasi URL:</strong> <code>APIRouter(prefix='/api/v1/nodes', tags=['Telemetry Nodes'])</code> mengelompokkan semua rute node sekaligus menatanya di Swagger UI.</li><li><strong>Versioning Prefix:</strong> Awalan <code>/api/v1</code> memudahkan peluncuran versi <code>v2</code> kelak tanpa mematahkan klien lama.</li><li><strong>Granular Auth:</strong> Rute baca <code>GET</code> dan <code>/health</code> tetap dapat diakses sesuai kebijakan, sementara <code>POST/PUT/DELETE</code> dilindungi <code>Depends(require_auth)</code>.</li></ul>",
+    "notes": "Dalam sistem produksi nyata, daftar APIRouter untuk resource berbeda di-mount menggunakan app.include_router(...)."
+  },
+  {
+    "title": "Contoh Kode: Auth Guard & APIRouter",
+    "kind": "code",
+    "example": "spec/C05/c05_03_service_auth_router",
+    "body": "<p>Menerbitkan dan memverifikasi token HMAC-SHA256 serta mengintegrasikannya pada operasi modifikasi di <code>APIRouter</code>.</p>",
+    "notes": "Operasi duplikasi kode node mengembalikan status semantik 409 Conflict."
+  },
+  {
+    "title": "Pola Application Factory create_app()",
+    "kind": "content",
+    "body": "<ul><li><strong>Zero Global Mutable Engine:</strong> Database engine dan app dirakit di dalam fungsi <code>create_app(config)</code>.</li><li><strong>Middleware Terintegrasi:</strong> Setiap request melalui timer middleware dan menerima header <code>X-Process-Time-Ms</code>.</li><li><strong>Clean Teardown:</strong> Mengembalikan pasangan <code>(app, engine)</code> memungkinkan pytest menutup engine bersih via <code>engine.dispose()</code>.</li></ul>",
+    "notes": "Application Factory adalah pola kunci agar backend Python berskala besar tetap mudah diuji paralel."
+  },
+  {
+    "title": "Contoh Kode: End-to-End Microservice Factory",
+    "kind": "code",
+    "example": "spec/C05/c05_04_app_factory_testclient",
+    "body": "<p>Menjalankan siklus lengkap microservice: health check publik, penolakan 401 tanpa token, pembuatan 201, pembaruan 200, dan listing terukur.</p>",
+    "notes": "Semua skenario berjalan cepat dan deterministik di atas TestClient + Temp SQLite."
+  },
+  {
+    "title": "Cakupan Integration Test Mutu Produksi",
+    "kind": "content",
+    "body": "<ul><li><strong>Status Sukses:</strong> Uji <code>200 OK</code>, <code>201 Created</code>, dan <code>204 No Content</code>.</li><li><strong>Status Penolakan:</strong> Uji <code>401 Unauthorized</code>, <code>404 Not Found</code>, <code>409 Conflict</code>, dan <code>422 Validation Error</code>.</li><li><strong>Kontrak OpenAPI:</strong> Pastikan endpoint <code>/api/v1/nodes</code> hadir di <code>app.openapi()['paths']</code>.</li></ul>",
+    "notes": "Integration test menyeluruh seperti test_c05_capstone.py adalah jaring pengaman sebelum rilis ke produksi."
+  },
+  {
+    "title": "Strategi Deployment Lanjutan",
+    "kind": "content",
+    "body": "<ul><li><strong>ASGI Server:</strong> Jalankan di balik server seperti <code>uvicorn</code> atau <code>gunicorn -k uvicorn.workers.UvicornWorker</code>.</li><li><strong>Database Produksi:</strong> Ganti string koneksi <code>db_url</code> dari SQLite menjadi PostgreSQL tanpa mengubah kode endpoint.</li><li><strong>Health Readiness Probe:</strong> Endpoint <code>GET /health</code> menjadi target pengecekan ketersediaan oleh Kubernetes atau load balancer.</li></ul>",
+    "notes": "Karena konfigurasi disuntik via ServiceConfig, migrasi lingkungan menjadi mulus."
+  },
+  {
+    "title": "Kuis Cepat: Arsitektur Application Factory",
+    "kind": "question",
+    "body": "<p>Uji pemahaman Anda terhadap manfaat desain Application Factory di layanan backend Python.</p>",
+    "question": "Mengapa fungsi create_app(config) jauh lebih unggul untuk automated testing dibandingkan mendefinisikan engine = create_engine('sqlite:///prod.db') di level global modul?",
+    "answer": "Engine global langsung mengikat koneksi ke file database tetap begitu modul diimpor sehingga pengujian antar file test dapat saling mengotori data. Dengan create_app(config), tiap pytest function menyuntikkan URL database unik di tmp_path secara terisolasi dan aman memanggil engine.dispose().",
+    "notes": "Isolasi state antar test case merupakan ciri backend engineering profesional."
+  },
+  {
+    "title": "Latihan Mandiri: Integration Audit API",
+    "kind": "exercise",
+    "body": "<ul><li>Periksa pemisahan kode di keempat modul C05.</li><li>Jalankan <code>pytest code/test_c05_capstone.py</code> dan amati cakupan seluruh status HTTP.</li><li>Kembangkan implementasi final Anda di <code>assignments/tugas.py</code>.</li></ul>",
+    "notes": "Setelah menuntaskan Track C, Anda telah siap mengotomasi sistem operasional di Track D."
+  },
+  {
+    "title": "Penutup Track C: Web Development & APIs",
+    "kind": "content",
+    "body": "<ul><li>Anda telah menyelesaikan 5 modul Track C: <strong>httpx Client (C01)</strong>, <strong>FastAPI CRUD (C02)</strong>, <strong>SQLAlchemy 2.0 (C03)</strong>, <strong>Security &amp; Logging (C04)</strong>, serta <strong>Capstone Microservice API (C05)</strong>.</li><li>Berikutnya di <strong>Track D: Automation &amp; Scripting</strong>, kita akan mengotomasi pemrosesan berkas, laporan Excel/PDF, web extraction, dan jadwal pelaporan!</li></ul>",
+    "notes": "Selamat menyelesaikan Batch 3 (Track C: Web Development & APIs)!"
+  }
+]
+

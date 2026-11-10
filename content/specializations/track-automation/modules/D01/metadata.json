@@ -1,0 +1,93 @@
+{
+  "id": "D01",
+  "trackId": "automation",
+  "trackTitle": "Automation & Scripting",
+  "order": 1,
+  "title": "File System Automation with pathlib & shutil",
+  "subtitle": "Audit Direktori, Pola Dry-Run Aman, Deduplikasi SHA-256 & Rotasi Backup ZIP",
+  "description": "Otomatisasikan pengelolaan berkas dan direktori secara aman dengan Python pathlib dan shutil: pemindaian rglob, pola preview --dry-run sebelum memindahkan file, identifikasi duplikat berbasis SHA-256, dan rotasi arsip backup ZIP.",
+  "difficulty": "Intermediate",
+  "estimatedHours": 4,
+  "prerequisites": [
+    "Chapter 17 (File Handling & CSV/JSON)",
+    "Chapter 18 (Error Handling & Exceptions)",
+    "Chapter 20 (Standard Library & CLI)"
+  ],
+  "learningObjectives": [
+    "Menavigasi dan mengaudit pohon direktori lintas OS secara bersih menggunakan pathlib.Path.",
+    "Menerapkan parameter wajib dry_run=True sebelum mengeksekusi pemindahan atau penghapusan file massal.",
+    "Mendeteksi file identik tersembunyi melalui hash kriptografis SHA-256 berbasis chunk aman RAM.",
+    "Membuat arsip ZIP terkompresi dan menerapkan rotasi otomatis untuk mempertahankan N backup terbaru."
+  ],
+  "dependencies": ["pytest>=8.0"],
+  "tags": ["pathlib", "shutil", "automation", "dry-run", "sha256", "zipfile"],
+  "codeExample": {
+    "title": "Organizer Berkas Otomatis dengan Preview Dry-Run",
+    "filename": "d01_02_safe_dry_run_organizer.py",
+    "outputKey": "spec/D01/d01_02_safe_dry_run_organizer",
+    "explanation": "Skrip ini memindai folder inbox sementara, mengelompokkan file berdasarkan kategori ekstensi, mencetak rencana aksi saat dry_run=True tanpa menyentuh disk, lalu mengeksekusi pemindahan rapi ketika dry_run=False."
+  },
+  "exercise": {
+    "title": "Audit Duplikat File & Rotasi Arsip ZIP Aman",
+    "instructions": [
+      "Buat fungsi compute_sha256(file_path) yang membaca file dalam potongan 64 KB.",
+      "Pindai direktori uji dengan Path.rglob('*') lalu kelompokkan file berdasarkan nilai hash untuk menemukan duplikat.",
+      "Tambahkan flag dry_run: bool = True pada fungsi pembersihan duplikat.",
+      "Simpan seluruh sisa file ke arsip ZIP terkompresi menggunakan zipfile.ZipFile."
+    ],
+    "tips": "Jangan pernah menguji skrip penghapus file pada direktori kerja asli! Selalu gunakan tempfile.TemporaryDirectory atau fixture tmp_path pytest.",
+    "time": "45 Menit"
+  },
+  "quiz": {
+    "question": "Mengapa fungsi utilitas otomatisasi file seperti pengorganisir atau penghapus duplikat sebaiknya menyediakan parameter default dry_run: bool = True?",
+    "options": [
+      "Karena pathlib.Path tidak bisa memindahkan file jika dry_run=False",
+      "Karena mode dry-run memungkinkan operator memverifikasi daftar file yang akan dipindah/dihapus terlebih dahulu tanpa risiko kehilangan data akibat bug path atau glob",
+      "Karena file ZIP hanya bisa dibuka saat dry_run=True",
+      "Karena Windows melarang operasi shutil tanpa dry_run"
+    ],
+    "correctIndex": 1,
+    "explanation": "Operasi sistem berkas sulit dibatalkan jika keliru. Dengan dry_run=True sebagai default, pengguna melihat rencana transformasi persis sebelum berkomitmen memodifikasi disk.",
+    "hint": "Pikirkan keamanan operasional saat menjalankan skrip pada ribuan dokumen kerja."
+  },
+  "assignment": {
+    "title": "Proyek Mini: Safe Workspace Organizer & Rotating Backup Tool",
+    "description": "Bangun modul otomasi sistem file yang mengklasifikasikan file ke folder kategori, menghapus duplikat berbasis SHA-256 (dengan mode dry-run), dan menjaga tepat N arsip backup ZIP terbaru.",
+    "instructions": [
+      "Implementasikan organize_by_extension(base_dir, dry_run=True) yang mengembalikan daftar rencana (src, dst) serta hanya memindahkan saat dry_run=False.",
+      "Implementasikan find_exact_duplicates(root_dir) memakai SHA-256 chunk reader.",
+      "Implementasikan create_rotating_backup(source_dir, backup_dir, keep=3) menggunakan zipfile.ZipFile dan menghapus arsip tertua bila melebihi batas keep.",
+      "Uji seluruh skenario di pytest menggunakan tmp_path."
+    ],
+    "rubric": [
+      { "criteria": "Keamanan Dry-Run & Penggunaan pathlib", "weight": 30, "description": "Seluruh manipulasi path lintas platform memakai pathlib tanpa concatenation string." },
+      { "criteria": "Akurasi Deduplikasi SHA-256", "weight": 25, "description": "Membaca berkas dalam chunk aman dan mengenali file identik meski namanya berbeda." },
+      { "criteria": "Logika Rotasi Backup ZIP", "weight": 25, "description": "Mempertahankan tepat N arsip terbaru dan membersihkan sisanya bersih." },
+      { "criteria": "Unit Testing Terisolasi (Pytest)", "weight": 20, "description": "Seluruh test memakai tmp_path dan berjalan deterministik." }
+    ],
+    "starterFilename": "tugas.py"
+  },
+  "resources": {
+    "hasSlides": true,
+    "codeDownload": "/downloads/specializations/D01/d01_02_safe_dry_run_organizer.py",
+    "notebookDownload": null,
+    "datasetDownload": null,
+    "guideDownload": "/downloads/specializations/D01/tugas.md",
+    "pptxDownload": null
+  },
+  "references": [
+    {
+      "title": "Python Official Docs: pathlib — Object-oriented filesystem paths",
+      "source": "Python Software Foundation",
+      "url": "https://docs.python.org/3/library/pathlib.html",
+      "license": "PSF-2.0"
+    },
+    {
+      "title": "Python Official Docs: shutil & zipfile High-level file operations",
+      "source": "Python Software Foundation",
+      "url": "https://docs.python.org/3/library/shutil.html",
+      "license": "PSF-2.0"
+    }
+  ]
+}
+

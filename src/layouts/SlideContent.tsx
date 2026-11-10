@@ -4,6 +4,8 @@ import { MathBlock } from '../ui/Math';
 import { Icon } from '../ui/Icon';
 import type { SlideData } from '../decks/registry';
 import outputs from '../code/outputs.json';
+import specOutputs from '../code/spec-outputs.json';
+import { getSpecializationCodeFile } from '../curriculum/specializations';
 
 const sources = import.meta.glob('../code/**/*.py', {
   query: '?raw',
@@ -15,24 +17,48 @@ export function SlideContent({
   slide,
   meeting,
   base,
+  specId,
 }: {
   slide: SlideData;
   meeting: number;
   base: string;
+  specId?: string;
 }) {
   const [answer, setAnswer] = useState(false);
+  const isSpecExample = Boolean(slide.example?.startsWith('spec/'));
+  const resolvedCode = slide.example
+    ? isSpecExample
+      ? getSpecializationCodeFile(slide.example) || ''
+      : sources[`../code/${slide.example}.py`]
+    : '';
   const files =
     slide.files ??
     (slide.example
-      ? [{ name: `${slide.example.split('/').pop()}.py`, code: sources[`../code/${slide.example}.py`] }]
+      ? [{ name: `${slide.example.split('/').pop()}.py`, code: resolvedCode }]
       : []);
+
+  const resolvedOutput = slide.example
+    ? isSpecExample
+      ? (specOutputs as Record<string, string>)[slide.example]
+      : (outputs as Record<string, string>)[slide.example]
+    : '';
+
+  const downloadExampleHref = slide.example
+    ? isSpecExample
+      ? `${base}downloads/specializations/${slide.example.slice(5)}.py`
+      : `${base}downloads/examples/${slide.example}.py`
+    : '';
+
+  const kickerText = specId ? `SPECIALIZATION · ${specId}` : `CHAPTER ${meeting.toString().padStart(2, '0')}`;
+  const coverNumText = specId ? specId : meeting.toString().padStart(2, '0');
+  const footerText = specId ? `Module ${specId}` : `Chapter ${meeting.toString().padStart(2, '0')}`;
 
   // Standardized Cover Slide (Requirement 1 & 3)
   if (slide.kind === 'cover') {
     return (
       <div className="slide-cover-layout">
         <div className="slide-kicker">
-          PYTHON LEARNING HUB <span>/</span> CHAPTER {meeting.toString().padStart(2, '0')}
+          PYTHON LEARNING HUB <span>/</span> {kickerText}
         </div>
         <h1 className="cover-title">{slide.title}</h1>
         <div className="cover-body" dangerouslySetInnerHTML={{ __html: slide.body }} />
@@ -41,7 +67,7 @@ export function SlideContent({
           <div className="author-affiliation">Institut Teknologi Sumatera</div>
         </div>
         <div className="cover-number" aria-hidden="true">
-          {meeting.toString().padStart(2, '0')}
+          {coverNumText}
         </div>
         <aside className="notes">{slide.notes}</aside>
       </div>
@@ -51,7 +77,7 @@ export function SlideContent({
   return (
     <>
       <div className="slide-kicker">
-        PYTHON LEARNING HUB <span>/</span> CHAPTER {meeting.toString().padStart(2, '0')}
+        PYTHON LEARNING HUB <span>/</span> {kickerText}
       </div>
       <h1>{slide.title}</h1>
 
@@ -78,12 +104,12 @@ export function SlideContent({
                 <Icon name="terminal" size={16} /> Output Terminal · Python 3
               </h2>
               <pre tabIndex={0}>
-                {(outputs as Record<string, string>)[slide.example] || '(Program selesai tanpa output teks)'}
+                {resolvedOutput || '(Program selesai tanpa output teks)'}
               </pre>
-              <small>Hasil eksekusi nyata CPython.</small>
+              <small>Hasil eksekusi Python.</small>
               <div className="output-actions">
-                <a className="text-link" href={`${base}downloads/examples/${slide.example}.py`} download>
-                  <Icon name="download" size={14} /> Unduh {slide.example.split('/').pop()}.py
+                <a className="text-link" href={downloadExampleHref} download>
+                  <Icon name="download" size={14} /> Download {slide.example.split('/').pop()}.py
                 </a>
                 {slide.files && (
                   <a className="text-link" href={`${base}downloads/examples/p09-module/statistik.py`} download>
@@ -143,7 +169,7 @@ export function SlideContent({
 
       <footer className="slide-footer">
         <span>Python Learning Hub • Aji Pamungkas Tri Nurcahyo</span>
-        <span>Chapter {meeting.toString().padStart(2, '0')}</span>
+        <span>{footerText}</span>
       </footer>
 
       <aside className="notes">{slide.notes}</aside>

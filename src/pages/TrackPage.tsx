@@ -1,4 +1,5 @@
 import { SPECIALIZATION_TRACKS, CHAPTERS, type SpecializationTrack, type Chapter } from '../curriculum';
+import { getModulesForTrack } from '../curriculum/specializations';
 import { DifficultyBadge } from '../components/DifficultyBadge';
 import { Icon } from '../ui/Icon';
 
@@ -7,6 +8,7 @@ interface TrackPageProps {
   onNavigateHome: () => void;
   onNavigateChapter: (chapterId: number) => void;
   onNavigateTrack: (trackId: string) => void;
+  onNavigateSpecModule?: (moduleId: string) => void;
 }
 
 export function TrackPage({
@@ -14,6 +16,7 @@ export function TrackPage({
   onNavigateHome,
   onNavigateChapter,
   onNavigateTrack,
+  onNavigateSpecModule,
 }: TrackPageProps) {
   const track: SpecializationTrack | undefined = SPECIALIZATION_TRACKS.find((t) => t.id === trackId);
 
@@ -33,6 +36,8 @@ export function TrackPage({
   const recommendedChaptersList: Chapter[] = track.recommendedChapters
     .map((num) => CHAPTERS.find((c) => c.id === num))
     .filter((c): c is Chapter => c !== undefined);
+
+  const implementedModules = getModulesForTrack(track.id);
 
   return (
     <div className="hub-track-page">
@@ -135,28 +140,78 @@ export function TrackPage({
         </div>
 
         <div className="track-modules-list">
-          {track.modules.map((mod, idx) => (
-            <div key={idx} className="track-module-row">
-              <div className="module-number-badge">{String(idx + 1).padStart(2, '0')}</div>
-              <div className="module-info">
-                <div className="module-status-line">
-                  <span
-                    className={`module-status-chip ${
-                      mod.status === 'Advanced Project'
-                        ? 'project'
-                        : mod.status === 'Core Prerequisite'
-                        ? 'core'
-                        : 'spec'
-                    }`}
-                  >
-                    {mod.status}
-                  </span>
+          {implementedModules.length > 0
+            ? implementedModules.map((mod) => (
+                <article
+                  key={mod.id}
+                  className="track-module-row clickable-module-row"
+                  role="button"
+                  tabIndex={0}
+                  onClick={() =>
+                    onNavigateSpecModule
+                      ? onNavigateSpecModule(mod.id)
+                      : (location.hash = `spec/${mod.id}`)
+                  }
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      if (onNavigateSpecModule) onNavigateSpecModule(mod.id);
+                      else location.hash = `spec/${mod.id}`;
+                    }
+                  }}
+                >
+                  <div className="module-number-badge">{mod.id}</div>
+                  <div className="module-info">
+                    <div className="module-status-line" style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
+                      <span className={`module-status-chip ${mod.isCapstone ? 'project' : 'spec'}`}>
+                        {mod.isCapstone ? 'Capstone Project' : 'Specialization Module'}
+                      </span>
+                      <DifficultyBadge difficulty={mod.difficulty} />
+                      <span className="ch-hours">
+                        <Icon name="schedule" size={14} /> {mod.estimatedHours} jam
+                      </span>
+                    </div>
+                    <h3 className="module-title">{mod.title}</h3>
+                    <p className="module-desc">{mod.description}</p>
+                  </div>
+                  <div className="row-right">
+                    <button
+                      type="button"
+                      className="button primary button-sm"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (onNavigateSpecModule) onNavigateSpecModule(mod.id);
+                        else location.hash = `spec/${mod.id}`;
+                      }}
+                    >
+                      <span>Buka Modul {mod.id}</span>
+                      <Icon name="arrow_forward" size={16} />
+                    </button>
+                  </div>
+                </article>
+              ))
+            : track.modules.map((mod, idx) => (
+                <div key={idx} className="track-module-row">
+                  <div className="module-number-badge">{String(idx + 1).padStart(2, '0')}</div>
+                  <div className="module-info">
+                    <div className="module-status-line">
+                      <span
+                        className={`module-status-chip ${
+                          mod.status === 'Advanced Project'
+                            ? 'project'
+                            : mod.status === 'Core Prerequisite'
+                            ? 'core'
+                            : 'spec'
+                        }`}
+                      >
+                        {mod.status}
+                      </span>
+                    </div>
+                    <h3 className="module-title">{mod.title}</h3>
+                    <p className="module-desc">{mod.description}</p>
+                  </div>
                 </div>
-                <h3 className="module-title">{mod.title}</h3>
-                <p className="module-desc">{mod.description}</p>
-              </div>
-            </div>
-          ))}
+              ))}
         </div>
       </section>
 

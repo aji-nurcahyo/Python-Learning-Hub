@@ -1,0 +1,100 @@
+[
+  {
+    "title": "File System Automation with pathlib & shutil",
+    "subtitle": "Audit Direktori, Pola Dry-Run Aman, SHA-256 & Rotasi Backup ZIP",
+    "kind": "cover",
+    "body": "<p>Mengotomasi penataan direktori, penghapusan duplikat berbasis checksum, dan pengarsipan backup harian secara portabel serta bebas risiko kerusakan data.</p>",
+    "notes": "Track D berfokus pada otomasi tugas operasional sehari-hari secara andal dan idempoten."
+  },
+  {
+    "title": "Dari os.path Menuju pathlib.Path",
+    "kind": "content",
+    "body": "<ul><li><strong>Portabel Lintas OS:</strong> Operator <code>root / 'sub' / 'file.csv'</code> otomatis menyesuaikan separator <code>\\</code> (Windows) maupun <code>/</code> (Linux/macOS).</li><li><strong>Berorientasi Objek:</strong> Properti <code>.name</code>, <code>.stem</code>, <code>.suffix</code>, dan <code>.parent</code> langsung melekat di objek path.</li><li><strong>Traversal Mudah:</strong> Gunakan <code>.iterdir()</code> untuk level tunggal atau <code>.rglob('*')</code> untuk rekursif penuh.</li></ul>",
+    "notes": "Gunakan pathlib untuk semua kode Python modern sejak versi 3.6+."
+  },
+  {
+    "title": "Contoh Kode: Audit Inventaris Pohon Direktori",
+    "kind": "code",
+    "example": "spec/D01/d01_01_pathlib_inventory",
+    "body": "<p>Memindai seluruh berkas di subdirektori memakai <code>rglob('*')</code> lalu mengelompokkan jumlah ekstensi dan total ukuran byte.</p>",
+    "notes": "Periksa selalu p.is_file() sebelum memanggil p.stat().st_size agar tidak memproses direktori."
+  },
+  {
+    "title": "Pola Keselamatan Wajib: --dry-run Mode",
+    "kind": "content",
+    "body": "<ul><li><strong>Mengapa Dry-Run Krusial?</strong> Skrip otomasi file berjalan dalam milidetik dan tidak mengenal tombol Undo.</li><li><strong>Two-Phase Execution:</strong> Fase 1 menyusun daftar pasangan <code>(asal, tujuan)</code>; Fase 2 hanya mengeksekusi <code>shutil.move</code> ketika <code>dry_run=False</code>.</li><li><strong>Default Konservatif:</strong> Tetapkan <code>dry_run=True</code> sebagai nilai default agar pemanggilan tak sengaja tidak mengubah disk.</li></ul>",
+    "notes": "Pola dry-run adalah standar industri pada utilitas DevOps dan sysadmin seperti rsync atau terraform plan."
+  },
+  {
+    "title": "Contoh Kode: Organizer Berkas Berfitur Dry-Run",
+    "kind": "code",
+    "example": "spec/D01/d01_02_safe_dry_run_organizer",
+    "body": "<p>Menunjukkan mode preview <code>dry_run=True</code> (file tetap utuh di root) sebelum mengeksekusi penataan folder dengan <code>dry_run=False</code>.</p>",
+    "notes": "mkdir(parents=True, exist_ok=True) mencegah FileNotFoundError saat folder tujuan belum tersedia."
+  },
+  {
+    "title": "Menghindari Overwrite Tak Sengaja dengan shutil",
+    "kind": "content",
+    "body": "<ul><li><strong>Bentrok Nama File:</strong> Memindahkan <code>report.csv</code> ke folder yang sudah berisi <code>report.csv</code> dapat menimpa data lama diam-diam.</li><li><strong>Mitigasi Praktis:</strong> Cek <code>if dest.exists():</code> sebelum <code>shutil.move()</code>, atau sisipkan suffix stempel waktu / hash.</li></ul>",
+    "notes": "Pastikan skrip otomasi selalu bersifat defensif terhadap bentrokan nama."
+  },
+  {
+    "title": "Deteksi File Duplikat Berbasis SHA-256",
+    "kind": "content",
+    "body": "<ul><li><strong>Nama Boleh Berbeda, Isi Tetap Terdeteksi:</strong> Hashing kriptografis <code>SHA-256</code> menghasilkan sidik jari unik isi biner berkas.</li><li><strong>Pembacaan Chunk (64 KB):</strong> Jangan memuat file 2 GB dengan <code>.read_bytes()</code>; baca bertahap dalam loop agar RAM tetap stabil di bawah 1 MB.</li></ul>",
+    "notes": "Komparasi ukuran byte terlebih dahulu dapat mempercepat pemindaian sebelum menghitung SHA-256 penuh."
+  },
+  {
+    "title": "Contoh Kode: Chunked SHA-256 Deduplicator",
+    "kind": "code",
+    "example": "spec/D01/d01_03_checksum_deduplication",
+    "body": "<p>Menggunakan walrus operator <code>while chunk := fh.read(65536)</code> untuk menemukan file duplikat identik dengan nama berbeda.</p>",
+    "notes": "Python 3.11+ juga mendukung hashlib.file_digest(fh, 'sha256') yang lebih ringkas dan cepat di level C!"
+  },
+  {
+    "title": "Pengarsipan Backup ZIP & Kebijakan Retensi",
+    "kind": "content",
+    "body": "<ul><li><strong>Kompresi Efisien:</strong> Gunakan <code>zipfile.ZipFile(..., compression=zipfile.ZIP_DEFLATED)</code> dan <code>arcname=file.relative_to(source_dir)</code> agar struktur folder relatif tersimpan bersih.</li><li><strong>Rotasi Otomatis (<code>keep=N</code>):</strong> Tanpa pemangkasan berkala, backup harian akan memenuhi disk hingga server mogok.</li></ul>",
+    "notes": "Urutkan nama file berstempel tanggal YYYYMMDD agar penyortiran leksikografis identik dengan urutan kronologis."
+  },
+  {
+    "title": "Contoh Kode: Backup ZIP & Rotasikeep=2",
+    "kind": "code",
+    "example": "spec/D01/d01_04_zip_backup_rotation",
+    "body": "<p>Membuat 4 arsip ZIP harian lalu menghapus otomatis arsip terlama hingga tersisa tepat 2 arsip terbaru.</p>",
+    "notes": "Pastikan zip_path ditempatkan di luar source_dir agar skrip tidak mengarsipkan file zip-nya sendiri secara rekursif!"
+  },
+  {
+    "title": "Strategi Pengujian Aman Tanpa Mengotori Workspace",
+    "kind": "content",
+    "body": "<ul><li><strong><code>tempfile.TemporaryDirectory()</code>:</strong> Buat direktori uji terisolasi di folder temp OS yang otomatis lenyap sesudah blok <code>with</code> selesai.</li><li><strong>Pytest Fixture <code>tmp_path</code>:</strong> Menyediakan objek <code>Path</code> unik per unit test tanpa risiko menghapus file proyek asli.</li></ul>",
+    "notes": "Aturan utama menguji skrip penghapus/pemindah file: jangan pernah uji langsung di folder Dokumen Anda!"
+  },
+  {
+    "title": "Kuis Cepat: Keamanan File & Hashing",
+    "kind": "question",
+    "body": "<p>Uji pemahaman Anda mengenai efisiensi memori dan keselamatan eksekusi skrip file system.</p>",
+    "question": "Mengapa fungsi sha256_file() membaca berkas memakai loop chunk 64 KB daripada memanggil path.read_bytes() sekaligus?",
+    "answer": "Memanggil read_bytes() memuat seluruh isi berkas ke RAM sekaligus yang dapat memicu MemoryError pada file video atau database berukuran gigabyte; membaca per chunk menjaga pemakaian RAM tetap konstan sangat kecil.",
+    "notes": "Streaming chunk reading adalah prinsip dasar penanganan file berukuran sembarang."
+  },
+  {
+    "title": "Latihan Mandiri: Safe File Organizer",
+    "kind": "exercise",
+    "body": "<ul><li>Terapkan <code>organize_directory</code> dengan preview <code>dry_run=True</code>.</li><li>Identifikasi berkas ganda dengan SHA-256 dan buat rotasi backup ZIP.</li><li>Jalankan <code>pytest code/test_d01_filesystem.py</code>.</li></ul>",
+    "notes": "Di Modul D02 kita akan beralih ke otomasi pembuatan laporan Excel (.xlsx) dan dokumen PDF (.pdf)."
+  },
+  {
+    "title": "Checklist Praktik Baik Otomasi File",
+    "kind": "content",
+    "body": "<ul><li>Gunakan <code>pathlib.Path</code> di seluruh manipulasi path.</li><li>Selalu sertakan flag <code>dry_run=True</code> untuk aksi destruktif atau pemindahan masif.</li><li>Baca biner secara chunked, hindari arsip rekursif ke dalam folder sumber, dan verifikasi di <code>tmp_path</code>.</li></ul>",
+    "notes": "Kebiasaan defensif ini menyelamatkan infrastruktur operasional dari kesalahan manusia."
+  },
+  {
+    "title": "Ringkasan Modul D01",
+    "kind": "content",
+    "body": "<ul><li><code>pathlib.Path</code> dan <code>shutil</code> memungkinkan penataan file lintas platform yang rapi dan terstruktur.</li><li><code>dry_run</code>, SHA-256 deduplikasi, serta rotasi backup ZIP memastikan pengelolaan storage tetap aman.</li><li>Langkah berikutnya (Modul D02): menghasilkan spreadsheet Excel berformula dan laporan PDF otomatis!</li></ul>",
+    "notes": "Lanjutkan ke Modul D02: Spreadsheet & PDF Document Automation."
+  }
+]
+

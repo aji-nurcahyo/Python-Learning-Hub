@@ -1,0 +1,100 @@
+[
+  {
+    "title": "ML Foundations & Scikit-Learn Pipelines",
+    "subtitle": "Train/Test Split, ColumnTransformer, Mencegah Data Leakage & Baseline",
+    "kind": "cover",
+    "body": "<p>Membangun alur kerja Machine Learning yang reproduksibel, tahan terhadap missing data dan kategori baru, serta bebas kebocoran informasi evaluasi menggunakan arsitektur Pipeline Scikit-Learn.</p>",
+    "notes": "Disiplin arsitektur pipeline di B01 menjadi penopang utama seluruh eksperimen regresi, klasifikasi, dan tuning di B02–B05."
+  },
+  {
+    "title": "Tujuan Supervised Learning: Generalisasi",
+    "kind": "content",
+    "body": "<ul><li><strong>Bukan Menghafal Data:</strong> Model yang memperoleh akurasi 100% di data latih tetapi gagal di data baru mengalami <em>overfitting</em>.</li><li><strong>Isolasi Data Uji:</strong> Data evaluasi (<em>test set</em>) harus diperlakukan seolah belum pernah ada selama pelatihan dan pra-pemrosesan.</li><li><strong>Reprodusibilitas:</strong> Selalu tetapkan parameter <code>random_state=42</code> agar pemecahan dataset dapat diulang identik.</li></ul>",
+    "notes": "Evaluasi yang jujur membutuhkan batas tegas antara fase pelatihan (.fit) dan fase inferensi (.transform / .predict)."
+  },
+  {
+    "title": "Stratified train_test_split",
+    "kind": "content",
+    "body": "<ul><li><strong>Mengapa Perlu <code>stratify=y</code>?</strong> Menjaga rasio kelas target di data latih dan data uji tetap identik, sangat krusial pada dataset berukuran kecil atau tidak seimbang.</li><li><strong>Proporsi Umum:</strong> 75%–80% untuk pelatihan dan 20%–25% untuk pengujian.</li><li><strong>Kunci Identitas:</strong> Kolom ID seperti <code>customer_id</code> wajib dikeluarkan sebelum pelatihan karena tidak membawa sinyal generalisasi.</li></ul>",
+    "notes": "Memasukkan customer_id sebagai fitur model adalah kesalahan klasik yang menyebabkan overfitting pada indeks urut."
+  },
+  {
+    "title": "Contoh Kode: Stratified Split & Verifikasi Proporsi",
+    "kind": "code",
+    "example": "spec/B01/b01_01_train_test_split",
+    "body": "<p>Memisahkan <code>customer_churn_features.csv</code> memakai <code>stratify=y</code> dan memeriksa kesamaan rasio churn di train vs test set.</p>",
+    "notes": "Perhatikan bahwa proporsi churn di train dan test keduanya seimbang di angka 0.50."
+  },
+  {
+    "title": "Mengatasi Fitur Campuran dengan ColumnTransformer",
+    "kind": "content",
+    "body": "<ul><li><strong>Fitur Numerik:</strong> Memerlukan imputasi nilai hilang (<code>SimpleImputer(strategy='median')</code>) serta penskalaan fitur (<code>StandardScaler</code>).</li><li><strong>Fitur Kategorikal:</strong> Memerlukan konversi angka biner lewat <code>OneHotEncoder(handle_unknown='ignore')</code>.</li><li><strong>ColumnTransformer:</strong> Memetakan masing-masing sub-pipeline ke daftar kolom terkait dalam satu blok terpadu.</li></ul>",
+    "notes": "Parameter handle_unknown='ignore' mencegah crash jika data produksi memunculkan wilayah atau paket kontrak baru."
+  },
+  {
+    "title": "Mengapa Scaling Penting bagi Model Linear?",
+    "kind": "content",
+    "body": "<ul><li><strong>Skala Fitur Berbeda:</strong> <code>monthly_spend_k</code> bernilai ratusan, sementara <code>support_calls</code> bernilai 0–6.</li><li><strong>Stabilitas Optimasi:</strong> Regresi logistik, SVM, dan K-Means sangat bergantung pada jarak/gradien sehingga mensyaratkan fitur berskala sebanding.</li><li><strong>Transformasi Uji:</strong> Pada test set panggil <code>.transform()</code> saja memakai rata-rata dan std dev milik train set.</li></ul>",
+    "notes": "Jangan pernah memanggil .fit_transform() lagi pada X_test!"
+  },
+  {
+    "title": "Contoh Kode: ColumnTransformer pada Data Heterogen",
+    "kind": "code",
+    "example": "spec/B01/b01_02_column_transformer",
+    "body": "<p>Memproses fitur numerik dan kategorikal sekaligus lalu memverifikasi nol missing values pada keluaran transformasi.</p>",
+    "notes": "Amati bagaimana jumlah fitur bertambah setelah One-Hot Encoding diterapkan."
+  },
+  {
+    "title": "Apa Itu Data Leakage dan Mengapa Berbahaya?",
+    "kind": "content",
+    "body": "<ul><li><strong>Definisi Leakage:</strong> Informasi dari masa depan atau data uji ikut bocor ke tahap pelatihan model.</li><li><strong>Bentuk Paling Umum:</strong> Menjalankan <code>StandardScaler().fit_transform(X)</code> atau imputasi sebelum <code>train_test_split</code>.</li><li><strong>Dampak Produksi:</strong> Skor pengujian lokal tampak tinggi semu, namun akurasi anjlok saat model menghadapi data baru di dunia nyata.</li></ul>",
+    "notes": "Scikit-Learn Pipeline secara struktural menutup celah data leakage paling umum ini."
+  },
+  {
+    "title": "Arsitektur Pipeline Anti-Leakage",
+    "kind": "content",
+    "body": "<ul><li><strong>Satu Antarmuka Unified:</strong> <code>Pipeline([('prep', preprocessor), ('clf', LogisticRegression())])</code>.</li><li><strong>Eksekusi `.fit(X_train, y_train)`:</strong> Otomatis memanggil <code>fit_transform</code> pada pra-pemroses lalu <code>fit</code> pada model.</li><li><strong>Eksekusi `.predict(X_test)`:</strong> Otomatis hanya memanggil <code>transform</code> (tanpa belajar ulang) lalu <code>predict</code>.</li></ul>",
+    "notes": "Pipeline sangat memudahkan saat nanti dipadukan dengan Cross-Validation dan GridSearchCV di B04."
+  },
+  {
+    "title": "Contoh Kode: Pipeline Anti-Leakage Lengkap",
+    "kind": "code",
+    "example": "spec/B01/b01_03_pipeline_leakage_prevention",
+    "body": "<p>Melatih <code>LogisticRegression</code> di dalam <code>Pipeline</code> penuh mulai dari data mentah mengandung NaN hingga prediksi di test set.</p>",
+    "notes": "Perhatikan bahwa X_train mentah langsung dikirim ke .fit() tanpa langkah preprocessing manual di luar pipeline."
+  },
+  {
+    "title": "Kewajiban Membandingkan Terhadap Baseline",
+    "kind": "content",
+    "body": "<ul><li><strong><code>DummyClassifier(strategy='most_frequent')</code>:</strong> Selalu menebak kelas terbanyak sebagai tolok ukur bawah tanpa pola fitur apa pun.</li><li><strong>Fungsi Uji Realitas:</strong> Pada data di mana 90% sampel negatif, model tebak-tebakan sudah mencetak akurasi 90%!</li><li><strong>Standar Validasi:</strong> Model ML hanya layak dipakai jika konsisten melampaui skor baseline pada test set.</li></ul>",
+    "notes": "Untuk masalah regresi, padanannya adalah DummyRegressor dengan strategy='median' atau 'mean'."
+  },
+  {
+    "title": "Contoh Kode: Baseline Dummy vs LogisticRegression",
+    "kind": "code",
+    "example": "spec/B01/b01_04_baseline_dummy",
+    "body": "<p>Mengukur peningkatan akurasi nyata dari <code>Pipeline</code> Logistic Regression di atas <code>DummyClassifier</code>.</p>",
+    "notes": "Selisih peningkatan jelas menunjukkan fitur kita membawa sinyal prediktif bermakna."
+  },
+  {
+    "title": "Kuis Cepat: Pencegahan Data Leakage",
+    "kind": "question",
+    "body": "<p>Uji ketajaman Anda dalam mengaudit kebocoran informasi saat pelatihan model.</p>",
+    "question": "Seorang insinyur mengimputasi seluruh missing value df['monthly_spend_k'] memakai median seluruh baris DataFrame sebelum memanggil train_test_split. Mengapa langkah ini keliru?",
+    "answer": "Karena nilai median tersebut dihitung ikut menyertakan sampel yang nantinya masuk ke test set. Informasi distribusi test set bocor ke data latih. Imputasi wajib dibungkus di dalam Pipeline agar median hanya dihitung dari X_train.",
+    "notes": "Hal yang sama berlaku untuk pemilihan fitur (feature selection) maupun SMOTE oversampling."
+  },
+  {
+    "title": "Latihan Mandiri: Merakit Pipeline Data Pelanggan",
+    "kind": "exercise",
+    "body": "<ul><li>Bagi <code>customer_churn_features.csv</code> memakai <code>stratify=y</code>.</li><li>Susun <code>ColumnTransformer</code> dengan <code>SimpleImputer</code>, <code>StandardScaler</code>, dan <code>OneHotEncoder</code>.</li><li>Pastikan akurasi model melampaui <code>DummyClassifier</code> dan uji memakai <code>pytest</code>.</li></ul>",
+    "notes": "Buka b01_ml_pipelines.ipynb untuk bereksperimen secara interaktif."
+  },
+  {
+    "title": "Ringkasan Modul B01",
+    "kind": "content",
+    "body": "<ul><li><code>train_test_split(..., stratify=y, random_state=42)</code> menjaga keadilan proporsi kelas serta reprodusibilitas.</li><li><code>ColumnTransformer</code> + <code>Pipeline</code> mengelola fitur numerik &amp; kategorikal tanpa data leakage.</li><li>Selalu ukur kemajuan model relatif terhadap <code>DummyClassifier</code> sebelum beralih ke algoritma kompleks di Modul B02.</li></ul>",
+    "notes": "Di Modul B02 kita akan mempelajari berbagai algoritma regresi dan klasifikasi beserta karakteristiknya."
+  }
+]
+

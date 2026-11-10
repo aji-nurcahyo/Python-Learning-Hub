@@ -227,3 +227,14 @@ Dokumen ini memetakan 8 sumber edukasi terkemuka dan berstandar internasional ke
 - **Rujukan Utama:** Industri Best Practices & Production Python Standards.
 - **Kebutuhan Konten Asli:** Capstone Project: *"Cloud-Native IoT Telecommunications Monitoring & Alerting Microservice"*.
 
+---
+
+## Pemetaan Referensi 25 Modul Spesialisasi (Tracks A–E)
+
+- **Track A (`A01`–`A05`, Data Science & Visualization):** NumPy Official User Guide (BSD-3-Clause), Pandas User Guide (BSD-3-Clause), NIST Engineering Statistics Handbook (Public Domain), Matplotlib & Seaborn Official Tutorials (PSF/BSD-3-Clause), Python Data Science Handbook (Jake VanderPlas), dan Pytest `tmp_path` Docs (MIT).
+- **Track B (`B01`–`B05`, AI & Machine Learning):** Scikit-Learn User Guide (Pipelines, Common Pitfalls Data Leakage, Linear/Ensemble Models, Clustering/PCA, Cross-Validation/GridSearchCV, Model Persistence `joblib` — BSD-3-Clause) dan Google Developers *Rules of Machine Learning* (CC BY 4.0).
+- **Track C (`C01`–`C05`, Web Development & APIs):** HTTPX Official Documentation (BSD-3-Clause), Pydantic v2 Documentation (MIT), FastAPI Official Tutorial & Testing/Security Guides (MIT), SQLAlchemy 2.0 ORM Unified Tutorial (MIT), Python `secrets`/`hmac`/`hashlib` Docs (PSF-2.0), dan *Architecture Patterns with Python* (CC BY-NC-ND 4.0).
+- **Track D (`D01`–`D05`, Automation & Scripting):** Python Official Docs (`pathlib`, `shutil`, `urllib.robotparser`, `argparse`, `logging` — PSF-2.0), OpenPyXL Documentation (MIT), fpdf2 Documentation (LGPL-3.0), Beautiful Soup 4 Documentation (MIT), dan Twelve-Factor App Guidelines (MIT).
+- **Track E (`E01`–`E05`, IoT, Signal Processing & Telecommunications):** Python `struct` Docs (PSF-2.0), pySerial URL Handlers Docs (BSD-3-Clause), Eclipse Paho MQTT Python v2 Docs (EPL-2.0/EDL-1.0), OASIS MQTT Spec, SciPy FFT & Signal Processing Reference (BSD-3-Clause), serta 3GPP TS 36.214 E-UTRA Physical Layer Measurements.
+
+

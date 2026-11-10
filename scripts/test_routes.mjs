@@ -66,6 +66,26 @@ if (missingDownloads === 0) {
   passed = -999;
 }
 
+// Check Specialization modules (A01..E05) downloads in dist/
+const specPrefixes = ['A', 'B', 'C', 'D', 'E'];
+let missingSpecDownloads = 0;
+for (const prefix of specPrefixes) {
+  for (let i = 1; i <= 5; i++) {
+    const id = `${prefix}0${i}`;
+    const guidePath = resolve(dist, `downloads/specializations/${id}/tugas.md`);
+    const starterPath = resolve(dist, `downloads/specializations/${id}/tugas.py`);
+    if (!existsSync(guidePath) || !existsSync(starterPath)) {
+      console.error(`✗ Missing specialization download assets for ${id} in dist/downloads/specializations/`);
+      missingSpecDownloads++;
+    }
+  }
+}
+if (missingSpecDownloads === 0) {
+  console.log('✓ All 25 specialization module downloads present in dist/downloads/specializations/');
+} else {
+  passed = -999;
+}
+
 // Check Getting Started & Upstream License in dist/downloads/
 const gsCode = resolve(dist, 'downloads/getting-started/main.py');
 const licenseUpstream = resolve(dist, 'downloads/LICENSE.upstream');

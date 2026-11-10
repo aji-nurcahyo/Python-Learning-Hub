@@ -1,0 +1,100 @@
+[
+  {
+    "title": "API Security, Config, Logging & Automated Testing",
+    "subtitle": "Environment Variables, PBKDF2 Hashing, Token HMAC & Audit Middleware",
+    "kind": "cover",
+    "body": "<p>Menjaga kerahasiaan kredensial dengan konfigurasi berbasis environment, mengamankan kata sandi dan token API secara kriptografis, serta membangun pencatatan audit permintaan otomatis.</p>",
+    "notes": "API yang andal tidak hanya cepat dan benar secara fungsional, tetapi juga aman terhadap penyalahgunaan akses."
+  },
+  {
+    "title": "Faktor Konfigurasi: Jauhkan Secret dari Repositori Git",
+    "kind": "content",
+    "body": "<ul><li><strong>Risiko Hardcoded Secret:</strong> Kunci API atau sandi yang tersimpan di file <code>.py</code> ikut terekam abadi di riwayat Git.</li><li><strong>Environment Variables:</strong> Pisahkan konfigurasi runtime (<code>APP_ENV</code>, <code>API_SECRET</code>, <code>TOKEN_TTL_SECONDS</code>) ke pemetaan environment.</li><li><strong>Fail-Fast Validation:</strong> Tolak startup aplikasi jika <code>API_SECRET</code> kosong atau terlalu pendek (&lt; 16 karakter).</li></ul>",
+    "notes": "Mengikuti prinsip Twelve-Factor App Factor III (Store config in the environment)."
+  },
+  {
+    "title": "Contoh Kode: Manajemen Settings Tervalidasi",
+    "kind": "code",
+    "example": "spec/C04/c04_01_settings_env_config",
+    "body": "<p>Membaca pemetaan environment menggunakan dataclass <code>AppSettings</code> dengan validasi panjang secret dan nilai default aman.</p>",
+    "notes": "Selalu jangan mencetak nilai secret mentah ke log atau output konsol."
+  },
+  {
+    "title": "Password Hashing Kriptografis yang Benar",
+    "kind": "content",
+    "body": "<ul><li><strong>Mengapa Bukan Plain-Text atau SHA-256 Biasa?</strong> SHA-256 terlalu cepat di GPU dan rentan tabel Rainbow tanpa salt.</li><li><strong>Salt Unik Acak:</strong> Gunakan <code>secrets.token_hex(16)</code> agar dua pengguna ber-password identik tetap menghasilkan hash berbeda.</li><li><strong>Key Stretching:</strong> <code>hashlib.pbkdf2_hmac('sha256', ..., 100_000)</code> memperlambat serangan brute-force ribuan kali lipat.</li></ul>",
+    "notes": "Di ekosistem industri, bcrypt dan Argon2 juga populer dengan prinsip salt + iterasi lambat yang serupa."
+  },
+  {
+    "title": "Mencegah Timing Side-Channel dengan compare_digest",
+    "kind": "content",
+    "body": "<ul><li><strong>Kelemahan Operator <code>==</code>:</strong> Pembandingan string biasa berhenti segera pada karakter pertama yang tidak cocok, membuka bocoran waktu respons mikro-detik.</li><li><strong>Solusi Konstan-Waktu:</strong> Selalu verifikasi signature atau hash memakai <code>hmac.compare_digest(expected, actual)</code>.</li></ul>",
+    "notes": "Penerapan hmac.compare_digest tidak menambah beban kinerja namun menutup celah timing attack."
+  },
+  {
+    "title": "Anatomi Token Akses Bertanda Tangan (HMAC)",
+    "kind": "content",
+    "body": "<ul><li><strong>Struktur Ringkas:</strong> <code>payload_base64url.signature_hmac_sha256</code> (konsep inti di balik token JWT HS256).</li><li><strong>Klaim Wajib:</strong> Sertakan <code>sub</code> (identitas subjek) dan <code>exp</code> (timestamp kedaluwarsa).</li><li><strong>Stateless Verification:</strong> Server cukup mengecek tanda tangan memakai <code>API_SECRET</code> dan waktu kedaluwarsa tanpa query database sesi.</li></ul>",
+    "notes": "Verifikasi harus memeriksa tanda tangan terlebih dahulu sebelum memercayai isi payload JSON."
+  },
+  {
+    "title": "Contoh Kode: Hashing PBKDF2 & Token HMAC",
+    "kind": "code",
+    "example": "spec/C04/c04_02_password_hash_hmac_token",
+    "body": "<p>Mengimplementasikan <code>hash_password</code>, <code>verify_password</code>, serta penerbitan/verifikasi token berbatas waktu kedaluwarsa.</p>",
+    "notes": "Perhatikan penolakan otomatis ketika now_epoch melewati nilai exp."
+  },
+  {
+    "title": "Melindungi Endpoint FastAPI via Depends()",
+    "kind": "content",
+    "body": "<ul><li><strong>Header Authorization:</strong> Format standar <code>Authorization: Bearer &lt;token&gt;</code>.</li><li><strong>Reusable Guard:</strong> Cukup sisipkan <code>actor: str = Depends(require_bearer_token)</code> ke parameter endpoint mana pun yang bersifat privat.</li><li><strong>Respons Standar 401:</strong> Sertakan status <code>401 Unauthorized</code> plus header <code>WWW-Authenticate: Bearer</code>.</li></ul>",
+    "notes": "Rute publik seperti /public/ping atau /health tetap dapat diakses bebas tanpa dependency auth."
+  },
+  {
+    "title": "Contoh Kode: Dependency Auth Guard pada FastAPI",
+    "kind": "code",
+    "example": "spec/C04/c04_03_dependency_auth_guard",
+    "body": "<p>Memisahkan rute publik <code>/public/ping</code> dan rute terlindungi <code>/admin/metrics</code> menggunakan <code>Depends(require_bearer_token)</code>.</p>",
+    "notes": "Endpoint protected otomatis menerima identitas actor yang sudah diverifikasi."
+  },
+  {
+    "title": "Observability: Request Logging Middleware",
+    "kind": "content",
+    "body": "<ul><li><strong>Audit Terpusat:</strong> Middleware <code>@app.middleware('http')</code> membungkus setiap panggilan API di satu tempat.</li><li><strong>Informasi Kunci:</strong> Catat <code>method</code>, <code>path</code>, <code>status_code</code>, dan latensi dalam milidetik (<code>X-Process-Time-Ms</code>).</li><li><strong>Pencegahan Kebocoran Log:</strong> Jangan pernah mencatat isi header <code>Authorization</code> atau field password ke dalam file log.</li></ul>",
+    "notes": "Logging yang terstruktur (key=value atau JSON) mempermudah pelacakan insiden produksi."
+  },
+  {
+    "title": "Contoh Kode: Middleware Audit & Header Timing",
+    "kind": "code",
+    "example": "spec/C04/c04_04_structured_logging_middleware",
+    "body": "<p>Mengukur durasi eksekusi setiap endpoint memakai <code>time.perf_counter()</code> dan menulis header respons <code>X-Process-Time-Ms</code>.</p>",
+    "notes": "Perhatikan bahwa rute yang menghasilkan 404 juga otomatis tercatat di audit log."
+  },
+  {
+    "title": "Menguji Keamanan API secara Otomatis",
+    "kind": "content",
+    "body": "<ul><li><strong>Jangan Hanya Test Jalur Sukses (Happy Path):</strong> Security bug bersembunyi di celah input salah atau token palsu.</li><li><strong>Skenario Wajib Pytest:</strong> Request tanpa header (401), token rusak/tampered (401), token expired (401), serta token valid (200 OK).</li></ul>",
+    "notes": "Automated security testing memastikan endpoint sensitif tidak pernah terbuka tidak sengaja akibat refactor."
+  },
+  {
+    "title": "Kuis Cepat: Urutan Verifikasi Token",
+    "kind": "question",
+    "body": "<p>Uji pemahaman Anda tentang praktik aman memverifikasi token akses bertanda tangan.</p>",
+    "question": "Dalam fungsi verify_signed_token(), mengapa signature HMAC wajib dicek memakai hmac.compare_digest() SEBELUM men-decode dan memercayai isi JSON payload?",
+    "answer": "Memercayai atau memproses payload JSON sebelum memverifikasi tanda tangan kriptografis membuka peluang pemalsuan klaim atau serangan parser pada input yang dimodifikasi penyerang; tanda tangan harus dibuktikan autentik terlebih dahulu secara konstan-waktu.",
+    "notes": "Prinsip cryptographic verification before parsing berlaku luas untuk HMAC maupun JWT."
+  },
+  {
+    "title": "Latihan Mandiri: Audit Keamanan Endpoint",
+    "kind": "exercise",
+    "body": "<ul><li>Implementasikan <code>hash_password</code> (PBKDF2) + <code>verify_password</code>.</li><li>Amankan endpoint privat memakai <code>Depends()</code> dan catat setiap request di middleware.</li><li>Jalankan <code>pytest code/test_c04_security_tests.py</code>.</li></ul>",
+    "notes": "Setelah mengamankan API di C04, kita siap menyatukan seluruh komponen Track C menjadi Production-Ready Capstone API di Modul C05."
+  },
+  {
+    "title": "Ringkasan Modul C04",
+    "kind": "content",
+    "body": "<ul><li>Secret aplikasi dimuat via environment config tervalidasi, bukan hardcoded di source code.</li><li>Password dilindungi salt acak + PBKDF2; token dilindungi signature HMAC + expiry + <code>hmac.compare_digest</code>.</li><li>Di Modul C05 (Capstone) kita merangkai modular routers, SQLAlchemy repository, auth guard, OpenAPI, dan integration test lengkap!</li></ul>",
+    "notes": "Lanjutkan ke Modul C05 untuk membangun proyek final Track C."
+  }
+]
+

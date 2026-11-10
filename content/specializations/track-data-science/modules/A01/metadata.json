@@ -1,0 +1,93 @@
+{
+  "id": "A01",
+  "trackId": "data-science",
+  "trackTitle": "Data Science & Visualization",
+  "order": 1,
+  "title": "Numerical Computing with NumPy",
+  "subtitle": "Array Multidimensi, Vectorization, Broadcasting & Aljabar Linier",
+  "description": "Kuasai komputasi numerik berkinerja tinggi menggunakan NumPy ndarray, slicing multidimensi, operasi vectorization tanpa loop lambat, aturan broadcasting, dan pemrosesan data matriks sensor.",
+  "difficulty": "Intermediate",
+  "estimatedHours": 4,
+  "prerequisites": [
+    "Chapter 08 (List & Tuple)",
+    "Chapter 14 (Functions & Modules)",
+    "Chapter 17 (File Handling)"
+  ],
+  "learningObjectives": [
+    "Membuat dan memeriksa struktur ndarray (shape, ndim, dtype, size).",
+    "Menerapkan indexing, slicing 2D, dan boolean masking secara akurat.",
+    "Mengganti nested loop dengan vectorization dan broadcasting yang efisien.",
+    "Menghitung agregasi berbasis axis, z-score normalization, dan operasi matriks dasar."
+  ],
+  "dependencies": ["numpy>=1.26", "pytest>=8.0"],
+  "tags": ["numpy", "ndarray", "vectorization", "broadcasting", "linear-algebra"],
+  "codeExample": {
+    "title": "Operasi Dasar ndarray & Statistik Berbasis Axis",
+    "filename": "a01_01_ndarray_basics.py",
+    "outputKey": "spec/A01/a01_01_ndarray_basics",
+    "explanation": "Skrip ini mendemonstrasikan pembuatan matriks 2D pengukuran sensor, inspeksi atribut shape/dtype/ndim, slicing baris-kolom, serta agregasi rata-rata per baris dan per kolom menggunakan parameter axis."
+  },
+  "exercise": {
+    "title": "Normalisasi & Deteksi Anomali Matriks Sensor",
+    "instructions": [
+      "Muat dataset sensor_matrix.csv menggunakan np.genfromtxt (skip header baris pertama).",
+      "Hitung rata-rata dan standar deviasi untuk setiap kolom fitur dengan axis=0.",
+      "Terapkan broadcasting untuk menghitung matriks z-score semua baris sekaligus.",
+      "Temukan indeks baris yang memiliki nilai z-score absolut lebih besar dari 1.8 pada fitur mana pun."
+    ],
+    "tips": "Pastikan parameter keepdims=True atau array 1D berdimensi (n_fitur,) cocok dengan aturan trailing dimension broadcasting.",
+    "time": "45 Menit"
+  },
+  "quiz": {
+    "question": "Jika array A berukuran (4, 3) dan array B berukuran (3,), apa hasil bentuk array dari operasi A - B dalam NumPy?",
+    "options": [
+      "Error ValueError karena jumlah dimensi berbeda",
+      "Array berukuran (4, 3) melalui aturan broadcasting",
+      "Array berukuran (3, 4) setelah transpose otomatis",
+      "Array 1D berukuran (12,) setelah flatten"
+    ],
+    "correctIndex": 1,
+    "explanation": "Menurut aturan broadcasting NumPy, dimensi B (3,) disejajarkan dari kanan menjadi (1, 3) lalu direntangkan sepanjang axis-0 menjadi (4, 3) tanpa menyalin memori.",
+    "hint": "Perhatikan kesamaan ukuran dimensi paling kanan (trailing dimension)."
+  },
+  "assignment": {
+    "title": "Proyek Mini: Pipeline Kalibrasi & Evaluasi Kinerja Node Sensor",
+    "description": "Bangun modul kalibrasi numerik murni berbasis NumPy untuk membaca matriks pembacaan multi-sensor, menghilangkan nilai bias sensor, menormalisasi fitur, dan memberi peringkat stabilitas node.",
+    "instructions": [
+      "Implementasikan fungsi load_sensor_data(csv_path) untuk memuat array float64 2D.",
+      "Buat fungsi remove_bias(data, bias_vector) menggunakan broadcasting pengurangan per kolom.",
+      "Buat fungsi minmax_scale(data) yang menormalkan setiap kolom ke rentang [0.0, 1.0] dengan proteksi pembagian nol.",
+      "Hitung skor jarak Euclidean tiap node terhadap titik operasi ideal dan urutkan indeks node dari yang paling stabil."
+    ],
+    "rubric": [
+      { "criteria": "Kebenaran Pembuatan & Inspeksi ndarray", "weight": 25, "description": "Validasi dimensi dan tipe data float64 berjalan tepat tanpa loop Python manual." },
+      { "criteria": "Penerapan Vectorization & Broadcasting", "weight": 30, "description": "Kalibrasi bias dan normalisasi Min-Max menerapkan broadcasting dan axis=0 secara benar." },
+      { "criteria": "Proteksi Kasus Batas & Testing", "weight": 25, "description": "Menangani kolom konstan (max == min) dan lulus seluruh unit test pytest." },
+      { "criteria": "Kualitas Kode & Keterbacaan", "weight": 20, "description": "Penamaan fungsi deskriptif, docstring Bahasa Indonesia dengan istilah teknis akurat." }
+    ],
+    "starterFilename": "tugas.py"
+  },
+  "resources": {
+    "hasSlides": true,
+    "codeDownload": "/downloads/specializations/A01/a01_01_ndarray_basics.py",
+    "notebookDownload": "/downloads/specializations/A01/a01_numpy_lab.ipynb",
+    "datasetDownload": "/downloads/specializations/A01/sensor_matrix.csv",
+    "guideDownload": "/downloads/specializations/A01/tugas.md",
+    "pptxDownload": null
+  },
+  "references": [
+    {
+      "title": "NumPy Documentation: Quickstart & Broadcasting",
+      "source": "NumPy Developers",
+      "url": "https://numpy.org/doc/stable/user/basics.broadcasting.html",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "title": "Python Data Science Handbook: Introduction to NumPy",
+      "source": "Jake VanderPlas",
+      "url": "https://jakevdp.github.io/PythonDataScienceHandbook/",
+      "license": "MIT / CC-BY-NC-ND"
+    }
+  ]
+}
+

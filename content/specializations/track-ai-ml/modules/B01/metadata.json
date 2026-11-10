@@ -1,0 +1,93 @@
+{
+  "id": "B01",
+  "trackId": "ai-ml",
+  "trackTitle": "Artificial Intelligence & Machine Learning",
+  "order": 1,
+  "title": "ML Foundations & Scikit-Learn Pipelines",
+  "subtitle": "Train/Test Split, ColumnTransformer, Mencegah Data Leakage & Baseline",
+  "description": "Bangun fondasi Machine Learning yang disiplin: pemisahan data berstratifikasi, pra-pemrosesan fitur numerik dan kategorikal dalam ColumnTransformer, pencegahan data leakage, serta evaluasi terhadap baseline.",
+  "difficulty": "Intermediate",
+  "estimatedHours": 4,
+  "prerequisites": [
+    "Modul A02 (Data Manipulation with Pandas)",
+    "Modul A03 (Exploratory Data Analysis)",
+    "Chapter 19 (Object-Oriented Programming)"
+  ],
+  "learningObjectives": [
+    "Menerapkan stratified train_test_split dengan random_state tetap agar eksperimen reproduksibel.",
+    "Menggabungkan transformasi numerik (StandardScaler) dan kategorikal (OneHotEncoder) memakai ColumnTransformer.",
+    "Menjelaskan serta mencegah data leakage menggunakan Scikit-Learn Pipeline.",
+    "Membandingkan model latih dengan DummyClassifier baseline sebelum menyimpulkan keberhasilan model."
+  ],
+  "dependencies": ["scikit-learn>=1.4", "pandas>=2.2", "numpy>=1.26", "pytest>=8.0"],
+  "tags": ["scikit-learn", "pipeline", "data-leakage", "preprocessing", "baseline"],
+  "codeExample": {
+    "title": "Pipeline Anti-Leakage dengan ColumnTransformer & LogisticRegression",
+    "filename": "b01_03_pipeline_leakage_prevention.py",
+    "outputKey": "spec/B01/b01_03_pipeline_leakage_prevention",
+    "explanation": "Skrip ini membungkus SimpleImputer, StandardScaler, OneHotEncoder, dan LogisticRegression dalam satu Scikit-Learn Pipeline sehingga seluruh parameter scaling dan encoding hanya dipelajari dari X_train."
+  },
+  "exercise": {
+    "title": "Merakit Pipeline Pra-Pemrosesan Data Pelanggan",
+    "instructions": [
+      "Muat datasets/customer_churn_features.csv memakai Pandas.",
+      "Pisahkan fitur X dan target churned memakai train_test_split(..., test_size=0.25, stratify=y, random_state=42).",
+      "Bangun ColumnTransformer untuk mengimputasi + menormalisasi kolom numerik dan melakukan one-hot encoding pada kolom contract_type serta region.",
+      "Bandingkan akurasi uji DummyClassifier vs Pipeline LogisticRegression."
+    ],
+    "tips": "Set parameter handle_unknown='ignore' pada OneHotEncoder agar kategori baru saat inferensi tidak memicu error.",
+    "time": "50 Menit"
+  },
+  "quiz": {
+    "question": "Mengapa menjalankan StandardScaler().fit_transform(X) pada seluruh dataset sebelum memanggil train_test_split dianggap sebagai kesalahan serius?",
+    "options": [
+      "Karena StandardScaler mengubah label string menjadi float",
+      "Karena rata-rata dan standar deviasi test set ikut memengaruhi transformasi data latih sehingga memicu data leakage dan evaluasi optimistis palsu",
+      "Karena Scikit-Learn melarang pemakaian StandardScaler bersama CSV",
+      "Karena train_test_split menghapus kolom yang sudah distandardisasi"
+    ],
+    "correctIndex": 1,
+    "explanation": "Setiap statistik distribusi test set harus benar-benar terisolasi saat training. Menaruh scaler di dalam Pipeline menjamin fit_transform hanya melihat X_train.",
+    "hint": "Pikirkan informasi apa saja yang dipelajari oleh metode .fit() milik scaler."
+  },
+  "assignment": {
+    "title": "Proyek Mini: Builder Pipeline Churn Prediction Berbasis Scikit-Learn",
+    "description": "Bangun modul Scikit-Learn Pipeline modular yang memisahkan split data secara adil, melakukan pra-pemrosesan heterogen bebas leakage, dan memverifikasi performa terhadap model baseline.",
+    "instructions": [
+      "Implementasikan split_features_target(df, target_col, test_size=0.25, random_state=42).",
+      "Implementasikan build_preprocessing_pipeline(numeric_cols, categorical_cols) menggunakan ColumnTransformer.",
+      "Implementasikan train_and_compare_baseline(X_train, X_test, y_train, y_test) yang membandingkan DummyClassifier dan LogisticRegression.",
+      "Pastikan fungsi Anda lulus unit test di test_b01_pipelines.py."
+    ],
+    "rubric": [
+      { "criteria": "Stratified Split & Reprodusibilitas Seed", "weight": 25, "description": "Split menjaga proporsi kelas target dan seed 42 deterministik." },
+      { "criteria": "Arsitektur ColumnTransformer & Pipeline", "weight": 35, "description": "Zero data leakage, handle_unknown='ignore', dan imputasi aman." },
+      { "criteria": "Perbandingan Baseline yang Jujur", "weight": 20, "description": "Model dievaluasi adil terhadap DummyClassifier di test set." },
+      { "criteria": "Unit Testing & Dokumentasi", "weight": 20, "description": "Lulus seluruh pytest dan mematuhi konvensi bahasa teknis." }
+    ],
+    "starterFilename": "tugas.py"
+  },
+  "resources": {
+    "hasSlides": true,
+    "codeDownload": "/downloads/specializations/B01/b01_03_pipeline_leakage_prevention.py",
+    "notebookDownload": "/downloads/specializations/B01/b01_ml_pipelines.ipynb",
+    "datasetDownload": "/downloads/specializations/B01/customer_churn_features.csv",
+    "guideDownload": "/downloads/specializations/B01/tugas.md",
+    "pptxDownload": null
+  },
+  "references": [
+    {
+      "title": "Scikit-Learn User Guide: Pipelines and Composite Estimators",
+      "source": "Scikit-Learn Developers",
+      "url": "https://scikit-learn.org/stable/modules/compose.html",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "title": "Scikit-Learn Common Pitfalls: Data Leakage",
+      "source": "Scikit-Learn Documentation",
+      "url": "https://scikit-learn.org/stable/common_pitfalls.html#data-leakage",
+      "license": "BSD-3-Clause"
+    }
+  ]
+}
+

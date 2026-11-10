@@ -1,0 +1,100 @@
+[
+  {
+    "title": "Capstone: Predictive Analytics Application",
+    "subtitle": "Feature Engineering, Model Selection, Joblib Persistence & Batch Inference",
+    "kind": "cover",
+    "body": "<p>Menyatukan seluruh materi Track B menjadi aplikasi Machine Learning end-to-end: dari rekayasa fitur hingga penyimpanan model atomik dan inferensi batch teruji.</p>",
+    "notes": "Capstone Track B menekankan praktik ML Engineering: paritas training-serving, persistence aman, dan validasi otomatis."
+  },
+  {
+    "title": "Tantangan Dunia Nyata: Training vs Serving",
+    "kind": "content",
+    "body": "<ul><li><strong>Training-Serving Skew:</strong> Terjadi bila rumus fitur, urutan kolom, atau skala normalisasi berbeda antara kode pelatihan dan kode produksi.</li><li><strong>Solusi Satu Pipeline:</strong> Kemas <code>Imputer + Scaler + Classifier</code> menjadi satu objek <code>Pipeline</code> Scikit-Learn sebelum disimpan.</li><li><strong>Pure Feature Helper:</strong> Panggil fungsi rekayasa fitur yang persis sama pada batch training dan batch prediksi.</li></ul>",
+    "notes": "Sekali arsitektur ini disiplin diikuti, kesalahan inferensi produksi berkurang drastis."
+  },
+  {
+    "title": "Arsitektur 4 Tahap Sistem Prediktif",
+    "kind": "content",
+    "body": "<ul><li><strong>1. Domain Feature Engineering:</strong> Membuat rasio beban per MHz dan indeks gabungan loss-latensi.</li><li><strong>2. CV Model Selection:</strong> Membandingkan Dummy, LogisticRegression, dan RandomForest via <code>StratifiedKFold</code> ROC-AUC.</li><li><strong>3. Joblib Model Bundle:</strong> Menyimpan <code>.joblib</code> beserta <code>model_metadata.json</code> + uji paritas <code>np.allclose</code>.</li><li><strong>4. Batch Inference:</strong> Mengurutkan probabilitas risiko menara baru untuk tim pemeliharaan lapangan.</li></ul>",
+    "notes": "Pola empat tahap ini berlaku umum untuk hampir semua proyek ML tabular industri."
+  },
+  {
+    "title": "Tahap 1: Rekayasa Fitur Domain (Feature Engineering)",
+    "kind": "content",
+    "body": "<ul><li><strong>Konteks Telekomunikasi:</strong> 400 pengguna di pita 40 MHz jauh lebih longgar daripada 400 pengguna di pita 20 MHz.</li><li><strong>Rasio Informatif:</strong> <code>load_per_mhz = active_users / bandwidth_mhz</code> menyingkap kepadatan aktual spektrum.</li><li><strong>Interaksi Risiko:</strong> <code>loss_latency_index = packet_loss_pct * latency_ms</code> memperkuat sinyal degradasi ganda.</li></ul>",
+    "notes": "Selalu lindungi pembagi memakai clip(lower=1.0) untuk mencegah division by zero."
+  },
+  {
+    "title": "Contoh Kode: Feature Engineering Aman & Murni",
+    "kind": "code",
+    "example": "spec/B05/b05_01_feature_engineering",
+    "body": "<p>Menghitung fitur interaksi kapasitas menara tanpa memutasi DataFrame input lalu memeriksa median perbedaan antarkelas.</p>",
+    "notes": "Median load_per_mhz kelas berisiko terlihat jauh lebih tinggi dibanding menara normal."
+  },
+  {
+    "title": "Tahap 2: Seleksi Model Berbasis CV & Baseline",
+    "kind": "content",
+    "body": "<ul><li><strong>Baseline Wajib:</strong> <code>DummyClassifier</code> mencetak ROC-AUC 0.50 (tebak acak).</li><li><strong>Validasi Silang Adil:</strong> Semua kandidat diuji pada fold <code>StratifiedKFold</code> yang identik di dalam <code>X_train</code>.</li><li><strong>Evaluasi Holdout Final:</strong> Hanya pemenang seleksi yang diukur satu kali pada holdout <code>X_test</code>.</li></ul>",
+    "notes": "Mencatat skor baseline, mean CV, dan holdout score sekaligus memberi transparansi kualitas model."
+  },
+  {
+    "title": "Contoh Kode: Seleksi Model & Holdout Assessment",
+    "kind": "code",
+    "example": "spec/B05/b05_02_training_selection",
+    "body": "<p>Mengotomasi perbandingan Dummy, LogisticRegression, dan RandomForest lalu mengembalikan model terbaik beserta metrik holdout-nya.</p>",
+    "notes": "Pipeline menangani imputasi dan scaling otomatis jika data memiliki missing value."
+  },
+  {
+    "title": "Tahap 3: Serialisasi Model dengan Joblib",
+    "kind": "content",
+    "body": "<ul><li><strong>Mengapa <code>joblib</code>?</strong> Jauh lebih efisien daripada <code>pickle</code> standar untuk objek yang memuat array besar NumPy dan tree Scikit-Learn.</li><li><strong>Metadata Pendamping:</strong> Simpan <code>model_metadata.json</code> berisi daftar kolom fitur, nama algoritma terpilih, dan tanggal/metrik.</li><li><strong>Uji Roundtrip Wajib:</strong> Muat kembali file <code>.joblib</code> dan pastikan <code>np.allclose(prob_awal, prob_muat)</code> bernilai True.</li></ul>",
+    "notes": "Catatan keamanan: hanya muat berkas .joblib dari sumber internal terpercaya, jangan dari input publik tak terverifikasi."
+  },
+  {
+    "title": "Contoh Kode: Joblib Dump, Load & Uji Paritas",
+    "kind": "code",
+    "example": "spec/B05/b05_03_model_persistence",
+    "body": "<p>Menyimpan bundle model ke direktori sementara, menulis metadata JSON, dan memverifikasi hasil prediksi tetap identik setelah dimuat ulang.</p>",
+    "notes": "Pengujian roundtrip mendeteksi korupsi artefak sebelum dikirim ke layanan produksi."
+  },
+  {
+    "title": "Tahap 4: Batch Inference & Prioritas Aksi",
+    "kind": "content",
+    "body": "<ul><li><strong>Input Batch Tanpa Label:</strong> Memuat <code>telecom_maintenance_batch.csv</code> yang tidak memiliki kolom <code>failure_risk</code>.</li><li><strong>Penerjemahan Skor ke Aksi:</strong> Peta probabilitas menjadi label <code>INSPECT_URGENT</code> atau <code>MONITOR</code>.</li><li><strong>Urutkan Berdasarkan Prioritas:</strong> Ekspor JSON terurut dari probabilitas tertinggi agar tim lapangan langsung menangani risiko terbesar.</li></ul>",
+    "notes": "Model ML memberi nilai bisnis hanya ketika terhubung dengan rekomendasi aksi konkret."
+  },
+  {
+    "title": "Contoh Kode: Orkestrator Batch Inference Engine",
+    "kind": "code",
+    "example": "spec/B05/b05_04_batch_inference_engine",
+    "body": "<p>Menjalankan pipeline penuh: training, verifikasi joblib, pembacaan batch menara baru, dan penulisan <code>batch_predictions.json</code>.</p>",
+    "notes": "Perhatikan NEW-102 dan NEW-103 langsung diprioritaskan untuk inspeksi mendesak."
+  },
+  {
+    "title": "Pengujian Otomatis Pytest untuk Sistem ML",
+    "kind": "content",
+    "body": "<ul><li><strong>Test Kontrak Pipeline:</strong> Memastikan holdout ROC-AUC melampaui ambang batas minimum (&gt; 0.90).</li><li><strong>Test Artefak Fisik:</strong> Memastikan berkas <code>.joblib</code> dan metadata JSON benar-benar tersimpan di <code>tmp_path</code>.</li><li><strong>Test Kewajaran Prediksi:</strong> Sampel ekstrem sehat harus mendapat <code>MONITOR</code> sedangkan sampel kritis mendapat <code>INSPECT_URGENT</code>.</li></ul>",
+    "notes": "Behavioral sanity test melindungi layanan ML dari regresi logika fitur."
+  },
+  {
+    "title": "Kuis Cepat: Joblib & Training-Serving Skew",
+    "kind": "question",
+    "body": "<p>Evaluasi pemahaman Anda mengenai rekayasa deployment sistem Machine Learning.</p>",
+    "question": "Apa konsekuensinya jika layanan produksi memanggil StandardScaler().fit_transform(batch_baru) sebelum melakukan prediksi dengan model RandomForest/LogisticRegression yang sudah dilatih?",
+    "answer": "Menghasilkan training-serving skew parah! Statistik rata-rata dan standar deviasi batch baru berbeda dari data training (terlebih jika batch baru hanya berisi 1–4 baris), sehingga nilai ter-scale bergeser dan prediksi menjadi kacau. Selalu bungkus scaler dalam Pipeline yang hanya dipanggil .predict() saat serving.",
+    "notes": "Ini salah satu bug ML produksi paling terkenal di dunia nyata."
+  },
+  {
+    "title": "Latihan Mandiri: Verifikasi Sistem Prediktif",
+    "kind": "exercise",
+    "body": "<ul><li>Telusuri alur <code>b05_01</code> sampai <code>b05_04</code>.</li><li>Jalankan <code>pytest code/test_b05_capstone.py</code> dan amati verifikasi artefak serta prediksi batch.</li><li>Lanjutkan merakit versi lengkap Anda pada <code>assignments/tugas.py</code>.</li></ul>",
+    "notes": "Cobalah juga menjalankan b05_capstone_predictive.ipynb untuk melihat hasil eksekusi interaktif."
+  },
+  {
+    "title": "Penutup Track B: AI & Machine Learning",
+    "kind": "content",
+    "body": "<ul><li>Anda telah menuntaskan seluruh 5 modul Track B: <strong>ML Pipelines (B01)</strong>, <strong>Regression &amp; Classification (B02)</strong>, <strong>Clustering &amp; PCA (B03)</strong>, <strong>CV &amp; Tuning (B04)</strong>, hingga <strong>Capstone Predictive System (B05)</strong>.</li><li>Pada <strong>Track C: Web Development &amp; APIs</strong>, Anda dapat menyajikan model serta data ini sebagai REST API berkecepatan tinggi!</li></ul>",
+    "notes": "Selamat menyelesaikan Batch 2 (Track B: AI & Machine Learning)!"
+  }
+]
+

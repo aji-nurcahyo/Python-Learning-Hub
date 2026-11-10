@@ -1,0 +1,100 @@
+[
+  {
+    "title": "Workflow Scheduling, Retry & Alerting",
+    "subtitle": "Exponential Backoff, Idempotency Key Ledger, Webhook Alerts & CLI Cron Runner",
+    "kind": "cover",
+    "body": "<p>Menjamin skrip otomasi terjadwal tahan terhadap gangguan jaringan sesaat, bebas eksekusi ganda melalui ledger idempoten, dan sigap melapor lewat webhook saat gagal.</p>",
+    "notes": "Skrip tanpa pengawasan manusia wajib gagal secara terlihat (noisy failure), bukan diam-diam."
+  },
+  {
+    "title": "Tantangan Pekerjaan Berjadwal Otomatis",
+    "kind": "content",
+    "body": "<ul><li><strong>Berjalan Tanpa Pengawasan:</strong> Job cron pukul 02.00 pagi harus menangani timeout sendiri atau memberi peringatan.</li><li><strong>Eksekusi Ulang Tak Terduga:</strong> Restart worker atau operator yang salah memicu ulang skrip bisa memproduksi duplikasi output.</li><li><strong>Observabilitas Penjadwal:</strong> Exit code <code>0</code> vs <code>1</code> adalah bahasa standar antara Python dan cron / Task Scheduler.</li></ul>",
+    "notes": "Komponen keandalan ini yang membedakan skrip sekali pakai vs otomasi operasional bermutu produksi."
+  },
+  {
+    "title": "Strategi Exponential Backoff Retry",
+    "kind": "content",
+    "body": "<ul><li><strong>Mengapa Jangan Loop Tanpa Jeda?</strong> Menembak server yang sedang sibuk tiap 1 ms justru memperparah gangguan.</li><li><strong>Pola Eksponensial:</strong> Hitung <code>delay = base_delay * (2 ** attempt)</code> (contoh: 0.5 detik -&gt; 1.0 detik -&gt; 2.0 detik).</li><li><strong>Batas Percobaan Wajib:</strong> Setelah <code>max_attempts</code> habis, lemparkan kembali exception agar pemanggil tahu tugas benar-benar gagal.</li></ul>",
+    "notes": "Di skrip terdistribusi nyata, tambahkan sedikit jitter acak agar banyak worker tidak bangkit bersamaan."
+  },
+  {
+    "title": "Contoh Kode: Backoff Retry Mudah Diuji",
+    "kind": "code",
+    "example": "spec/D04/d04_01_retry_exponential_backoff",
+    "body": "<p>Menyuntikkan parameter <code>sleep_fn</code> ke <code>run_with_backoff</code> sehingga unit test dapat memverifikasi jeda backoff tanpa menunggu waktu nyata.</p>",
+    "notes": "Dependency injection pada time.sleep adalah trik testing paling berharga untuk modul scheduling."
+  },
+  {
+    "title": "Idempotency: Anti Duplikasi Output & Notifikasi",
+    "kind": "content",
+    "body": "<ul><li><strong>Definisi Idempoten:</strong> Menjalankan tugas untuk kunci periode yang sama (<code>daily-sync-2025-02-01</code>) berulang kali menghasilkan efek samping tepat satu kali.</li><li><strong>State Ledger Persisten:</strong> Catat kunci pekerjaan yang sudah beres ke JSON / SQLite sebelum menutup job.</li><li><strong>Run Berikutnya Otomatis Skip:</strong> Jika kunci sudah ada di ledger, langsung kembalikan status <code>SKIPPED</code> bersih.</li></ul>",
+    "notes": "Tanpa idempotency key, retry atau restart cron dapat mengirim laporan Excel/email kembar kepada pimpinan!"
+  },
+  {
+    "title": "Contoh Kode: Idempotent Job Ledger JSON",
+    "kind": "code",
+    "example": "spec/D04/d04_02_idempotent_job_ledger",
+    "body": "<p>Menunjukkan eksekusi pertama diproses, pemanggilan kedua untuk tanggal sama di-skip aman, sementara tanggal baru tetap diproses normal.</p>",
+    "notes": "Simpan ledger di folder state persisten yang tidak ikut terhapus antar eksekusi cron."
+  },
+  {
+    "title": "Alerting Terstruktur via HTTP Webhook",
+    "kind": "content",
+    "body": "<ul><li><strong>Apa Itu Webhook Alert?</strong> Permintaan HTTP <code>POST</code> berpayload JSON singkat ke kanal operasional (Slack, Discord, Microsoft Teams, atau Telegram Gateway).</li><li><strong>Kapan Mengirim?</strong> Saat tugas melewati batas percobaan retry atau menemukan pelanggaran ambang kritis.</li><li><strong>Isi Payload Ringkas:</strong> Cantumkan <code>job</code>, <code>severity</code>, dan pesan <code>error</code> yang langsung dapat ditindaklanjuti teknisi on-call.</li></ul>",
+    "notes": "Sertakan hanya pesan kegagalan teknis ringkas, jangan mengirim isi rahasia/credentials ke chat grup."
+  },
+  {
+    "title": "Contoh Kode: Webhook Alert Dispatcher",
+    "kind": "code",
+    "example": "spec/D04/d04_03_webhook_alert_formatter",
+    "body": "<p>Memformat JSON alert standar dan mengirimkannya memakai <code>httpx.MockTransport</code> guna memverifikasi status penerimaan HTTP 202.</p>",
+    "notes": "Pola ini mudah disambungkan ke URL webhook produksi melalui environment variable."
+  },
+  {
+    "title": "Merancang CLI Cron Runner & Exit Code Standar",
+    "kind": "content",
+    "body": "<ul><li><strong><code>argparse</code> Eksplisit:</strong> Terima parameter seperti <code>--job-date</code> agar job bisa dijalankan ulang spesifik untuk tanggal tertentu (*backfill*).</li><li><strong>Exit Code <code>0</code>:</strong> Tugas tuntas atau aman di-skip idempotent.</li><li><strong>Exit Code <code>1</code> (non-nol):</strong> Terjadi kesalahan — memberi sinyal ke GitHub Actions, cron, atau Task Scheduler untuk menandai run gagal.</li></ul>",
+    "notes": "Hindari memanggil sys.exit(1) langsung di dalam fungsi helper; kembalikan int return code dari run_cli() agar mudah diuji pytest."
+  },
+  {
+    "title": "Contoh Kode: CLI Runner dengan argparse & Exit Code",
+    "kind": "code",
+    "example": "spec/D04/d04_04_cli_cron_runner",
+    "body": "<p>Menunjukkan fungsi <code>run_cli(argv)</code> yang mengembalikan exit code <code>0</code> saat sukses dan <code>1</code> saat simulasi kegagalan.</p>",
+    "notes": "Penjadwal OS seperti Windows Task Scheduler atau crontab Linux membaca angka kembalian proses Python ini."
+  },
+  {
+    "title": "Contoh Konfigurasi Penjadwal (Cron & Task Scheduler)",
+    "kind": "content",
+    "body": "<ul><li><strong>Linux Crontab (06:00 WIB):</strong> <code>0 6 * * * /path/.venv/bin/python /app/runner.py --job-date $(date +\\%F)</code>.</li><li><strong>Windows Task Scheduler:</strong> Arahkan Program ke <code>.venv\\Scripts\\python.exe</code> beserta argumen penuh &amp; <em>Start in</em> direktori kerja proyek.</li><li><strong>Aturan Wajib Virtual Env:</strong> Selalu tunjuk path lengkap interpreter Python di dalam <code>.venv</code> agar pustaka pihak ketiga ditemukan penjadwal.</li></ul>",
+    "notes": "Kesalahan paling sering pada cron adalah lupa mengarahkan ke python di dalam virtual environment."
+  },
+  {
+    "title": "Menghindari Zombie Process & Overlapping Run",
+    "kind": "content",
+    "body": "<ul><li><strong>Timeout Ketat:</strong> Pasang <code>timeout</code> di seluruh koneksi HTTP serta DB agar tugas malam tidak pernah menggantung berjam-jam.</li><li><strong>Lock / Ledger Check:</strong> Mengecek status proses di awal menjaga agar jadwal menit ke-10 tidak bertabrakan dengan jadwal sebelumnya yang lambat.</li></ul>",
+    "notes": "Kombinasi timeout + backoff + idempotency membentuk fondasi operasional tangguh."
+  },
+  {
+    "title": "Kuis Cepat: Desain Unit Test Fungsi Retry",
+    "kind": "question",
+    "body": "<p>Uji pemahaman Anda mengenai teknik injeksi ketergantungan untuk menguji logika penjadwalan.</p>",
+    "question": "Mengapa fungsi run_with_backoff() menerima parameter sleep_fn=time.sleep ketimbang memanggil time.sleep() langsung di dalam tubuh fungsi?",
+    "answer": "Dengan menjadikan sleep_fn sebagai parameter yang bisa diganti saat pengujian, pytest dapat menyuntikkan list.append sebagai sleep_fn tiruan: unit test tetap memverifikasi angka jeda eksponensial [0.25, 0.5] dengan akurat 100% dalam waktu kurang dari 1 milidetik.",
+    "notes": "Prinsip Dependency Injection juga mempermudah pengujian waktu/clock tanpa perlu menunggu nyata."
+  },
+  {
+    "title": "Latihan Mandiri: Scheduled Job & Idempotency",
+    "kind": "exercise",
+    "body": "<ul><li>Implementasikan <code>run_with_backoff</code> dengan <code>sleep_fn</code> tiruan.</li><li>Uji pencegahan eksekusi ganda menggunakan <code>IdempotentLedger</code> di <code>tmp_path</code>.</li><li>Jalankan <code>pytest code/test_d04_orchestration.py</code>.</li></ul>",
+    "notes": "Pada Modul D05 (Capstone), kita menyatukan D01–D04 menjadi Bot Pelaporan Otonom lengkap!"
+  },
+  {
+    "title": "Ringkasan Modul D04",
+    "kind": "content",
+    "body": "<ul><li>Exponential backoff menangani gangguan sementara secara sopan tanpa membebani server target.</li><li>Idempotent state ledger mencegah pengiriman ulang ganda oleh cron, sementara webhook &amp; exit code 1 memastikan kegagalan segera diketahui.</li><li>Di Modul D05 (Capstone Track D) kita merakit seluruh sistem Autonomous Data Ingestion &amp; Reporting Bot!</li></ul>",
+    "notes": "Lanjutkan ke Modul D05 (Capstone)."
+  }
+]
+

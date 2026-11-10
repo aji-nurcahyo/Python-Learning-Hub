@@ -142,3 +142,19 @@ Sebelum suatu chapter diubah statusnya menjadi `"available": true`, modul terseb
 7. **Integritas Build Produksi:**
    - `npm run build` sukses 100% dan lolos seluruh pengujian rute statis di `dist/`.
 
+---
+
+### FASE 5: Ekspansi 5 Jalur Spesialisasi Profesional (25 Modul: A01–E05)
+*Target: Spesialisasi domain industri lanjutan sesudah menuntaskan Chapter 01–30, memadukan praktik rekayasa Python nyata dengan pengujian otomatis `pytest` dan verifikasi `.venv` terisolasi.*
+
+| Track ID | Judul Track | Rentang Modul | Stack Utama | Status Keluaran |
+| :--- | :--- | :--- | :--- | :--- |
+| `data-science` | Data Science & Visualization | `A01`–`A05` | NumPy, Pandas, SciPy, Matplotlib, Seaborn, Jupyter | **SELESAI (100%)**: 5 modul, 76 slide, 20 skrip, 5 notebooks, 5 pytest suites |
+| `ai-ml` | Artificial Intelligence & ML | `B01`–`B05` | Scikit-Learn Pipelines, Ridge, RF, K-Means/DBSCAN/PCA, `joblib` | **SELESAI (100%)**: 5 modul, 75 slide, 20 skrip, 5 notebooks, 5 pytest suites |
+| `web-api` | Web Development & APIs | `C01`–`C05` | `httpx`, FastAPI, Pydantic v2, SQLAlchemy 2.0, HMAC Auth | **SELESAI (100%)**: 5 modul, 75 slide, 20 skrip, 5 pytest suites |
+| `automation` | Automation & Scripting | `D01`–`D05` | `pathlib`, `shutil`, OpenPyXL, `fpdf2`, BeautifulSoup4, `RobotFileParser` | **SELESAI (100%)**: 5 modul, 75 slide, 20 skrip, 5 pytest suites |
+| `iot-telecom` | IoT, Signal Processing & Telecom | `E01`–`E05` | `pyserial`, `struct`, `paho-mqtt`, SciPy FFT/Butterworth, LTE RSRP/SINR | **SELESAI (100%)**: 5 modul, 75 slide, 20 skrip, 5 pytest suites |
+
+*Milestone Keseluruhan Platform:* **55 / 55 Modul Pembelajaran Aktif (30 Core Chapters + 25 Specialization Modules)** telah tervalidasi penuh dengan `check_specializations.mjs`, `.venv` runner, dan Vite production build.
+
+

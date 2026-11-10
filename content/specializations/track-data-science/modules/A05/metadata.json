@@ -1,0 +1,95 @@
+{
+  "id": "A05",
+  "trackId": "data-science",
+  "trackTitle": "Data Science & Visualization",
+  "order": 5,
+  "title": "Capstone: End-to-End Analytics Report",
+  "subtitle": "Pipeline Multi-Tabel dari Data Ingestion hingga Executive Report Otomatis",
+  "description": "Integrasikan seluruh keterampilan Track A (NumPy, Pandas, EDA, Matplotlib/Seaborn) menjadi arsitektur pipeline analitik terpadu yang memvalidasi skema CSV, membersihkan log operasional, menghitung SLA compliance rate, dan menghasilkan laporan analitik beserta grafik PNG.",
+  "difficulty": "Advanced",
+  "estimatedHours": 8,
+  "isCapstone": true,
+  "prerequisites": [
+    "Modul A01 (Numerical Computing with NumPy)",
+    "Modul A02 (Data Manipulation with Pandas)",
+    "Modul A03 (Exploratory Data Analysis)",
+    "Modul A04 (Data Visualization with Matplotlib & Seaborn)"
+  ],
+  "learningObjectives": [
+    "Merancang pipeline analitik modular (ingestion -> cleaning -> enrichment -> KPI -> reporting).",
+    "Menerapkan validasi skema kolom dan tipe data sebelum transformasi dijalankan.",
+    "Menggabungkan log transaksi operasional dengan tabel master infrastruktur secara aman.",
+    "Menghasilkan artefak laporan Markdown/JSON serta dashboard multi-panel yang teruji oleh pytest."
+  ],
+  "dependencies": ["pandas>=2.2", "numpy>=1.26", "matplotlib>=3.8", "seaborn>=0.13", "pytest>=8.0"],
+  "tags": ["capstone", "pipeline", "analytics-report", "kpi", "automation"],
+  "codeExample": {
+    "title": "Orkestrator Pipeline End-to-End Analytics Report",
+    "filename": "a05_04_report_generator.py",
+    "outputKey": "spec/A05/a05_04_report_generator",
+    "explanation": "Skrip orkestrator ini menjalankan validasi skema, membersihkan log jaringan, menggabungkan metadata menara, menghitung SLA compliance per region, merender figur 2-panel ke folder sementara, dan menyusun ringkasan laporan terstruktur."
+  },
+  "exercise": {
+    "title": "Ekstensi KPI Pipeline & Deteksi Risiko SLA",
+    "instructions": [
+      "Pelajari keterhubungan network_operations_logs.csv dan tower_metadata.csv.",
+      "Tambahkan pemeriksaan missing values dan nilai latensi negatif pada tahap cleaning.",
+      "Hitung metrik p95_latency_ms per wilayah menggunakan np.percentile atau Series.quantile(0.95).",
+      "Format rekomendasi menara berisiko tinggi menjadi tabel Markdown terurut."
+    ],
+    "tips": "Pisahkan fungsi murni kalkulasi KPI dari fungsi I/O file agar unit test berjalan cepat dan deterministik.",
+    "time": "60 Menit"
+  },
+  "quiz": {
+    "question": "Dalam merancang pipeline analitik modular yang mudah diuji oleh pytest, praktik arsitektur manakah yang paling tepat?",
+    "options": [
+      "Menaruh seluruh proses read_csv, cleaning, plotting, dan print laporan dalam satu skrip global tanpa fungsi",
+      "Memisahkan tahap ingestion/schema-check, transformation/KPI calculation (pure functions), dan export visualisasi ke fungsi terpisah dengan parameter Path eksplisit",
+      "Menyimpan grafik langsung ke direktori kerja root tanpa parameter output path",
+      "Mengabaikan duplikasi ID log karena tidak memengaruhi nilai rata-rata"
+    ],
+    "correctIndex": 1,
+    "explanation": "Pemisahan fungsi transformasi murni dan injeksi path output memungkinkan pytest menguji kebenaran logika KPI maupun ekspor file terisolasi menggunakan tmp_path.",
+    "hint": "Ingat prinsip Separation of Concerns dari Chapter 29."
+  },
+  "assignment": {
+    "title": "Capstone Project Track A: End-to-End Network Analytics Report Engine",
+    "description": "Bangun mesin pelaporan analitik lengkap yang memproses log jaringan kotor dan metadata menara menjadi laporan KPI SLA regional, daftar eskalasi menara kritis, serta grafik ringkasan siap presentasi.",
+    "instructions": [
+      "Implementasikan validate_and_load(logs_path, meta_path) dengan pengecekan kolom wajib (schema validation).",
+      "Implementasikan clean_and_enrich(logs_df, meta_df) untuk deduplikasi log_id, koreksi angka tidak valid, imputasi median, dan left join metadata menara.",
+      "Implementasikan compute_regional_kpis(enriched_df) untuk menghasilkan sla_compliance_pct, median_latency_ms, p95_latency_ms, dan total_incidents per region.",
+      "Implementasikan generate_analytics_bundle(logs_path, meta_path, out_dir) yang menulis report.md, kpi_summary.json, dan dashboard.png beserta minimal 4 unit test pytest."
+    ],
+    "rubric": [
+      { "criteria": "Validasi Skema & Ketahanan Ingestion", "weight": 20, "description": "Mendeteksi kolom yang hilang atau tipe data rusak lebih awal sebelum kalkulasi." },
+      { "criteria": "Data Cleaning, Enrichment & Rekayasa KPI", "weight": 35, "description": "Deduplikasi, imputasi, join, serta perhitungan SLA & P95 latency akurat 100%." },
+      { "criteria": "Kualitas Artefak Laporan & Visualisasi", "weight": 25, "description": "Dashboard PNG bersih dan laporan Markdown/JSON informatif." },
+      { "criteria": "Modularitas Kode & Cakupan Unit Test", "weight": 20, "description": "Seluruh tahapan diuji end-to-end dengan pytest menggunakan tmp_path." }
+    ],
+    "starterFilename": "tugas.py"
+  },
+  "resources": {
+    "hasSlides": true,
+    "codeDownload": "/downloads/specializations/A05/a05_04_report_generator.py",
+    "notebookDownload": "/downloads/specializations/A05/a05_capstone_analytics.ipynb",
+    "datasetDownload": "/downloads/specializations/A05/network_operations_logs.csv",
+    "guideDownload": "/downloads/specializations/A05/tugas.md",
+    "pptxDownload": null
+  },
+  "references": [
+    {
+      "title": "Pandas User Guide: Scaling & Method Chaining Patterns",
+      "source": "Pandas Development Team",
+      "url": "https://pandas.pydata.org/docs/user_guide/enhancingperf.html",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "title": "Pytest Documentation: Using tmp_path Fixture",
+      "source": "Pytest Developers",
+      "url": "https://docs.pytest.org/en/stable/howtouse/tmp_path.html",
+      "license": "MIT"
+    }
+  ]
+}
+

@@ -1,0 +1,100 @@
+[
+  {
+    "title": "Wireless Network & Cellular Signal Analytics",
+    "subtitle": "RSSI, RSRP, RSRQ, SINR vs SNR, Path Loss & Deteksi Blindspot",
+    "kind": "cover",
+    "body": "<p>Membedah data survei drive-test jaringan seluler 4G/5G: membedakan kekuatan cakupan (RSRP) dari kualitas interferensi (SINR vs SNR), pemodelan FSPL, dan pemetaan zona bermasalah.</p>",
+    "notes": "Modul E04 menerjemahkan konsep RF Teknik Telekomunikasi menjadi alur analisis Python yang terukur."
+  },
+  {
+    "title": "Empat Metrik Radio Inti: RSSI, RSRP, RSRQ, SINR",
+    "kind": "content",
+    "body": "<ul><li><strong>RSSI:</strong> Total daya penerima di seluruh lebar pita — bercampur antara sinyal berguna, interferensi sel tetangga, dan derau.</li><li><strong>RSRP (dBm):</strong> Daya murni sinyal referensi milik sel target saja — ukuran utama <em>luas cakupan</em>.</li><li><strong>RSRQ (dB):</strong> Rasio <code>N * RSRP / RSSI</code> yang memantau kualitas sinyal saat sel berbeban penuh.</li><li><strong>SINR (dB):</strong> Mengukur kejernihan sinyal untuk menentukan laju bit (modulasi QAM) maksimal.</li></ul>",
+    "notes": "Membaca RSSI tanpa RSRP/SINR sering menipu karena sel yang penuh interferensi tampak memiliki RSSI kuat."
+  },
+  {
+    "title": "Perbedaan Kritis: SNR vs SINR",
+    "kind": "content",
+    "body": "<ul><li><strong>SNR (<code>S / N</code>):</strong> Hanya memperhitungkan rasio sinyal terhadap derau termal latar belakang (<em>thermal noise floor</em>).</li><li><strong>SINR (<code>S / (I + N)</code>):</strong> Memasukkan komponen <strong>I (Interference)</strong> dari menara pemancar tetangga pada pita frekuensi yang sama.</li><li><strong>Fakta Seluler Modern:</strong> Pada deployment padat (<em>frequency reuse = 1</em>), kapasitas data dibatasi oleh <strong>SINR</strong>, sehingga <code>SINR &lt;= SNR</code>.</li></ul>",
+    "notes": "Di wilayah perkotaan yang ramai menara BTS, I jauh lebih besar daripada N."
+  },
+  {
+    "title": "Contoh Kode: Klasifikasi RSRP/SINR & Penalti Interferensi",
+    "kind": "code",
+    "example": "spec/E04/e04_01_rf_metrics_classification",
+    "body": "<p>Mengelompokkan tiap sampel drive-test ke grade <code>Excellent</code>..<code>Cell-Edge</code> serta menghitung penalti interferensi <code>snr_db - sinr_db</code>.</p>",
+    "notes": "Perhatikan pada titik PT-03 dan PT-05 selisih antara SNR dan SINR mencapai belasan dB!"
+  },
+  {
+    "title": "Memisahkan Coverage Blindspot vs High Interference",
+    "kind": "content",
+    "body": "<ul><li><strong>Coverage Blindspot (<code>RSRP &lt; -105 dBm</code>):</strong> Sinyal sel target memang lemah/terhalang gedung (butuh penguatan antena atau site baru).</li><li><strong>High Interference / Pilot Pollution (<code>RSRP &gt;= -90 dBm</code> tapi <code>SINR &lt;= 3 dB</code>):</strong> Sinyal kuat, namun banyak menara saling menindih tanpa sel dominan — memicu <em>ping-pong handover</em> dan putus koneksi!</li></ul>",
+    "notes": "Menaikkan daya TX menara saat mengalami pilot pollution justru memicu gangguan makin parah."
+  },
+  {
+    "title": "Contoh Kode: Diagnosis Masalah Titik Drive Test",
+    "kind": "code",
+    "example": "spec/E04/e04_02_drive_test_blindspots",
+    "body": "<p>Mengklasifikasikan titik-titik anomali pada <code>drive_test_lte_measurements.csv</code> menjadi <code>HIGH_INTERFERENCE</code>, <code>COVERAGE_BLINDSPOT</code>, atau <code>CRITICAL_EDGE</code>.</p>",
+    "notes": "Titik PT-11 ber-RSRP -83.5 dBm tetap mengalami 4 kali handover karena SINR hanya 1.4 dB."
+  },
+  {
+    "title": "Link Budget & Free-Space Path Loss (FSPL)",
+    "kind": "content",
+    "body": "<ul><li><strong>Formula Ruang Bebas:</strong> <code>FSPL(dB) = 32.44 + 20*log10(d_km) + 20*log10(f_MHz)</code>.</li><li><strong>Aturan Praktis 6 dB:</strong> Menggandakan jarak (1 km -&gt; 2 km) atau menggandakan frekuensi pembawa (900 -&gt; 1800 MHz) menambah rugi redaman sebesar <strong>+6.02 dB</strong>.</li><li><strong>Perhitungan Rx Power:</strong> <code>Tx Power + Gain Tx + Gain Rx - Path Loss</code>.</li></ul>",
+    "notes": "Di perkotaan padat, redaman tambahan (clutter/penetration loss gedung) jauh di atas nilai FSPL murni."
+  },
+  {
+    "title": "Contoh Kode: Simulasi FSPL & Link Budget Multi-Jarak",
+    "kind": "code",
+    "example": "spec/E04/e04_03_pathloss_link_budget",
+    "body": "<p>Menghitung rugi lintasan 1800 MHz serta estimasi daya terima (dBm) pada jarak 0.5 km hingga 4.0 km memakai NumPy.</p>",
+    "notes": "Setiap kelipatan dua jarak konsisten menambah rugi lintasan sekitar 6.02 dB."
+  },
+  {
+    "title": "Agregasi per Cell ID & Peta Sebar Geospasial",
+    "kind": "content",
+    "body": "<ul><li><strong>Statistik Median per Sel:</strong> Mengelompokkan sampel berdasarkan <code>cell_id</code> untuk mencari sel dengan median SINR terendah dan total handover tertinggi.</li><li><strong>Peta Sebar Lat/Lon:</strong> Menggunakan skala warna divergen <code>RdYlGn</code> terkunci di rentang <code>[-115, -75]</code> dBm agar zona hijau vs merah langsung menonjol.</li></ul>",
+    "notes": "Peta koordinat GPS membantu tim optimasi radio menentukan persis segmen jalan yang harus di-tilt ulang."
+  },
+  {
+    "title": "Contoh Kode: Rekap Cell ID & Render Coverage Map",
+    "kind": "code",
+    "example": "spec/E04/e04_04_handover_coverage_map",
+    "body": "<p>Meringkas kinerja masing-masing <code>cell_id</code> dan merender scatter map RSRP berbasis koordinat <code>lat</code>/<code>lon</code> ke file PNG.</p>",
+    "notes": "Menentukan vmin/vmax colorbar konsisten sangat krusial ketika membandingkan peta sebelum vs sesudah optimasi."
+  },
+  {
+    "title": "Mengaudit Ping-Pong Handover di Jaringan",
+    "kind": "content",
+    "body": "<ul><li><strong>Gejala Ping-Pong:</strong> Perangkat berpindah sel bolak-balik antar dua menara dalam hitungan detik di area tumpang tindih sinyal setara.</li><li><strong>Korelasi SINR &amp; Handover:</strong> Pada dataset drive-test kita, titik ber-SINR rendah &lt; 3 dB sering diiringi lonjakan <code>handover_count</code> 2–4 kali.</li></ul>",
+    "notes": "Penyetelan parameter hysteresis (Cell Individual Offset) dan downtilt mekanis membantu menstabilkan sel dominan."
+  },
+  {
+    "title": "Validasi Data Telekomunikasi di Pytest",
+    "kind": "content",
+    "body": "<ul><li><strong>Invariansi Fisik:</strong> Pastikan di seluruh rekaman data <code>sinr_db &lt;= snr_db</code> karena interferensi tambahan tidak mungkin bernilai negatif.</li><li><strong>Pengujian Batas Ambang:</strong> Uji fungsi klasifikasi tepat di batas <code>-80.0</code>, <code>-90.0</code>, dan <code>-105.0</code> dBm.</li></ul>",
+    "notes": "Assertion hukum fisika pada data sensor sering menangkap bug inversi tanda minus atau satuan dB vs skala linear."
+  },
+  {
+    "title": "Kuis Cepat: Optimasi Kesalahan Solusi RF",
+    "kind": "question",
+    "body": "<p>Uji pemahaman Anda dalam mendiagnosis penyebab buruknya performa pelanggan seluler.</p>",
+    "question": "Di sebuah ruas jalan raya, pengukuran RSRP sangat kuat (-79 dBm), namun throughput unduh amat lambat dan SINR tercatat 1.2 dB. Tindakan mana yang keliru jika dilakukan oleh tim lapangan?",
+    "answer": "Memperbesar daya pancar (TX Power) BTS tetangga atau BTS lokal tanpa mengatur azimuth/downtilt! Dengan RSRP -79 dBm cakupan sudah sangat cukup; masalah utamanya adalah HIGH_INTERFERENCE (SINR rendah). Memperbesar daya tanpa mengatur fisik antena atau penjadwalan kanal hanya memperparah interferensi silang.",
+    "notes": "Pemisahan diagnosa Coverage-limited vs Interference-limited adalah pengetahuan dasar RF Optimization Engineer."
+  },
+  {
+    "title": "Latihan Mandiri: RF Analytics & FSPL",
+    "kind": "exercise",
+    "body": "<ul><li>Audit seluruh titik pada <code>drive_test_lte_measurements.csv</code>.</li><li>Hitung perbedaan <code>snr_db - sinr_db</code> dan uji rumus FSPL.</li><li>Jalankan <code>pytest code/test_e04_rf_analytics.py</code>.</li></ul>",
+    "notes": "Kini seluruh komponen IoT (E01-E02), DSP (E03), dan Wireless RF (E04) siap dirangkai dalam Capstone Track E di Modul E05!"
+  },
+  {
+    "title": "Ringkasan Modul E04",
+    "kind": "content",
+    "body": "<ul><li>Bedakan selalu <strong>RSRP</strong> (cakupan murni), <strong>RSRQ</strong> (kualitas), <strong>SNR</strong> (sinyal vs thermal noise), dan <strong>SINR</strong> (sinyal vs interferensi + noise).</li><li>Kombinasi RSRP dan SINR memisahkan zona blindspot dari zona interferensi ko-kanal.</li><li>Di Modul E05 (Capstone Track E), kita membangun sistem terpadu <strong>IoT Monitoring &amp; Signal Analytics System</strong>!</li></ul>",
+    "notes": "Lanjutkan ke Modul E05 (Capstone)."
+  }
+]
+

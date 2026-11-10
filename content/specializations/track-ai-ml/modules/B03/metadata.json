@@ -1,0 +1,92 @@
+{
+  "id": "B03",
+  "trackId": "ai-ml",
+  "trackTitle": "Artificial Intelligence & Machine Learning",
+  "order": 3,
+  "title": "Unsupervised Learning & Dimensionality Reduction",
+  "subtitle": "K-Means Clustering, Silhouette Analysis, DBSCAN Anomaly & PCA",
+  "description": "Temukan struktur tersembunyi pada data tanpa label menggunakan algoritma clustering berbasis jarak (K-Means) dan kepadatan (DBSCAN), evaluasi kualitas cluster dengan Silhouette Score, serta reduksi dimensi memakai Principal Component Analysis (PCA).",
+  "difficulty": "Intermediate",
+  "estimatedHours": 5,
+  "prerequisites": [
+    "Modul B01 (ML Foundations & Scikit-Learn Pipelines)",
+    "Modul A01 (Numerical Computing with NumPy)"
+  ],
+  "learningObjectives": [
+    "Menyiapkan fitur numerik dengan StandardScaler sebelum menerapkan algoritma berbasis jarak.",
+    "Menentukan jumlah cluster optimal pada K-Means memakai metode Elbow (inertia) dan Silhouette Score.",
+    "Menggunakan DBSCAN untuk mendeteksi kelompok non-sferis sekaligus mengisolasi outlier berlabel -1.",
+    "Mereduksi fitur multidimensi menggunakan PCA(n_components=2) serta menafsirkan explained_variance_ratio_."
+  ],
+  "dependencies": ["scikit-learn>=1.4", "pandas>=2.2", "numpy>=1.26", "pytest>=8.0"],
+  "tags": ["unsupervised", "kmeans", "dbscan", "pca", "clustering"],
+  "codeExample": {
+    "title": "Menentukan Jumlah Cluster Optimal via Inertia & Silhouette Score",
+    "filename": "b03_02_elbow_silhouette.py",
+    "outputKey": "spec/B03/b03_02_elbow_silhouette",
+    "explanation": "Skrip ini menskalakan fitur profil penggunaan pelanggan lalu mengevaluasi nilai K=2 hingga K=5 menggunakan inersia K-Means serta Silhouette Score guna menentukan segmentasi paling kohesif."
+  },
+  "exercise": {
+    "title": "Segmentasi Pengguna & Reduksi Dimensi PCA",
+    "instructions": [
+      "Muat datasets/user_usage_profiles.csv dan pilih 4 kolom metrik penggunaan.",
+      "Lakukan StandardScaler lalu jalankan KMeans(n_clusters=3, n_init=10, random_state=42).",
+      "Hitung Silhouette Score segmentasi serta nilai rata-rata fitur tiap cluster.",
+      "Terapkan PCA(n_components=2) untuk memproyeksikan 4 dimensi menjadi 2 komponen utama dan cek total variance yang tersimpan."
+    ],
+    "tips": "Jangan pernah menjalankan K-Means atau PCA tanpa StandardScaler jika fitur memiliki satuan jauh berbeda (misal GB vs milidetik).",
+    "time": "50 Menit"
+  },
+  "quiz": {
+    "question": "Mengapa StandardScaler wajib dijalankan sebelum K-Means atau PCA ketika dataset menggabungkan fitur 'daily_gb' (0.5–12.0) dan 'active_minutes' (20–450)?",
+    "options": [
+      "Karena K-Means tidak menerima tipe data float64",
+      "Karena fitur dengan rentang angka besar (active_minutes) akan mendominasi perhitungan jarak Euclidean dan varians PCA jika tidak distandardisasi ke mean=0, std=1",
+      "Karena PCA otomatis menghapus kolom dengan standar deviasi kecil",
+      "Karena StandardScaler mengubah data tanpa label menjadi klasifikasi supervised"
+    ],
+    "correctIndex": 1,
+    "explanation": "K-Means meminimalkan jarak Euclidean kuadrat dan PCA memaksimalkan arah varians terbesar; tanpa scaling, skala unit besar mendominasi hasil matematis secara bias.",
+    "hint": "Perhatikan efek skala angka ratusan vs satuan pada selisih kuadrat (x1 - x2)^2."
+  },
+  "assignment": {
+    "title": "Proyek Mini: Mesin Segmentasi Pelanggan & Deteksi Anomali Tanpa Label",
+    "description": "Bangun modul unsupervised learning yang melakukan segmentasi pengguna data seluler, memilih K optimal berbasis Silhouette Score, menandai pengguna anomali lewat DBSCAN, serta memproyeksikan fitur via PCA.",
+    "instructions": [
+      "Implementasikan scale_and_cluster_kmeans(df, feature_cols, k_values) untuk mengembalikan evaluasi inertia dan silhouette score tiap K.",
+      "Implementasikan detect_density_anomalies(df, feature_cols, eps=0.9, min_samples=3) memakai DBSCAN yang mengembalikan indeks baris berlabel -1.",
+      "Implementasikan project_pca(df, feature_cols, n_components=2) menggunakan Pipeline(StandardScaler, PCA).",
+      "Validasikan ketiga fungsi menggunakan unit test di test_b03_unsupervised.py."
+    ],
+    "rubric": [
+      { "criteria": "Kebenaran Scaling & Pipeline Jarak", "weight": 25, "description": "StandardScaler diterapkan konsisten sebelum K-Means, DBSCAN, dan PCA." },
+      { "criteria": "Evaluasi Kualitas K-Means (Silhouette)", "weight": 25, "description": "Berhasil memilih K terbaik beserta interpretasi profil tiap cluster." },
+      { "criteria": "Deteksi Noise DBSCAN & Reduksi PCA", "weight": 30, "description": "Mengisolasi label -1 DBSCAN serta memeriksa explained_variance_ratio_." },
+      { "criteria": "Unit Testing & Kebersihan Kode", "weight": 20, "description": "Lulus seluruh skenario pytest dengan random_state deterministik." }
+    ],
+    "starterFilename": "tugas.py"
+  },
+  "resources": {
+    "hasSlides": true,
+    "codeDownload": "/downloads/specializations/B03/b03_02_elbow_silhouette.py",
+    "notebookDownload": "/downloads/specializations/B03/b03_clustering_pca.ipynb",
+    "datasetDownload": "/downloads/specializations/B03/user_usage_profiles.csv",
+    "guideDownload": "/downloads/specializations/B03/tugas.md",
+    "pptxDownload": null
+  },
+  "references": [
+    {
+      "title": "Scikit-Learn User Guide: Clustering (K-Means & DBSCAN)",
+      "source": "Scikit-Learn Developers",
+      "url": "https://scikit-learn.org/stable/modules/clustering.html",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "title": "Scikit-Learn Decomposition: Principal Component Analysis (PCA)",
+      "source": "Scikit-Learn Developers",
+      "url": "https://scikit-learn.org/stable/modules/decomposition.html#pca",
+      "license": "BSD-3-Clause"
+    }
+  ]
+}
+

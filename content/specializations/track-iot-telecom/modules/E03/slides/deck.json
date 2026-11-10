@@ -1,0 +1,100 @@
+[
+  {
+    "title": "Digital Signal Processing with SciPy & FFT",
+    "subtitle": "Teorema Nyquist, Spektrum Frekuensi rfft & Filter Butterworth Zero-Phase",
+    "kind": "cover",
+    "body": "<p>Menganalisis kandungan frekuensi sinyal terukur memakai Fast Fourier Transform dan menyingkirkan interferensi berfrekuensi tinggi secara stabil dengan filter digital Butterworth SOS.</p>",
+    "notes": "Modul E03 menjembatani teori sinyal telekomunikasi dengan implementasi numerik praktis di Python SciPy."
+  },
+  {
+    "title": "Sinyal Diskrit & Teorema Sampling Nyquist",
+    "kind": "content",
+    "body": "<ul><li><strong>Frekuensi Sampling (<code>fs</code>):</strong> Jumlah cuplikan yang direkam per detik (Hz).</li><li><strong>Batas Nyquist (<code>fs / 2</code>):</strong> Frekuensi maksimal sinyal yang dapat direkonstruksi akurat tanpa lipatan spektrum.</li><li><strong>Aliasing:</strong> Apabila <code>fs</code> terlalu lambat untuk sinyal 180 Hz, komponen tinggi menyamar menjadi frekuensi rendah palsu!</li></ul>",
+    "notes": "Dalam akuisisi data praktis, insinyur biasanya memilih fs minimal 4x hingga 10x frekuensi tertinggi yang diamati."
+  },
+  {
+    "title": "Contoh Kode: Sintesis Sinyal Multi-Frekuensi & Noise",
+    "kind": "code",
+    "example": "spec/E03/e03_01_sine_sampling_nyquist",
+    "body": "<p>Membangkitkan sinyal utama 40 Hz tercampur interferensi 180 Hz serta noise Gaussian acak deterministik (<code>default_rng(42)</code>).</p>",
+    "notes": "Penggunaan endpoint=False pada np.linspace penting agar periode gelombang menyambung presisi bagi FFT."
+  },
+  {
+    "title": "Dari Domain Waktu ke Domain Frekuensi (FFT)",
+    "kind": "content",
+    "body": "<ul><li><strong>Mengapa Domain Frekuensi?</strong> Di osiloskop waktu, gelombang 40 Hz + 180 Hz + noise terlihat kusut bercampur aduk.</li><li><strong><code>scipy.fft.rfft</code>:</strong> Khusus sinyal riil — menghitung tepat bin frekuensi non-negatif secara efisien.</li><li><strong><code>rfftfreq(N, d=1/fs)</code>:</strong> Menghasilkan sumbu frekuensi dalam satuan Hz untuk setiap bin hasil FFT.</li></ul>",
+    "notes": "Kalikan magnitudo |rfft| dengan 2.0 / N (kecuali komponen DC) agar nilainya kembali ke amplitudo fisik asli."
+  },
+  {
+    "title": "Contoh Kode: Deteksi Puncak Spektrum rfft",
+    "kind": "code",
+    "example": "spec/E03/e03_02_fft_frequency_spectrum",
+    "body": "<p>Menemukan komponen 40.0 Hz dan 180.0 Hz beserta perkiraan amplitudonya secara otomatis lewat spektrum magnitudo FFT.</p>",
+    "notes": "Begitu frekuensi pengganggu 180 Hz teridentifikasi di spektrum, kita dapat menetapkan cutoff filter tepat di antaranya."
+  },
+  {
+    "title": "Memahami Windowing & Spectral Leakage",
+    "kind": "content",
+    "body": "<ul><li><strong>Asumsi Periodisitas FFT:</strong> FFT menganggap cuplikan berdurasi terbatas berulang periodik di luar jendela pengamatan.</li><li><strong>Hann Window (<code>scipy.signal.windows.hann</code>):</strong> Jika frekuensi tidak pas jatuh di bin integer, gunakan fungsi window agar tepi sinyal mengecil mulus ke nol.</li></ul>",
+    "notes": "Pemilihan durasi pengamatan integer detik pada fs integer meminimalkan leakage untuk sinyal uji 40 Hz & 180 Hz."
+  },
+  {
+    "title": "Merancang Filter Digital Butterworth",
+    "kind": "content",
+    "body": "<ul><li><strong>Karakter Butterworth:</strong> Respons magnitudo datar maksimal (<em>maximally flat</em>) di daerah passband tanpa riak gelombang.</li><li><strong>Jenis Filter:</strong> <code>low</code> (meloloskan frekuensi rendah), <code>high</code> (meloloskan tinggi), dan <code>bandpass</code> (meloloskan pita tertentu).</li><li><strong>Frekuensi Cut-off (<code>Wn</code>):</strong> Diatur pada <code>85 Hz</code> (di antara sinyal 40 Hz dan gangguan 180 Hz), serta wajib <code>&lt; fs / 2</code>.</li></ul>",
+    "notes": "Orde filter (order=4) menyeimbangkan ketajaman penurunan spektrum dan efisiensi komputasi."
+  },
+  {
+    "title": "Kestabilan Numerik: output='sos' vs (b, a)",
+    "kind": "content",
+    "body": "<ul><li><strong>Kelemahan Bentuk Transfer <code>b, a</code>:</strong> Pada orde filter tinggi atau cutoff sangat rendah, akar polinomial rentan melenceng akibat pembulatan float64.</li><li><strong>Second-Order Sections (<code>output='sos'</code>):</strong> Memecah filter besar menjadi rantai bagian kuadratik orde-2 yang selalu stabil secara numerik.</li><li><strong><code>sosfiltfilt</code>:</strong> Menyaring maju lalu mundur sehingga mengompensasi penuh lag/pergeseran fase sinyal!</li></ul>",
+    "notes": "Dokumentasi resmi SciPy sangat merekomendasikan format sos ketimbang b, a untuk aplikasi DSP modern."
+  },
+  {
+    "title": "Contoh Kode: Butterworth LPF & Evaluasi SNR",
+    "kind": "code",
+    "example": "spec/E03/e03_03_butterworth_lowpass_filter",
+    "body": "<p>Menyaring interferensi 180 Hz + noise dengan <code>butter(..., output='sos')</code> + <code>sosfiltfilt</code> serta mengukur kenaikan SNR dalam desibel.</p>",
+    "notes": "Amati lonjakan SNR pasca-filtering lebih dari +10 dB!"
+  },
+  {
+    "title": "Visualisasi Perbandingan Domain Waktu & Spektrum",
+    "kind": "content",
+    "body": "<ul><li><strong>Panel Atas (Domain Waktu):</strong> Menampilkan hilangnya getaran cepat frekuensi tinggi sesudah filtering sambil menjaga fase puncak 40 Hz.</li><li><strong>Panel Bawah (Domain Frekuensi):</strong> Memperlihatkan puncak gangguan di 180 Hz tertekan hampir menyentuh nol.</li></ul>",
+    "notes": "Menyajikan plot waktu + spektrum sekaligus memberi bukti visual lengkap bahwa sinyal diinginkan tetap utuh."
+  },
+  {
+    "title": "Contoh Kode: Ekspor Grafik Waktu & FFT",
+    "kind": "code",
+    "example": "spec/E03/e03_04_spectrum_chart_export",
+    "body": "<p>Merender figur dua-panel Matplotlib (150 ms domain waktu + spektrum 0–260 Hz) dan memverifikasi penyusutan magnitudo di 180 Hz.</p>",
+    "notes": "Sinyal bersih 40 Hz di panel waktu terlihat tetap sefase (zero-phase) berkat sosfiltfilt."
+  },
+  {
+    "title": "Kapan Tidak Bisa Memakai filtfilt?",
+    "kind": "content",
+    "body": "<ul><li><strong>Streaming Real-Time Sample-by-Sample:</strong> <code>sosfiltfilt</code> membutuhkan seluruh buffer masa depan untuk jalan mundur, sehingga dipakai pada rekaman batch atau blok window.</li><li><strong>Real-Time Causal:</strong> Untuk streaming milidetik di edge perangkat keras, gunakan <code>sosfilt(sos, chunk, zi=state)</code> yang mempertahankan state filter antar blok.</li></ul>",
+    "notes": "Membedakan causal vs zero-phase offline filter menunjukkan penguasaan rekayasa DSP."
+  },
+  {
+    "title": "Kuis Cepat: Nyquist & Filter Cutoff",
+    "kind": "question",
+    "body": "<p>Uji pemahaman Anda tentang batas sampling diskrit dan pemilihan frekuensi cutoff.</p>",
+    "question": "Jika laju pencuplikan sensor adalah fs = 200 Hz, mengapa pemanggilan butter(4, 120.0, btype='low', fs=200.0, output='sos') gagal melempar ValueError?",
+    "answer": "Frekuensi Nyquist sistem dengan fs = 200 Hz adalah 100 Hz (fs / 2). Frekuensi cutoff 120 Hz melampaui batas Nyquist 100 Hz dan secara teoretis tidak dapat direpresentasikan atau disaring di atas domain digital tersebut.",
+    "notes": "Selalu periksa syarat 0 < cutoff_hz < fs / 2 sebelum memanggil scipy.signal.butter."
+  },
+  {
+    "title": "Latihan Mandiri: Spectral Analyzer & Filtering",
+    "kind": "exercise",
+    "body": "<ul><li>Deteksi dua puncak frekuensi dominan via <code>rfft</code>.</li><li>Rancang filter Butterworth <code>output='sos'</code> dan ukur peningkatan SNR (dB).</li><li>Jalankan <code>pytest code/test_e03_dsp.py</code>.</li></ul>",
+    "notes": "Di Modul E04 kita beralih ke analitik jaringan seluler nirkabel: RSSI, RSRP, RSRQ, SINR vs SNR, dan pemetaan cakupan radio!"
+  },
+  {
+    "title": "Ringkasan Modul E03",
+    "kind": "content",
+    "body": "<ul><li>Pahami batas Nyquist <code>fs / 2</code> dan gunakan <code>rfft</code> + <code>rfftfreq</code> untuk membedah spektrum sinyal sensor.</li><li>Gunakan <code>butter(..., output='sos')</code> + <code>sosfiltfilt</code> demi stabilitas numerik dan distorsi fase nol.</li><li>Di Modul E04 kita menerapkan pemrosesan Python pada metrik radio telekomunikasi nyata (RSRP, RSRQ, SINR, Link Budget)!</li></ul>",
+    "notes": "Lanjutkan ke Modul E04: Wireless Network & Cellular Signal Analytics."
+  }
+]
+

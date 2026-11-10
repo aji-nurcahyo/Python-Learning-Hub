@@ -1,0 +1,93 @@
+{
+  "id": "C01",
+  "trackId": "web-api",
+  "trackTitle": "Web Development & APIs",
+  "order": 1,
+  "title": "HTTP Client Utility & JSON Contract",
+  "subtitle": "httpx Client, Timeout, Retry Pattern, Pagination & Validasi Pydantic",
+  "description": "Bangun klien HTTP yang tangguh di Python menggunakan httpx: manajemen timeout eksplisit, parameter query, pagination, penanganan status HTTP 4xx/5xx dengan retry, serta validasi kontrak JSON menggunakan Pydantic.",
+  "difficulty": "Intermediate",
+  "estimatedHours": 4,
+  "prerequisites": [
+    "Chapter 18 (Error Handling & Exceptions)",
+    "Chapter 28 (Networking & API Integration)",
+    "Chapter 25 (Type Hints & Code Quality)"
+  ],
+  "learningObjectives": [
+    "Mengonfigurasi httpx.Client dengan timeout eksplisit dan header standar secara aman.",
+    "Mengirim query parameters dinamis serta mengumpulkan data multi-halaman (pagination).",
+    "Menerapkan retry pattern selektif hanya untuk kesalahan jaringan/5xx, bukan kesalahan klien 4xx.",
+    "Memvalidasi respons JSON API menjadi model bertipe ketat memakai Pydantic BaseModel."
+  ],
+  "dependencies": ["httpx>=0.27", "pydantic>=2.7", "pytest>=8.0"],
+  "tags": ["http", "httpx", "rest-client", "pydantic", "retry"],
+  "codeExample": {
+    "title": "Klien HTTP dengan Retry Selektif pada Status 5xx",
+    "filename": "c01_03_error_handling_retry.py",
+    "outputKey": "spec/C01/c01_03_error_handling_retry",
+    "explanation": "Skrip ini mensimulasikan API tidak stabil menggunakan httpx.MockTransport (dua kali mengembalikan HTTP 503 lalu 200 OK) untuk mendemonstrasikan retry terkontrol sementara kesalahan 404 langsung berhenti tanpa diulang sia-sia."
+  },
+  "exercise": {
+    "title": "Membangun Klien REST Tahan Banting dengan MockTransport",
+    "instructions": [
+      "Definisikan skema Pydantic DeviceStatus dengan field id (str), rssi_dbm (float), dan online (bool).",
+      "Buat httpx.MockTransport yang mengembalikan HTTP 503 pada percobaan pertama lalu HTTP 200 pada percobaan kedua.",
+      "Implementasikan fungsi fetch_with_retry(client, url, max_attempts=3) yang hanya mengulang status 500–599.",
+      "Validasi JSON balikan memakai DeviceStatus.model_validate_json(...) atau model_validate(...)."
+    ],
+    "tips": "Jangan pernah memanggil request HTTP tanpa timeout=... karena koneksi menggantung dapat membekukan seluruh worker aplikasi.",
+    "time": "45 Menit"
+  },
+  "quiz": {
+    "question": "Ketika mengonsumsi REST API eksternal, mengapa permintaan yang mengembalikan status HTTP 400 atau 404 sebaiknya TIDAK di-retry otomatis, sedangkan HTTP 503 layak dicoba ulang?",
+    "options": [
+      "Karena httpx melarang pemakaian status code 4xx",
+      "Karena 400/404 menandakan kesalahan input atau resource tidak ada yang hasilnya akan tetap sama jika diulang, sedangkan 503 bersifat sementara (transient server overload)",
+      "Karena 503 otomatis mengubah payload menjadi XML",
+      "Karena retry hanya bekerja pada metode HTTP POST"
+    ],
+    "correctIndex": 1,
+    "explanation": "Error 4xx umumnya deterministik dari sisi klien (kecuali 429 Too Many Requests dengan header Retry-After), sedangkan 5xx atau timeout adalah gangguan jaringan/server sesaat.",
+    "hint": "Bedakan kesalahan dari permintaan klien (4xx) dengan gangguan ketersediaan server sementara (5xx)."
+  },
+  "assignment": {
+    "title": "Proyek Mini: Reusable Telemetry HTTP Client",
+    "description": "Bangun modul klien HTTP modular yang mampu menarik data berhalaman (paginated), menangani status transient via retry, dan mem-parsing setiap item menjadi objek Pydantic tervalidasi.",
+    "instructions": [
+      "Definisikan model Pydantic TelemetryRecord dengan validasi rentang suhu -40.0 <= temp_c <= 120.0.",
+      "Implementasikan fetch_all_pages(client, endpoint) yang mengiterasi page=1..N sampai hasil items kosong.",
+      "Implementasikan safe_get_json(client, url, max_attempts=3) dengan retry untuk status 502/503/504.",
+      "Uji seluruh skenario offline memakai httpx.MockTransport di pytest."
+    ],
+    "rubric": [
+      { "criteria": "Konfigurasi httpx.Client & Timeout Eksplisit", "weight": 25, "description": "Seluruh sesi HTTP memakai context manager with httpx.Client(timeout=...) dan headers jelas." },
+      { "criteria": "Logika Pagination & Retry Selektif", "weight": 30, "description": "Hanya mengulang gangguan transient (5xx), langsung gagal pada 400/404." },
+      { "criteria": "Validasi Skema JSON via Pydantic", "weight": 25, "description": "Menolak field bertipe salah atau nilai di luar batas valid." },
+      { "criteria": "Unit Testing Offline dengan MockTransport", "weight": 20, "description": "Seluruh test deterministik tanpa ketergantungan internet." }
+    ],
+    "starterFilename": "tugas.py"
+  },
+  "resources": {
+    "hasSlides": true,
+    "codeDownload": "/downloads/specializations/C01/c01_03_error_handling_retry.py",
+    "notebookDownload": null,
+    "datasetDownload": null,
+    "guideDownload": "/downloads/specializations/C01/tugas.md",
+    "pptxDownload": null
+  },
+  "references": [
+    {
+      "title": "HTTPX Official Documentation: Client, Timeouts & MockTransport",
+      "source": "Encode OSS",
+      "url": "https://www.python-httpx.org/advanced/transports/",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "title": "Pydantic v2 Documentation: Models & Validation",
+      "source": "Pydantic Services",
+      "url": "https://docs.pydantic.dev/latest/concepts/models/",
+      "license": "MIT"
+    }
+  ]
+}
+

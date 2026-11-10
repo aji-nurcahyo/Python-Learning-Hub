@@ -1,0 +1,100 @@
+[
+  {
+    "title": "Model Evaluation, Cross-Validation & Tuning",
+    "subtitle": "Confusion Matrix, Precision/Recall, StratifiedKFold & GridSearchCV",
+    "kind": "cover",
+    "body": "<p>Mengukur kualitas model secara akurat pada kelas tidak seimbang, memvalidasi stabilitas generalisasi lewat StratifiedKFold, serta menyetel hyperparameter dan decision threshold secara metodis.</p>",
+    "notes": "Banyak proyek ML gagal di produksi karena mengandalkan satu kali split dan akurasi mentah."
+  },
+  {
+    "title": "Jebakan Akurasi pada Data Imbalanced",
+    "kind": "content",
+    "body": "<ul><li><strong>Ilusi Akurasi Tinggi:</strong> Pada dataset dengan 95% transaksi normal, model konstan menebak 'Normal' mencatat akurasi 95% meski nol deteksi penipuan.</li><li><strong>Confusion Matrix:</strong> Memisahkan 4 skenario hasil prediksi: True Positive (TP), False Positive (FP), True Negative (TN), dan False Negative (FN).</li><li><strong>Metrik Wajib:</strong> Precision, Recall, F1-Score, dan ROC-AUC.</li></ul>",
+    "notes": "Selalu tampilkan Confusion Matrix terlebih dahulu untuk melihat ke mana kesalahan model condong."
+  },
+  {
+    "title": "Precision, Recall, F1 & ROC-AUC",
+    "kind": "content",
+    "body": "<ul><li><strong>Precision:</strong> Ketepatan alarm (berapa banyak prediksi positif yang benar). Penting bila investigasi palsu berbiaya mahal.</li><li><strong>Recall (Sensitivity):</strong> Kelengkapan tangkapan (berapa banyak insiden asli berhasil terdeteksi).</li><li><strong>F1-Score:</strong> Rata-rata harmonik Precision dan Recall.</li><li><strong>ROC-AUC:</strong> Mengukur pemisahan skor probabilitas tanpa bergantung pada satu threshold tunggal.</li></ul>",
+    "notes": "ROC-AUC mendekati 1.0 berarti model mampu memberi probabilitas jauh lebih tinggi kepada kelas positif."
+  },
+  {
+    "title": "Contoh Kode: Metrik Klasifikasi Imbalanced",
+    "kind": "code",
+    "example": "spec/B04/b04_01_confusion_classification_metrics",
+    "body": "<p>Menghitung Confusion Matrix, Precision, Recall, F1, dan ROC-AUC model deteksi peringatan transaksi anomali.</p>",
+    "notes": "Amati pemakaian zero_division=0 agar skrip tidak melempar warning saat prediksi kelas kosong."
+  },
+  {
+    "title": "Keterbatasan Single Holdout Split",
+    "kind": "content",
+    "body": "<ul><li><strong>Varians Pengukuran:</strong> Pada dataset puluhan atau ratusan baris, kebetulan penempatan 2 sampel sulit ke test set bisa menggeser skor hingga ±10%.</li><li><strong>Solusi Validasi Silang:</strong> <em>K-Fold Cross-Validation</em> mengevaluasi model pada semua bagian data latih secara bergiliran.</li><li><strong>Stratifikasi:</strong> <code>StratifiedKFold</code> memastikan setiap lipatan (fold) membawa persentase kelas positif yang konsisten.</li></ul>",
+    "notes": "Jangan pernah menjalankan CV pada test set! CV hanya beroperasi di dalam X_train, y_train."
+  },
+  {
+    "title": "Contoh Kode: Stratified 5-Fold Cross-Validation",
+    "kind": "code",
+    "example": "spec/B04/b04_02_stratified_kfold",
+    "body": "<p>Menilai kestabilan <code>Pipeline(StandardScaler, LogisticRegression)</code> melalui 5 lipatan stratified sekaligus mencetak mean ± std.</p>",
+    "notes": "Standar deviasi kecil menandakan performa model stabil lintas partisi data."
+  },
+  {
+    "title": "Pencarian Hyperparameter: GridSearchCV di Atas Pipeline",
+    "kind": "content",
+    "body": "<ul><li><strong>Hyperparameter vs Parameter:</strong> Koefisien dipelajari model saat <code>.fit()</code>, sedangkan <code>n_estimators</code> dan <code>max_depth</code> ditetapkan sebelum training.</li><li><strong>Prefix Nama Step:</strong> Gunakan <code>'rf__max_depth'</code> (double underscore) untuk menunjuk step <code>'rf'</code> di dalam Pipeline.</li><li><strong>Zero Leakage Otomatis:</strong> Di setiap fold GridSearchCV, pra-pemroses di-fit ulang hanya pada fold pelatihan terkait.</li></ul>",
+    "notes": "Setelah pencarian selesai, evaluasi akhir dilakukan tepat satu kali pada holdout X_test."
+  },
+  {
+    "title": "Contoh Kode: Pipeline + GridSearchCV + Holdout Eval",
+    "kind": "code",
+    "example": "spec/B04/b04_03_gridsearch_tuning",
+    "body": "<p>Menyetel kedalaman dan jumlah pohon <code>RandomForestClassifier</code> dengan kriteria <code>scoring='roc_auc'</code> lalu menguji <code>best_estimator_</code> di holdout set.</p>",
+    "notes": "Perhatikan garis pemisah tegas antara cv (X_train) dan evaluasi akhir (X_test)."
+  },
+  {
+    "title": "Menghindari Overfitting Akibat Over-Tuning",
+    "kind": "content",
+    "body": "<ul><li><strong>Pencarian Terlalu Agresif:</strong> Mencoba ratusan kombinasi grid pada dataset kecil dapat menyebabkan overfitting terhadap skor CV itu sendiri.</li><li><strong>Pilih Ruang Pencarian Masuk Akal:</strong> Batasi pilihan hyperparameter yang paling berdampak (regularisasi C/alpha, max_depth, min_samples_leaf).</li><li><strong>RandomizedSearchCV:</strong> Alternatif lebih hemat waktu untuk ruang hyperparameter berdimensi banyak.</li></ul>",
+    "notes": "Evaluasi final pada holdout set membantu mendeteksi apakah CV telah mengalami overfitting ringan."
+  },
+  {
+    "title": "Threshold Tuning Sesuai Biaya Bisnis",
+    "kind": "content",
+    "body": "<ul><li><strong>Mengapa Bukan Selalu 0.50?</strong> Ambang 0.50 mengasumsikan biaya False Positive dan False Negative persis sama.</li><li><strong>Menurunkan Threshold (misal 0.25):</strong> Recall naik drastis (makin banyak anomali tertangkap), Precision mungkin turun sedikit.</li><li><strong>Menaikkan Threshold (misal 0.75):</strong> Alarm hanya berbunyi ketika model sangat yakin (Precision tinggi).</li></ul>",
+    "notes": "Threshold adalah tuas kendali bisnis yang bisa disetel ulang tanpa melatih ulang model."
+  },
+  {
+    "title": "Contoh Kode: Tabel Trade-Off Decision Threshold",
+    "kind": "code",
+    "example": "spec/B04/b04_04_threshold_tuning",
+    "body": "<p>Membandingkan Precision, Recall, dan F1 pada ambang 0.25, 0.50, dan 0.75 dari probabilitas keluaran model.</p>",
+    "notes": "Pendekatan ini memungkinkan kolaborasi kuantitatif antara data scientist dan tim keamanan/operasional."
+  },
+  {
+    "title": "Checklist Evaluasi Model Sebelum Produksi",
+    "kind": "content",
+    "body": "<ul><li>Apakah sudah lulus skor di atas <code>DummyClassifier</code> baseline?</li><li>Apakah <code>StandardScaler</code> dan <code>Imputer</code> terisolasi di dalam <code>Pipeline</code> selama Cross-Validation?</li><li>Apakah holdout test set hanya disentuh di akhir setelah pemilihan parameter selesai?</li><li>Apakah threshold probabilitas sudah selaras dengan prioritas operasional?</li></ul>",
+    "notes": "Checklist ini akan kita pakai penuh pada proyek Capstone di Modul B05."
+  },
+  {
+    "title": "Kuis Cepat: Holdout Test Set vs Cross-Validation",
+    "kind": "question",
+    "body": "<p>Uji pemahaman Anda terhadap alur pemisahan data evaluasi saat melakukan tuning hyperparameter.</p>",
+    "question": "Dalam alur GridSearchCV, mengapa kita tetap memisahkan Holdout Test Set sebelum menjalankan GridSearchCV pada data latih?",
+    "answer": "Karena selama GridSearchCV mengevaluasi berbagai hyperparameter, model terpilih secara implisit dioptimalkan agar cocok pada fold-fold CV. Holdout test set yang tidak pernah disentuh GridSearchCV diperlukan untuk mengukur kemampuan generalisasi murni tanpa optimisme seleksi hyperparameter.",
+    "notes": "Ini sering disebut arsitektur Train (CV Tuning) -> Holdout Test Evaluation."
+  },
+  {
+    "title": "Latihan Mandiri: Audit CV & Tuning",
+    "kind": "exercise",
+    "body": "<ul><li>Hitung 5-fold <code>StratifiedKFold</code> pada <code>fraud_alert_sample.csv</code>.</li><li>Jalankan <code>GridSearchCV</code> pada <code>Pipeline</code> Random Forest dengan scoring <code>roc_auc</code>.</li><li>Bandingkan Precision dan Recall pada threshold <code>0.25</code> vs <code>0.75</code> serta jalankan <code>pytest</code>.</li></ul>",
+    "notes": "Silakan lanjutkan eksperimen interaktif pada notebook b04_eval_tuning.ipynb."
+  },
+  {
+    "title": "Ringkasan Modul B04",
+    "kind": "content",
+    "body": "<ul><li>Gunakan Confusion Matrix, Precision, Recall, F1, dan ROC-AUC untuk dataset tidak seimbang.</li><li><code>StratifiedKFold</code> dan <code>GridSearchCV</code> di atas <code>Pipeline</code> mencegah leakage sekaligus mengukur kestabilan.</li><li>Penyetelan threshold menjembatani probabilitas model dengan kebutuhan bisnis; kini Anda siap merakit Capstone B05 beserta model persistence!</li></ul>",
+    "notes": "Modul B05 mengintegrasikan seluruh Track B dari feature engineering hingga penyimpanan model joblib dan batch inference."
+  }
+]
+

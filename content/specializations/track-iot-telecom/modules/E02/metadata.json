@@ -1,0 +1,93 @@
+{
+  "id": "E02",
+  "trackId": "iot-telecom",
+  "trackTitle": "IoT, Signal Processing & Telecommunications",
+  "order": 2,
+  "title": "IoT Protocols & MQTT Publish-Subscribe",
+  "subtitle": "Topic Hierarchy, Wildcards (+/#), QoS 0/1/2, Retained Messages & LWT",
+  "description": "Kuasai protokol pesan standar industri IoT menggunakan paho-mqtt v2: perancangan hierarki topik terstruktur, pencocokan wildcard + dan #, perbedaan keandalan QoS 0/1/2, Retained Message, Last Will and Testament (LWT), serta simulasi broker offline.",
+  "difficulty": "Intermediate",
+  "estimatedHours": 5,
+  "prerequisites": [
+    "Modul E01 (Sensor Telemetry, Serial Framing & Checksums)",
+    "Chapter 19 (Object-Oriented Programming)",
+    "Chapter 28 (Networking & API Integration)"
+  ],
+  "learningObjectives": [
+    "Merancang struktur hierarki topik MQTT yang skalabel dan mengevaluasi wildcard + serta #.",
+    "Memilih level QoS 0, 1, atau 2, Retained Message, dan Last Will and Testament (LWT) sesuai karakter sensor.",
+    "Mengimplementasikan callback paho-mqtt v2 (CallbackAPIVersion.VERSION2) untuk parsing JSON payload.",
+    "Menjalankan simulator broker MQTT deterministik di memori untuk menguji alert ambang batas secara offline."
+  ],
+  "dependencies": ["paho-mqtt>=2.0", "pytest>=8.0"],
+  "tags": ["mqtt", "iot", "publish-subscribe", "paho-mqtt", "qos"],
+  "codeExample": {
+    "title": "Simulasi Broker MQTT Offline, Wildcard Routing & Deduplikasi QoS 1",
+    "filename": "e02_04_offline_broker_pipeline.py",
+    "outputKey": "spec/E02/e02_04_offline_broker_pipeline",
+    "explanation": "Skrip ini menyimulasikan alur publish-subscribe MQTT penuh di memori memakai paho.mqtt.client.topic_matches_sub, mempertahankan retained message terbaru, mencegah duplikasi pesan QoS 1 lewat packet_id, dan memicu alert suhu tinggi."
+  },
+  "exercise": {
+    "title": "Perancangan Topik Wildcard & Penanganan Callback MQTT v2",
+    "instructions": [
+      "Gunakan paho.mqtt.client.topic_matches_sub untuk mengevaluasi subscription 'itera/+/sensor/#' terhadap berbagai topik perangkat.",
+      "Buat objek mqtt.Client(mqtt.CallbackAPIVersion.VERSION2) serta pasangkan callback on_message.",
+      "Simulasikan pengiriman payload JSON {'node': 'GKU-01', 'temp_c': 37.8} ke MQTTMessage dan uji callback handler.",
+      "Tambahkan deduplikasi message_id untuk pesan QoS 1."
+    ],
+    "tips": "Jangan mengawali topik MQTT dengan garis miring ('/itera/...') karena menciptakan segmen level kosong tambahan; mulai langsung dengan 'itera/...'.",
+    "time": "50 Menit"
+  },
+  "quiz": {
+    "question": "Dalam komunikasi IoT menggunakan MQTT, apa fungsi fitur Last Will and Testament (LWT) yang didaftarkan sensor ke broker saat awal koneksi?",
+    "options": [
+      "Mengompresi payload JSON menjadi file ZIP",
+      "Memerintahkan broker menerbitkan pesan status 'offline' otomatis ke subscriber apabila sensor terputus mendadak tanpa mengirim paket DISCONNECT",
+      "Menjamin kecepatan bandwidth naik dua kali lipat",
+      "Mengganti protokol TCP menjadi HTTP GET polling"
+    ],
+    "correctIndex": 1,
+    "explanation": "Jika node di lapangan mati mendadak (listrik padam atau sinyal putus), broker mendeteksi keep-alive timeout dan segera menerbitkan pesan LWT ke topik status agar dashboard monitoring langsung tahu perangkat offline.",
+    "hint": "Pikirkan bagaimana dashboard mengetahui bahwa sebuah perangkat mati listrik dan berhenti mengirim data."
+  },
+  "assignment": {
+    "title": "Proyek Mini: MQTT Telemetry Router & Offline Broker Simulator",
+    "description": "Bangun komponen routing dan pemrosesan pesan MQTT berbasis paho-mqtt v2 yang mendukung wildcard matching, retained snapshot, penanganan LWT, dan deteksi anomali threshold.",
+    "instructions": [
+      "Implementasikan match_mqtt_subscriptions(subscriptions, topic) menggunakan mqtt.topic_matches_sub.",
+      "Bangun kelas InMemoryMqttBroker mendukung subscribe, publish(topic, payload, qos, retain, packet_id), serta simulasi disconnect_ungraceful(client_id) untuk memicu LWT.",
+      "Pastikan subscriber QoS 1 mendeteksi duplikasi packet_id.",
+      "Uji seluruh skenario dengan pytest di test_e02_mqtt.py."
+    ],
+    "rubric": [
+      { "criteria": "Desain Hierarki Topik & Wildcard Matching", "weight": 25, "description": "Penggunaan + (single-level) dan # (multi-level) akurat." },
+      { "criteria": "Implementasi Retained Message & Trigger LWT", "weight": 30, "description": "Subscriber baru mendapat retained message dan disconnect tak terduga mengirim LWT." },
+      { "criteria": "Penanganan Payload JSON & Paho v2 Callback", "weight": 25, "description": "Validasi payload JSON tangguh dan deduplikasi QoS 1 bekerja tepat." },
+      { "criteria": "Unit Testing Broker Simulasi (Pytest)", "weight": 20, "description": "Seluruh skenario offline berjalan bersih tanpa broker eksternal." }
+    ],
+    "starterFilename": "tugas.py"
+  },
+  "resources": {
+    "hasSlides": true,
+    "codeDownload": "/downloads/specializations/E02/e02_04_offline_broker_pipeline.py",
+    "notebookDownload": null,
+    "datasetDownload": null,
+    "guideDownload": "/downloads/specializations/E02/tugas.md",
+    "pptxDownload": null
+  },
+  "references": [
+    {
+      "title": "Eclipse Paho MQTT Python v2 Documentation",
+      "source": "Eclipse Foundation",
+      "url": "https://eclipse.dev/paho/files/paho.mqtt.python/html/client.html",
+      "license": "EPL-2.0 / EDL-1.0"
+    },
+    {
+      "title": "OASIS MQTT Version 5.0 / 3.1.1 Specification Overview",
+      "source": "OASIS",
+      "url": "https://mqtt.org/",
+      "license": "Open Standard"
+    }
+  ]
+}
+

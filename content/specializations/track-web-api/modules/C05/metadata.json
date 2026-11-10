@@ -1,0 +1,95 @@
+{
+  "id": "C05",
+  "trackId": "web-api",
+  "trackTitle": "Web Development & APIs",
+  "order": 5,
+  "title": "Capstone: Production-Ready REST API",
+  "subtitle": "Modular APIRouter, Repository Pattern, Auth Guard, Middleware & Full Pytest Suite",
+  "description": "Bangun microservice REST API lengkap bermutu produksi yang memadukan skema Pydantic v2, lapisan repository SQLAlchemy 2.0 SQLite, autentikasi Bearer token HMAC, middleware logging timing, OpenAPI docs, serta integration test penuh.",
+  "difficulty": "Advanced",
+  "estimatedHours": 8,
+  "isCapstone": true,
+  "prerequisites": [
+    "Modul C01 (HTTP Client Utility & JSON Contract)",
+    "Modul C02 (Modern REST API with FastAPI & Pydantic)",
+    "Modul C03 (Database Persistence with SQLAlchemy ORM)",
+    "Modul C04 (API Security, Config, Logging & Testing)"
+  ],
+  "learningObjectives": [
+    "Menyusun arsitektur berlapis (Schema -> Repository -> APIRouter -> App Factory).",
+    "Mengelola session database persisten lewat dependency injection yang dapat dioverride untuk testing.",
+    "Mengamankan operasi tulis/baca sensitif dengan token guard dan mencatat metrik latensi HTTP di middleware.",
+    "Memverifikasi siklus lengkap endpoint (201/200/204/401/404/409/422) serta OpenAPI via pytest."
+  ],
+  "dependencies": ["fastapi>=0.115", "sqlalchemy>=2.0", "pydantic>=2.7", "httpx>=0.27", "pytest>=8.0"],
+  "tags": ["capstone", "microservice", "fastapi", "sqlalchemy", "integration-test"],
+  "codeExample": {
+    "title": "Application Factory & Full End-to-End Integration Lifecycle",
+    "filename": "c05_04_app_factory_testclient.py",
+    "outputKey": "spec/C05/c05_04_app_factory_testclient",
+    "explanation": "Orkestrator capstone ini merakit modul schema, SQLAlchemy repository, router terautentikasi, dan audit middleware lewat create_app(), lalu menguji siklus lengkap Create -> Read -> Conflict 409 -> Auth 401 -> Update -> Delete 204 dengan TestClient."
+  },
+  "exercise": {
+    "title": "Audit Kontrak API & Pemisahan Lapisan Arsitektur",
+    "instructions": [
+      "Tinjau pemisahan tanggung jawab antara c05_01_domain_schemas.py, c05_02_repository_db.py, dan c05_03_service_auth_router.py.",
+      "Pastikan router HTTP tidak langsung menyentuh detail query SQL mentah melainkan memanggil DeviceRepository.",
+      "Verifikasi bahwa route GET /health bersifat publik sementara POST/PUT/DELETE /api/v1/nodes mensyaratkan Bearer token.",
+      "Jalankan pytest code/test_c05_capstone.py untuk memvalidasi semua status HTTP."
+    ],
+    "tips": "Pola Application Factory create_app(db_url, api_secret) mempermudah pembuatan instance app terisolasi di tiap pytest fixture.",
+    "time": "65 Menit"
+  },
+  "quiz": {
+    "question": "Apa keuntungan utama memisahkan fungsi database CRUD ke kelas DeviceRepository terpisah daripada menulis query SQLAlchemy langsung di dalam endpoint router FastAPI?",
+    "options": [
+      "Agar router tidak bisa dikompilasi oleh OpenAPI",
+      "Memisahkan logika HTTP (status code & headers) dari logika akses data sehingga query database dapat digunakan ulang, mudah dirawat, dan diuji secara terpisah",
+      "Agar SQLite berjalan tanpa berkas database",
+      "Untuk menghilangkan kebutuhan model Pydantic"
+    ],
+    "correctIndex": 1,
+    "explanation": "Repository Pattern menjaga endpoint router tetap ramping (fokus validasi HTTP & otorisasi) dan memudahkan migrasi atau pengujian lapisan database secara modular.",
+    "hint": "Ingat konsep Separation of Concerns dari Chapter 29."
+  },
+  "assignment": {
+    "title": "Capstone Track C: Production-Ready Telemetry Nodes Microservice",
+    "description": "Rancang backend microservice REST API terstruktur lengkap dengan Pydantic schemas, SQLAlchemy 2.0 Repository, HMAC Bearer Auth Guard, logging middleware, dan integration test suite.",
+    "instructions": [
+      "Definisikan NodeCreate, NodeUpdate, dan NodeOut (ConfigDict(from_attributes=True)) beserta batasan validasi Field.",
+      "Implementasikan NodeRepository dengan metode create, get_by_id, list_all, update_status, dan delete.",
+      "Rakit APIRouter ber-prefix /api/v1/nodes yang dilindungi dependency require_auth_token serta router publik /health.",
+      "Sediakan factory create_microservice_app(db_url, api_secret) beserta integration tests pytest untuk skenario 201, 200, 204, 401, 404, 409, dan 422."
+    ],
+    "rubric": [
+      { "criteria": "Arsitektur Berlapis & Modular APIRouter", "weight": 25, "description": "Pemisahan jelas antara schema, repository, auth guard, dan factory." },
+      { "criteria": "SQLAlchemy 2.0 CRUD & Integritas Data", "weight": 25, "description": "Session lifecycle aman, unique check 409, dan engine.dispose() bersih." },
+      { "criteria": "Keamanan Token, Validasi 422 & Middleware", "weight": 25, "description": "Proteksi 401 akurat dan response header timing tercatat." },
+      { "criteria": "Integration Test Pytest & OpenAPI Check", "weight": 25, "description": "Seluruh jalur sukses & negatif diuji terisolasi memakai tmp_path." }
+    ],
+    "starterFilename": "tugas.py"
+  },
+  "resources": {
+    "hasSlides": true,
+    "codeDownload": "/downloads/specializations/C05/c05_04_app_factory_testclient.py",
+    "notebookDownload": null,
+    "datasetDownload": null,
+    "guideDownload": "/downloads/specializations/C05/tugas.md",
+    "pptxDownload": null
+  },
+  "references": [
+    {
+      "title": "FastAPI Larger Applications - Multiple Files & APIRouter",
+      "source": "FastAPI Developers",
+      "url": "https://fastapi.tiangolo.com/tutorial/bigger-applications/",
+      "license": "MIT"
+    },
+    {
+      "title": "Architecture Patterns with Python (Repository & Dependency Injection)",
+      "source": "Harry Percival & Bob Gregory",
+      "url": "https://www.cosmicpython.com/book/chapter_02_repository.html",
+      "license": "CC BY-NC-ND 4.0"
+    }
+  ]
+}
+

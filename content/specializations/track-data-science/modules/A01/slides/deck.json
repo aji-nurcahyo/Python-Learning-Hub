@@ -1,0 +1,106 @@
+[
+  {
+    "title": "Numerical Computing with NumPy",
+    "subtitle": "Array Multidimensi, Vectorization, Broadcasting & Aljabar Linier",
+    "kind": "cover",
+    "body": "<p>Mengapa komputasi numerik modern bergantung pada NumPy <code>ndarray</code>, bagaimana aturan broadcasting bekerja di balik layar, serta praktik manipulasi matriks dataset sensor secara vektorisasi.</p>",
+    "notes": "Modul pembuka Track A membahas fondasi array numerik berkinerja tinggi sebelum melangkah ke DataFrame Pandas."
+  },
+  {
+    "title": "Keterbatasan Python List untuk Komputasi Numerik",
+    "kind": "content",
+    "body": "<ul><li><strong>Pointer Indirection:</strong> Setiap elemen dalam <code>list</code> adalah pointer ke objek terpisah di heap memori.</li><li><strong>Overhead Dinamis:</strong> Loop Python memeriksa tipe data di setiap iterasi penjumlahan.</li><li><strong>Solusi ndarray:</strong> Blok memori kontigu bertipe homogen (misal <code>float64</code>) sehingga kompatibel dengan instruksi SIMD CPU dan pustaka C/Fortran.</li></ul>",
+    "notes": "Pemahaman struktur memori menjelaskan mengapa NumPy bisa 10x hingga 100x lebih cepat daripada nested loop Python."
+  },
+  {
+    "title": "Anatomi Array & Atribut Struktural",
+    "kind": "content",
+    "body": "<ul><li><code>.shape</code>: Tuple panjang setiap dimensi, misalnya <code>(12, 4)</code>.</li><li><code>.ndim</code>: Jumlah sumbu dimensi (1 untuk vektor, 2 untuk matriks).</li><li><code>.dtype</code>: Tipe memori seragam seperti <code>np.float64</code> atau <code>np.int64</code>.</li><li><code>.size</code>: Total jumlah elemen (perkalian semua nilai pada <code>shape</code>).</li></ul>",
+    "notes": "Biasakan mencetak shape dan dtype terlebih dahulu sebelum menjalankan perhitungan matematis kompleks."
+  },
+  {
+    "title": "Contoh Kode: Dasar ndarray & Agregasi Axis",
+    "kind": "code",
+    "example": "spec/A01/a01_01_ndarray_basics",
+    "body": "<p>Membuat matriks 2D dari pengukuran suhu, kelembapan, dan latensi lalu menghitung agregasi per kolom (<code>axis=0</code>).</p>",
+    "notes": "Perhatikan perbedaan hasil antara axis=0 (menurun per kolom) dan axis=1 (mendatar per baris)."
+  },
+  {
+    "title": "Indexing & Slicing Multidimensi",
+    "kind": "content",
+    "body": "<ul><li><strong>Format Umum:</strong> <code>arr[baris_slice, kolom_slice]</code> untuk array 2D.</li><li><strong>Mengambil Satu Kolom:</strong> <code>arr[:, 2]</code> mempertahankan seluruh baris pada kolom indeks 2.</li><li><strong>View Semantics:</strong> Slicing dasar mengembalikan <em>view</em>, bukan salinan baru. Gunakan <code>.copy()</code> bila ingin memodifikasi irisan tanpa mengubah array induk.</li></ul>",
+    "notes": "Sifat view sangat menghemat RAM ketika bekerja dengan matriks gambar atau dataset besar."
+  },
+  {
+    "title": "Konsep Vectorization",
+    "kind": "content",
+    "body": "<ul><li><strong>Definisi:</strong> Menerapkan operasi aritmetika atau fungsi matematis langsung pada keseluruhan array sekaligus.</li><li><strong>Keunggulan:</strong> Kode lebih ringkas, mudah dibaca, minim bug indeks, dan dieksekusi di level C.</li><li><strong>Fungsi Universal (ufunc):</strong> <code>np.sqrt</code>, <code>np.exp</code>, <code>np.log1p</code> bekerja elemen demi elemen secara otomatis.</li></ul>",
+    "notes": "Sebagai aturan umum di Data Science: bila Anda menulis loop for untuk mengolah angka per sel, cari cara tervektorisasinya."
+  },
+  {
+    "title": "Aturan Broadcasting di NumPy",
+    "kind": "content",
+    "body": "<ul><li><strong>Langkah 1 (Alignment):</strong> Sejajarkan shape kedua array mulai dari dimensi paling kanan.</li><li><strong>Langkah 2 (Compatibility):</strong> Dua dimensi kompatibel jika ukurannya sama <em>atau</em> salah satunya bernilai <code>1</code>.</li><li><strong>Langkah 3 (Expansion):</strong> Dimensi berukuran <code>1</code> direntangkan secara virtual tanpa menyalin data fisik.</li></ul>",
+    "notes": "Dimensi (12, 4) ditambah vektor (4,) valid; namun (12, 4) ditambah (12,) memicu ValueError jika tidak di-reshape ke (12, 1)."
+  },
+  {
+    "title": "Contoh Kode: Vectorization & Broadcasting",
+    "kind": "code",
+    "example": "spec/A01/a01_02_vectorization_broadcasting",
+    "body": "<p>Menerapkan offset kalibrasi <code>(3,)</code> dan normalisasi z-score memakai <code>keepdims=True</code> agar dimensi tetap konsisten.</p>",
+    "notes": "Perhatikan penggunaan np.where untuk mencegah pembagian nol ketika standar deviasi bernilai 0."
+  },
+  {
+    "title": "Memahami axis=0, axis=1, dan keepdims=True",
+    "kind": "content",
+    "body": "<ul><li><code>axis=0</code> mereduksi sepanjang baris, menyisakan satu nilai per kolom.</li><li><code>axis=1</code> mereduksi sepanjang kolom, menyisakan satu nilai per baris.</li><li><code>keepdims=True</code> menjaga jumlah dimensi hasil agar langsung siap untuk operasi broadcasting lanjutan.</li></ul>",
+    "notes": "Tanpa keepdims=True pada axis=1, vektor hasil berdimensi (n,) alih-alih (n, 1) sehingga broadcasting kolom bisa gagal."
+  },
+  {
+    "title": "Aljabar Linier & Statistik Kuantil",
+    "kind": "content",
+    "body": "<ul><li><strong>Operator <code>@</code>:</strong> Perkalian matriks dan dot product sesuai standar Python PEP 465.</li><li><strong>Norma Vektor:</strong> <code>np.linalg.norm(diff, axis=1)</code> menghitung jarak Euclidean tiap sampel sekaligus.</li><li><strong>Statistik Non-Parametrik:</strong> <code>np.median</code> dan <code>np.percentile</code> tahan terhadap nilai ekstrem (outlier).</li></ul>",
+    "notes": "Operasi aljabar linier merupakan tulang punggung perhitungan jarak kemiripan dan skor komposit."
+  },
+  {
+    "title": "Contoh Kode: Skor Risiko & Jarak Euclidean",
+    "kind": "code",
+    "example": "spec/A01/a01_03_linear_algebra_stats",
+    "body": "<p>Menghitung skor risiko tertimbang menggunakan perkalian matriks <code>@</code> serta jarak setiap node terhadap titik operasi ideal.</p>",
+    "notes": "Dengan menuliskan bobot dalam array 1D, perhitungan skor seluruh node selesai dalam satu operasi dot product."
+  },
+  {
+    "title": "Boolean Masking & Penyaringan Kondisional",
+    "kind": "content",
+    "body": "<ul><li><strong>Operator Logika Array:</strong> Gunakan <code>&amp;</code> (AND), <code>|</code> (OR), dan <code>~</code> (NOT) — bukan kata kunci <code>and</code>/<code>or</code> Python.</li><li><strong>Kurung Wajib:</strong> Selalu apit setiap kondisi perbandingan dalam tanda kurung, misal <code>(a &gt; 5) &amp; (b &lt; 2)</code>.</li><li><strong><code>np.where</code>:</strong> Alternatif tervektorisasi dari ekspresi kondisional if-else.</li></ul>",
+    "notes": "Kesalahan paling sering di pemula NumPy adalah lupa membungkus kondisi dalam tanda kurung saat memakai & atau |."
+  },
+  {
+    "title": "Contoh Kode: Memuat Dataset CSV & Masking Anomali",
+    "kind": "code",
+    "example": "spec/A01/a01_04_boolean_masking_dataset",
+    "body": "<p>Membaca <code>sensor_matrix.csv</code> dengan <code>np.genfromtxt</code>, memfilter node berlatensi tinggi, dan melabeli status via <code>np.where</code>.</p>",
+    "notes": "Perhatikan bagaimana masking memungkinkan kita menghitung rata-rata kelompok NORMAL vs ALERT tanpa iterasi loop."
+  },
+  {
+    "title": "Kuis Cepat: Aturan Broadcasting",
+    "kind": "question",
+    "body": "<p>Uji pemahaman Anda mengenai kompatibilitas bentuk array pada operasi aritmetika NumPy.</p>",
+    "question": "Diberikan array M dengan shape (5, 3) dan array V dengan shape (5,). Mengapa M - V menghasilkan ValueError, dan bagaimana cara memperbaikinya?",
+    "answer": "Trailing dimension keduanya berbeda (3 vs 5). Perbaikannya adalah mengubah V menjadi vektor kolom berdimensi (5, 1) dengan V[:, np.newaxis] atau V.reshape(-1, 1) agar sesuai aturan broadcasting.",
+    "notes": "Dorong siswa memvisualisasikan sejajaran dimensi dari sisi paling kanan."
+  },
+  {
+    "title": "Latihan Mandiri: Normalisasi & Deteksi Anomali",
+    "kind": "exercise",
+    "body": "<ul><li>Muat <code>sensor_matrix.csv</code> menggunakan <code>np.genfromtxt</code>.</li><li>Hitung z-score setiap metrik sensor secara vektorisasi menggunakan <code>axis=0</code>.</li><li>Temukan semua <code>node_id</code> yang memiliki nilai z-score absolut &gt; 1.8.</li></ul>",
+    "notes": "Gunakan notebook a01_numpy_lab.ipynb atau skrip Python lokal untuk menguji hasil eksperimen Anda."
+  },
+  {
+    "title": "Ringkasan Modul A01",
+    "kind": "content",
+    "body": "<ul><li><code>ndarray</code> menyimpan data homogen di memori kontigu dengan atribut <code>shape</code>, <code>ndim</code>, dan <code>dtype</code>.</li><li>Vectorization dan broadcasting menghapus kebutuhan loop lambat serta mempermudah normalisasi per kolom/baris.</li><li>Boolean masking (<code>&amp;</code>, <code>|</code>, <code>np.where</code>) dan <code>np.linalg.norm</code> merupakan perkakas inti pra-pemrosesan sebelum analisis tabular Pandas di Modul A02.</li></ul>",
+    "notes": "Pastikan siswa mencoba unit test test_a01_numpy.py dengan pytest sebelum melanjutkan ke A02."
+  }
+]
+

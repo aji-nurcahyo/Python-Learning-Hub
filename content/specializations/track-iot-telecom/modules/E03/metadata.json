@@ -1,0 +1,93 @@
+{
+  "id": "E03",
+  "trackId": "iot-telecom",
+  "trackTitle": "IoT, Signal Processing & Telecommunications",
+  "order": 3,
+  "title": "Digital Signal Processing with SciPy & FFT",
+  "subtitle": "Teorema Sampling Nyquist, Analisis Spektrum rfft & Butterworth Filter",
+  "description": "Analisis dan bersihkan sinyal diskrit dunia nyata dengan SciPy dan NumPy: sintesis sinyal uji berderau deterministik, verifikasi batas Nyquist, transformasi Fast Fourier Transform (rfft), desain filter digital Butterworth IIR (sosfiltfilt), dan visualisasi spektrum.",
+  "difficulty": "Intermediate",
+  "estimatedHours": 5,
+  "prerequisites": [
+    "Modul A01 (Numerical Computing with NumPy)",
+    "Modul A04 (Data Visualization with Matplotlib & Seaborn)",
+    "Modul E01 (Sensor Telemetry & Smoothing)"
+  ],
+  "learningObjectives": [
+    "Menerapkan Teorema Sampling Nyquist (fs > 2 * f_max) dalam menyusun sumbu waktu sinyal diskrit.",
+    "Mengubah sinyal domain waktu ke domain frekuensi menggunakan scipy.fft.rfft dan rfftfreq untuk menemukan frekuensi dominan.",
+    "Merancang filter digital Butterworth (output='sos') dan menjalankan penyaringan nol-fasa sosfiltfilt agar bentuk gelombang utama tidak bergeser.",
+    "Mengukur perbaikan Signal-to-Noise Ratio (SNR dB) sebelum dan sesudah filtering serta mengekspor grafik domain waktu & frekuensi."
+  ],
+  "dependencies": ["scipy>=1.13", "numpy>=1.26", "matplotlib>=3.8", "pytest>=8.0"],
+  "tags": ["dsp", "fft", "scipy", "signal-processing", "butterworth", "nyquist"],
+  "codeExample": {
+    "title": "Perancangan Filter Low-Pass Butterworth Zero-Phase (sosfiltfilt)",
+    "filename": "e03_03_butterworth_lowpass_filter.py",
+    "outputKey": "spec/E03/e03_03_butterworth_lowpass_filter",
+    "explanation": "Skrip ini mensintesiskan sinyal 40 Hz yang tercemar interferensi 180 Hz serta noise Gaussian, lalu merancang filter Butterworth orde-4 (output='sos') dan menyaringnya memakai sosfiltfilt sehingga SNR dB meningkat tajam tanpa menggeser fase sinyal."
+  },
+  "exercise": {
+    "title": "Analisis Spektrum FFT & Reduksi Noise Interferensi",
+    "instructions": [
+      "Bangkitkan sinyal dengan frekuensi sampling fs=800 Hz selama 1 detik berisi gelombang 50 Hz (amplitudo 1.5) ditambah interferensi 180 Hz (amplitudo 0.9).",
+      "Hitung spektrum magnitudo memakai scipy.fft.rfft dan rfftfreq lalu deteksi dua frekuensi puncak terbesar.",
+      "Rancang filter low-pass Butterworth dengan cutoff=90 Hz memakai scipy.signal.butter(..., output='sos').",
+      "Terapkan sosfiltfilt dan verifikasi energi komponen 180 Hz turun di bawah 5% nilai awalnya."
+    ],
+    "tips": "Selalu gunakan output='sos' (Second-Order Sections) dan sosfiltfilt daripada bentuk transfer function b, a klasik agar filter berorde tinggi tetap stabil secara numerik.",
+    "time": "55 Menit"
+  },
+  "quiz": {
+    "question": "Apa dua alasan teknis mengapa scipy.signal.sosfiltfilt sering dipilih daripada lfilter standar saat menyaring sinyal sensor offline?",
+    "options": [
+      "Karena sosfiltfilt hanya mendukung 10 sampel data",
+      "Karena pemakaian Second-Order Sections (sos) menjaga stabilitas numerik, dan penyaringan maju-mundur (filtfilt) menghasilkan pergeseran fasa nol (zero-phase distortion)",
+      "Karena lfilter mengubah sinyal audio menjadi gambar PNG",
+      "Karena sosfiltfilt menggandakan laju sampling fs secara otomatis"
+    ],
+    "correctIndex": 1,
+    "explanation": "Polinomial orde tinggi (b, a) rentan ketidakstabilan floating-point. SOS memecahnya menjadi biquad stabil, sementara penyaringan dua arah (maju + mundur) meniadakan keterlambatan fasa sehingga puncak gelombang tidak bergeser di sumbu waktu.",
+    "hint": "Perhatikan arti 'sos' dan pengulangan 'filt-filt' (dua arah)."
+  },
+  "assignment": {
+    "title": "Proyek Mini: Spectral Analyzer & Digital Denoising Engine",
+    "description": "Bangun modul Digital Signal Processing yang mengekstrak frekuensi dominan via rfft, merancang filter Butterworth zero-phase, mengukur kenaikan SNR (dB), dan memproduksi grafik perbandingan domain waktu & spektrum.",
+    "instructions": [
+      "Implementasikan extract_dominant_frequencies(signal, fs, top_k=2) menggunakan scipy.fft.rfft & rfftfreq.",
+      "Implementasikan apply_butter_lowpass(signal, fs, cutoff_hz, order=4) memakai butter(..., output='sos') dan sosfiltfilt.",
+      "Implementasikan compute_snr_db(clean_ref, observed) berdasarkan rasio daya sinyal bersih terhadap daya error residual.",
+      "Uji deteksi puncak dan kenaikan SNR pasca-filtering memakai pytest di test_e03_dsp.py."
+    ],
+    "rubric": [
+      { "criteria": "Ketepatan Analisis Spektrum FFT", "weight": 30, "description": "Normalisasi magnitudo (2.0 / N) dan ekstraksi puncak frekuensi rfftfreq akurat." },
+      { "criteria": "Desain Filter Butterworth Zero-Phase", "weight": 30, "description": "Validasi Nyquist cutoff < fs/2, menggunakan output='sos' dan sosfiltfilt." },
+      { "criteria": "Perhitungan Metrik SNR & Chart Export", "weight": 20, "description": "SNR (dB) naik signifikan setelah filtering dan PNG dua panel bersih." },
+      { "criteria": "Unit Testing DSP Deterministik (Pytest)", "weight": 20, "description": "Menggunakan default_rng(42) dan lulus seluruh assertion pytest." }
+    ],
+    "starterFilename": "tugas.py"
+  },
+  "resources": {
+    "hasSlides": true,
+    "codeDownload": "/downloads/specializations/E03/e03_03_butterworth_lowpass_filter.py",
+    "notebookDownload": null,
+    "datasetDownload": null,
+    "guideDownload": "/downloads/specializations/E03/tugas.md",
+    "pptxDownload": null
+  },
+  "references": [
+    {
+      "title": "SciPy User Guide: Fourier Transforms (scipy.fft) & Signal Processing",
+      "source": "SciPy Developers",
+      "url": "https://docs.scipy.org/doc/scipy/tutorial/fft.html",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "title": "SciPy Signal Reference: butter & sosfiltfilt",
+      "source": "SciPy Developers",
+      "url": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.sosfiltfilt.html",
+      "license": "BSD-3-Clause"
+    }
+  ]
+}
+
