@@ -27,8 +27,8 @@ Developed and maintained by **Aji Pamungkas Tri Nurcahyo** from **Institut Tekno
 Platform ini dibangun berlandaskan 6 pilar edukasi komputasi modern:
 
 1. **Pemahaman Konseptual Mendalam:** Menjelaskan logika di balik sintaks, alokasi memori, prinsip interpreter CPython, dan alasan teknis di balik rancangan suatu struktur data atau fungsi.
-2. **Eksekusi Nyata & Terverifikasi:** Seluruh 24 contoh program dieksekusi secara nyata oleh interpreter CPython 3. Keluaran terminal yang ditampilkan di antarmuka web adalah hasil aktual sistem tanpa manipulasi simulasi.
-3. **Eksplorasi Mandiri Tanpa Sekat:** Pengguna memiliki kebebasan penuh memilih chapter mana pun di antara 30 chapter dan 5 jalur spesialisasi tanpa kewajiban menyelesaikan chapter sebelumnya secara linier.
+2. **Eksekusi Nyata & Terverifikasi:** Seluruh 209 contoh kode inti dan 100 skrip spesialisasi (total 309 program Python, 25 suite `pytest`, dan 10 Jupyter notebook) dieksekusi oleh CPython 3. Keluaran terminal yang ditampilkan di antarmuka web adalah hasil aktual sistem tanpa manipulasi simulasi.
+3. **Eksplorasi Mandiri Tanpa Sekat:** Pengguna memiliki kebebasan penuh memilih modul mana pun di antara 30 Core Chapter dan 25 Modul Spesialisasi (total 55 modul pembelajaran) tanpa kewajiban menyelesaikan modul sebelumnya secara linier.
 4. **Pemecahan Masalah Algoritmik:** Latihan terarah bertahap yang mengasah daya nalar algoritmik dari kasus dasar hingga optimasi kompleksitas Big-O.
 5. **Keterampilan Standar Industri:** Menanamkan konvensi kode Python (PEP 8), penanganan error terstruktur, modularitas fungsi, hingga pengujian otomatis.
 6. **Sumber Terbuka & Terbuka untuk Umum:** Seluruh materi dapat diakses secara bebas sebagai kontribusi nyata bagi literasi pemrograman dan rekayasa telekomunikasi.
@@ -61,12 +61,12 @@ Panduan onboarding praktis penyiapan *Python Development Environment* lokal dan 
    *Standar rekayasa sistem perangkat lunak industri.*  
    Mencakup: Advanced OOP & Gang of Four Design Patterns, decorators, custom generators & context managers (`with`), static typing & type hints (`typing`, `mypy`), automated testing & structured logging (`logging`, `unittest`, mock), concurrent & asynchronous programming (`threading`, `multiprocessing`, `asyncio`), networking & REST API integration, Clean Architecture & containerized deployment (Docker, CI/CD Actions), serta Professional Capstone Project.
 
-### 5 Jalur Spesialisasi Industri
-- **Track A: Data Science & Visualization** (NumPy, Pandas, Matplotlib, Seaborn, exploratory data analysis).
-- **Track B: Artificial Intelligence & Machine Learning** (Scikit-Learn, feature engineering, regresi, klasifikasi, clustering).
-- **Track C: Web Development & APIs** (FastAPI, SQLAlchemy, JWT auth, background workers Celery/Redis).
-- **Track D: Automation & Scripting** (pathlib, BeautifulSoup, Playwright, openpyxl, alert webhooks).
-- **Track E: IoT, Signal Processing & Telecommunications** (SciPy signal, analisis propagasi sinyal RSRP/RSRQ, protokol MQTT, telemetri sensor).
+### 5 Jalur Spesialisasi Industri (25 Modul: `A01`–`E05`)
+- **Track A (`A01`–`A05`): Data Science & Visualization** (NumPy `ndarray`, Pandas wrangling, EDA, Matplotlib/Seaborn multi-panel visualizations, Capstone End-to-End Analytics Report).
+- **Track B (`B01`–`B05`): Artificial Intelligence & Machine Learning** (Scikit-Learn Pipelines anti-*data leakage*, Regression & Classification, Clustering & PCA, Cross-Validation & `GridSearchCV`, Capstone Predictive Maintenance).
+- **Track C (`C01`–`C05`): Web Development & APIs** (`httpx` client & Pydantic contracts, FastAPI REST CRUD, SQLAlchemy 2.0 ORM, API Security PBKDF2/HMAC & logging middleware, Capstone Modular REST API).
+- **Track D (`D01`–`D05`): Automation & Scripting** (`pathlib`/`shutil` dry-run & ZIP rotation, OpenPyXL & `fpdf2` reporting, ethical `BeautifulSoup`/`robots.txt` parsing, exponential backoff & idempotency ledger, Capstone Autonomous Reporting Bot).
+- **Track E (`E01`–`E05`): IoT, Signal Processing & Telecommunications** (Serial framing & XOR/`struct`, MQTT v2 publish-subscribe, SciPy FFT & Butterworth filtering, Wireless RF Analytics RSSI/RSRP/RSRQ/SINR vs SNR, Capstone IoT Monitoring Dashboard).
 
 *Pernyataan Independensi: Kurikulum ini dikembangkan secara independen oleh Aji Pamungkas Tri Nurcahyo sebagai sarana belajar mandiri terbuka. Kurikulum diselaraskan secara luas dengan area kompetensi sertifikasi industri, namun platform ini bersifat independen dan tidak terafiliasi resmi maupun disponsori komersial oleh Python Institute.*
 
@@ -204,22 +204,27 @@ Buka peramban pada URL yang ditampilkan di terminal (default: `http://localhost:
 
 ### Skrip Pengujian & QA Lengkap
 ```powershell
-# 1. Memeriksa konsistensi seluruh 24 contoh kode Python terhadap keluaran CPython
+# 1. Memeriksa konsistensi 209 contoh kode inti terhadap keluaran CPython
 npm run check:outputs
 
-# 2. Memeriksa ketersediaan konten 30 chapter dan 5 tracks
+# 2. Memeriksa ketersediaan konten 30 chapter, aset, dan presentasi
 npm run check:content
+npm run check:presentations
 
-# 3. Typecheck TypeScript (tsc --noEmit)
+# 3. Memeriksa 25 modul spesialisasi, 376 slide, dan output spec-outputs.json
+npm run check:specializations
+
+# 4. Typecheck TypeScript (tsc --noEmit) dan Linting ESLint
 npm run typecheck
-
-# 4. Linting ESLint (standar kode bebas error)
 npm run lint
 
-# 5. Build produksi dan verifikasi rute statis di dist/
+# 5. Build produksi lengkap dan verifikasi rute statis di dist/
 npm run build
 
-# 6. Menjalankan server preview hasil build produksi
+# 6. (Opsional, menggunakan .venv) Menjalankan seluruh 100 skrip spesialisasi, 25 pytest, & 10 notebooks
+.\.venv\Scripts\python.exe scripts/run_specialization_examples.py --check
+
+# 7. Menjalankan server preview hasil build produksi
 npm run preview
 ```
 
@@ -253,26 +258,18 @@ Workflow otomatis telah disiapkan di `.github/workflows/deploy.yml`:
    - Pilih visibilitas **Public**.
    - Jangan centang "Add a README file" atau .gitignore.
 
-2. **Inisialisasi & Push Kode Lokal ke GitHub:**
+2. **Hubungkan Repositori Lokal & Push Perdana ke GitHub (Branch `main`):**
    ```powershell
    cd "D:\Workstation\Repo My Corses\Alpro-python"
 
-   # Inisialisasi git jika belum ada
-   git init
-
-   # Tambahkan semua berkas yang telah siap
-   git add .
-
-   # Buat commit pertama
-   git commit -m "feat: initial release of Python Learning Hub"
-
-   # Pastikan branch utama bernama main
+   # Pastikan working tree bersih dan berada di branch main
+   git status
    git branch -M main
 
    # Hubungkan ke repositori GitHub Anda (ganti USERNAME)
    git remote add origin https://github.com/USERNAME/python-learning-hub.git
 
-   # Push ke GitHub
+   # Push perdana ke GitHub
    git push -u origin main
    ```
 
@@ -280,7 +277,7 @@ Workflow otomatis telah disiapkan di `.github/workflows/deploy.yml`:
    - Masuk ke halaman repositori di GitHub: `https://github.com/USERNAME/python-learning-hub/settings/pages`.
    - Pada bagian **Build and deployment > Source**, pilih opsi: **GitHub Actions**.
    - Setelah branch `main` di-push, workflow `Deploy to GitHub Pages` akan berjalan secara otomatis di tab **Actions**.
-   - Setelah workflow selesai (status hijau), situs web Anda akan aktif di:  
+   - Setelah workflow selesai (status hijau), uji seluruh rute pada URL live:  
      `https://USERNAME.github.io/python-learning-hub/`
 
 ---
@@ -291,10 +288,15 @@ Workflow otomatis telah disiapkan di `.github/workflows/deploy.yml`:
 |---|---|
 | `#/` atau `index.html` | Beranda Python Learning Hub (Hero, Level, Spesialisasi, Roadmap, Browser 30 Chapter) |
 | `#/about` | Halaman Tentang Platform, Profil Pengembang & Filosofi Belajar |
+| `#/getting-started` | Panduan onboarding setup Python Development Environment lokal & Colab |
 | `#/level/1`, `#/level/2`, `#/level/3` | Halaman detail Level 1, 2, atau 3 (Silabus, target kompetensi, capstone) |
 | `#/track/:id` | Halaman silabus jalur spesialisasi (misal `#/track/data-science`, `#/track/iot-telecom`) |
-| `#/chapter/:id` | Halaman modul pembelajaran (Tab Materi, Slide, Latihan, Tugas) |
-| `#/chapter/:id/slides` | Slide presentasi interaktif Reveal.js layar penuh |
+| `#/spec/:id` | Halaman modul spesialisasi `A01`–`E05` (Ikhtisar, Kode & Output, Latihan & Kuis, Tugas) |
+| `#/spec/:id/slides` | Tampilan slide presentasi modul spesialisasi layar penuh |
+| `#/spec/:id/read` | Mode baca dokumen linier modul spesialisasi |
+| `#/spec/:id/task` | Tampilan fokus tugas praktik mandiri modul spesialisasi |
+| `#/chapter/:id` | Halaman modul pembelajaran 30 Core Chapter (Tab Materi, Slide, Latihan, Tugas) |
+| `#/chapter/:id/slides` | Slide presentasi interaktif layar penuh |
 | `#/chapter/:id/read` | Mode baca dokumen linier untuk perangkat ponsel / tablet |
 | `#/chapter/:id/task` | Tampilan fokus tugas praktik mandiri dan rubrik penilaian |
 | `/404.html` | SPA redirect fallback (mengarahkan URL langsung & bookmark lama ke hash route) |

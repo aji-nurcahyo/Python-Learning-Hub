@@ -40,6 +40,12 @@ venv/
 .venv/
 ENV/
 .pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+.coverage
+htmlcov/
+*.egg-info/
 
 # Editor & OS files
 .DS_Store
