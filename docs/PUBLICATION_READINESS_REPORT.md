@@ -107,3 +107,4 @@ Setelah workflow GitHub Actions pertama selesai, uji langsung di browser pada `h
 - [ ] **Browser Refresh & Fallback 404:** Tekan `F5` pada rute `#/chapter/10/slides` dan akses langsung `/python-learning-hub/spec/A01/read` serta `/python-learning-hub/about` — halaman tetap termuat tanpa layar 404 kosong.
 - [ ] **Unduhan Berkas:** Uji unduh minimal 1 skrip `.py`, 1 notebook `.ipynb`, 1 dataset `.csv`, 1 panduan `tugas.md`, dan `Materi_Pengkom_Pertemuan_9_10_Python.pptx`.
 - [ ] **Pembaruan Placeholder URL di `README.md`:** Setelah URL aktif diverifikasi, ganti `USERNAME` di baris 6 `README.md` dengan username GitHub Anda.
+
