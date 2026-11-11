@@ -17,11 +17,12 @@ def build_inventory(root: Path) -> dict:
 with tempfile.TemporaryDirectory() as td:
     base = Path(td)
     (base / "sub").mkdir()
-    (base / "report.csv").write_text("id,val\n1,100\n", encoding="utf-8")
-    (base / "notes.txt").write_text("catatan operasional", encoding="utf-8")
-    (base / "sub" / "backup.csv").write_text("id,val\n2,200\n", encoding="utf-8")
+    (base / "report.csv").write_text("id,val\n1,100\n", encoding="utf-8", newline="\n")
+    (base / "notes.txt").write_text("catatan operasional", encoding="utf-8", newline="\n")
+    (base / "sub" / "backup.csv").write_text("id,val\n2,200\n", encoding="utf-8", newline="\n")
 
     summary = build_inventory(base)
     print("Total berkas terdeteksi :", summary["file_count"])
     print("Total ukuran (bytes)    :", summary["total_bytes"])
     print("Sebaran ekstensi        :", summary["by_extension"])
+

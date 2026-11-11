@@ -22,5 +22,5 @@ if check:
         raise SystemExit('Output changed. Run npm run gen:outputs and review.')
 else:
     target.write_text(json.dumps(outputs,ensure_ascii=False,indent=2),encoding='utf-8')
-    shutil.copytree(root/'src/code',root/'public/downloads/examples',dirs_exist_ok=True,ignore=shutil.ignore_patterns('__pycache__','outputs.json'))
+    shutil.copytree(root/'src/code',root/'public/downloads/examples',dirs_exist_ok=True,ignore=shutil.ignore_patterns('__pycache__','outputs.json','spec-outputs.json'))
 print(f'{len(outputs)} Python examples executed successfully; output '+('verified.' if check else 'generated.'))

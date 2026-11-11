@@ -27,7 +27,7 @@ def jalankan_demo() -> None:
         "BTS-02,Kotabumi,2100,41.0,ACTIVE\n"
         "BTS-03,Kalianda,900,46.2,MAINTENANCE\n"
     )
-    sampel_csv.write_text(konten_csv, encoding="utf-8")
+    sampel_csv.write_text(konten_csv, encoding="utf-8", newline="\n")
 
     try:
         # 2. Memuat dan memvalidasi data CSV

@@ -97,7 +97,7 @@ class TelemetryDataManager:
         """Mengekspor seluruh koleksi rekaman ke file JSON terstruktur."""
         path = Path(file_path)
         path.parent.mkdir(parents=True, exist_ok=True)
-        with open(path, "w", encoding="utf-8") as f:
+        with open(path, "w", encoding="utf-8", newline="\n") as f:
             json.dump(self.records, f, indent=2)
         return len(self.records)
 

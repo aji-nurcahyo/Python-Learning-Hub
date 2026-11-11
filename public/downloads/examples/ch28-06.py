@@ -20,7 +20,7 @@ def request_with_timeout(endpoint: str, timeout_sec: float, simulated_latency: f
 
     if elapsed > timeout_sec:
         raise RequestTimeoutException(
-            f"Koneksi ke {endpoint} timeout setelah {elapsed:.2f}s (Maksimal {timeout_sec}s)"
+            f"Koneksi ke {endpoint} timeout setelah {simulated_latency:.2f}s (Maksimal {timeout_sec}s)"
         )
 
     return f"Respons diterima dari {endpoint} dalam {elapsed:.3f}s"

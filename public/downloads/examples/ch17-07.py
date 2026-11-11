@@ -13,8 +13,8 @@ try:
     # 1. Membuat direktori bertingkat secara otomatis (parents=True)
     folder_arsip.mkdir(parents=True, exist_ok=True)
 
-    # 2. Menulis dan membaca teks langsung lewat metode Path
-    berkas_log.write_text("Sistem telekomunikasi siap diuji.\n", encoding="utf-8")
+    # 2. Menulis dan membaca teks secara konsisten lintas OS (newline="\n")
+    berkas_log.write_text("Sistem telekomunikasi siap diuji.\n", encoding="utf-8", newline="\n")
 
     # 3. Menginspeksi atribut berkas secara deklaratif
     print("Atribut Path:")

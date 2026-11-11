@@ -42,7 +42,7 @@ def run_capstone_pipeline(logs_path: Path, meta_path: Path, out_dir: Path) -> di
 
     summary_path = out_dir / "kpi_summary.json"
     summary_records = kpi_df.round(2).to_dict(orient="records")
-    summary_path.write_text(json.dumps(summary_records, indent=2), encoding="utf-8")
+    summary_path.write_text(json.dumps(summary_records, indent=2), encoding="utf-8", newline="\n")
 
     md_lines = [
         "# Laporan Analitik Kinerja Jaringan Regional",
@@ -57,7 +57,7 @@ def run_capstone_pipeline(logs_path: Path, meta_path: Path, out_dir: Path) -> di
             f"- {row['region']}: compliance {row['sla_compliance_pct']}%, median latency {row['median_latency_ms']} ms"
         )
     report_path = out_dir / "analytics_report.md"
-    report_path.write_text("\n".join(md_lines) + "\n", encoding="utf-8")
+    report_path.write_text("\n".join(md_lines) + "\n", encoding="utf-8", newline="\n")
 
     return {"chart": chart_path, "summary": summary_path, "report": report_path}
 
