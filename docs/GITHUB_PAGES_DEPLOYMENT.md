@@ -1,28 +1,28 @@
 # Panduan Persiapan & Publikasi GitHub Pages
 ## Python Learning Hub — GitHub Repository & GitHub Pages Deployment Guide
 
-> **Target Repositori GitHub:** `python-learning-hub`  
-> **Target URL Produksi:** `https://<username>.github.io/python-learning-hub/`  
+> **Target Repositori GitHub:** `https://github.com/aji-nurcahyo/Python-Learning-Hub`  
+> **Target URL Produksi:** `https://aji-nurcahyo.github.io/Python-Learning-Hub/`  
 > **Workflow Otomatis:** `.github/workflows/deploy.yml` (GitHub Actions Official Pages Actions)  
-> **Status Kesiapan Lokal:** Terverifikasi (Siap dipublikasikan tanpa perubahan arsitektur tambahan)
+> **Status Kesiapan Lokal:** Terverifikasi (Siap dipublikasikan dengan konfigurasi `/Python-Learning-Hub/` permanen)
 
 ---
 
 ## 1. Ikhtisar Konfigurasi Deployment
 
-**Python Learning Hub** adalah aplikasi web statis (*Single-Page Application* / SPA) berbasis React, TypeScript, Vite, dan Reveal.js tanpa kebutuhan backend server. Platform ini dirancang untuk di-hosting secara gratis melalui **GitHub Pages** di bawah subpath proyek `/python-learning-hub/`.
+**Python Learning Hub** adalah aplikasi web statis (*Single-Page Application* / SPA) berbasis React, TypeScript, Vite, dan Reveal.js tanpa kebutuhan backend server. Platform ini dirancang untuk di-hosting secara gratis melalui **GitHub Pages** di bawah subpath proyek `/Python-Learning-Hub/`.
 
 ### Komponen Kunci Kesiapan Hosting Statis:
 1. **Vite Base Path (`vite.config.ts`):**
    - Secara default untuk pengembangan lokal, `VITE_BASE_PATH` bernilai `'./'`.
-   - Untuk produksi GitHub Pages di bawah subpath `https://<username>.github.io/python-learning-hub/`, workflow CI menetapkan environment variable:
+   - Untuk produksi GitHub Pages di bawah subpath `https://aji-nurcahyo.github.io/Python-Learning-Hub/`, script `npm run build:pages` dan workflow CI menetapkan environment variable:
      ```text
-     VITE_BASE_PATH=/python-learning-hub/
+     VITE_BASE_PATH=/Python-Learning-Hub/
      ```
-   - Fungsi `normalizeBasePath()` di [`vite.config.ts`](file:///d:/Workstation/Repo%20My%20Corses/Alpro-python/vite.config.ts) memastikan akhiran garis miring `/` selalu konsisten baik untuk build lokal (`./`) maupun subpath produksi (`/python-learning-hub/`).
+   - Fungsi `normalizeBasePath()` di [`vite.config.ts`](file:///d:/Workstation/Repo%20My%20Corses/Alpro-python/vite.config.ts) memastikan akhiran garis miring `/` selalu konsisten baik untuk build lokal (`./`) maupun subpath produksi (`/Python-Learning-Hub/`).
 2. **Resolusi Aset & Resource (`getAssetUrl`):**
    - Seluruh berkas unduhan (`.py`, `.md`, `.pptx`, dan `LICENSE.upstream`) disimpan di `public/downloads/` sehingga disalin utuh ke `dist/downloads/`.
-   - Seluruh tautan di komponen UI menggunakan helper [`getAssetUrl()`](file:///d:/Workstation/Repo%20My%20Corses/Alpro-python/src/curriculum/resources.ts) dan `import.meta.env.BASE_URL` agar jalur aset menyesuaikan otomatis dengan root maupun subpath `/python-learning-hub/`.
+   - Seluruh tautan di komponen UI menggunakan helper [`getAssetUrl()`](file:///d:/Workstation/Repo%20My%20Corses/Alpro-python/src/curriculum/resources.ts) dan `import.meta.env.BASE_URL` agar jalur aset menyesuaikan otomatis dengan root maupun subpath `/Python-Learning-Hub/`.
 3. **Penanda `.nojekyll` (`public/.nojekyll`):**
    - Disertakan otomatis di folder akar hasil build `dist/` untuk menonaktifkan pemrosesan Jekyll di GitHub Pages agar tidak ada folder atau berkas aset yang diabaikan.
 
@@ -33,12 +33,12 @@
 Karena GitHub Pages merupakan server berkas statis murni, permintaan URL langsung pada rute dalam (*nested route*) atau penyegaran halaman (*browser refresh*) ditangani dengan kombinasi dua mekanisme:
 
 1. **Hash-Based SPA Routing (`src/main.tsx`):**
-   - Navigasi utama aplikasi menggunakan hash URL seperti `#getting-started`, `#level/1`, `#chapter/15`, `#chapter/15/slides`, `#chapter/15/read`, `#chapter/15/task`, dan `#about`.
-   - Saat pengguna menekan tombol *Refresh* (`F5`) di browser, server GitHub Pages hanya meminta `/python-learning-hub/` dan langsung menyajikan `index.html`, lalu React merender ulang halaman sesuai hash aktif.
+   - Navigasi utama aplikasi menggunakan hash URL seperti `#getting-started`, `#level/1`, `#chapter/15`, `#chapter/15/slides`, `#chapter/15/read`, `#chapter/15/task`, `#spec/A01`, dan `#about`.
+   - Saat pengguna menekan tombol *Refresh* (`F5`) di browser, server GitHub Pages hanya meminta `/Python-Learning-Hub/` dan langsung menyajikan `index.html`, lalu React merender ulang halaman sesuai hash aktif.
 2. **Fallback `404.html` SPA Redirect (`404.html`):**
-   - Jika pengguna mengetik URL path langsung tanpa `#` (misalnya `/python-learning-hub/chapter/05/slides` atau `/python-learning-hub/getting-started/vscode-setup`), GitHub Pages menyajikan `dist/404.html`.
-   - Skrip pada [`404.html`](file:///d:/Workstation/Repo%20My%20Corses/Alpro-python/404.html) mendeteksi prefiks repositori `python-learning-hub`, memetakan path legacy (`pertemuan-XX`), mempertahankan query parameter (seperti `?print-pdf`), lalu mengarahkan secara instan ke `/python-learning-hub/#<rute>` sebelum aplikasi React dimuat.
-   - `parseHashRoute()` pada [`src/main.tsx`](file:///d:/Workstation/Repo%20My%20Corses/Alpro-python/src/main.tsx) juga menyediakan fallback pembacaan `location.pathname` (dengan menghapus prefiks `/python-learning-hub/`) sehingga pengujian rute langsung pada `vite dev` dan `vite preview` tetap berfungsi mulus.
+   - Jika pengguna mengetik URL path langsung tanpa `#` (misalnya `/Python-Learning-Hub/chapter/05/slides` atau `/Python-Learning-Hub/spec/A01/read`), GitHub Pages menyajikan `dist/404.html`.
+   - Skrip pada [`404.html`](file:///d:/Workstation/Repo%20My%20Corses/Alpro-python/404.html) mendeteksi prefiks repositori `Python-Learning-Hub` (beserta varian huruf kecilnya), memetakan path legacy (`pertemuan-XX`), mempertahankan query parameter (seperti `?print-pdf`), lalu mengarahkan secara instan ke `/Python-Learning-Hub/#<rute>` sebelum aplikasi React dimuat.
+   - `extractRouteFromPathname()` pada [`src/main.tsx`](file:///d:/Workstation/Repo%20My%20Corses/Alpro-python/src/main.tsx) juga menyediakan fallback pembacaan `location.pathname` (dengan menghapus prefiks `/Python-Learning-Hub/` secara case-insensitive) sehingga pengujian rute langsung pada `vite dev` dan `vite preview` tetap berfungsi mulus.
 
 ---
 
@@ -58,73 +58,70 @@ Otomasi deployment menggunakan aksi resmi GitHub (*official maintained GitHub Ac
 Sebelum artifact diunggah, job `build` menjalankan pemeriksaan wajib:
 - `npm ci`
 - `npm run lint`
-- `npm run build` (mencakup `check:outputs`, `check:content`, `check:presentations`, `typecheck`, `vite build`, dan `test:routes`) dengan `VITE_BASE_PATH: '/python-learning-hub/'`.
+- `npm run build:pages` (mencakup `check:outputs`, `check:content`, `check:presentations`, `check:specializations`, `typecheck`, `vite build`, dan `test:routes`) dengan `VITE_BASE_PATH: /Python-Learning-Hub/`.
 
 ---
 
-## 4. Langkah Persiapan Pertama Kali di GitHub (*First-Time Setup*)
+## 4. Konfigurasi Remote & Aktivasi GitHub Pages
 
-> **Catatan Keamanan:** Repositori lokal ini sengaja belum dihubungkan ke remote GitHub mana pun (`git remote -v` kosong) agar Anda dapat meninjau seluruh perubahan terlebih dahulu sebelum publikasi perdana.
-
-### Langkah 1: Buat Repositori Baru di GitHub
-1. Masuk ke akun GitHub Anda dan klik tombol **New repository**.
-2. Isi **Repository name** tepat dengan: `python-learning-hub`.
-3. Pilih visibilitas **Public** (diperlukan untuk hosting GitHub Pages gratis pada akun standar).
-4. **Jangan** mencentang opsi *"Add a README file"*, *"Add .gitignore"*, atau *"Choose a license"* karena seluruh berkas tersebut sudah tersedia lengkap di proyek lokal.
-5. Klik **Create repository**.
-
-### Langkah 2: Hubungkan Remote & Push Pertama Kali
-Buka terminal di direktori `D:\Workstation\Repo My Corses\Alpro-python` dan jalankan perintah berikut (ganti `<USERNAME>` dengan username GitHub Anda):
-
-```bash
-# 1. Pastikan working tree lokal bersih dan seluruh perubahan sudah di-commit
-git status
-
-# 2. Tambahkan remote origin ke repositori GitHub Anda
-git remote add origin https://github.com/<USERNAME>/python-learning-hub.git
-
-# 3. Verifikasi remote sudah terdaftar dengan benar
-git remote -v
-
-# 4. Push branch main ke GitHub
-git push -u origin main
+### Langkah 1: Verifikasi Remote GitHub
+Repositori terhubung ke:
+```text
+https://github.com/aji-nurcahyo/Python-Learning-Hub.git
 ```
 
-### Langkah 3: Aktivasi GitHub Pages di Pengaturan Repositori
-1. Buka halaman repositori `python-learning-hub` Anda di GitHub.
+Untuk memeriksa status dan remote lokal di `D:\Workstation\Repo My Corses\Alpro-python`:
+```powershell
+git status
+git remote -v
+```
+
+### Langkah 2: Aktivasi GitHub Pages di Pengaturan Repositori
+1. Buka halaman repositori `https://github.com/aji-nurcahyo/Python-Learning-Hub`.
 2. Masuk ke tab **Settings** -> di sidebar kiri bagian *Code and automation*, klik **Pages**.
 3. Pada bagian **Build and deployment**, ubah opsi **Source** dari *Deploy from a branch* menjadi:
    - **GitHub Actions**
 4. Buka tab **Actions** di repositori Anda untuk memantau proses workflow **Deploy to GitHub Pages**.
-5. Setelah job `build` dan `deploy` berstatus hijau (*Succeeded*), situs Anda akan langsung aktif pada alamat:
+5. Setelah job `build` dan `deploy` berstatus hijau (*Succeeded*), situs Anda akan aktif pada alamat:
    ```text
-   https://<USERNAME>.github.io/python-learning-hub/
+   https://aji-nurcahyo.github.io/Python-Learning-Hub/
    ```
-
-*(Opsional: Jangan lupa perbarui placeholder `<USERNAME>` pada baris tautan Live Site URL di [`README.md`](file:///d:/Workstation/Repo%20My%20Corses/Alpro-python/README.md) setelah situs aktif).*
 
 ---
 
 ## 5. Pengujian Build Produksi Secara Lokal (*Local Testing*)
 
-Sebelum melakukan push ke GitHub, Anda dapat mensimulasikan hasil build GitHub Pages `/python-learning-hub/` di komputer lokal:
+Sebelum melakukan push ke GitHub, Anda dapat membangun dan mensimulasikan hasil build GitHub Pages `/Python-Learning-Hub/` secara konsisten:
+
+### Menggunakan Cross-Platform Script (Windows, Linux, macOS):
+```bash
+npm run build:pages
+npx vite preview --host 127.0.0.1 --port 8932
+```
 
 ### Menggunakan PowerShell (Windows):
 ```powershell
-$env:VITE_BASE_PATH="/python-learning-hub/"
+$env:VITE_BASE_PATH="/Python-Learning-Hub/"
 npm run build
 npx vite preview --host 127.0.0.1 --port 8932
 ```
 
-Kemudian buka di browser:
-- `http://127.0.0.1:8932/python-learning-hub/`
-- `http://127.0.0.1:8932/python-learning-hub/#getting-started`
-- `http://127.0.0.1:8932/python-learning-hub/#chapter/05/slides`
-- `http://127.0.0.1:8932/python-learning-hub/#chapter/30/task`
+### Menggunakan Linux / GitHub Actions Shell:
+```bash
+VITE_BASE_PATH="/Python-Learning-Hub/" npm run build
+npx vite preview --host 127.0.0.1 --port 8932
+```
 
-Untuk mengembalikan build ke mode relatif default:
+Kemudian uji di browser:
+- `http://127.0.0.1:8932/Python-Learning-Hub/`
+- `http://127.0.0.1:8932/Python-Learning-Hub/#getting-started`
+- `http://127.0.0.1:8932/Python-Learning-Hub/#chapter/05/slides`
+- `http://127.0.0.1:8932/Python-Learning-Hub/#spec/A01`
+- `http://127.0.0.1:8932/Python-Learning-Hub/#chapter/30/task`
+
+Untuk mengembalikan build ke mode relatif default (`'./'`):
 ```powershell
-Remove-Item Env:VITE_BASE_PATH
+Remove-Item Env:VITE_BASE_PATH -ErrorAction SilentlyContinue
 npm run build
 ```
 
@@ -138,7 +135,7 @@ Setiap kali Anda menambahkan materi atau memperbaiki bug di repositori lokal:
 2. Jalankan rangkaian verifikasi lokal:
    ```bash
    npm run lint
-   npm run build
+   npm run build:pages
    ```
 3. Commit dan push perubahan ke branch `main`:
    ```bash

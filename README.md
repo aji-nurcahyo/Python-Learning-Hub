@@ -3,7 +3,8 @@
 > **Tagline:** Learn Python, One Chapter at a Time  
 > **Subtitle:** Interactive Python Learning Modules  
 > **Status:** Open Access Educational Resource (OER)  
-> **Live Site URL (GitHub Pages):** `https://USERNAME.github.io/python-learning-hub/`
+> **Repository:** `https://github.com/aji-nurcahyo/Python-Learning-Hub`  
+> **Live Site URL (GitHub Pages):** `https://aji-nurcahyo.github.io/Python-Learning-Hub/`
 
 Python Learning Hub is a free, open-access collection of structured Python learning modules, interactive browser presentations, verified programming examples, guided exercises, conceptual quizzes, and practical projects.
 
@@ -218,13 +219,23 @@ npm run check:specializations
 npm run typecheck
 npm run lint
 
-# 5. Build produksi lengkap dan verifikasi rute statis di dist/
+# 5. Build produksi lokal (base path default './') dan verifikasi rute statis di dist/
 npm run build
 
-# 6. (Opsional, menggunakan .venv) Menjalankan seluruh 100 skrip spesialisasi, 25 pytest, & 10 notebooks
+# 6. Build produksi GitHub Pages (base path '/Python-Learning-Hub/')
+npm run build:pages
+
+# Alternatif manual PowerShell (Windows):
+# $env:VITE_BASE_PATH="/Python-Learning-Hub/"
+# npm run build
+
+# Alternatif manual Linux / macOS:
+# VITE_BASE_PATH="/Python-Learning-Hub/" npm run build
+
+# 7. (Opsional, menggunakan .venv) Menjalankan seluruh 100 skrip spesialisasi, 25 pytest, & 10 notebooks
 .\.venv\Scripts\python.exe scripts/run_specialization_examples.py --check
 
-# 7. Menjalankan server preview hasil build produksi
+# 8. Menjalankan server preview hasil build produksi
 npm run preview
 ```
 
@@ -236,49 +247,43 @@ Proyek ini telah dikonfigurasi secara lengkap untuk dapat dipublikasikan secara 
 
 ### Format URL Publik yang Diharapkan
 ```text
-https://USERNAME.github.io/python-learning-hub/
+https://aji-nurcahyo.github.io/Python-Learning-Hub/
 ```
-*(Ganti `USERNAME` dengan username akun GitHub Anda)*
 
 ### Kompatibilitas Subpath & SPA Routing
-- **Base Path Adaptif:** Konfigurasi `vite.config.ts` menggunakan `base: process.env.VITE_BASE_PATH || './'`, menghasilkan jalur aset relatif (`./assets/...`) yang dapat berjalan lancar di subpath repositori GitHub Pages, root domain kustom, maupun Cloudflare Pages.
-- **Dukungan Refresh Peramban (`404.html` SPA Handler):** File `404.html` dilengkapi skrip pengalih otomatis yang mempertahankan path dan parameter URL yang diminta, lalu memuatnya kembali melalui hash route sehingga refresh pada URL nested (`/chapter/10`, `/level/2`, `/about`) tidak menghasilkan halaman kosong atau 404. Selain itu, tautan lama seperti `/pertemuan-09/` secara cerdas dialihkan ke chapter baru `#/chapter/10`.
+- **Base Path Adaptif & Permanen:** Konfigurasi `vite.config.ts` membaca `process.env.VITE_BASE_PATH` (default `'./'` untuk pengembangan lokal), sedangkan skrip `npm run build:pages` dan workflow GitHub Actions secara permanen menetapkan `VITE_BASE_PATH="/Python-Learning-Hub/"` untuk produksi GitHub Pages.
+- **Dukungan Refresh Peramban (`404.html` SPA Handler):** File `404.html` dilengkapi skrip pengalih otomatis yang menormalkan base subpath `/Python-Learning-Hub/` serta mempertahankan path dan parameter URL yang diminta, lalu memuatnya kembali melalui hash route sehingga refresh pada URL nested (`/chapter/10`, `/spec/A01`, `/level/2`, `/about`) tidak menghasilkan halaman kosong atau 404. Selain itu, tautan lama seperti `/pertemuan-09/` dialihkan ke chapter baru `#/chapter/10`.
 - **Bebas Jekyll (`.nojekyll`):** File `public/.nojekyll` otomatis disertakan ke folder `dist/` untuk mencegah pemrosesan Jekyll pada GitHub Pages.
 
 ### Alur Kerja GitHub Actions (`.github/workflows/deploy.yml`)
 Workflow otomatis telah disiapkan di `.github/workflows/deploy.yml`:
 1. Berjalan otomatis saat ada `push` ke branch `main`, atau dijalankan manual melalui menu `Actions > Deploy to GitHub Pages > Run workflow` (`workflow_dispatch`).
 2. Menyiapkan Python 3.12 dan Node.js 22 dengan cache dependensi npm.
-3. Menjalankan seluruh pengujian: `check:outputs`, `check:content`, `typecheck`, `lint`, dan `build`.
+3. Menjalankan `npm ci`, `npm run lint`, lalu `npm run build:pages` dengan `env: VITE_BASE_PATH: /Python-Learning-Hub/` (yang juga menjalankan validasi `check:outputs`, `check:content`, `check:presentations`, `check:specializations`, `typecheck`, `vite build`, dan `test:routes`).
 4. Mengunggah folder `dist/` dan mempublikasikannya ke GitHub Pages dengan izin token minimum (`contents: read`, `pages: write`, `id-token: write`).
 
 ### Langkah-Langkah Publikasi oleh Pemilik Repositori
-1. **Buat Repositori Baru di GitHub:**
-   - Masuk ke akun GitHub Anda dan buat repositori baru bernama: `python-learning-hub`.
-   - Pilih visibilitas **Public**.
-   - Jangan centang "Add a README file" atau .gitignore.
+1. **Repositori Target di GitHub:**
+   - Repositori: `https://github.com/aji-nurcahyo/Python-Learning-Hub` (visibilitas **Public**).
 
-2. **Hubungkan Repositori Lokal & Push Perdana ke GitHub (Branch `main`):**
+2. **Sinkronisasi Repositori Lokal & Push ke GitHub (Branch `main`):**
    ```powershell
    cd "D:\Workstation\Repo My Corses\Alpro-python"
 
    # Pastikan working tree bersih dan berada di branch main
    git status
-   git branch -M main
+   git remote -v
 
-   # Hubungkan ke repositori GitHub Anda (ganti USERNAME)
-   git remote add origin https://github.com/USERNAME/python-learning-hub.git
-
-   # Push perdana ke GitHub
+   # Push ke GitHub (hanya setelah verifikasi lokal selesai)
    git push -u origin main
    ```
 
 3. **Aktifkan GitHub Pages melalui GitHub Actions:**
-   - Masuk ke halaman repositori di GitHub: `https://github.com/USERNAME/python-learning-hub/settings/pages`.
+   - Masuk ke halaman repositori di GitHub: `https://github.com/aji-nurcahyo/Python-Learning-Hub/settings/pages`.
    - Pada bagian **Build and deployment > Source**, pilih opsi: **GitHub Actions**.
    - Setelah branch `main` di-push, workflow `Deploy to GitHub Pages` akan berjalan secara otomatis di tab **Actions**.
    - Setelah workflow selesai (status hijau), uji seluruh rute pada URL live:  
-     `https://USERNAME.github.io/python-learning-hub/`
+     `https://aji-nurcahyo.github.io/Python-Learning-Hub/`
 
 ---
 

@@ -16,7 +16,7 @@ export interface ChapterResourceConfig {
 
 /**
  * Resolves a public/static asset path into a Vite base-path-aware URL.
- * Supports root domain, relative base (`./`), and GitHub Pages subpaths (`/python-learning-hub/`).
+ * Supports root domain, relative base (`./`), and GitHub Pages subpaths (`/Python-Learning-Hub/`).
  */
 export function getAssetUrl(relativePath: string | null | undefined): string {
   if (!relativePath) return '';

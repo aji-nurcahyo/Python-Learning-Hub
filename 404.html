@@ -22,10 +22,10 @@
 
         var segments = path.split('/').filter(Boolean);
         var isGitHubPages = l.hostname.endsWith('github.io');
-        var repoName = 'python-learning-hub';
-        var hasRepoPrefix = segments.length > 0 && segments[0] === repoName;
+        var repoName = 'Python-Learning-Hub';
+        var hasRepoPrefix = segments.length > 0 && segments[0].toLowerCase() === repoName.toLowerCase();
         
-        var base = (isGitHubPages || hasRepoPrefix) ? '/' + (hasRepoPrefix ? segments[0] : repoName) + '/' : '/';
+        var base = (isGitHubPages || hasRepoPrefix) ? '/' + repoName + '/' : '/';
         var routeSegments = hasRepoPrefix ? segments.slice(1) : segments;
         var route = routeSegments.join('/');
 

@@ -169,8 +169,9 @@ type HubRoute =
 
 function extractRouteFromPathname(pathname: string): string {
   const cleaned = pathname.replace(/\/index\.html$/, '').replace(/^\/+/, '');
-  if (cleaned === 'python-learning-hub') return '';
-  if (cleaned.startsWith('python-learning-hub/')) {
+  const lower = cleaned.toLowerCase();
+  if (lower === 'python-learning-hub') return '';
+  if (lower.startsWith('python-learning-hub/')) {
     return cleaned.slice('python-learning-hub/'.length);
   }
   return cleaned;

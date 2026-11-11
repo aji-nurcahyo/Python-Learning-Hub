@@ -1,10 +1,10 @@
 # Laporan Kesiapan Publikasi Perdana — Python Learning Hub
 
-> **Repositori Target:** `python-learning-hub`  
+> **Repositori Target:** `https://github.com/aji-nurcahyo/Python-Learning-Hub`  
 > **Direktori Proyek Lokal:** `D:\Workstation\Repo My Corses\Alpro-python`  
 > **Pengembang & Institusi:** Aji Pamungkas Tri Nurcahyo — Institut Teknologi Sumatera  
-> **Status Publikasi Saat Ini:** **Siap Push Perdana (Belum Di-push / Belum Di-deploy ke GitHub)**  
-> *Catatan: Keberhasilan situs live baru boleh dinyatakan setelah Anda membuat repositori GitHub, melakukan push perdana, menunggu workflow GitHub Actions selesai, dan menguji URL publik secara langsung.*
+> **URL GitHub Pages Produksi:** `https://aji-nurcahyo.github.io/Python-Learning-Hub/`  
+> **Status Konfigurasi:** **Terkonfigurasi Permanen (`/Python-Learning-Hub/`) — Siap Push & Verifikasi Workflow**
 
 ---
 
@@ -34,44 +34,36 @@
 ## 3. Verifikasi Kurikulum 55 Modul, Konfigurasi Subpath & Build
 
 - **Representasi 55 Modul:** **30 Core Chapters** (`Chapter 01`–`30` di 3 Level) + **25 Specialization Modules** (`A01`–`E05` di 5 Tracks), terdokumentasi akurat di [`README.md`](file:///d:/Workstation/Repo%20My%20Corses/Alpro-python/README.md), [`docs/SPECIALIZATION_CURRICULUM.md`](file:///d:/Workstation/Repo%20My%20Corses/Alpro-python/docs/SPECIALIZATION_CURRICULUM.md), [`docs/CONTENT_AUDIT.md`](file:///d:/Workstation/Repo%20My%20Corses/Alpro-python/docs/CONTENT_AUDIT.md), serta terindeks di [`index.html`](file:///d:/Workstation/Repo%20My%20Corses/Alpro-python/index.html).
-- **Konfigurasi Base Path (`vite.config.ts`):** Fungsi [`normalizeBasePath`](file:///d:/Workstation/Repo%20My%20Corses/Alpro-python/vite.config.ts#L8-L13) memakai `'./'` secara default untuk dev/preview lokal dan menerima `VITE_BASE_PATH='/python-learning-hub/'` untuk produksi GitHub Pages.
+- **Konfigurasi Base Path (`vite.config.ts`):** Fungsi [`normalizeBasePath`](file:///d:/Workstation/Repo%20My%20Corses/Alpro-python/vite.config.ts#L8-L13) memakai `'./'` secara default untuk dev/preview lokal dan menerima `VITE_BASE_PATH='/Python-Learning-Hub/'` untuk produksi GitHub Pages (`npm run build:pages`).
 - **GitHub Actions Workflow ([`.github/workflows/deploy.yml`](file:///d:/Workstation/Repo%20My%20Corses/Alpro-python/.github/workflows/deploy.yml)):**
   - Trigger otomatis pada push ke branch `main` + `workflow_dispatch`.
   - Menggunakan aksi resmi GitHub (`actions/checkout@v4`, `actions/setup-python@v5`, `actions/setup-node@v4`, `actions/configure-pages@v5`, `actions/upload-pages-artifact@v3`, `actions/deploy-pages@v4`) dengan token permission minimal (`contents: read`, `pages: write`, `id-token: write`).
-  - Menjalankan `npm ci`, `npm run lint`, dan `npm run build` (`check:outputs`, `check:content`, `check:presentations`, `check:specializations`, `typecheck`, `vite build`, `test:routes`) dengan `VITE_BASE_PATH: '/python-learning-hub/'`.
+  - Menjalankan `npm ci`, `npm run lint`, dan `npm run build:pages` (`check:outputs`, `check:content`, `check:presentations`, `check:specializations`, `typecheck`, `vite build`, `test:routes`) dengan `VITE_BASE_PATH: /Python-Learning-Hub/`.
 - **Aset Statis Build (`dist/`) & Perilaku Browser Refresh:**
-  - `npm run build` memverifikasi 209 contoh kode inti, 30 paket download chapter, 25 paket download modul spesialisasi (`A01`–`E05`), `Materi_Pengkom_Pertemuan_9_10_Python.pptx`, `getting-started/main.py`, `.nojekyll`, `LICENSE.upstream`, serta injeksi subpath `/python-learning-hub/assets/` pada `index.html` dan `404.html`.
-  - Pengujian Playwright terhadap `dist/` di bawah `/python-learning-hub/` memverifikasi 14 hash routes + reload (`F5`), 6 direct non-hash URL via `404.html` redirect (termasuk `#chapter/10/slides`, `#spec/A01/read`, `#track/iot-telecom`, `#getting-started/vscode-setup`, `#about`, dan `/pertemuan-09/` -> `#chapter/10/slides`), serta 9 static downloads (`HTTP 200`).
+  - `npm run build:pages` memverifikasi 209 contoh kode inti, 30 paket download chapter, 25 paket download modul spesialisasi (`A01`–`E05`), `Materi_Pengkom_Pertemuan_9_10_Python.pptx`, `getting-started/main.py`, `.nojekyll`, `LICENSE.upstream`, serta injeksi subpath `/Python-Learning-Hub/assets/` pada `index.html` dan `404.html`.
+  - Pengujian Playwright terhadap `dist/` di bawah `/Python-Learning-Hub/` memverifikasi 14 hash routes + reload (`F5`), 6 direct non-hash URL via `404.html` redirect (termasuk `#chapter/10/slides`, `#spec/A01/read`, `#track/iot-telecom`, `#getting-started/vscode-setup`, `#about`, dan `/pertemuan-09/` -> `#chapter/10/slides`), serta 9 static downloads (`HTTP 200`).
 
 ---
 
-## 4. Perintah Publikasi Perdana (*Exact First-Push Commands*)
+## 4. Perintah Sinkronisasi & Deployment GitHub Pages
 
-1. **Buat repositori kosong baru di GitHub:**
-   - Nama repositori: **`python-learning-hub`**
-   - Visibilitas: **Public**
-   - **Jangan** mencentang *Add a README*, *.gitignore*, atau *Choose a license*.
+1. **Verifikasi repositori remote:**
+   - Remote `origin`: **`https://github.com/aji-nurcahyo/Python-Learning-Hub.git`**
 
-2. **Tinjau status lokal, sambungkan remote, dan push perdana (ganti `<USERNAME>`):**
+2. **Tinjau status lokal dan push ke GitHub (hanya setelah verifikasi lokal selesai):**
    ```powershell
    cd "D:\Workstation\Repo My Corses\Alpro-python"
 
    # 1. Pastikan working tree bersih dan berada di branch main
    git status
-   git branch -M main
-
-   # 2. Daftarkan remote origin (ganti <USERNAME> dengan akun GitHub Anda)
-   git remote add origin https://github.com/<USERNAME>/python-learning-hub.git
-
-   # 3. Verifikasi alamat remote
    git remote -v
 
-   # 4. Push branch main ke GitHub
+   # 2. Push branch main ke GitHub
    git push -u origin main
    ```
 
 3. **Aktifkan GitHub Pages:**
-   - Buka `https://github.com/<USERNAME>/python-learning-hub/settings/pages`
+   - Buka `https://github.com/aji-nurcahyo/Python-Learning-Hub/settings/pages`
    - Pada **Build and deployment > Source**, pilih **GitHub Actions**.
    - Tunggu workflow **Deploy to GitHub Pages** di tab **Actions** selesai berstatus hijau (*Succeeded*).
 
@@ -84,10 +76,9 @@ Setiap kali Anda memperbarui materi atau kode aplikasi di `D:\Workstation\Repo M
 2. Jalankan pemeriksaan lokal sebelum commit:
    ```powershell
    npm run lint
-   $env:VITE_BASE_PATH="/python-learning-hub/"
-   npm run build
-   Remove-Item Env:VITE_BASE_PATH
+   npm run build:pages
    ```
+   *(Atau secara eksplisit: `$env:VITE_BASE_PATH="/Python-Learning-Hub/"; npm run build; Remove-Item Env:VITE_BASE_PATH`)*
 3. Commit dan push ke `main`:
    ```powershell
    git add -A
@@ -100,11 +91,10 @@ Setiap kali Anda memperbarui materi atau kode aplikasi di `D:\Workstation\Repo M
 
 ## 6. Checklist Verifikasi Pasca-Deployment (Wajib Dijalankan di URL Publik)
 
-Setelah workflow GitHub Actions pertama selesai, uji langsung di browser pada `https://<USERNAME>.github.io/python-learning-hub/`:
+Setelah workflow GitHub Actions selesai, uji langsung di browser pada `https://aji-nurcahyo.github.io/Python-Learning-Hub/`:
 - [ ] **Beranda (`/`):** Hero tampil bersih tanpa error konsol/404; statistik menampilkan 30 Core Chapters & 5 Specialization Tracks; Light Mode dan Dark Mode terbaca jelas.
 - [ ] **Navigasi Core & Getting Started:** `#/getting-started/vscode-setup`, `#/level/1`, `#/chapter/10`, `#/chapter/10/slides`, `#/chapter/10/read`, dan `#/chapter/10/task` terbuka lengkap dengan contoh kode & output.
 - [ ] **Navigasi 5 Specialization Tracks & 25 Modul:** `#/track/data-science` (`A01`–`A05`), `#/track/ai-ml` (`B01`–`B05`), `#/track/web-api` (`C01`–`C05`), `#/track/automation` (`D01`–`D05`), dan `#/track/iot-telecom` (`E01`–`E05`), termasuk `#/spec/A01/slides` dan `#/spec/E05`.
-- [ ] **Browser Refresh & Fallback 404:** Tekan `F5` pada rute `#/chapter/10/slides` dan akses langsung `/python-learning-hub/spec/A01/read` serta `/python-learning-hub/about` — halaman tetap termuat tanpa layar 404 kosong.
+- [ ] **Browser Refresh & Fallback 404:** Tekan `F5` pada rute `#/chapter/10/slides` dan akses langsung `/Python-Learning-Hub/spec/A01/read` serta `/Python-Learning-Hub/about` — halaman tetap termuat tanpa layar 404 kosong.
 - [ ] **Unduhan Berkas:** Uji unduh minimal 1 skrip `.py`, 1 notebook `.ipynb`, 1 dataset `.csv`, 1 panduan `tugas.md`, dan `Materi_Pengkom_Pertemuan_9_10_Python.pptx`.
-- [ ] **Pembaruan Placeholder URL di `README.md`:** Setelah URL aktif diverifikasi, ganti `USERNAME` di baris 6 `README.md` dengan username GitHub Anda.
 

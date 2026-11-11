@@ -87,7 +87,7 @@ Setiap chapter dilengkapi dengan 7 dimensi pembelajaran berstandar tinggi:
 ## 4. Kesiapan Deployment GitHub Pages (*Production Readiness*)
 
 Platform telah melalui verifikasi build penuh (`npm run build`):
-- **Base Path Awareness:** Seluruh aset, slide deck, dan tautan unduhan menggunakan `import.meta.env.BASE_URL` sehingga dapat berjalan mulus baik di domain root maupun di subpath GitHub Pages (`/python-learning-hub/`).
+- **Base Path Awareness:** Seluruh aset, slide deck, dan tautan unduhan menggunakan `import.meta.env.BASE_URL` sehingga dapat berjalan mulus baik di domain root maupun di subpath GitHub Pages (`/Python-Learning-Hub/`).
 - **Penanda `.nojekyll`:** Dipastikan hadir di direktori `dist/` untuk mencegah pemblokiran berkas biner dan folder dengan awalan garis bawah oleh parser Jekyll GitHub.
 - **Rute Statis:** Halaman `index.html` dan `404.html` siap menangani direct linking dan browser refresh pada rute berbasis hash.
 - **Unduhan Fisik:** Seluruh skrip Python, panduan Markdown, dan berkas slide PowerPoint (`.pptx`) tersedia utuh di direktori `dist/downloads/`.
