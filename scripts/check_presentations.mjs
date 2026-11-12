@@ -43,7 +43,9 @@ const CANONICAL_TITLES = {
 };
 
 const FORBIDDEN_BRANDING_TERMS = [
+  /\bpengkom\b/i,
   /\bpertemuan\s*\d+/i,
+  /\bpertemuan-\d+\b/i,
   /\bpengantar komputasi\b/i,
   /\bpengenalan komputasi\b/i,
   /\balgoritma dan pemrograman\b/i,

@@ -55,18 +55,15 @@ export function HomePage({
       {/* Hero Section */}
       <section className="hub-hero">
         <div className="hub-hero-inner">
-          <div className="hero-eyebrow">
-            <span className="status-dot pulsing" />
-            <span>Learn Python, One Chapter at a Time</span>
-          </div>
+          <p className="hero-eyebrow-text">Kurikulum Pemrograman Python 3 · Terbuka &amp; Terstruktur</p>
           <h1 className="hero-main-title">
             Python Learning Hub
           </h1>
           <p className="hero-subheading">
-            Interactive Python Learning Modules
+            Interactive Python Learning Modules — Learn Python, One Chapter at a Time
           </p>
           <p className="hero-subtext">
-            Explore Python programming through structured learning modules, interactive presentations, practical coding examples, and hands-on exercises. Platform mencakup 3 Level Kompetensi, 30 Core Chapter Terstruktur, dan 5 Jalur Spesialisasi Industri (25 Modul Spesialisasi).
+            Sumber belajar pemrograman Python 3 yang mencakup 30 core chapter dalam tiga tingkat kompetensi (Foundations, Intermediate, Professional) serta 5 jalur spesialisasi industri. Setiap modul menyediakan slide interaktif, materi bacaan, contoh kode terverifikasi CPython, latihan, dan tugas mandiri.
           </p>
           <div className="hero-cta-group">
             <button
@@ -77,32 +74,18 @@ export function HomePage({
               <span>Mulai Level 1 (Foundations)</span>
               <Icon name="arrow_forward" size={20} />
             </button>
+            <button
+              type="button"
+              className="button subtle button-lg"
+              onClick={() => (onNavigateGettingStarted ? onNavigateGettingStarted() : (location.hash = 'getting-started'))}
+            >
+              <Icon name="handyman" size={20} />
+              <span>Persiapan Awal (Setup)</span>
+            </button>
             <a href="#curriculum-browser" className="button subtle button-lg">
               <span>Jelajahi 30 Chapter</span>
               <Icon name="explore" size={20} />
             </a>
-          </div>
-
-          <div className="hub-stats-bar">
-            <div className="stat-item">
-              <span className="stat-number">3</span>
-              <span className="stat-label">Level Kompetensi</span>
-            </div>
-            <div className="stat-separator" />
-            <div className="stat-item">
-              <span className="stat-number">30</span>
-              <span className="stat-label">Chapter Terstruktur</span>
-            </div>
-            <div className="stat-separator" />
-            <div className="stat-item">
-              <span className="stat-number">5</span>
-              <span className="stat-label">Jalur Spesialisasi</span>
-            </div>
-            <div className="stat-separator" />
-            <div className="stat-item">
-              <span className="stat-number">{availableCount}</span>
-              <span className="stat-label">Chapter Siap Belajar</span>
-            </div>
           </div>
         </div>
       </section>
@@ -111,23 +94,18 @@ export function HomePage({
       <section className="hub-getting-started-banner-section" id="getting-started-banner">
         <div className="getting-started-callout-card">
           <div className="getting-started-callout-content">
-            <div className="getting-started-pill">
-              <Icon name="handyman" size={14} />
-              <span>Panduan Persiapan Awal</span>
-            </div>
-            <h2 className="getting-started-callout-title">Baru Belajar Python?</h2>
+            <h2 className="getting-started-callout-title">Baru Belajar Python? Mulai dari Setup Environment</h2>
             <p className="getting-started-callout-desc">
-              Mulai dengan menyiapkan Python Development Environment sebelum mempelajari modul pemrograman.
-              Panduan instalasi resmi CPython, konfigurasi VS Code, JupyterLab, isolasi Virtual Environment, hingga verifikasi sistem bebas kendala.
+              Siapkan Python Development Environment sebelum mempelajari materi pemrograman: instalasi CPython, konfigurasi Code Editor (VS Code), JupyterLab, dan isolasi Virtual Environment untuk Windows, Linux, maupun macOS.
             </p>
           </div>
           <div className="getting-started-callout-action">
             <button
               type="button"
-              className="button primary button-lg"
+              className="button primary"
               onClick={() => (onNavigateGettingStarted ? onNavigateGettingStarted() : (location.hash = 'getting-started'))}
             >
-              <Icon name="play_lesson" size={20} />
+              <Icon name="play_lesson" size={18} />
               <span>Buka Getting Started</span>
             </button>
           </div>
@@ -383,61 +361,49 @@ export function HomePage({
             >
               <div className="ch-card-header">
                 <span className="ch-number-badge">Ch {ch.number}</span>
-                <div className="ch-status-tags">
-                  {ch.available ? (
-                    <span className="status-badge ready">● Tersedia</span>
-                  ) : (
+                <div className="ch-card-meta-inline">
+                  <span className="ch-level-indicator">Level {ch.levelId}</span>
+                  <DifficultyBadge difficulty={ch.difficulty} />
+                  <span className="ch-hours">
+                    <Icon name="schedule" size={13} /> {ch.estimatedHours}j
+                  </span>
+                  {!ch.available && (
                     <span className="status-badge upcoming">Segera Hadir</span>
                   )}
                 </div>
               </div>
 
-                <div className="ch-card-meta">
-                  <span className="ch-level-indicator">Level {ch.levelId}</span>
-                  <DifficultyBadge difficulty={ch.difficulty} />
-                  <span className="ch-hours">
-                    <Icon name="schedule" size={14} /> {ch.estimatedHours} jam
+              <h3 className="ch-card-title">{ch.title}</h3>
+              <p className="ch-card-sub">{ch.subtitle}</p>
+              <p className="ch-card-desc">{ch.description}</p>
+
+              <div className="ch-card-competency">
+                <Icon name="radar" size={14} />
+                <span>{ch.competencyFocus}</span>
+              </div>
+
+              <div className="ch-tags-row">
+                {ch.tags.slice(0, 3).map((tag) => (
+                  <span key={tag} className="tag-chip">
+                    {tag}
                   </span>
-                </div>
+                ))}
+              </div>
 
-                <h3 className="ch-card-title">{ch.title}</h3>
-                <p className="ch-card-sub">{ch.subtitle}</p>
-                <p className="ch-card-desc">{ch.description}</p>
-
-                <div className="ch-card-competency">
-                  <Icon name="radar" size={14} />
-                  <span>{ch.competencyFocus}</span>
-                </div>
-
-                <div className="ch-tags-row">
-                  {ch.tags.map((tag) => (
-                    <span key={tag} className="tag-chip">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="ch-card-footer">
-                  {ch.available ? (
-                    <button
-                      type="button"
-                      className="button primary button-sm"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onNavigateChapter(ch.id);
-                      }}
-                    >
-                      <span>Buka Pembelajaran</span>
-                      <Icon name="arrow_forward" size={16} />
-                    </button>
-                  ) : (
-                    <span className="upcoming-notice">
-                      Rencana Silabus <Icon name="chevron_right" size={16} />
-                    </span>
-                  )}
-                </div>
-              </article>
-            ))}
+              <div className="ch-card-footer">
+                {ch.available ? (
+                  <span className="ch-card-action-link">
+                    <span>Buka Chapter</span>
+                    <Icon name="arrow_forward" size={16} />
+                  </span>
+                ) : (
+                  <span className="upcoming-notice">
+                    Rencana Silabus <Icon name="chevron_right" size={16} />
+                  </span>
+                )}
+              </div>
+            </article>
+          ))}
         </div>
 
         {filteredChapters.length === 0 && (

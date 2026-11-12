@@ -139,11 +139,13 @@ export function SpecializationModulePage({
       </header>
 
       {/* Tabs Navigation */}
-      <div className="chapter-tabs-nav" role="tablist">
+      <div className="chapter-tabs-nav" role="tablist" aria-label="Bagian materi modul spesialisasi">
         <button
+          id="spec-tab-overview"
           type="button"
           role="tab"
           aria-selected={activeTab === 'overview'}
+          aria-controls="spec-panel-overview"
           className={activeTab === 'overview' ? 'active' : ''}
           onClick={() => setActiveTab('overview')}
         >
@@ -152,9 +154,11 @@ export function SpecializationModulePage({
         </button>
         {mod.exampleCode && (
           <button
+            id="spec-tab-code"
             type="button"
             role="tab"
             aria-selected={activeTab === 'code'}
+            aria-controls="spec-panel-code"
             className={activeTab === 'code' ? 'active' : ''}
             onClick={() => setActiveTab('code')}
           >
@@ -163,9 +167,11 @@ export function SpecializationModulePage({
           </button>
         )}
         <button
+          id="spec-tab-practice"
           type="button"
           role="tab"
           aria-selected={activeTab === 'practice'}
+          aria-controls="spec-panel-practice"
           className={activeTab === 'practice' ? 'active' : ''}
           onClick={() => setActiveTab('practice')}
         >
@@ -173,9 +179,11 @@ export function SpecializationModulePage({
           <span>Latihan &amp; Kuis Konsep</span>
         </button>
         <button
+          id="spec-tab-assignment"
           type="button"
           role="tab"
           aria-selected={activeTab === 'assignment'}
+          aria-controls="spec-panel-assignment"
           className={activeTab === 'assignment' ? 'active' : ''}
           onClick={() => setActiveTab('assignment')}
         >
@@ -187,20 +195,10 @@ export function SpecializationModulePage({
       {/* Tab Content */}
       <div className="chapter-tab-content">
         {activeTab === 'overview' && (
-          <div className="tab-pane-overview">
+          <div id="spec-panel-overview" role="tabpanel" aria-labelledby="spec-tab-overview" className="tab-pane-overview">
             <div className="chapter-preview-grid">
               <PrerequisiteList prerequisites={mod.prerequisites} />
               <LearningObjectives objectives={mod.learningObjectives} />
-            </div>
-
-            <div className="pedagogy-callout">
-              <Icon name="psychology" size={24} />
-              <div>
-                <h4>Alur Belajar Modul Spesialisasi</h4>
-                <p>
-                  Mulailah dengan mempelajari slide, kemudian baca penjelasan materi terperinci, coba contoh kode dengan dataset atau skrip lokal Anda, dan selesaikan proyek terapan.
-                </p>
-              </div>
             </div>
 
             <ResourceDownloads
@@ -236,7 +234,7 @@ export function SpecializationModulePage({
         )}
 
         {activeTab === 'code' && mod.exampleCode && (
-          <div className="tab-pane-code">
+          <div id="spec-panel-code" role="tabpanel" aria-labelledby="spec-tab-code" className="tab-pane-code">
             <div className="section-heading-clean">
               <div>
                 <div className="eyebrow">CONTOH KODE PYTHON · {mod.id}</div>
@@ -265,13 +263,13 @@ export function SpecializationModulePage({
         )}
 
         {activeTab === 'practice' && (
-          <div className="tab-pane-practice">
+          <div id="spec-panel-practice" role="tabpanel" aria-labelledby="spec-tab-practice" className="tab-pane-practice">
             <ExerciseSection exercise={mod.exercise} quiz={mod.quiz} />
           </div>
         )}
 
         {activeTab === 'assignment' && (
-          <div className="tab-pane-assignment">
+          <div id="spec-panel-assignment" role="tabpanel" aria-labelledby="spec-tab-assignment" className="tab-pane-assignment">
             <AssignmentSection
               assignment={{
                 ...mod.assignment,

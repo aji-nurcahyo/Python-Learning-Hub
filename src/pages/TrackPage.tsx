@@ -162,7 +162,7 @@ export function TrackPage({
                 >
                   <div className="module-number-badge">{mod.id}</div>
                   <div className="module-info">
-                    <div className="module-status-line" style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
+                    <div className="module-status-line">
                       <span className={`module-status-chip ${mod.isCapstone ? 'project' : 'spec'}`}>
                         {mod.isCapstone ? 'Capstone Project' : 'Specialization Module'}
                       </span>
@@ -173,11 +173,17 @@ export function TrackPage({
                     </div>
                     <h3 className="module-title">{mod.title}</h3>
                     <p className="module-desc">{mod.description}</p>
+                    <div className="module-resource-tags">
+                      {mod.resources.hasSlides && <span>Slide</span>}
+                      {mod.resources.codeDownload && <span>Kode (.py)</span>}
+                      {mod.resources.notebookDownload && <span>Notebook (.ipynb)</span>}
+                      {mod.resources.datasetDownload && <span>Dataset</span>}
+                    </div>
                   </div>
                   <div className="row-right">
                     <button
                       type="button"
-                      className="button primary button-sm"
+                      className="button subtle button-sm"
                       onClick={(e) => {
                         e.stopPropagation();
                         if (onNavigateSpecModule) onNavigateSpecModule(mod.id);

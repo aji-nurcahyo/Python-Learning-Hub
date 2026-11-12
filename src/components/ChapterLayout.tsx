@@ -113,51 +113,59 @@ export function ChapterLayout({
       />
 
       {/* Tabs Navigation for Chapter Content */}
-      <div className="chapter-tabs-nav" role="tablist">
+      <div className="chapter-tabs-nav" role="tablist" aria-label="Bagian materi chapter">
         <button
+          id="tab-overview"
           type="button"
           role="tab"
           aria-selected={activeTab === 'overview'}
+          aria-controls="panel-overview"
           className={activeTab === 'overview' ? 'active' : ''}
           onClick={() => setActiveTab('overview')}
         >
           <Icon name="info" size={18} />
-          <span>Ikhtisar & Kompetensi</span>
+          <span>Ikhtisar &amp; Kompetensi</span>
         </button>
         {codeSection && (
           <button
+            id="tab-code"
             type="button"
             role="tab"
             aria-selected={activeTab === 'code'}
+            aria-controls="panel-code"
             className={activeTab === 'code' ? 'active' : ''}
             onClick={() => setActiveTab('code')}
           >
             <Icon name="terminal" size={18} />
-            <span>Contoh Kode & Output</span>
+            <span>Contoh Kode &amp; Output</span>
           </button>
         )}
         {practiceSection && (
           <button
+            id="tab-practice"
             type="button"
             role="tab"
             aria-selected={activeTab === 'practice'}
+            aria-controls="panel-practice"
             className={activeTab === 'practice' ? 'active' : ''}
             onClick={() => setActiveTab('practice')}
           >
             <Icon name="fitness_center" size={18} />
-            <span>Latihan & Kuis Konsep</span>
+            <span>Latihan &amp; Kuis Konsep</span>
           </button>
         )}
         {assignmentSection && (
           <button
+            id="tab-assignment"
             type="button"
             role="tab"
             aria-selected={activeTab === 'assignment'}
+            aria-controls="panel-assignment"
             className={activeTab === 'assignment' ? 'active' : ''}
             onClick={() => setActiveTab('assignment')}
           >
             <Icon name="assignment" size={18} />
-            <span>Tugas & Rubrik Penilaian</span>
+            <span>Tugas &amp; Rubrik Penilaian</span>
           </button>
         )}
       </div>
@@ -166,7 +174,7 @@ export function ChapterLayout({
       <div className="chapter-tab-content">
         {/* Tab: Overview */}
         {activeTab === 'overview' && (
-          <div className="tab-pane-overview">
+          <div id="panel-overview" role="tabpanel" aria-labelledby="tab-overview" className="tab-pane-overview">
             <div className="chapter-preview-grid">
               <PrerequisiteList prerequisites={chapter.prerequisites} />
               <LearningObjectives objectives={chapter.learningObjectives} />
@@ -189,17 +197,17 @@ export function ChapterLayout({
 
         {/* Tab: Code & Output */}
         {activeTab === 'code' && codeSection && (
-          <div className="tab-pane-code">{codeSection}</div>
+          <div id="panel-code" role="tabpanel" aria-labelledby="tab-code" className="tab-pane-code">{codeSection}</div>
         )}
 
         {/* Tab: Practice & Quiz */}
         {activeTab === 'practice' && practiceSection && (
-          <div className="tab-pane-practice">{practiceSection}</div>
+          <div id="panel-practice" role="tabpanel" aria-labelledby="tab-practice" className="tab-pane-practice">{practiceSection}</div>
         )}
 
         {/* Tab: Assignment */}
         {activeTab === 'assignment' && assignmentSection && (
-          <div className="tab-pane-assignment">{assignmentSection}</div>
+          <div id="panel-assignment" role="tabpanel" aria-labelledby="tab-assignment" className="tab-pane-assignment">{assignmentSection}</div>
         )}
       </div>
 

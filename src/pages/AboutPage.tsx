@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Icon } from '../ui/Icon';
 import { getAssetUrl } from '../curriculum/resources';
 import { CURRICULUM_DISCLAIMER } from '../curriculum';
@@ -8,6 +9,11 @@ interface AboutPageProps {
 }
 
 export function AboutPage({ onNavigateHome, onNavigateLevel }: AboutPageProps) {
+  useEffect(() => {
+    if (location.hash.toLowerCase().includes('licenses')) {
+      document.getElementById('licenses')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, []);
   return (
     <div className="hub-about-page">
       {/* Breadcrumb */}
@@ -132,7 +138,7 @@ export function AboutPage({ onNavigateHome, onNavigateLevel }: AboutPageProps) {
             </div>
             <div className="philosophy-item">
               <div className="philosophy-num">06</div>
-              <h4>Sumber Terbuka (OER)</h4>
+              <h4>Open Educational Resource (OER)</h4>
               <p>Materi pembelajaran dapat diakses secara gratis dan terbuka untuk kemajuan pendidikan pemrograman.</p>
             </div>
           </div>
@@ -165,33 +171,38 @@ export function AboutPage({ onNavigateHome, onNavigateLevel }: AboutPageProps) {
       </section>
 
       {/* Content Section: Open Source Acknowledgments */}
-      <section className="about-section-card acknowledgments-card">
+      <section className="about-section-card acknowledgments-card" id="licenses">
         <div className="about-card-header">
           <div className="about-icon-pill">
             <Icon name="handshake" size={24} />
           </div>
           <div>
-            <h2>Pengakuan & Atribusi Sumber Terbuka</h2>
-            <p className="about-card-desc">Open-source software foundation & license transparency</p>
+            <h2>Pengakuan &amp; Atribusi Open-Source</h2>
+            <p className="about-card-desc">Open-Source Software &amp; License Transparency</p>
           </div>
         </div>
         <div className="about-card-body">
           <p>
-            Platform ini menghormati dan mematuhi etika ekosistem open-source dengan membedakan secara tegas
-            antara identitas pengembang kurikulum Python Learning Hub dan pencipta perangkat lunak fondasi:
+            <strong>Python Learning Hub</strong> dikembangkan menggunakan berbagai open-source software dan library
+            yang mendukung penyajian materi, interactive slides, syntax highlighting, dan mathematical notation:
           </p>
           <ul className="ack-list">
             <li>
-              <strong>Arsitektur Presentasi:</strong> Diadaptasi dari fondasi antarmuka peramban slide{' '}
-              <a href="https://github.com/informatika-itera/pengkom" target="_blank" rel="noreferrer">
-                Pengkom ITERA
-              </a>{' '}
-              yang berlisensi <a href={getAssetUrl('downloads/LICENSE.upstream')}>MIT License</a>.
+              <strong>Core Technologies:</strong> React 19 (MIT License), Reveal.js (MIT License, Hakim El Hattab),
+              Shiki syntax highlighting (MIT License, Anthony Fu &amp; Pine Wu), dan KaTeX mathematical notation
+              (MIT License, Khan Academy).
             </li>
             <li>
-              <strong>Library & Ekosistem:</strong> Dibangun dengan React 19, Reveal.js 6 (Hak Cipta Hakim El Hattab),
-              Shiki syntax highlighter (Anthony Fu & Pine Wu), KaTeX typesetting math (Khan Academy),
-              font Google Sans Flex & Code, serta Material Symbols Rounded.
+              <strong>Typography &amp; Iconography:</strong> Google Fonts (Google Sans Flex &amp; Google Sans Code,
+              Open Font License) serta Material Symbols Rounded (Apache License 2.0).
+            </li>
+            <li>
+              <strong>Lisensi &amp; Pemberitahuan Hukum:</strong> Salinan lengkap lisensi dan pemberitahuan hak cipta
+              pihak ketiga tersedia pada berkas{' '}
+              <a href={getAssetUrl('downloads/LICENSE.upstream')} target="_blank" rel="noreferrer">
+                Pemberitahuan Lisensi &amp; Atribusi Pihak Ketiga
+              </a>
+              .
             </li>
           </ul>
         </div>

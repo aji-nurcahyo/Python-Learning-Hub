@@ -1,4 +1,4 @@
-"""Contoh praktikum Pengantar Komputasi, pertemuan 10."""
+"""Contoh Praktikum Python Learning Hub: Dictionary, Set & Pengurutan Data."""
 
 PENGUKURAN = [
     {'id': 'S01', 'lokasi': 'Gedung A', 'rsrp': -82},

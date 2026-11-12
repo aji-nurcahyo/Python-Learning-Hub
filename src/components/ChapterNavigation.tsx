@@ -19,9 +19,9 @@ export function ChapterNavigation({
           onClick={() => onNavigate(prevChapter.id)}
         >
           <Icon name="arrow_back" size={18} />
-          <div>
-            <small>Chapter Sebelumnya</small>
-            <span>{prevChapter.number}. {prevChapter.title}</span>
+          <div className="nav-meta">
+            <span className="nav-dir">Chapter Sebelumnya</span>
+            <span className="nav-title">{prevChapter.number}. {prevChapter.title}</span>
           </div>
         </button>
       ) : (
@@ -34,9 +34,9 @@ export function ChapterNavigation({
           className="chapter-nav-btn next"
           onClick={() => onNavigate(nextChapter.id)}
         >
-          <div>
-            <small>Chapter Berikutnya</small>
-            <span>{nextChapter.number}. {nextChapter.title}</span>
+          <div className="nav-meta">
+            <span className="nav-dir">Chapter Berikutnya</span>
+            <span className="nav-title">{nextChapter.number}. {nextChapter.title}</span>
           </div>
           <Icon name="arrow_forward" size={18} />
         </button>

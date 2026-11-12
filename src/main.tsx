@@ -50,39 +50,60 @@ function Header({
   onNavigateAbout?: () => void;
 }) {
   const { theme, setTheme } = usePreferences();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleBrandClick = (e: React.MouseEvent) => {
+    setMobileMenuOpen(false);
     if (onNavigateHome) {
       e.preventDefault();
       onNavigateHome();
     }
   };
 
+  const closeMenuAnd = (fn?: () => void, fallbackUrl?: string) => {
+    setMobileMenuOpen(false);
+    if (fn) {
+      fn();
+    } else if (fallbackUrl) {
+      location.href = fallbackUrl;
+    }
+  };
+
   return (
     <header className="site-header">
+      <a className="skip-link" href="#main-content">
+        Langsung ke konten utama
+      </a>
       <a className="brand-hub" href={`${base}index.html`} onClick={handleBrandClick} aria-label="Python Learning Hub Beranda">
-        <span className="brand-hub-logo">py_</span>
+        <span className="brand-hub-logo" aria-hidden="true">py_</span>
         <div className="brand-hub-text">
           <span className="brand-hub-name">Python Learning Hub</span>
           <span className="brand-hub-tagline">Interactive Python Learning Modules</span>
         </div>
       </a>
 
-      <nav className="hub-nav-links" aria-label="Navigasi kurikulum">
+      <nav
+        id="hub-primary-nav"
+        className={`hub-nav-links ${mobileMenuOpen ? 'is-open' : ''}`}
+        aria-label="Navigasi kurikulum"
+      >
         <button
           type="button"
           className={`hub-nav-link ${activeNav === 'home' ? 'active' : ''}`}
-          onClick={() => (onNavigateHome ? onNavigateHome() : (location.href = `${base}index.html`))}
+          aria-current={activeNav === 'home' ? 'page' : undefined}
+          onClick={() => closeMenuAnd(onNavigateHome, `${base}index.html`)}
         >
           Beranda
         </button>
         <button
           type="button"
           className={`hub-nav-link ${activeNav === 'getting-started' ? 'active' : ''}`}
+          aria-current={activeNav === 'getting-started' ? 'page' : undefined}
           onClick={() =>
-            onNavigateGettingStarted
-              ? onNavigateGettingStarted()
-              : (location.href = `${base}index.html#getting-started`)
+            closeMenuAnd(
+              onNavigateGettingStarted ? () => onNavigateGettingStarted() : undefined,
+              `${base}index.html#getting-started`
+            )
           }
         >
           Getting Started
@@ -90,34 +111,46 @@ function Header({
         <button
           type="button"
           className={`hub-nav-link ${activeNav === 'level-1' ? 'active' : ''}`}
-          onClick={() => (onNavigateLevel ? onNavigateLevel(1) : (location.href = `${base}index.html#level/1`))}
+          aria-current={activeNav === 'level-1' ? 'page' : undefined}
+          onClick={() => closeMenuAnd(onNavigateLevel ? () => onNavigateLevel(1) : undefined, `${base}index.html#level/1`)}
         >
           Level 1
         </button>
         <button
           type="button"
           className={`hub-nav-link ${activeNav === 'level-2' ? 'active' : ''}`}
-          onClick={() => (onNavigateLevel ? onNavigateLevel(2) : (location.href = `${base}index.html#level/2`))}
+          aria-current={activeNav === 'level-2' ? 'page' : undefined}
+          onClick={() => closeMenuAnd(onNavigateLevel ? () => onNavigateLevel(2) : undefined, `${base}index.html#level/2`)}
         >
           Level 2
         </button>
         <button
           type="button"
           className={`hub-nav-link ${activeNav === 'level-3' ? 'active' : ''}`}
-          onClick={() => (onNavigateLevel ? onNavigateLevel(3) : (location.href = `${base}index.html#level/3`))}
+          aria-current={activeNav === 'level-3' ? 'page' : undefined}
+          onClick={() => closeMenuAnd(onNavigateLevel ? () => onNavigateLevel(3) : undefined, `${base}index.html#level/3`)}
         >
           Level 3
         </button>
-        <a className="hub-nav-link" href={`${base}index.html#tracks`}>
+        <a
+          className="hub-nav-link"
+          href={`${base}index.html#tracks`}
+          onClick={() => setMobileMenuOpen(false)}
+        >
           Spesialisasi
         </a>
-        <a className="hub-nav-link" href={`${base}index.html#curriculum-browser`}>
+        <a
+          className="hub-nav-link"
+          href={`${base}index.html#curriculum-browser`}
+          onClick={() => setMobileMenuOpen(false)}
+        >
           30 Chapter
         </a>
         <button
           type="button"
           className={`hub-nav-link ${activeNav === 'about' ? 'active' : ''}`}
-          onClick={() => (onNavigateAbout ? onNavigateAbout() : (location.href = `${base}index.html#about`))}
+          aria-current={activeNav === 'about' ? 'page' : undefined}
+          onClick={() => closeMenuAnd(onNavigateAbout, `${base}index.html#about`)}
         >
           Tentang
         </button>
@@ -125,6 +158,16 @@ function Header({
 
       <div className="hub-header-actions">
         <ThemeSelect theme={theme} onChange={setTheme} />
+        <button
+          type="button"
+          className="hub-mobile-menu-btn"
+          aria-expanded={mobileMenuOpen}
+          aria-controls="hub-primary-nav"
+          aria-label={mobileMenuOpen ? 'Tutup menu navigasi' : 'Buka menu navigasi'}
+          onClick={() => setMobileMenuOpen((prev) => !prev)}
+        >
+          <Icon name={mobileMenuOpen ? 'close' : 'menu'} size={22} />
+        </button>
       </div>
     </header>
   );
@@ -141,11 +184,17 @@ function Footer() {
         Dikembangkan oleh <strong>Aji Pamungkas Tri Nurcahyo</strong> · Institut Teknologi Sumatera
       </div>
       <div>
-        Fondasi:{' '}
-        <a href="https://github.com/informatika-itera/pengkom" target="_blank" rel="noreferrer">
-          Pengkom ITERA
-        </a>{' '}
-        · <a href={`${base}downloads/LICENSE.upstream`}>Lisensi MIT</a>
+        <a
+          href={`${base}index.html#about/licenses`}
+          onClick={(e) => {
+            if (!isDirect404) {
+              e.preventDefault();
+              location.hash = 'about/licenses';
+            }
+          }}
+        >
+          Lisensi &amp; Atribusi
+        </a>
       </div>
     </footer>
   );

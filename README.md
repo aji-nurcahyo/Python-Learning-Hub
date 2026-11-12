@@ -387,16 +387,16 @@ Alpro-python/
 
 ---
 
-## 11. Atribusi & Lisensi Sumber Terbuka
+## 11. Pengakuan & Atribusi Open-Source
 
 - **Pengembang & Penulis Kurikulum Python Learning Hub:**  
   Aji Pamungkas Tri Nurcahyo (Institut Teknologi Sumatera).
-- **Fondasi Perangkat Lunak:**  
-  Arsitektur peramban slide dan fondasi teknis situs diadaptasi dari repositori open-source [Pengkom ITERA](https://github.com/informatika-itera/pengkom) di bawah ketentuan [MIT License](LICENSE.upstream).
-- **Pustaka Pihak Ketiga:**  
+- **Lisensi & Atribusi Lengkap:**  
+  Python Learning Hub dikembangkan menggunakan berbagai *open-source software* dan *library* untuk mendukung penyajian materi, *interactive slides*, *syntax highlighting*, dan *mathematical notation*. Rincian atribusi pihak ketiga tersedia pada [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) dan [`LICENSE.upstream`](LICENSE.upstream).
+- **Pustaka Utama Pihak Ketiga:**  
   - [React](https://react.dev/) — MIT License
   - [Reveal.js](https://revealjs.com/) — MIT License (Hak Cipta Hakim El Hattab)
   - [Shiki](https://shiki.style/) — MIT License (Anthony Fu & Pine Wu)
   - [KaTeX](https://katex.org/) — MIT License (Khan Academy)
-  - [Google Sans Flex & Code](https://fonts.google.com/) — Open Font License
+  - [Google Fonts (Google Sans Flex & Code)](https://fonts.google.com/) — Open Font License
   - [Material Symbols](https://fonts.google.com/icons) — Apache License 2.0

@@ -1,4 +1,4 @@
-"""Contoh praktikum Pengantar Komputasi, pertemuan 9."""
+"""Contoh Praktikum Python Learning Hub: Fungsi Modular & Klasifikasi Sinyal."""
 
 def celsius_ke_fahrenheit(celsius):
     """Ubah suhu Celsius menjadi Fahrenheit."""

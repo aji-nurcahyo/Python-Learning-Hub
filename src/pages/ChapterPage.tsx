@@ -59,17 +59,6 @@ export function ChapterPage({
       onNavigateSlides={onNavigateSlides}
       onNavigateReading={onNavigateReading}
       onNavigateTask={onNavigateTask}
-      overviewChildren={
-        <div className="pedagogy-callout">
-          <Icon name="psychology" size={24} />
-          <div>
-            <h4>Pendekatan Belajar Terarah</h4>
-            <p>
-              Mulailah dengan mempelajari slide, kemudian baca penjelasan materi, coba contoh kode, dan kerjakan latihan serta kuis penguatan konsep.
-            </p>
-          </div>
-        </div>
-      }
       codeSection={
         chapter.codeExample ? (
           <div>
